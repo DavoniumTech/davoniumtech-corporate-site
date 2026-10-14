@@ -1,0 +1,50 @@
+DAVONIUM TECHNOLOGIES WEBSITE — WINDOWS CMD DEPLOYMENT
+
+BEFORE CMD
+1. Create a NEW PRIVATE repository on GitHub named: davoniumtech-corporate-site
+2. Do not initialise it with README, .gitignore or a license.
+3. Download this ZIP and make sure it is in your Downloads folder.
+
+CMD COMMANDS — RUN ONE AT A TIME
+
+cd /d "%USERPROFILE%\Downloads"
+
+powershell -NoProfile -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\Davonium-Technologies-Corporate-Website-v2.0.zip' -DestinationPath '%USERPROFILE%\davoniumtech-corporate-site' -Force"
+
+cd /d "%USERPROFILE%\davoniumtech-corporate-site"
+
+dir
+
+git --version
+
+git init
+
+git add .
+
+git status
+
+git commit -m "Launch Davonium Technologies website refresh"
+
+git branch -M main
+
+git remote add origin https://github.com/DavoniumTech/davoniumtech-corporate-site.git
+
+git push -u origin main
+
+If Git asks for a name/email, configure a suitable Git identity. If it asks for GitHub authentication, follow the browser prompt. Never share a password, token or private key. If a command fails, stop and keep its full error text.
+
+CLOUDFLARE PAGES
+1. Cloudflare Dashboard -> Workers & Pages -> Create application -> Pages -> Connect to Git.
+2. Authorise the GitHub account and choose DavoniumTech/davoniumtech-corporate-site.
+3. Production branch: main. Framework preset: None. Build command: exit 0 (or blank if accepted). Build output directory: . Root directory: blank or /.
+4. Deploy. Test the generated *.pages.dev website before touching the custom domain.
+5. Once verified, Pages -> Custom domains -> Set up a domain -> davoniumtech.com. Add www.davoniumtech.com as an alias only if you want to support it. Follow Cloudflare's prompts. Preserve existing DNS records for ready2go, marvelchat and email. Do not delete MX/TXT records.
+6. After domain activation, verify the canonical domain URLs, HTTPS, support email routing, PWA installation and sitemap.
+
+UPDATES AFTER CONNECTING GIT
+cd /d "%USERPROFILE%\davoniumtech-corporate-site"
+ git add .
+ git commit -m "Update corporate website"
+ git push
+
+Cloudflare Pages will automatically deploy pushes to main once Git integration is connected.

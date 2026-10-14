@@ -1,0 +1,5 @@
+Contact: mailto:support@davoniumtech.com
+Preferred-Languages: en
+Canonical: https://davoniumtech.com/.well-known/security.txt
+Policy: https://davoniumtech.com/security.html
+Expires: 2027-10-14T00:00:00.000Z

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://davoniumtech.com/sitemap.xml

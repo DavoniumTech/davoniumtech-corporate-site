@@ -1,0 +1,25 @@
+{
+  "name": "Davonium Technologies",
+  "short_name": "Davonium",
+  "description": "Digital products, websites and practical software experiences by Davonium Technologies.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f7fc",
+  "theme_color": "#f7f7fc",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
