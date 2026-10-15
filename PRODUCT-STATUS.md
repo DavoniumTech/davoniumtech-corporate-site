@@ -1,17 +1,14 @@
 # Davonium Technologies — Product Status
 
-We publish clear status labels so readers can distinguish current capability from work in progress.
+We keep product status accurate so visitors can distinguish what exists today from what we are still building.
 
 ## Ready2Go Learning — In development
-
-We are developing a learning and exam-practice experience for JAMB candidates and students. Supported content, pricing, and release access are published as those details are confirmed.
+We are building a learning and exam-practice experience for JAMB candidates and students. We will publish confirmed access, pricing, and supported features when those details are ready.
 
 ## Marvel Chat — Built; active development
-
-The initial product build exists. We continue development, testing, and refinement. The Marvel Chat product website is the source for current access and feature availability.
+The initial product build exists. We continue testing, refining, and improving the experience. The product site remains the source for current access and feature availability.
 
 ## Davonium Nexus — In development
+We are developing a workspace for clearer project progress, deliverables, and client handoff. The label does not mean every intended workflow is already available.
 
-We are developing a workspace to make project status, deliverables, and client handoff information easier to follow. This label does not mean every planned workflow is already available.
-
-We update this document, the public product page, relevant guides, and machine-readable company files when a verified release changes a product’s status.
+We update public product pages and guides when a verified release changes these statuses.

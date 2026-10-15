@@ -356,13 +356,14 @@ td { color: var(--muted); }
 .instactions .btn { width: 100%; min-height: 50px; }
 .noscript { padding: 14px; color: var(--ink); background: var(--tint); text-align: center; }
 
-/* Small persistent contact action added by the UI layer */
-.wa-float { position: fixed; z-index: 90; right: max(22px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: 11px; max-width: calc(100vw - 28px); padding: 12px 17px 12px 12px; border: 1px solid rgba(255,255,255,.5); border-radius: 18px; color: #fff; background: linear-gradient(125deg, #188c68, #21ad81); box-shadow: 0 15px 38px rgba(14,116,82,.27), inset 0 1px 0 rgba(255,255,255,.22); text-decoration: none; transition: transform .22s ease, box-shadow .22s ease; }
-.wa-float:hover { color: #fff; transform: translateY(-4px); box-shadow: 0 20px 44px rgba(14,116,82,.35); text-decoration: none; }
-.wa-glyph { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 13px; color: #fff; background: rgba(255,255,255,.16); font-size: 1.35rem; }
-.wa-copy { display: grid; gap: 1px; line-height: 1.25; }
-.wa-copy strong { font-size: .82rem; font-weight: 850; }
-.wa-copy small { color: rgba(255,255,255,.83); font-size: .68rem; }
+/* WhatsApp contact: recognisable phone-in-chat mark, circular hit area, and accessible label. */
+.wa-float { position: fixed; z-index: 90; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: grid; place-items: center; width: 62px; height: 62px; padding: 0; border: 2px solid rgba(255,255,255,.92); border-radius: 50%; color: #fff; background: #20c968; box-shadow: 0 10px 28px rgba(13,126,74,.26), 0 0 0 0 rgba(32,201,104,.34); text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; animation: wa-breathe 3.6s ease-out infinite; }
+.wa-icon { width: 34px; height: 34px; display: block; color: #fff; }
+.wa-float:hover, .wa-float:focus-visible { color: #fff; transform: translateY(-3px) scale(1.025); box-shadow: 0 14px 34px rgba(13,126,74,.35), 0 0 0 5px rgba(32,201,104,.12); text-decoration: none; }
+.wa-float::before { content: attr(data-label); position: absolute; right: calc(100% + 11px); top: 50%; transform: translate(5px,-50%); opacity: 0; visibility: hidden; white-space: nowrap; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface-solid); box-shadow: var(--shadow-sm); font-size: .78rem; font-weight: 800; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
+.wa-float:hover::before, .wa-float:focus-visible::before { opacity: 1; visibility: visible; transform: translate(0,-50%); }
+.wa-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes wa-breathe { 0%, 75%, 100% { box-shadow: 0 10px 28px rgba(13,126,74,.26), 0 0 0 0 rgba(32,201,104,0); } 12% { box-shadow: 0 10px 28px rgba(13,126,74,.26), 0 0 0 6px rgba(32,201,104,.14); } }
 
 /* Reveal animation only activates when JavaScript support is present. */
 .motion-ready [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .65s var(--ease), transform .65s var(--ease); }
@@ -489,9 +490,8 @@ td { color: var(--muted); }
   .panel { padding: 22px; border-radius: 24px; }
   .insthead { gap: 12px; }
   .insthead img { width: 55px; height: 55px; flex-basis: 55px; }
-  .wa-float { right: max(13px, env(safe-area-inset-right)); bottom: max(13px, env(safe-area-inset-bottom)); width: 54px; height: 54px; padding: 7px; justify-content: center; gap: 0; border-radius: 18px; }
-  .wa-glyph { width: 38px; height: 38px; flex-basis: 38px; border-radius: 13px; }
-  .wa-copy { display: none; }
+  .wa-float { right: max(13px, env(safe-area-inset-right)); bottom: max(13px, env(safe-area-inset-bottom)); width: 56px; height: 56px; }
+  .wa-icon { width: 31px; height: 31px; }
 }
 @media (max-width: 380px) {
   .wrap { width: calc(100% - 24px); }
@@ -650,3 +650,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .scroll-progress { display: none; }
   .motion-ready [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+@media (max-width: 760px), (pointer: coarse) {
+  .hero::before { filter: none; opacity: .75; }
+  .art::after { animation-duration: 26s; box-shadow: inset 0 0 26px rgba(112,72,245,.035), 0 0 28px rgba(112,72,245,.04); }
+}
+@media (prefers-reduced-motion: reduce) { .wa-float { animation: none; } .wa-float::before { transition: none; } }

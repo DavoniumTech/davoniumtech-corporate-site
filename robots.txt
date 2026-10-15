@@ -3,7 +3,7 @@ Allow: /
 Disallow: /404.html
 Disallow: /offline.html
 
-# OpenAI search discovery and user-requested page fetches.
+# Public company and product information may be surfaced in ChatGPT Search.
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /404.html
@@ -14,10 +14,8 @@ Allow: /
 Disallow: /404.html
 Disallow: /offline.html
 
-# GPTBot is managed separately from ChatGPT search discovery.
+# Separate preference for model-training crawl.
 User-agent: GPTBot
-Allow: /
-Disallow: /404.html
-Disallow: /offline.html
+Disallow: /
 
 Sitemap: https://www.davoniumtech.com/sitemap.xml

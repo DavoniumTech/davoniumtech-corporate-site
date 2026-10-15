@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker — reliable root routing and progressive cache. */
-const CACHE_NAME = 'davonium-site-v9-company-docs-20261015';
+const CACHE_NAME = 'davonium-site-v11-public-release-20261015';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -7,6 +7,11 @@ const CORE = [
   routeUrl('offline.html'),
   routeUrl('install'),
   routeUrl('products'),
+  routeUrl('about'),
+  routeUrl('contact'),
+  routeUrl('services'),
+  routeUrl('support'),
+  routeUrl('docs/'),
   routeUrl('assets/css/styles.css'),
   routeUrl('assets/js/site.js'),
   routeUrl('manifest.webmanifest'),

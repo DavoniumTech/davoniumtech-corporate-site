@@ -1,44 +1,22 @@
 {
-  "release": "Davonium Technologies — Company Voice, Documentation and Discovery Refresh",
-  "release_date": "2026-10-15",
-  "scope": "Complete static company website and public documentation release; no Node.js, npm, React, Vite, or build step required.",
+  "release": "Davonium Technologies Public Company Release",
+  "date": "2026-10-15",
+  "canonical_domain": "https://www.davoniumtech.com/",
+  "html_pages": 53,
+  "documentation_guides": 39,
+  "sitemap_urls": 48,
   "static_validation": {
-    "html_pages_parsed": 53,
-    "public_documentation_guides": 39,
-    "local_routes_assets_and_links_checked": 2480,
-    "broken_local_references": 0,
-    "broken_in_page_fragments": 0,
-    "duplicate_html_ids": 0,
-    "duplicate_documentation_headings": 0,
-    "duplicate_documentation_paragraphs": 0,
-    "structured_data_parse_errors": 0,
-    "javascript_syntax": "passed",
-    "manifest_json": "valid",
-    "wrangler_configuration_jsonc_shape": "valid JSON object",
-    "sitemap_xml": "valid",
-    "sitemap_public_urls": 51,
-    "documentation_guides_missing_from_index": 0,
-    "documentation_guides_missing_from_llms_full": 0,
-    "obsolete_personal_gmail_in_public_source": false,
-    "product_status_mismatches_detected": 0
+    "html_parse_and_metadata": "passed",
+    "internal_routes_and_fragments": "passed; zero errors",
+    "structured_data": "passed",
+    "manifest_and_wrangler_configuration": "valid JSON",
+    "sitemap": "valid XML; canonical URLs only; draft legal pages excluded",
+    "public_copy": "implementation-stack terms removed from public HTML prose",
+    "browser_automation": "not completed; sandbox browser access was blocked, so live-device review remains necessary"
   },
   "product_status": {
     "Ready2Go Learning": "In development",
     "Marvel Chat": "Built; active development",
     "Davonium Nexus": "In development"
-  },
-  "included": [
-    "First-person company-authored technical documentation with topic-specific content",
-    "Public AI discovery guide and llms.txt / llms-full.txt indexes",
-    "Crawler policy and sitemap aligned with clean canonical routes",
-    "Cloudflare Workers Static Assets configuration and clean-route handling",
-    "Progressive caching with independent core asset caching",
-    "System-aware light/dark appearance, optional installation, and reduced-motion-aware scroll reveals",
-    "Privacy, terms, and browser-storage drafts clearly marked for review"
-  ],
-  "verification_limits": [
-    "Static checks do not replace live production HTTP checks or physical-device testing.",
-    "Automated browser navigation was blocked by the build environment's loopback restrictions; validate the live deployment after publishing.",
-    "Search engines and AI providers control their own crawling, indexing, ranking, citation, and answer inclusion."
-  ]
+  }
 }
