@@ -1,49 +1,18 @@
-DAVONIUM TECHNOLOGIES — UI REFRESH / WINDOWS CMD
+DAVONIUM TECHNOLOGIES — WINDOWS CMD DEPLOYMENT
 
-Before starting:
-- Download `davonium-technologies-pwa-ui-refresh.zip` into your Downloads folder.
-- The corporate repository has already been cloned to the path below in the earlier deployment session.
-- Do not use `/MIR`; the copy command below preserves files and folders not included in the new package.
-
-1. Extract this refreshed package to a NEW folder:
-
-powershell -NoProfile -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-pwa-ui-refresh.zip' -DestinationPath '%USERPROFILE%\Downloads\davoniumtech-ui-refresh' -Force"
-
-2. Enter and verify the CORPORATE repository:
-
-cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site"
-git remote -v
-
-The origin must be:
-https://github.com/DavoniumTech/davoniumtech-corporate-site.git
-
-3. Copy the updated UI and all current site files without mirroring deletions:
-
-robocopy "%USERPROFILE%\Downloads\davoniumtech-ui-refresh" "%USERPROFILE%\Downloads\davoniumtech-corporate-site" /E /XD "%USERPROFILE%\Downloads\davoniumtech-corporate-site\.git" "%USERPROFILE%\Downloads\davoniumtech-corporate-site\.github"
-
-Robocopy exit codes 0 through 7 are usually non-fatal file-copy results. Check for FAILED files in the summary; it should say 0 FAILED.
-
-4. Restore the exact Davonium Technologies logo and icons already present in the repository's Git history. This also removes the temporary generated icon files:
-
-call "%USERPROFILE%\Downloads\davoniumtech-corporate-site\RESTORE-ORIGINAL-BRAND-ASSETS.cmd"
-
-The script should report that the original logo/favicon/touch/PWA icons were restored. If it reports an error, STOP and do not push yet.
-
-5. Check, commit and push to the existing production branch:
+1. Extract the ZIP to: %USERPROFILE%\Downloads\davonium-technologies-final-website
+2. Update the first path below if your company-site clone has another folder name.
+3. Ensure the Git remote is the company website repo, not a product repo.
 
 cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site"
 git status
-git add -A
+git remote -v
+git switch -c website-final-refresh-2026
+robocopy "%USERPROFILE%\Downloads\davonium-technologies-final-website" "." /E /XD .git
+git status
+git add .
 git diff --cached --stat
-git commit -m "Polish Davonium Technologies UI and restore brand identity"
-git push origin main
+git commit -m "Refresh Davonium Technologies company website"
+git push -u origin website-final-refresh-2026
 
-If Git says there is nothing to commit, do not worry; inspect `git status` and confirm the files were copied. Do not push to any Ready2Go or Marvel Chat repository.
-
-6. In Cloudflare Pages, check `davoniumtech-corporate-site` > Deployments. Wait for a successful production deployment, then hard-refresh the live website (Ctrl+F5).
-
-WHAT THIS UPDATE CHANGES:
-- Visual CSS only: premium gradients/glows, refined cards and buttons, glass header, spacing and responsive breakpoints.
-- Mobile-first navigation and layout refinements for small phones, tablets, laptops, and large monitors.
-- Reconnects header/footer/install/PWA identity to the exact original Davonium D icon from Git history.
-- Keeps documentation text and website copy unchanged. The updated service-worker cache name prompts the refreshed look to replace old cached styles.
+Stop if the repository remote is wrong or the working tree contains changes you do not understand. Never use robocopy /MIR. Robocopy exit codes 8 or higher indicate an error. Review the preview and merge only into the correct Pages production branch.

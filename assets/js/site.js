@@ -168,9 +168,8 @@
     dialog.addEventListener('click', event => { if (event.target === dialog) hide(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialog.classList.contains('open')) hide(); });
   }
-  if (dialog && !standalone() && safeStore.get('davonium-install-invitation-seen') !== 'yes') {
-    window.setTimeout(show, 650);
-  }
+  // No forced install pop-up: visitors can browse immediately and choose installation from the Install page.
+
 
   // Documentation search remains local, instant, and compatible with offline use.
   const search = $('#docs-search');
@@ -236,6 +235,10 @@
   }
 
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}));
+    const baseMeta = $('meta[name="site-base"]');
+    const basePath = baseMeta ? baseMeta.content : '.';
+    const swUrl = new URL(`${basePath}/sw.js`, location.href);
+    const swScope = new URL(`${basePath}/`, location.href).pathname;
+    window.addEventListener('load', () => navigator.serviceWorker.register(swUrl.href, { scope: swScope }).catch(() => {}));
   }
 })();
