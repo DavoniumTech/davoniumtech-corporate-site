@@ -1,0 +1,27 @@
+# Davonium Technologies
+
+> Davonium Technologies is an independent technology company building digital products for students and everyday users, and practical websites and web tools for small businesses.
+
+## Company
+- Official website: https://www.davoniumtech.com/
+- About: https://www.davoniumtech.com/about.html
+- Services: https://www.davoniumtech.com/services.html
+- Products: https://www.davoniumtech.com/products.html
+- Our work: https://www.davoniumtech.com/work.html
+- Contact: https://www.davoniumtech.com/contact.html
+- Documentation: https://www.davoniumtech.com/docs/index.html
+- Support: support@davoniumtech.com
+
+## Products
+- Ready2Go Learning — in development. A learning and exam-practice product for JAMB candidates and students. Product site: https://ready2go.davoniumtech.com/
+- Marvel Chat — initial product build complete; active development continues, including refinement and testing. Product site: https://marvelchat.davoniumtech.com/
+- Davonium Nexus — in development. A workspace being built to make client project progress, deliverables, and handoff information easier to follow. Overview: https://www.davoniumtech.com/docs/guides/davonium-nexus.html
+
+## Website capabilities
+The company website is made with static HTML, CSS, and vanilla JavaScript. It includes responsive pages, light and dark themes, documentation search, contact links, an optional installable PWA experience, selected offline caching, metadata, structured data, and an XML sitemap.
+
+## Important status and access notes
+“In development” does not mean all features are complete or generally available. The company website can be installed only when the visitor’s browser and device support it; the site is not a native APK. Selected pages work offline only after they have been cached successfully. Product features and availability should be confirmed on the product’s own site.
+
+## Policies
+Privacy, terms, and browser-storage pages are working drafts and should be reviewed against actual production practices before being treated as final legal policies.

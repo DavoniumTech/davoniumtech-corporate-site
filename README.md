@@ -1,68 +1,53 @@
-# Davonium Technologies — Final Website Refresh
+# Davonium Technologies
 
-This package updates the existing Davonium Technologies company website while preserving the original Davonium D brand mark and icon set from the source project. It is a static site built with HTML, CSS, and vanilla JavaScript. No Node.js, npm, React, or build command is required.
+**Useful technology, built for real needs.**
 
-## Included
+Davonium Technologies is an independent technology company building digital products for students and everyday users, while helping small businesses present their work clearly online. This repository contains the company website: our profile, product information, services, support routes, and public documentation.
 
-- Company pages: Home, About, Products, Services, Our Work, Contact, Support, Install.
-- A documentation hub and standalone guide pages with ordinary crawlable links. Search filtering works in JavaScript; the guide links and page content remain in the HTML.
-- Responsive light/dark themes, compact mobile header, mobile navigation, keyboard focus styling, contact links, and a non-forced PWA install path.
-- Corrected original brand assets, a dedicated 1200 x 630 social preview image, Open Graph metadata, and Twitter `summary_large_image` cards.
-- A service worker that precaches the shipped HTML, assets, and documentation for offline reopening after a successful online visit and service-worker installation.
-- Root-relative metadata and relative navigation that work at `https://www.davoniumtech.com/` and at GitHub Pages project path `https://davoniumtech.github.io/davoniumtech-website/`.
-- The old personal email address has been removed from the public site. Public email contact is `support@davoniumtech.com`.
+## What visitors can find here
 
-## Product status wording
+- **Company:** who we are, how we work, and how to contact the team.
+- **Products:** current information on Ready2Go Learning, Marvel Chat, and Davonium Nexus, with each product’s development status stated plainly.
+- **Services:** responsive website design and development, web-app experiences, and practical discovery foundations.
+- **Support and documentation:** guides for visitors, customers, and project collaborators.
+- **Installable website:** on compatible devices, a visitor can add the company website to the home screen or apps list.
 
-- **Ready2Go Learning:** in development; aimed at JAMB candidates and students.
-- **Marvel Chat:** initial product build complete; active development and refinement continue. Its live product site is the source of truth for current access and features.
-- **Davonium Nexus:** planned concept.
+## Product status
 
-Do not describe a prototype or in-progress capability as generally available unless that status has been confirmed. The privacy, terms, and storage policy pages are visibly labelled as drafts and still require a check against actual production practices.
+- **Ready2Go Learning — In development.** A learning and exam-practice product for JAMB candidates and students.
+- **Marvel Chat — Built; active development.** The initial product build exists; work continues on refinement, testing, and reliability.
+- **Davonium Nexus — In development.** A workspace being built to make project progress, deliverables, and customer handoff easier to follow.
 
-## Test locally on Windows
+These labels describe the current stage of work. They are not a promise that every feature is complete or available to every visitor.
 
-1. Extract the ZIP to a folder such as `%USERPROFILE%\Downloads\davonium-technologies-final-website`.
-2. Open `index.html` directly for a quick visual check. For testing service workers/offline installation, use VS Code with the Live Server extension; browser `file://` restrictions can prevent those features.
-3. Test navigation, light/dark toggle, documentation search, product links, contact form preparation, install page, and mobile layout at 320, 360, 390, 430, 768, 1024, and 1366 pixels.
-4. To test offline, first load the site over HTTP, wait for the service worker to activate, visit key pages while online, and then switch to offline mode. Some external links and the `mailto:` contact handoff still need a network or a configured email app.
+## Website technology
 
-## Deploy to GitHub Pages or Cloudflare Pages
+The site uses standard HTML, CSS, and vanilla JavaScript. It does not require Node.js, npm, a framework, or a compilation step. The code is designed to remain understandable and straightforward to maintain.
 
-Use the same package in the repository that serves the company website. Make a new branch and preview before merging to the branch configured for production. Do not copy this package into the Ready2Go Learning or Marvel Chat repository.
+The website includes responsive layouts, a mobile navigation menu, light and dark themes, accessible focus styling, a documentation search helper, page metadata, structured data, an XML sitemap, a social-preview image, and a service worker for caching selected content after an online visit.
 
-### Windows CMD commands
+### Installation
 
-Replace the two example folder paths below with the actual folders on your PC. Extract this ZIP first. In the existing company website Git clone, verify the remote and clean working tree before copying: 
+This site is a **Progressive Web App (PWA)**, not an Android APK or a native app-store package. On compatible devices, visitors can use the browser’s install option or follow the instructions on `install.html`. The browser and operating system decide whether to show an install prompt.
 
-```bat
-cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site"
-git status
-git remote -v
-git switch -c website-final-refresh-2026
-robocopy "%USERPROFILE%\Downloads\davonium-technologies-final-website" "." /E /XD .git
-git status
-git add .
-git diff --cached --stat
-git commit -m "Refresh Davonium Technologies company website"
-git push -u origin website-final-refresh-2026
-```
+Offline access is limited to pages and assets that have been cached successfully. Product links, email handoff, and other online services may still require an internet connection.
 
-If your actual local clone uses another folder name, change the first `cd` path. Confirm `git remote -v` points to the company site repository before copying. Do not use `robocopy /MIR`; it can delete existing files. If Robocopy returns exit code 8 or higher, stop and inspect the error.
+## Contact
 
-After pushing, check the branch preview. Merge the branch only after verifying the published preview and confirming the correct production branch in GitHub Pages or Cloudflare Pages. If your host publishes from `main`, a separate branch will not update production until you merge it.
+For general enquiries, use the contact page or email **support@davoniumtech.com**. The static contact form opens a prepared message in the visitor’s email application; it does not create a server-side support ticket.
 
-## Google indexing
+Website: https://www.davoniumtech.com/
 
-- `robots.txt` permits crawling; key pages have `index,follow` metadata and canonical URLs pointing to `https://www.davoniumtech.com/`.
-- `sitemap.xml` lists the custom-domain URLs. Use it as the sitemap for the canonical site.
-- In Google Search Console, verify ownership of `davoniumtech.com`, submit `https://www.davoniumtech.com/sitemap.xml`, and use URL Inspection for the homepage, products, services, and contact page.
-- Sitemap submission improves discovery but does not guarantee indexing or rankings. Keep the custom domain as the canonical public address, rather than trying to make the GitHub Pages preview and custom domain compete as separate versions.
+## Deployment
 
-## Security guidance
+Follow `DEPLOY-WINDOWS-CMD.txt` for the Windows Command Prompt workflow. The documented GitHub repository for this company site is: `https://github.com/DavoniumTech/davoniumtech-corporate-site`. Confirm the Git remote before copying files, use a separate update branch, inspect the change summary, and review the preview before merging into the production branch.
 
-This static website deliberately does not block every visitor behind a 30-second challenge. That type of blanket interstitial harms accessibility and can interfere with search crawling. If the site is on Cloudflare, use HTTPS, standard security headers, rate controls, and a Managed Challenge only for suspicious traffic or protected endpoints. A static HTML site does not have a login or database endpoint to secure in the same way as a dynamic application.
+Do not copy this site into the Ready2Go Learning or Marvel Chat repositories. A product site has its own routes, assets, and deployment configuration.
 
-## Honest feature boundaries
+## Search and AI discovery
 
-The contact form prepares an email through the visitor's email application; it does not store submissions in a server-side ticket system. The install prompt is browser-controlled and optional. Offline pages and assets are cached after a successful online visit; first-time offline visits cannot fetch content that the device has never cached.
+The site provides crawlable page links, meaningful page titles and descriptions, canonical URLs, structured data, `robots.txt`, `sitemap.xml`, and a concise `llms.txt` summary. These give search engines and compatible AI retrieval systems clearer public information about the company and products. They cannot force a system to crawl, index, mention, or recommend the site. Keep product descriptions current and make sure the production domain is reachable.
+
+## Review before release
+
+Privacy, terms, and browser-storage policy pages are working drafts and should be checked against actual production behaviour and applicable legal requirements before they are presented as final legal advice. Verify product links and all phone/contact details before publishing.

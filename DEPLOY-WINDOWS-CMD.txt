@@ -1,18 +1,79 @@
 DAVONIUM TECHNOLOGIES — WINDOWS CMD DEPLOYMENT
 
-1. Extract the ZIP to: %USERPROFILE%\Downloads\davonium-technologies-final-website
-2. Update the first path below if your company-site clone has another folder name.
-3. Ensure the Git remote is the company website repo, not a product repo.
+Use these steps after downloading this package. All commands below are for Windows Command Prompt (CMD), not PowerShell unless a PowerShell command is explicitly shown.
 
-cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site"
-git status
+PACKAGE FILE NAME
+  davonium-technologies-company-refresh.zip
+
+1) EXTRACT THE PACKAGE
+
+cd /d "%USERPROFILE%\Downloads"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-company-refresh.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-company-refresh' -Force"
+dir "%USERPROFILE%\Downloads\davonium-technologies-company-refresh\index.html"
+
+The last command should show index.html. If the ZIP is saved in a different folder, edit the ZIP path in the Expand-Archive command.
+
+2) CLONE THE CORRECT COMPANY REPOSITORY
+
+This is the company website repository, not the Ready2Go Learning or Marvel Chat repository. These commands create a separate working copy so your existing main branch is not edited directly.
+
+git clone https://github.com/DavoniumTech/davoniumtech-corporate-site.git "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
+cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
 git remote -v
-git switch -c website-final-refresh-2026
-robocopy "%USERPROFILE%\Downloads\davonium-technologies-final-website" "." /E /XD .git
+git status
+git fetch origin
+git switch main
+git pull origin main
+
+Before continuing, check that git remote -v shows:
+  https://github.com/DavoniumTech/davoniumtech-corporate-site.git
+
+If the URL is different, stop. Do not copy website files into the wrong repository.
+
+3) CREATE A SEPARATE UPDATE BRANCH
+
+git switch -c company-site-product-and-install-refresh-20261015
+
+4) COPY THE NEW WEBSITE
+
+robocopy "%USERPROFILE%\Downloads\davonium-technologies-company-refresh" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
+
+echo %ERRORLEVEL%
+
+Robocopy exit codes 0–7 normally indicate that copying completed without a fatal error. If the code is 8 or higher, stop and review the displayed error. Never add /MIR; it can delete destination files.
+
+5) REVIEW, COMMIT, AND PUSH THE BRANCH
+
 git status
 git add .
 git diff --cached --stat
-git commit -m "Refresh Davonium Technologies company website"
-git push -u origin website-final-refresh-2026
 
-Stop if the repository remote is wrong or the working tree contains changes you do not understand. Never use robocopy /MIR. Robocopy exit codes 8 or higher indicate an error. Review the preview and merge only into the correct Pages production branch.
+git commit -m "Polish Davonium product showcase and install experience"
+git push -u origin company-site-product-and-install-refresh-20261015
+
+If Git asks you to authenticate, follow the browser sign-in prompt. If the commit says there is nothing to commit, review git status and confirm the copy operation completed.
+
+6) REVIEW AND PUBLISH
+
+Open:
+  https://github.com/DavoniumTech/davoniumtech-corporate-site
+
+Create a pull request from company-site-product-and-install-refresh-20261015 into main. Check the changed files and the hosting preview, especially the homepage, product cards, mobile navigation, installation invitation, contact links, and documentation search. Merge the pull request only after that review.
+
+The live GitHub Pages or Cloudflare Pages deployment updates only when the configured production branch/build is updated. If www.davoniumtech.com is served by a separate Cloudflare Pages project, confirm that project deploys from this repository or publish the same files to that project's configured source.
+
+7) CHECK AFTER RELEASE
+
+Open these pages in a browser:
+  https://www.davoniumtech.com/
+  https://www.davoniumtech.com/products.html
+  https://www.davoniumtech.com/install.html
+  https://www.davoniumtech.com/llms.txt
+  https://www.davoniumtech.com/robots.txt
+  https://www.davoniumtech.com/sitemap.xml
+
+Test at least one Android phone and one desktop browser. A browser-controlled install invitation cannot install an APK or force installation. It offers the PWA install prompt where supported and otherwise gives manual instructions.
+
+SEARCH DISCOVERY
+
+After deployment, verify the domain in Google Search Console and submit https://www.davoniumtech.com/sitemap.xml. This supports discovery but does not guarantee indexing, ranking, or inclusion in AI answers.

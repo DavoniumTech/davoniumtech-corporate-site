@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Davonium Technologies",
   "short_name": "Davonium Tech",
-  "description": "Digital products for students and everyday users, plus websites and web tools for small businesses.",
+  "description": "Davonium Technologies: digital products for students and everyday users, and practical websites and web tools for small businesses.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -27,5 +27,11 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ]
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "education"
+  ],
+  "prefer_related_applications": false
 }

@@ -153,6 +153,7 @@
         ? 'Installation was accepted by your browser.'
         : 'Installation was not completed. You can try again from the browser menu.';
       if (choice && choice.outcome === 'accepted' && button) button.textContent = 'Installation accepted';
+      if (dialog && dialog.classList.contains('open')) hide();
     } catch (_) {
       if (statusElement) statusElement.textContent = manualInstallHelp();
     }
@@ -168,7 +169,25 @@
     dialog.addEventListener('click', event => { if (event.target === dialog) hide(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialog.classList.contains('open')) hide(); });
   }
-  // No forced install pop-up: visitors can browse immediately and choose installation from the Install page.
+  // On a visitor's first homepage visit, offer an optional PWA installation invitation.
+  // Visitors can dismiss it and browse normally; it never appears again once dismissed.
+  const homePage = document.body.dataset.page === 'home';
+  if (dialog && homePage && !standalone() && safeStore.get('davonium-install-invitation-seen') !== 'yes') {
+    window.setTimeout(() => {
+      if (safeStore.get('davonium-install-invitation-seen') !== 'yes' && !standalone()) show();
+    }, 1500);
+  }
+
+  // Keep keyboard users inside the modal until they dismiss it or choose to continue.
+  if (dialog) dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab' || !dialog.classList.contains('open')) return;
+    const focusable = $$('button, a[href]', dialog).filter(el => !el.hasAttribute('disabled'));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
 
 
   // Documentation search remains local, instant, and compatible with offline use.
@@ -204,6 +223,13 @@
     search.addEventListener('input', filter);
     if (clear) clear.addEventListener('click', () => { search.value = ''; filter(); search.focus(); });
     filter();
+  }
+
+  // Keep product-to-company navigation contextual when a visitor asks about Nexus.
+  const contactTopic = $('#contact-topic');
+  const requestedTopic = new URLSearchParams(location.search).get('topic');
+  if (contactTopic && requestedTopic && requestedTopic.toLowerCase() === 'nexus') {
+    contactTopic.value = 'Product question';
   }
 
   // Static contact form opens a prepared email; it never claims to submit a ticket server-side.
