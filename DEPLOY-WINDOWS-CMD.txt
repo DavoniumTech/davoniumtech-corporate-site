@@ -1,51 +1,54 @@
-DAVONIUM TECHNOLOGIES — SYSTEM THEME + READY2GO ICON UPDATE
+DAVONIUM TECHNOLOGIES — FAST LOADING & APP INSTALL UPDATE
 
-This is a static HTML/CSS/JavaScript website. No Node.js, npm, React, Vite, or build command is required for editing the files.
+This release makes first installation lighter, shows a visible Install app link on every page, repeats the optional invitation no more than once every seven days after dismissal, and adds rounded normal app icons plus separate maskable icons.
 
-1) Extract the ZIP using CMD (assuming this ZIP is in Downloads):
+1. Download this ZIP into Downloads and extract it with CMD:
 
 cd /d "%USERPROFILE%\Downloads"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-system-theme-refresh.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-system-theme-refresh' -Force"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh' -Force"
 
-2) Enter your existing company-site repository (do not clone another copy):
+2. Go to the existing company repository:
 
 cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
-git remote -v
 git status
+git remote -v
 
-The remote must be https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If git status shows local changes you have not committed, stop and review them before copying.
+Confirm the remote is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If `git status` shows local changes you want to keep, stop and resolve them first.
 
-3) Refresh main and create a backup reference before deploying:
+3. Update main:
 
 git fetch origin
 git switch main
 git pull --ff-only origin main
-git branch backup-before-system-theme-refresh-20261015
-git push origin backup-before-system-theme-refresh-20261015
 
-4) Copy this package into the repository. Do not use /MIR:
+4. Create a safety backup:
 
-robocopy "%USERPROFILE%\Downloads\davonium-technologies-system-theme-refresh" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
+git branch backup-before-fast-install-refresh-20261015
+git push origin backup-before-fast-install-refresh-20261015
+
+If that backup branch already exists, use a different backup name before continuing.
+
+5. Copy the release files:
+
+robocopy "%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
+
 echo %ERRORLEVEL%
 
-Robocopy exit codes 0–7 normally indicate the copy completed without a fatal error. If the code is 8 or higher, stop and inspect the error.
+Robocopy codes 0–7 normally indicate success. If the code is 8 or higher, stop and review the error. Do NOT use /MIR.
 
-5) Review, commit, and push the changes directly to main:
+6. Review, commit and push:
 
 git status
 git add .
 git diff --cached --stat
-git commit -m "Use system appearance and official Ready2Go icon"
+git commit -m "Improve loading and PWA install experience"
 git push origin main
 
-If Git says there is nothing to commit, do not repeat the command; check whether the files were already copied/committed. If push is rejected because main advanced remotely, run git fetch origin and git pull --ff-only origin main, then review any conflict before trying again. Never force-push.
+If Git says there is nothing to commit, inspect `git status` instead of repeating the commit. If push is rejected because main moved on GitHub, stop and share the error before retrying.
 
-6) Verify the live website after the Cloudflare deployment completes:
-- Open https://www.davoniumtech.com/ in a browser set to light appearance and then dark appearance.
-- In a private/incognito session with no saved theme choice, the site should initially follow the browser/operating-system appearance.
-- Change OS appearance while the site is open; when the saved theme mode is System, the page should change with it.
-- Use the theme button to test manual appearance and cycle back to System as indicated by its accessible label/title.
-- Confirm the actual R2G logo appears in the home page, Products page, Our Work cards, documentation listing, and Ready2Go product guide.
-- Test the site install flow as before. The company website's own install icon remains the Davonium brand, not the Ready2Go product icon.
-
-The Cloudflare production deploy command should be `npx wrangler deploy`, with root directory `/` and no build command for this static site. Preview deployment should be configured separately according to the Cloudflare dashboard's Worker Previews settings. Verify the deployment logs; a successful Git push does not by itself guarantee deployment success.
+VERIFY AFTER DEPLOYMENT
+- Open the website normally and in a private browser window; look for the Install app link in the top navigation.
+- The optional invitation appears on the homepage and Products page if it was not dismissed within the previous seven days and the website is not already running as an installed app.
+- If the browser has no native install prompt, the button explains device-specific manual steps. Some browsers do not expose a JavaScript prompt.
+- Test the home screen icon on Android/iOS/desktop. The `any` icons have rounded transparent corners; the separate `maskable` icons let launchers apply their own preferred icon shape. A launcher may override icon styling.
+- For offline testing, visit pages online once, then test them offline. Pages are cached when visited; the service worker no longer downloads every documentation page during first installation.

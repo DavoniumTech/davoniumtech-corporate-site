@@ -51,3 +51,20 @@ The site provides crawlable page links, meaningful page titles and descriptions,
 ## Review before release
 
 Privacy, terms, and browser-storage policy pages are working drafts and should be checked against actual production behaviour and applicable legal requirements before they are presented as final legal advice. Verify product links and all phone/contact details before publishing.
+
+
+Performance and install behavior
+
+- The service worker caches a small core shell during installation; additional pages are cached when visited instead of all documentation being downloaded at once.
+- The website logo is served as a smaller WebP asset. Images below the initial view use lazy loading where appropriate.
+- Rounded-corner `any` app icons are provided alongside separate full-bleed `maskable` icons so launchers can apply their preferred adaptive shape. Platform launchers may still choose their own icon mask.
+- The app invitation appears on the homepage and Products page, then respects a seven-day dismissal interval. The Install app navigation link remains available on every page.
+
+
+Fast load and installation behavior
+
+- The service worker precaches a small core app shell and caches other pages only when visited, rather than downloading all documentation during installation.
+- the 1024px logo was replaced in runtime HTML with a compact 512px WebP asset (22648 bytes).
+- Every primary navigation contains an Install app link. The optional invitation is shown on the homepage and Products page, subject to a seven-day dismissal interval.
+- The manifest offers rounded-corner `any` icons and separate full-bleed `maskable` icons. Device launchers may still apply their own preferred shape.
+- Motion reveal effects and expensive blur are reduced on touch/small-screen devices.

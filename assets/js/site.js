@@ -115,7 +115,7 @@
 
   // Gentle reveal-on-scroll. If reduced motion is requested, content stays fully visible.
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion && 'IntersectionObserver' in window) {
+  if (!reduceMotion && window.innerWidth > 850 && matchMedia('(hover: hover)').matches && 'IntersectionObserver' in window) {
     const revealTargets = $$('.hero-grid, .principles, .section-head, .card, .band, .quote, .notice, .steps .step, .pagehero .wrap, .prose > h2, .checks li');
     revealTargets.forEach((element, index) => {
       element.dataset.reveal = 'true';
@@ -133,27 +133,31 @@
     revealTargets.forEach(element => observer.observe(element));
   }
 
-  // Keep the existing installation invitation and add clearer status handling.
+  // Install invitation: visible navigation affordance everywhere, with a polite recurring offer on key entry pages.
   let promptEvent = null;
   const dialog = $('#install-dialog');
   const installButton = $('#install-action');
   const status = $('#install-status');
   let lastFocus = null;
+  const invitationKey = 'davonium-install-invitation-dismissed-at-v3';
+  const installedKey = 'davonium-install-completed-v2';
+  const invitationInterval = 7 * 24 * 60 * 60 * 1000;
   const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const markInvitationDismissed = () => safeStore.set(invitationKey, String(Date.now()));
   const show = () => {
-    if (!dialog || standalone()) return;
+    if (!dialog || standalone() || safeStore.get(installedKey) === 'yes') return;
     lastFocus = document.activeElement;
     dialog.classList.add('open');
     document.body.classList.add('install-dialog-open');
     document.body.style.overflow = 'hidden';
     window.setTimeout(() => installButton && installButton.focus(), 25);
   };
-  const hide = () => {
+  const hide = (recordDismissal = true) => {
     if (!dialog) return;
     dialog.classList.remove('open');
     document.body.classList.remove('install-dialog-open');
     document.body.style.overflow = '';
-    safeStore.set('davonium-install-invitation-seen', 'yes');
+    if (recordDismissal) markInvitationDismissed();
     if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
   };
   window.addEventListener('beforeinstallprompt', event => {
@@ -162,16 +166,18 @@
   });
   window.addEventListener('appinstalled', () => {
     promptEvent = null;
+    safeStore.set(installedKey, 'yes');
+    markInvitationDismissed();
     if (status) status.textContent = 'Davonium Technologies has been installed on this device.';
-    safeStore.set('davonium-install-invitation-seen', 'yes');
+    hide(false);
   });
   const manualInstallHelp = () => {
     const ua = navigator.userAgent || '';
     if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-      return 'No native prompt is available here. On iPhone or iPad, open this site in Safari, tap Share, choose Add to Home Screen, then confirm.';
+      return 'To install on iPhone or iPad, open this site in Safari, tap Share, choose Add to Home Screen, then confirm.';
     }
-    if (/Android/i.test(ua)) return 'No native prompt is available right now. Open the browser menu and look for Install app or Add to Home screen. The label varies by browser version.';
-    return 'No native prompt is available right now. In a compatible desktop browser, open the browser menu and look for Install page as app or a similar option.';
+    if (/Android/i.test(ua)) return 'Open the browser menu and choose Install app or Add to Home screen. Your browser may use a different label.';
+    return 'In a compatible desktop browser, open the browser menu or address bar and choose Install page as app. The option varies by browser.';
   };
   async function runInstall(statusElement = status, button = installButton) {
     if (standalone()) {
@@ -190,7 +196,10 @@
       if (statusElement) statusElement.textContent = choice && choice.outcome === 'accepted'
         ? 'Installation was accepted by your browser.'
         : 'Installation was not completed. You can try again from the browser menu.';
-      if (choice && choice.outcome === 'accepted' && button) button.textContent = 'Installation accepted';
+      if (choice && choice.outcome === 'accepted') {
+        if (button) button.textContent = 'Installation accepted';
+        markInvitationDismissed();
+      }
       if (dialog && dialog.classList.contains('open')) hide();
     } catch (_) {
       if (statusElement) statusElement.textContent = manualInstallHelp();
@@ -201,22 +210,25 @@
   if (pageInstall) pageInstall.addEventListener('click', () => runInstall($('#install-page-status'), pageInstall));
   const close = $('#install-close');
   const continueButton = $('#install-continue');
-  if (close) close.addEventListener('click', hide);
-  if (continueButton) continueButton.addEventListener('click', hide);
+  if (close) close.addEventListener('click', () => hide());
+  if (continueButton) continueButton.addEventListener('click', () => hide());
   if (dialog) {
     dialog.addEventListener('click', event => { if (event.target === dialog) hide(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialog.classList.contains('open')) hide(); });
   }
-  // On a visitor's first homepage visit, offer an optional PWA installation invitation.
-  // Visitors can dismiss it and browse normally; it never appears again once dismissed.
-  const homePage = document.body.dataset.page === 'home';
-  if (dialog && homePage && !standalone() && safeStore.get('davonium-install-invitation-seen') !== 'yes') {
+  // Existing visitors see this revised invitation once after the update; dismissals are respected for seven days.
+  const page = document.body.dataset.page || '';
+  const invitePage = page === 'home' || page === 'products';
+  const dismissedAt = Number(safeStore.get(invitationKey) || 0);
+  const invitationDue = !dismissedAt || (Date.now() - dismissedAt) >= invitationInterval;
+  if (dialog && invitePage && invitationDue && !standalone() && safeStore.get(installedKey) !== 'yes') {
     window.setTimeout(() => {
-      if (safeStore.get('davonium-install-invitation-seen') !== 'yes' && !standalone()) show();
-    }, 1500);
+      if ((!Number(safeStore.get(invitationKey) || 0) || Date.now() - Number(safeStore.get(invitationKey) || 0) >= invitationInterval)
+          && !standalone() && safeStore.get(installedKey) !== 'yes') show();
+    }, 2800);
   }
 
-  // Keep keyboard users inside the modal until they dismiss it or choose to continue.
+  // Keep keyboard users inside the dialog while it is open.
   if (dialog) dialog.addEventListener('keydown', event => {
     if (event.key !== 'Tab' || !dialog.classList.contains('open')) return;
     const focusable = $$('button, a[href]', dialog).filter(el => !el.hasAttribute('disabled'));
@@ -226,7 +238,6 @@
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-
 
   // Documentation search remains local, instant, and compatible with offline use.
   const search = $('#docs-search');

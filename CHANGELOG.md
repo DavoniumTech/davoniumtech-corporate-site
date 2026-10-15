@@ -25,3 +25,12 @@
 - Added a first-visit, dismissible PWA invitation on the homepage and improved keyboard handling.
 - Added `llms.txt`, product-list structured data, and a cache-version update for new assets.
 - Updated the company README and Windows CMD deployment guide to target `DavoniumTech/davoniumtech-corporate-site`.
+
+## Fast loading and install invitation refresh
+
+- Reduced service-worker install work to a small core app shell; documentation and other pages are cached on demand.
+- Replaced the repeatedly requested 1024px brand PNG with a smaller WebP asset.
+- Added visible Install app links to the primary navigation and made the homepage CTA stronger.
+- Reworked the optional invitation to show on home/products entry pages and respect a seven-day dismissal period.
+- Added rounded-corner normal app icons and separate maskable icon assets.
+- Reduced scroll reveal animation on touch and small screens, and reduced heavy blur effects on mobile.
