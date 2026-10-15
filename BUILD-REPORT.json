@@ -1,20 +1,34 @@
 {
-  "project": "Davonium Technologies final website refresh",
+  "project": "Davonium Technologies company website refresh",
   "build_date": "2026-10-15",
   "html_pages": 52,
-  "files": 69,
-  "social_preview_px": [
-    1200,
-    630
+  "files": 73,
+  "framework": "Static HTML, CSS, and vanilla JavaScript",
+  "product_status": {
+    "Ready2Go Learning": "In development",
+    "Marvel Chat": "Initial build complete; active development",
+    "Davonium Nexus": "In development"
+  },
+  "install_behavior": "Optional first-visit homepage invitation; dismissible; native prompt used only when the browser provides one; otherwise manual instructions are shown.",
+  "company_logo": "Preserves the source Davonium D mark and displays it in the homepage workflow panel, site navigation/footer, and install invitation.",
+  "discoverability": [
+    "crawlable HTML links",
+    "page metadata and canonical URLs",
+    "Organization/WebSite/ItemList structured data",
+    "robots.txt",
+    "sitemap.xml",
+    "llms.txt",
+    "1200x630 Open Graph/Twitter image"
   ],
-  "framework": "Static HTML/CSS/vanilla JavaScript",
-  "gmail_removed": true,
-  "pwa_precache_routes": 64,
-  "checks": [
-    "internal asset paths restored",
-    "site-base metadata added",
-    "all HTML uses index,follow",
-    "og:image and twitter:image use 1200x630 asset",
-    "service worker scope derived from relative site base"
-  ]
+  "validation": {
+    "javascript_syntax": "passed",
+    "html_parser_and_single_doctype": "passed for all HTML files",
+    "local_href_src_paths": "passed (2529 references checked)",
+    "manifest_json": "passed",
+    "sitemap_xml": "passed",
+    "embedded_json_ld": "passed",
+    "public_gmail_address_absent": "passed",
+    "nexus_status_consistency": "passed",
+    "full_browser_visual_test": "not completed in the build environment; review the deployed preview on phone and desktop before merging"
+  }
 }

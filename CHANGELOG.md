@@ -9,3 +9,12 @@
 - Corrected internal routing so it can be deployed at a custom domain root or the existing GitHub Pages project path.
 - Rebuilt service-worker routing to cache existing local pages and documentation for offline reopening.
 - Kept policy pages marked as drafts and removed blanket first-visit install modals.
+
+## 2026-10-15 — Product family and install experience
+
+- Added distinct, lightweight product marks for Ready2Go Learning, Marvel Chat, and Davonium Nexus.
+- Refined the homepage product cards and added a visible company-site install guide panel.
+- Set Davonium Nexus to “In development” consistently with the current product status.
+- Added a first-visit, dismissible PWA invitation on the homepage and improved keyboard handling.
+- Added `llms.txt`, product-list structured data, and a cache-version update for new assets.
+- Updated the company README and Windows CMD deployment guide to target `DavoniumTech/davoniumtech-corporate-site`.
