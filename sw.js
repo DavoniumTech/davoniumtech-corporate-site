@@ -1,34 +1,5 @@
-const CACHE_NAME = 'davonium-site-v2-20261014';
-const APP_SHELL = [
-  '/', '/index.html', '/about.html', '/products.html', '/services.html', '/portfolio.html',
-  '/docs.html', '/contact.html', '/privacy.html', '/terms.html', '/security.html',
-  '/accessibility.html', '/404.html', '/css/styles.css', '/js/main.js', '/manifest.webmanifest',
-  '/assets/icons/favicon-32.png', '/assets/icons/apple-touch-icon.png',
-  '/assets/icons/icon-192.png', '/assets/icons/icon-512.png', '/assets/images/davonium-d-icon.png',
-  '/assets/images/davonium-social-card.png'
-];
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)));
-  self.skipWaiting();
-});
-self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('davonium-site-') && key !== CACHE_NAME).map(key => caches.delete(key)))));
-  self.clients.claim();
-});
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if (request.method !== 'GET') return;
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-  if (request.mode === 'navigate' || request.destination === 'document') {
-    event.respondWith(fetch(request).then(response => {
-      if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
-      return response;
-    }).catch(async () => (await caches.match(request)) || (await caches.match('/index.html'))));
-    return;
-  }
-  event.respondWith(caches.match(request).then(cached => cached || fetch(request).then(response => {
-    if (response.ok && response.type === 'basic') caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
-    return response;
-  })));
-});
+const CACHE_NAME='davonium-site-v1';
+const PRECACHE_URLS=["/", "/index.html", "/about.html", "/products.html", "/services.html", "/work.html", "/contact.html", "/support.html", "/install.html", "/docs/index.html", "/legal/privacy.html", "/legal/terms.html", "/legal/cookies.html", "/404.html", "/offline.html", "/manifest.webmanifest", "/assets/css/styles.css", "/assets/js/site.js", "/assets/img/davonium-mark.svg", "/assets/img/icon-192.png", "/assets/img/icon-512.png", "/docs/guides/company-overview.html", "/docs/guides/getting-started.html", "/docs/guides/services-guide.html", "/docs/guides/project-process.html", "/docs/guides/website-delivery.html", "/docs/guides/seo-discovery.html", "/docs/guides/technical-seo-checklist.html", "/docs/guides/pwa-installation.html", "/docs/guides/offline-first.html", "/docs/guides/accessibility.html", "/docs/guides/performance.html", "/docs/guides/product-status.html", "/docs/guides/ready2go-learning.html", "/docs/guides/marvel-chat.html", "/docs/guides/davonium-nexus.html", "/docs/guides/security-basics.html", "/docs/guides/privacy-data.html", "/docs/guides/support-guide.html", "/docs/guides/content-standards.html", "/docs/guides/release-notes.html", "/docs/guides/faq.html", "/docs/guides/glossary.html", "/docs/guides/documentation-maintenance.html", "/docs/guides/deployment-maintenance.html", "/docs/guides/web-app-engineering.html", "/docs/guides/customer-handoff.html", "/docs/guides/website-forms.html", "/docs/guides/navigation-search.html", "/docs/guides/privacy-notice-guide.html", "/docs/guides/service-scope.html", "/docs/guides/architecture-map.html", "/docs/guides/browser-compatibility.html", "/docs/guides/cookies-and-storage.html", "/docs/guides/analytics-and-measurement.html", "/docs/guides/error-pages.html", "/docs/guides/static-vs-dynamic.html", "/docs/guides/support-escalation.html", "/docs/guides/security-reporting.html"];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(PRECACHE_URLS)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('davonium-site-')&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin)return;if(r.mode==='navigate'){e.respondWith(fetch(r).then(res=>{if(res&&res.ok){const cp=res.clone();caches.open(CACHE_NAME).then(c=>c.put(r,cp))}return res}).catch(async()=>await caches.match(r)||await caches.match('/offline.html')||Response.error()));return}e.respondWith(caches.match(r).then(hit=>hit||fetch(r).then(res=>{if(res&&res.ok){const cp=res.clone();caches.open(CACHE_NAME).then(c=>c.put(r,cp))}return res})))});

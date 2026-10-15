@@ -1,0 +1,20 @@
+DAVONIUM TECHNOLOGIES WEBSITE REFRESH — WINDOWS CMD
+
+1. Extract the downloaded ZIP:
+ powershell -NoProfile -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-pwa-website.zip' -DestinationPath '%USERPROFILE%\Downloads\davoniumtech-website-upgrade' -Force"
+
+2. Confirm your corporate website repository path, then run: (replace the path if yours differs)
+ cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site"
+ git status
+ git remote -v
+ git switch -c website-refresh-2026
+ robocopy "%USERPROFILE%\Downloads\davoniumtech-website-upgrade" "%USERPROFILE%\Downloads\davoniumtech-corporate-site" /E /XD .git
+ git status
+ git add .
+ git diff --cached --stat
+ git commit -m "Upgrade Davonium Technologies website and PWA"
+ git push -u origin website-refresh-2026
+
+3. Check the GitHub branch and Cloudflare Pages preview. Merge to the configured production branch only after reviewing the preview.
+
+SAFETY: This must be the corporate website repository, not Ready2Go Learning or Marvel Chat. Do not use robocopy /MIR.
