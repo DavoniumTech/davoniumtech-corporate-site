@@ -2,7 +2,7 @@
   "project": "Davonium Technologies company website refresh",
   "build_date": "2026-10-15",
   "html_pages": 52,
-  "files": 73,
+  "files": 75,
   "framework": "Static HTML, CSS, and vanilla JavaScript",
   "product_status": {
     "Ready2Go Learning": "In development",
@@ -23,12 +23,19 @@
   "validation": {
     "javascript_syntax": "passed",
     "html_parser_and_single_doctype": "passed for all HTML files",
-    "local_href_src_paths": "passed (2529 references checked)",
+    "local_href_src_paths": "passed (2,080 local href/src references checked across all HTML pages)",
     "manifest_json": "passed",
     "sitemap_xml": "passed",
     "embedded_json_ld": "passed",
     "public_gmail_address_absent": "passed",
     "nexus_status_consistency": "passed",
-    "full_browser_visual_test": "not completed in the build environment; review the deployed preview on phone and desktop before merging"
-  }
+    "full_browser_visual_test": "not completed in the build environment; review the deployed preview on phone and desktop before merging",
+    "theme_default": "passed: no HTML page forces a light theme; system dark mode has a CSS fallback before JavaScript runs",
+    "theme_persistence": "passed: only davonium-theme-choice is read/written; no default theme is persisted; system preference changes are observed when preference is system",
+    "ready2go_icon_source": "passed: assets/icons/products/ready2go.svg matches Ready2Go Learning assets/r2g-app-icon.svg",
+    "html_page_count": "passed (52 HTML pages parsed; each has one doctype and no forced light data-theme attribute)",
+    "service_worker_cache": "passed (cache version incremented to v6 for the theme and brand update)"
+  },
+  "theme_behavior": "Follows the operating-system light/dark preference by default and updates when that preference changes; only a deliberate visitor choice is stored. Legacy automatically-saved theme values are ignored.",
+  "ready2go_branding": "Official r2g-app-icon.svg sourced from the Ready2Go Learning app project is used in the home, products, work, documentation listing, and product guide."
 }

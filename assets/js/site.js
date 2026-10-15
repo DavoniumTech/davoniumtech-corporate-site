@@ -12,21 +12,59 @@
   const year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // Theme choice follows the visitor's saved preference; the toggle remains keyboard accessible.
+  // Theme follows the device by default. Only a deliberate choice is saved.
+  // The old davonium-theme key was also written on first load, so ignore it during migration.
   const theme = $('#theme-toggle');
-  const setTheme = (requested) => {
-    const value = requested === 'dark' ? 'dark' : 'light';
+  const themeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  const systemTheme = () => themeMedia && themeMedia.matches ? 'dark' : 'light';
+  let themePreference = safeStore.get('davonium-theme-choice');
+  if (!['light', 'dark'].includes(themePreference)) themePreference = 'system';
+  const resolvedTheme = () => themePreference === 'system' ? systemTheme() : themePreference;
+  const renderTheme = () => {
+    const value = resolvedTheme();
+    const systemValue = systemTheme();
     document.documentElement.dataset.theme = value;
-    safeStore.set('davonium-theme', value);
+    const themeColor = $('meta[name="theme-color"]');
+    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#090b14' : '#6847e8');
     if (theme) {
+      const other = value === 'dark' ? 'light' : 'dark';
       theme.textContent = value === 'dark' ? '☀' : '☾';
-      theme.setAttribute('aria-label', `Switch to ${value === 'dark' ? 'light' : 'dark'} theme`);
-      theme.setAttribute('title', `Switch to ${value === 'dark' ? 'light' : 'dark'} theme`);
+      let label;
+      let title;
+      if (themePreference === 'system') {
+        label = `Switch to ${other} theme; currently following system appearance`;
+        title = `Following system appearance (${value}). Click to use ${other} theme.`;
+      } else if (themePreference === systemValue) {
+        label = `Use system appearance; currently showing ${value}`;
+        title = `Manual ${value} theme. Click to return to system appearance.`;
+      } else {
+        label = `Switch to ${systemValue} theme; manual preference is ${value}`;
+        title = `Manual ${value} theme. Click to switch to ${systemValue}; click again to follow the system.`;
+      }
+      theme.setAttribute('aria-label', label);
+      theme.setAttribute('title', title);
     }
   };
-  const savedTheme = safeStore.get('davonium-theme');
-  setTheme(savedTheme || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-  if (theme) theme.addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+  renderTheme();
+  // Click cycles from system to the opposite mode, then the system's current mode, then back to system.
+  if (theme) theme.addEventListener('click', () => {
+    const current = resolvedTheme();
+    const systemValue = systemTheme();
+    if (themePreference === 'system') {
+      themePreference = current === 'dark' ? 'light' : 'dark';
+    } else if (themePreference !== systemValue) {
+      themePreference = systemValue;
+    } else {
+      themePreference = 'system';
+    }
+    safeStore.set('davonium-theme-choice', themePreference);
+    renderTheme();
+  });
+  if (themeMedia) {
+    const onSystemThemeChange = () => { if (themePreference === 'system') renderTheme(); };
+    if (typeof themeMedia.addEventListener === 'function') themeMedia.addEventListener('change', onSystemThemeChange);
+    else if (typeof themeMedia.addListener === 'function') themeMedia.addListener(onSystemThemeChange);
+  }
 
   // Mobile menu: close after navigation, outside click, or Escape; keep the existing page links unchanged.
   const menu = $('#menu-toggle');

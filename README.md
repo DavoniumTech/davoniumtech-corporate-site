@@ -18,13 +18,13 @@ Davonium Technologies is an independent technology company building digital prod
 - **Marvel Chat — Built; active development.** The initial product build exists; work continues on refinement, testing, and reliability.
 - **Davonium Nexus — In development.** A workspace being built to make project progress, deliverables, and customer handoff easier to follow.
 
-These labels describe the current stage of work. They are not a promise that every feature is complete or available to every visitor.
+These labels describe the current stage of work. They are not a promise that every feature is complete or available to every visitor. The Ready2Go Learning icon in company product cards and its documentation guide is sourced from the Ready2Go Learning app project.
 
 ## Website technology
 
 The site uses standard HTML, CSS, and vanilla JavaScript. It does not require Node.js, npm, a framework, or a compilation step. The code is designed to remain understandable and straightforward to maintain.
 
-The website includes responsive layouts, a mobile navigation menu, light and dark themes, accessible focus styling, a documentation search helper, page metadata, structured data, an XML sitemap, a social-preview image, and a service worker for caching selected content after an online visit.
+The website includes responsive layouts, a mobile navigation menu, system-default light/dark appearance with an optional saved visitor choice (the theme control can return to system appearance), accessible focus styling, a documentation search helper, page metadata, structured data, an XML sitemap, a social-preview image, and a service worker for caching selected content after an online visit.
 
 ### Installation
 

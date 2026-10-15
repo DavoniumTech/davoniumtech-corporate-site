@@ -56,6 +56,36 @@
   --shadow-lg: 0 34px 95px rgba(0,0,0,.43);
   --glow: 0 0 0 1px rgba(165,138,255,.17), 0 10px 44px rgba(112,72,245,.18);
 }
+/* System appearance fallback before JavaScript runs. Explicit visitor choice is handled by [data-theme]. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+  color-scheme: dark;
+  --bg: #090b14;
+  --surface: rgba(18, 21, 37, .84);
+  --surface-solid: #121526;
+  --surface-raised: #171a2d;
+  --tint: #1c1c35;
+  --ink: #f5f3ff;
+  --muted: #b2b1c9;
+  --subtle: #8988a7;
+  --line: rgba(213, 203, 255, .13);
+  --line-strong: rgba(174, 149, 255, .35);
+  --purple: #a58aff;
+  --purple-deep: #c0afff;
+  --purple-light: #6f50ed;
+  --cyan: #56dbea;
+  --coral: #ff9297;
+  --mint: #6ce0bd;
+  --gold: #ffca76;
+  --header: rgba(9, 11, 20, .82);
+  --shadow-sm: 0 8px 26px rgba(0,0,0,.18);
+  --shadow: 0 20px 65px rgba(0,0,0,.28);
+  --shadow-lg: 0 34px 95px rgba(0,0,0,.43);
+  --glow: 0 0 0 1px rgba(165,138,255,.17), 0 10px 44px rgba(112,72,245,.18);
+
+  }
+}
+
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 112px; -webkit-text-size-adjust: 100%; }
@@ -582,3 +612,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .app-promo-card { display:block; }
   .app-promo-card > img { margin-bottom:15px; }
 }
+
+
+/* Ready2Go brand placements use the product's actual app icon from its source project. */
+.doc-product-mark { display:block; width:42px; height:42px; margin:0 0 12px; border-radius:12px; object-fit:cover; box-shadow:var(--shadow-sm); }
+.guide-product-mark { display:block; width:76px; height:76px; margin:0 0 14px; border-radius:20px; object-fit:cover; box-shadow:var(--shadow-sm); }
+@media (max-width:480px) { .guide-product-mark { width:64px; height:64px; border-radius:17px; } }
