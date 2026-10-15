@@ -1,0 +1,69 @@
+# Davonium Technologies — Expanded public information
+
+We are Davonium Technologies. This file indexes public pages on our official website; the linked HTML pages remain the detailed source of information.
+
+## Company and services
+- Home: https://www.davoniumtech.com/ — our company, audience, products, and contact routes.
+- About: https://www.davoniumtech.com/about — our purpose and working principles.
+- Products: https://www.davoniumtech.com/products — product purpose and current status.
+- Services: https://www.davoniumtech.com/services — our web engineering and delivery services.
+- Our work: https://www.davoniumtech.com/work — an overview of our work and product activity.
+- Contact: https://www.davoniumtech.com/contact — our public enquiry routes.
+- Support: https://www.davoniumtech.com/support — how to report a question or problem.
+- Documentation: https://www.davoniumtech.com/docs/ — the public guide index.
+- Install this website: https://www.davoniumtech.com/install — installation steps for compatible devices.
+
+## Product status
+- Ready2Go Learning — In development: https://www.davoniumtech.com/docs/guides/ready2go-learning
+- Marvel Chat — Built; active development: https://www.davoniumtech.com/docs/guides/marvel-chat
+- Davonium Nexus — In development: https://www.davoniumtech.com/docs/guides/davonium-nexus
+
+## Public documentation
+- Accessibility checklist: How we test the site with keyboard navigation, focus visibility, zoom, and narrow screens. https://www.davoniumtech.com/docs/guides/accessibility
+- AI discovery and public crawler access: How we publish crawlable company information and manage public AI crawler access. https://www.davoniumtech.com/docs/guides/ai-discovery
+- Analytics and measurement principles: How we think about performance measurement without unnecessary visitor-data collection. https://www.davoniumtech.com/docs/guides/analytics-and-measurement
+- Website architecture and file map: A map of our HTML pages, shared assets, browser scripts, caching, and deployment files. https://www.davoniumtech.com/docs/guides/architecture-map
+- Browser compatibility guide: How we approach mobile and desktop browser support and progressive enhancement. https://www.davoniumtech.com/docs/guides/browser-compatibility
+- Company overview: Who we are, whom we serve, and how our product and service work fits together. https://www.davoniumtech.com/docs/guides/company-overview
+- Content and editorial standards: How we keep public writing accurate, specific, and aligned with verified product status. https://www.davoniumtech.com/docs/guides/content-standards
+- Cookies and browser storage: What our website stores for interface preferences and offline behaviour. https://www.davoniumtech.com/docs/guides/cookies-and-storage
+- Customer handoff checklist: How we hand over source files, ownership, deployment information, and maintenance notes. https://www.davoniumtech.com/docs/guides/customer-handoff
+- Davonium Nexus development guide: The development purpose and current status of our project workspace. https://www.davoniumtech.com/docs/guides/davonium-nexus
+- Deployment and maintenance: How we review and publish changes to our website. https://www.davoniumtech.com/docs/guides/deployment-maintenance
+- Documentation maintenance: How we keep our public guide library accurate and navigable. https://www.davoniumtech.com/docs/guides/documentation-maintenance
+- Error pages and recovery paths: How we help visitors recover from missing pages and connection errors. https://www.davoniumtech.com/docs/guides/error-pages
+- Frequently asked questions: Answers about our company, products, PWA, privacy, and discoverability. https://www.davoniumtech.com/docs/guides/faq
+- Getting started with Davonium: A quick route into our company pages, products, guides, and support. https://www.davoniumtech.com/docs/guides/getting-started
+- Web and product glossary: Plain-language definitions of web, PWA, search, security, and product terms. https://www.davoniumtech.com/docs/guides/glossary
+- Marvel Chat product guide: Our status and development direction for Marvel Chat. https://www.davoniumtech.com/docs/guides/marvel-chat
+- Documentation navigation and search: How our direct documentation links and client-side filtering work together. https://www.davoniumtech.com/docs/guides/navigation-search
+- Offline-first design principles: What offline support means for our website and its cache. https://www.davoniumtech.com/docs/guides/offline-first
+- Website performance guide: How we approach loading, motion, caching, and honest performance verification. https://www.davoniumtech.com/docs/guides/performance
+- Data handling and privacy principles: How we minimise information, handle contact flow, and describe current policy status. https://www.davoniumtech.com/docs/guides/privacy-data
+- How we maintain a privacy notice: How we align privacy wording with real data flows before adopting a final notice. https://www.davoniumtech.com/docs/guides/privacy-notice-guide
+- Product status and release language: Our current product-status language and how we keep it consistent. https://www.davoniumtech.com/docs/guides/product-status
+- Project delivery process: How we move from a brief to reviewable changes, verification, and release. https://www.davoniumtech.com/docs/guides/project-process
+- Progressive web app installation: How supported browsers install our website and where the limits are. https://www.davoniumtech.com/docs/guides/pwa-installation
+- Ready2Go Learning product guide: Our learning and exam-practice product currently in development. https://www.davoniumtech.com/docs/guides/ready2go-learning
+- Release notes and change history: How we keep release records concise and evidence-based. https://www.davoniumtech.com/docs/guides/release-notes
+- Website security basics: The security boundaries for our public static website and deployment process. https://www.davoniumtech.com/docs/guides/security-basics
+- Reporting a security concern: How to report a security concern while protecting private information. https://www.davoniumtech.com/docs/guides/security-reporting
+- Search discovery and indexing: How we manage crawlable routes, canonical URLs, sitemap, metadata, and indexing checks. https://www.davoniumtech.com/docs/guides/seo-discovery
+- Service scope and project boundaries: How we define deliverables, exclusions, acceptance, and changes for client work. https://www.davoniumtech.com/docs/guides/service-scope
+- Services guide: An overview of our web engineering and delivery services. https://www.davoniumtech.com/docs/guides/services-guide
+- Static website versus dynamic application: How we decide when static pages are enough and when a backend is justified. https://www.davoniumtech.com/docs/guides/static-vs-dynamic
+- Support escalation and prioritisation: What information helps us understand and prioritise a support report. https://www.davoniumtech.com/docs/guides/support-escalation
+- Customer support guide: How to reach us and report a reproducible problem safely. https://www.davoniumtech.com/docs/guides/support-guide
+- Technical SEO checklist: The route, metadata, sitemap, and crawler checks we use before a release. https://www.davoniumtech.com/docs/guides/technical-seo-checklist
+- Web app engineering principles: Our approach to maintainable browser applications, reliability, and verification. https://www.davoniumtech.com/docs/guides/web-app-engineering
+- Website delivery and handoff: What we include in a website handoff and how we record follow-up work. https://www.davoniumtech.com/docs/guides/website-delivery
+- Website forms and contact flows: How our contact form works and which data-handling boundaries apply. https://www.davoniumtech.com/docs/guides/website-forms
+
+## Search and public crawler access
+- robots.txt: https://www.davoniumtech.com/robots.txt
+- XML sitemap: https://www.davoniumtech.com/sitemap.xml
+- Short machine-readable overview: https://www.davoniumtech.com/llms.txt
+- Search engine and AI discovery do not guarantee indexing, ranking, citation, or inclusion in generated answers.
+
+## Implementation boundaries
+We publish a static HTML, CSS, and vanilla JavaScript company website. It includes responsive design, system-aware appearance, a documentation filter over ordinary anchor links, optional PWA installation, selected offline caching, page metadata, structured data, and an XML sitemap. Our contact form prepares an email in your email application; it does not create a server-side ticket. Our privacy, terms, and browser-storage pages remain drafts pending review against actual production practices and applicable requirements.

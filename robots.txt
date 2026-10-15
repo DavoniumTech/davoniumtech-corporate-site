@@ -1,6 +1,23 @@
 User-agent: *
 Allow: /
-Allow: /llms.txt
-Disallow: /offline.html
 Disallow: /404.html
+Disallow: /offline.html
+
+# OpenAI search discovery and user-requested page fetches.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /404.html
+Disallow: /offline.html
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /404.html
+Disallow: /offline.html
+
+# GPTBot is managed separately from ChatGPT search discovery.
+User-agent: GPTBot
+Allow: /
+Disallow: /404.html
+Disallow: /offline.html
+
 Sitemap: https://www.davoniumtech.com/sitemap.xml

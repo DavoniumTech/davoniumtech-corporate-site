@@ -1,54 +1,56 @@
-DAVONIUM TECHNOLOGIES — FAST LOADING & APP INSTALL UPDATE
+DAVONIUM TECHNOLOGIES — COMPANY DOCUMENTATION RELEASE
 
-This release makes first installation lighter, shows a visible Install app link on every page, repeats the optional invitation no more than once every seven days after dismissal, and adds rounded normal app icons plus separate maskable icons.
+This release rewrites our public documentation in the company voice, removes repeated template copy, adds a public AI-discovery guide, expands llms-full.txt, and updates robots.txt and sitemap.xml.
 
-1. Download this ZIP into Downloads and extract it with CMD:
+1. Download this ZIP to Downloads and extract it in CMD:
 
 cd /d "%USERPROFILE%\Downloads"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh' -Force"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-company-voice-release.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-company-voice-release' -Force"
+dir "%USERPROFILE%\Downloads\davonium-technologies-company-voice-release\index.html"
 
-2. Go to the existing company repository:
+2. Open the existing company repository. We do not need a second clone:
 
 cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
-git status
 git remote -v
+git status
 
-Confirm the remote is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If `git status` shows local changes you want to keep, stop and resolve them first.
+Confirm the remote is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If the working tree contains changes that need to be kept, stop and preserve them before copying.
 
-3. Update main:
+3. Update main and create a backup branch. If this backup name exists already, choose a new name:
 
 git fetch origin
 git switch main
 git pull --ff-only origin main
+git branch backup-before-company-voice-refresh-20261015
+git push origin backup-before-company-voice-refresh-20261015
 
-4. Create a safety backup:
+4. Copy the release into the repository (do not use /MIR):
 
-git branch backup-before-fast-install-refresh-20261015
-git push origin backup-before-fast-install-refresh-20261015
-
-If that backup branch already exists, use a different backup name before continuing.
-
-5. Copy the release files:
-
-robocopy "%USERPROFILE%\Downloads\davonium-technologies-fast-install-refresh" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
-
+robocopy "%USERPROFILE%\Downloads\davonium-technologies-company-voice-release" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
 echo %ERRORLEVEL%
 
-Robocopy codes 0–7 normally indicate success. If the code is 8 or higher, stop and review the error. Do NOT use /MIR.
+Robocopy codes 0–7 generally indicate success. If the result is 8 or higher, stop and inspect the error.
 
-6. Review, commit and push:
+5. Review and publish:
 
 git status
 git add .
 git diff --cached --stat
-git commit -m "Improve loading and PWA install experience"
+git commit -m "Rewrite public docs in Davonium company voice"
 git push origin main
 
-If Git says there is nothing to commit, inspect `git status` instead of repeating the commit. If push is rejected because main moved on GitHub, stop and share the error before retrying.
+If there is nothing to commit, inspect git status rather than repeating the commit. If Git rejects the push because main advanced, stop and share the full error; do not force-push.
 
-VERIFY AFTER DEPLOYMENT
-- Open the website normally and in a private browser window; look for the Install app link in the top navigation.
-- The optional invitation appears on the homepage and Products page if it was not dismissed within the previous seven days and the website is not already running as an installed app.
-- If the browser has no native install prompt, the button explains device-specific manual steps. Some browsers do not expose a JavaScript prompt.
-- Test the home screen icon on Android/iOS/desktop. The `any` icons have rounded transparent corners; the separate `maskable` icons let launchers apply their own preferred icon shape. A launcher may override icon styling.
-- For offline testing, visit pages online once, then test them offline. Pages are cached when visited; the service worker no longer downloads every documentation page during first installation.
+6. After Cloudflare reports a successful deployment, test these URLs:
+- https://www.davoniumtech.com/
+- https://www.davoniumtech.com/docs/
+- https://www.davoniumtech.com/docs/guides/seo-discovery
+- https://www.davoniumtech.com/docs/guides/ai-discovery
+- https://www.davoniumtech.com/llms.txt
+- https://www.davoniumtech.com/llms-full.txt
+- https://www.davoniumtech.com/robots.txt
+- https://www.davoniumtech.com/sitemap.xml
+
+7. In Google Search Console, verify domain ownership, submit the sitemap, and inspect priority URLs. The sitemap and crawler policy support discovery but do not guarantee indexing or rankings. Check Cloudflare security rules if legitimate crawlers receive blocked responses.
+
+Our contact form prepares an email in the visitor’s email application and does not create a server-side ticket. Our privacy, terms, and browser-storage pages remain drafts until reviewed against actual practices and applicable requirements.

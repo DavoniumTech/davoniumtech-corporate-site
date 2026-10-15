@@ -115,22 +115,29 @@
 
   // Gentle reveal-on-scroll. If reduced motion is requested, content stays fully visible.
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion && window.innerWidth > 850 && matchMedia('(hover: hover)').matches && 'IntersectionObserver' in window) {
-    const revealTargets = $$('.hero-grid, .principles, .section-head, .card, .band, .quote, .notice, .steps .step, .pagehero .wrap, .prose > h2, .checks li');
-    revealTargets.forEach((element, index) => {
-      element.dataset.reveal = 'true';
-      element.style.setProperty('--reveal-index', String(index % 5));
-    });
-    document.body.classList.add('motion-ready');
-    const observer = new IntersectionObserver((entries, instance) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          instance.unobserve(entry.target);
-        }
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const lowPower = Boolean((connection && connection.saveData) || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 2));
+  if (!reduceMotion && !lowPower && 'IntersectionObserver' in window) {
+    const selector = window.innerWidth <= 650
+      ? '.hero-grid, .principles, .section-head, .card, .band, .pagehero .wrap'
+      : '.hero-grid, .principles, .section-head, .card, .band, .quote, .notice, .steps .step, .pagehero .wrap, .prose > h2, .checks li';
+    const revealTargets = $$(selector).slice(0, 90);
+    if (revealTargets.length) {
+      revealTargets.forEach((element, index) => {
+        element.dataset.reveal = 'true';
+        element.style.setProperty('--reveal-index', String(index % 4));
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
-    revealTargets.forEach(element => observer.observe(element));
+      document.body.classList.add('motion-ready');
+      const observer = new IntersectionObserver((entries, instance) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            instance.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
+      revealTargets.forEach(element => observer.observe(element));
+    }
   }
 
   // Install invitation: visible navigation affordance everywhere, with a polite recurring offer on key entry pages.
@@ -139,9 +146,9 @@
   const installButton = $('#install-action');
   const status = $('#install-status');
   let lastFocus = null;
-  const invitationKey = 'davonium-install-invitation-dismissed-at-v3';
-  const installedKey = 'davonium-install-completed-v2';
-  const invitationInterval = 7 * 24 * 60 * 60 * 1000;
+  const invitationKey = 'davonium-install-invitation-dismissed-at-v4';
+  const installedKey = 'davonium-install-completed-v3';
+  const invitationInterval = 3 * 24 * 60 * 60 * 1000;
   const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   const markInvitationDismissed = () => safeStore.set(invitationKey, String(Date.now()));
   const show = () => {
@@ -216,7 +223,7 @@
     dialog.addEventListener('click', event => { if (event.target === dialog) hide(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialog.classList.contains('open')) hide(); });
   }
-  // Existing visitors see this revised invitation once after the update; dismissals are respected for seven days.
+  // The revised invitation is shown again for this release; dismissals are respected for three days.
   const page = document.body.dataset.page || '';
   const invitePage = page === 'home' || page === 'products';
   const dismissedAt = Number(safeStore.get(invitationKey) || 0);
@@ -225,7 +232,7 @@
     window.setTimeout(() => {
       if ((!Number(safeStore.get(invitationKey) || 0) || Date.now() - Number(safeStore.get(invitationKey) || 0) >= invitationInterval)
           && !standalone() && safeStore.get(installedKey) !== 'yes') show();
-    }, 2800);
+    }, 2100);
   }
 
   // Keep keyboard users inside the dialog while it is open.

@@ -1,27 +1,39 @@
 # Davonium Technologies
 
-> Davonium Technologies is an independent technology company building digital products for students and everyday users, and practical websites and web tools for small businesses.
+> We are Davonium Technologies, an independent technology company developing digital products for students and everyday users and building practical websites and web tools for small businesses.
 
-## Company
-- Official website: https://www.davoniumtech.com/
-- About: https://www.davoniumtech.com/about.html
-- Services: https://www.davoniumtech.com/services.html
-- Products: https://www.davoniumtech.com/products.html
-- Our work: https://www.davoniumtech.com/work.html
-- Contact: https://www.davoniumtech.com/contact.html
-- Documentation: https://www.davoniumtech.com/docs/index.html
-- Support: support@davoniumtech.com
+## Official company pages
+- Home: https://www.davoniumtech.com/
+- About us: https://www.davoniumtech.com/about
+- Products: https://www.davoniumtech.com/products
+- Services: https://www.davoniumtech.com/services
+- Our work: https://www.davoniumtech.com/work
+- Contact: https://www.davoniumtech.com/contact
+- Documentation: https://www.davoniumtech.com/docs/
+- Support: https://www.davoniumtech.com/support
+- Install this website: https://www.davoniumtech.com/install
 
-## Products
-- Ready2Go Learning — in development. A learning and exam-practice product for JAMB candidates and students. Product site: https://ready2go.davoniumtech.com/
-- Marvel Chat — initial product build complete; active development continues, including refinement and testing. Product site: https://marvelchat.davoniumtech.com/
-- Davonium Nexus — in development. A workspace being built to make client project progress, deliverables, and handoff information easier to follow. Overview: https://www.davoniumtech.com/docs/guides/davonium-nexus.html
+## Our products and current status
+- Ready2Go Learning — In development. We are building a learning and exam-practice experience for JAMB candidates and students. https://ready2go.davoniumtech.com/
+- Marvel Chat — Built; active development. The initial build exists and we continue testing and refinement. https://marvelchat.davoniumtech.com/
+- Davonium Nexus — In development. We are building a workspace for project status, deliverables, and client handoff. https://www.davoniumtech.com/docs/guides/davonium-nexus
 
-## Website capabilities
-The company website is made with static HTML, CSS, and vanilla JavaScript. It includes responsive pages, light and dark themes, documentation search, contact links, an optional installable PWA experience, selected offline caching, metadata, structured data, and an XML sitemap.
+## Public documentation
+- Expanded map of our public pages: https://www.davoniumtech.com/llms-full.txt
+- Search discovery and indexing: https://www.davoniumtech.com/docs/guides/seo-discovery
+- AI discovery and crawler access: https://www.davoniumtech.com/docs/guides/ai-discovery
+- Documentation navigation and search: https://www.davoniumtech.com/docs/guides/navigation-search
+- Technical SEO checklist: https://www.davoniumtech.com/docs/guides/technical-seo-checklist
+- Security basics: https://www.davoniumtech.com/docs/guides/security-basics
+- Privacy and data handling: https://www.davoniumtech.com/docs/guides/privacy-data
+- PWA installation: https://www.davoniumtech.com/docs/guides/pwa-installation
+- Offline-first design: https://www.davoniumtech.com/docs/guides/offline-first
+- Product status: https://www.davoniumtech.com/docs/guides/product-status
 
-## Important status and access notes
-“In development” does not mean all features are complete or generally available. The company website can be installed only when the visitor’s browser and device support it; the site is not a native APK. Selected pages work offline only after they have been cached successfully. Product features and availability should be confirmed on the product’s own site.
+## Site implementation and boundaries
+We publish this website as static HTML, CSS, and vanilla JavaScript. We provide responsive layouts, a system-aware light/dark theme, documentation filtering over ordinary links, optional PWA installation, selected offline caching, page metadata, structured data, and an XML sitemap. Installation and offline behaviour depend on the browser, device, network, and resources already cached.
 
-## Policies
-Privacy, terms, and browser-storage pages are working drafts and should be reviewed against actual production practices before being treated as final legal policies.
+Our contact form prepares an email in the visitor’s mail application; it does not store submissions or create a server-side ticket. Our privacy, terms, and browser-storage pages are drafts pending review against actual production practices and applicable requirements.
+
+## Discovery and citation note
+We permit public crawling through robots.txt, including OAI-SearchBot for ChatGPT search discovery. Search engines and AI services decide independently whether to crawl, index, rank, summarize, cite, or surface our pages. These files describe our public site; they do not guarantee visibility or endorsement.

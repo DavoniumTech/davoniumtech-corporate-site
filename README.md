@@ -2,69 +2,57 @@
 
 **Useful technology, built for real needs.**
 
-Davonium Technologies is an independent technology company building digital products for students and everyday users, while helping small businesses present their work clearly online. This repository contains the company website: our profile, product information, services, support routes, and public documentation.
+We are Davonium Technologies, an independent technology company developing digital products for students and everyday users and building practical websites and web tools for small businesses. This repository contains our public company website, product information, support routes, and documentation.
 
-## What visitors can find here
+## What we publish
 
-- **Company:** who we are, how we work, and how to contact the team.
-- **Products:** current information on Ready2Go Learning, Marvel Chat, and Davonium Nexus, with each product’s development status stated plainly.
-- **Services:** responsive website design and development, web-app experiences, and practical discovery foundations.
-- **Support and documentation:** guides for visitors, customers, and project collaborators.
-- **Installable website:** on compatible devices, a visitor can add the company website to the home screen or apps list.
+- **Company information:** who we are, how we work, and how to contact us.
+- **Products:** Ready2Go Learning, Marvel Chat, and Davonium Nexus, with current public status.
+- **Services and work:** website and web-tool delivery, scope, and handoff information.
+- **Public documentation:** standalone guides covering products, web engineering, PWA installation, offline behaviour, privacy, security, search discovery, and support.
+- **Installable website:** a browser-controlled Progressive Web App experience on compatible devices.
 
-## Product status
+## Current product status
 
-- **Ready2Go Learning — In development.** A learning and exam-practice product for JAMB candidates and students.
-- **Marvel Chat — Built; active development.** The initial product build exists; work continues on refinement, testing, and reliability.
-- **Davonium Nexus — In development.** A workspace being built to make project progress, deliverables, and customer handoff easier to follow.
+- **Ready2Go Learning — In development.** We are building a learning and exam-practice experience for JAMB candidates and students.
+- **Marvel Chat — Built; active development.** The initial product build exists; testing, refinement, and ongoing development continue.
+- **Davonium Nexus — In development.** We are building a workspace for clearer project visibility, deliverables, and client handoff.
 
-These labels describe the current stage of work. They are not a promise that every feature is complete or available to every visitor. The Ready2Go Learning icon in company product cards and its documentation guide is sourced from the Ready2Go Learning app project.
+These labels reflect current status and do not promise that unfinished features are generally available. We update the public pages when a verified release changes a product’s status.
 
-## Website technology
+## How this website works
 
-The site uses standard HTML, CSS, and vanilla JavaScript. It does not require Node.js, npm, a framework, or a compilation step. The code is designed to remain understandable and straightforward to maintain.
+We publish standalone HTML pages styled by shared CSS and enhanced with vanilla JavaScript. The source does not require Node.js, npm, React, Vite, or a build step. Core content and routes are present in HTML; the documentation search is a client-side filter over ordinary links.
 
-The website includes responsive layouts, a mobile navigation menu, system-default light/dark appearance with an optional saved visitor choice (the theme control can return to system appearance), accessible focus styling, a documentation search helper, page metadata, structured data, an XML sitemap, a social-preview image, and a service worker for caching selected content after an online visit.
+The theme follows the visitor’s system appearance until the visitor explicitly chooses light or dark mode. We use modest scroll reveals, respect reduced-motion preferences, and provide fallbacks for optional browser features.
 
-### Installation
+## Installation and offline behaviour
 
-This site is a **Progressive Web App (PWA)**, not an Android APK or a native app-store package. On compatible devices, visitors can use the browser’s install option or follow the instructions on `install.html`. The browser and operating system decide whether to show an install prompt.
-
-Offline access is limited to pages and assets that have been cached successfully. Product links, email handoff, and other online services may still require an internet connection.
-
-## Contact
-
-For general enquiries, use the contact page or email **support@davoniumtech.com**. The static contact form opens a prepared message in the visitor’s email application; it does not create a server-side support ticket.
-
-Website: https://www.davoniumtech.com/
-
-## Deployment
-
-Follow `DEPLOY-WINDOWS-CMD.txt` for the Windows Command Prompt workflow. The documented GitHub repository for this company site is: `https://github.com/DavoniumTech/davoniumtech-corporate-site`. Confirm the Git remote before copying files, use a separate update branch, inspect the change summary, and review the preview before merging into the production branch.
-
-Do not copy this site into the Ready2Go Learning or Marvel Chat repositories. A product site has its own routes, assets, and deployment configuration.
+On compatible browsers, you can install our website as a Progressive Web App. Installation and icon shaping are controlled by the browser and operating system; this website is not a native Android APK. The service worker caches essential files first and pages after successful visits. Cached pages can sometimes reopen offline, while first-time uncached routes and external product links still need a connection.
 
 ## Search and AI discovery
 
-The site provides crawlable page links, meaningful page titles and descriptions, canonical URLs, structured data, `robots.txt`, `sitemap.xml`, and a concise `llms.txt` summary. These give search engines and compatible AI retrieval systems clearer public information about the company and products. They cannot force a system to crawl, index, mention, or recommend the site. Keep product descriptions current and make sure the production domain is reachable.
+We maintain page-specific titles and summaries, self-referencing canonical URLs, visible crawlable links, appropriate structured data, `robots.txt`, `sitemap.xml`, `llms.txt`, and `llms-full.txt`. We permit relevant public crawlers, including OAI-SearchBot for ChatGPT search discovery. These signals help services understand our public content but do not guarantee crawling, indexing, ranking, citation, or inclusion in a generated answer.
 
-## Review before release
+## Public routes
 
-Privacy, terms, and browser-storage policy pages are working drafts and should be checked against actual production behaviour and applicable legal requirements before they are presented as final legal advice. Verify product links and all phone/contact details before publishing.
+- Website: https://www.davoniumtech.com/
+- Products: https://www.davoniumtech.com/products
+- Documentation: https://www.davoniumtech.com/docs/
+- Search and indexing guide: https://www.davoniumtech.com/docs/guides/seo-discovery
+- AI discovery guide: https://www.davoniumtech.com/docs/guides/ai-discovery
+- Public machine-readable overview: https://www.davoniumtech.com/llms.txt
+- Expanded public guide: https://www.davoniumtech.com/llms-full.txt
+- Contact: https://www.davoniumtech.com/contact
+- Support: support@davoniumtech.com
+- Repository: https://github.com/DavoniumTech/davoniumtech-corporate-site
 
+## Deployment
 
-Performance and install behavior
+We deploy the site root as the Workers Static Assets directory using `wrangler.jsonc`. Our Cloudflare configuration uses `auto-trailing-slash` HTML handling and a custom 404 page. Internal links use the corresponding clean routes. `DEPLOY-WINDOWS-CMD.txt` contains the Windows CMD release workflow.
 
-- The service worker caches a small core shell during installation; additional pages are cached when visited instead of all documentation being downloaded at once.
-- The website logo is served as a smaller WebP asset. Images below the initial view use lazy loading where appropriate.
-- Rounded-corner `any` app icons are provided alongside separate full-bleed `maskable` icons so launchers can apply their preferred adaptive shape. Platform launchers may still choose their own icon mask.
-- The app invitation appears on the homepage and Products page, then respects a seven-day dismissal interval. The Install app navigation link remains available on every page.
+We review the repository, actual deployment result, direct page routes, mobile layout, install behaviour, documentation search, and offline recovery before treating a release as complete. A successful Git push is not, by itself, confirmation that production deployment succeeded.
 
+## Privacy and policy status
 
-Fast load and installation behavior
-
-- The service worker precaches a small core app shell and caches other pages only when visited, rather than downloading all documentation during installation.
-- the 1024px logo was replaced in runtime HTML with a compact 512px WebP asset (22648 bytes).
-- Every primary navigation contains an Install app link. The optional invitation is shown on the homepage and Products page, subject to a seven-day dismissal interval.
-- The manifest offers rounded-corner `any` icons and separate full-bleed `maskable` icons. Device launchers may still apply their own preferred shape.
-- Motion reveal effects and expensive blur are reduced on touch/small-screen devices.
+Our privacy, terms, and browser-storage pages remain draft policy text. We will treat them as final only after checking them against the actual production data flows and applicable legal requirements. The contact form prepares an email in the visitor’s email application; it does not create a server-side support ticket.

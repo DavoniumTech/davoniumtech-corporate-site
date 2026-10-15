@@ -1,36 +1,15 @@
-# Changelog
+# Changelog — Davonium Technologies
 
-## System appearance and Ready2Go branding — 2026-10-15
-- The website follows the visitor’s operating-system light/dark preference on first use and updates when that preference changes.
-- Only a deliberate theme choice is saved; legacy values written automatically by the previous version are ignored. Visitors can cycle back to system appearance with the theme control.
-- Replaced the provisional Ready2Go card mark with the actual R2G app icon sourced from the Ready2Go Learning project.
-- Added the Ready2Go icon to its documentation listing and product guide, and advanced the service-worker cache version.
+## 15 October 2026 — Company voice, functional routes, and public discovery
 
+- We rewrote our public technical guide library in our own company voice and removed repeated template endings, duplicate paragraphs, and duplicate section headings.
+- We made the documentation topic-specific, with practical next steps that reflect how we work instead of generic instructions aimed at an unnamed organisation.
+- We expanded our search discovery and AI crawler guide with links to official Google and OpenAI publishing guidance.
+- We maintain `llms.txt` and `llms-full.txt` as optional summaries of our public pages and current product statuses; the HTML pages remain the detailed source.
+- We aligned `robots.txt`, canonical metadata, internal clean routes, and `sitemap.xml` with our public domain.
+- We corrected duplicate endings in the customer support, Ready2Go Learning, and privacy-data guides.
+- We kept Ready2Go Learning and Davonium Nexus labelled **In development**, and Marvel Chat labelled **Built; active development**.
+- We retained clear draft notices on the privacy, terms, and browser-storage policy pages until those documents are checked against actual production practices and applicable requirements.
+- We refreshed deployment notes and recorded the static validation results in `BUILD-REPORT.json`.
 
-## Final website refresh — 2026-10-15
-- Reworked home-page messaging around students, everyday users, and small businesses.
-- Updated Marvel Chat to “Built · active development,” reflecting an initial product build while remaining transparent about ongoing development.
-- Removed the unwanted Gmail address and the extra tagline strip above the header.
-- Restored the exact existing D logo and icon files from the original website ZIP.
-- Added the 1200 x 630 Open Graph image and Twitter large-image cards.
-- Corrected internal routing so it can be deployed at a custom domain root or the existing GitHub Pages project path.
-- Rebuilt service-worker routing to cache existing local pages and documentation for offline reopening.
-- Kept policy pages marked as drafts and removed blanket first-visit install modals.
-
-## 2026-10-15 — Product family and install experience
-
-- Added distinct, lightweight product marks for Ready2Go Learning, Marvel Chat, and Davonium Nexus.
-- Refined the homepage product cards and added a visible company-site install guide panel.
-- Set Davonium Nexus to “In development” consistently with the current product status.
-- Added a first-visit, dismissible PWA invitation on the homepage and improved keyboard handling.
-- Added `llms.txt`, product-list structured data, and a cache-version update for new assets.
-- Updated the company README and Windows CMD deployment guide to target `DavoniumTech/davoniumtech-corporate-site`.
-
-## Fast loading and install invitation refresh
-
-- Reduced service-worker install work to a small core app shell; documentation and other pages are cached on demand.
-- Replaced the repeatedly requested 1024px brand PNG with a smaller WebP asset.
-- Added visible Install app links to the primary navigation and made the homepage CTA stronger.
-- Reworked the optional invitation to show on home/products entry pages and respect a seven-day dismissal period.
-- Added rounded-corner normal app icons and separate maskable icon assets.
-- Reduced scroll reveal animation on touch and small screens, and reduced heavy blur effects on mobile.
+We distinguish static validation from live-browser verification. After publishing, we check the public routes, mobile layout, installation behaviour, cache recovery, and crawler files on the production domain.

@@ -3,7 +3,7 @@
   "name": "Davonium Technologies",
   "short_name": "Davonium Tech",
   "description": "Davonium Technologies: digital products for students and everyday users, and practical websites and web tools for small businesses.",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": [
