@@ -1,12 +1,13 @@
-/* Davonium Technologies PWA service worker — v23 certificate preview, cross-demo themes, and transparent floating DVNM Bot. */
-const CACHE_NAME = 'davonium-site-v23-certificate-theme-transparent-bot-20261021';
+/* Davonium Technologies PWA service worker — v24 standalone full-body DVNM Bot cutout, certificate preview, and cross-demo themes. */
+const CACHE_NAME = 'davonium-site-v24-standalone-dvnm-bot-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-  routeUrl("assets/images/dvnm-bot-3d.webp?v=23"),
-  routeUrl("assets/css/dvnm-bot.css?v=23"),
+  routeUrl("assets/images/dvnm-bot-cutout.webp?v=24"),
+  routeUrl("assets/images/dvnm-bot-3d.webp?v=24"),
+  routeUrl("assets/css/dvnm-bot.css?v=24"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -32,7 +33,7 @@ const CORE = [
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=23"),
+  routeUrl("assets/css/dvnm-bot.css?v=24"),
   routeUrl("demos/demos.css"),
   routeUrl("demos/demos.js"),
   routeUrl("assets/images/davonium-website-qr.png"),

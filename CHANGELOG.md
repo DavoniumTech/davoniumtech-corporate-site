@@ -1,3 +1,12 @@
+# Release v24 — Standalone full-body DVNM Bot
+- Reused the existing branded DVNM robot artwork and made a transparent-background cutout asset for natural, full-body presentation; no new character artwork was generated.
+- Replaced the old floating launcher made from CSS head/body pieces with the existing full-body robot image. The launcher itself has no card, square, border, pill, or background panel.
+- Removed the rectangular photo frame around the homepage robot preview and removed the visible image frame in the welcome/assistant robot displays while preserving their layout and speech controls.
+- Preserved blinking eyes, the speech-reactive mouth, speaking chest glow, keyboard focus, reduced-motion handling, and existing written guidance.
+- Bumped CSS/cache-busting versions and the service-worker cache to v24 so browsers can fetch the updated robot asset rather than reusing v23.
+- Kept the certificate preview/downloads, seven sample websites, QR destinations, shared light/dark demo themes, site content and navigation unchanged.
+- Live Cloudflare visual checks remain required after deployment.
+
 # Release v23 — Certificate preview, shared demo theme, and transparent DVNM Bot launcher
 
 - We corrected the v22 deployment guard: it now checks the actual `@keyframes dvnm-natural-blink` definition instead of incorrectly requiring a `.dvnm-natural-blink` class.

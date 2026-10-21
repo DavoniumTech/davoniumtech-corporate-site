@@ -1,5 +1,9 @@
-DAVONIUM TECHNOLOGIES — ARCHIVED DEPLOYMENT NOTE
+DAVONIUM TECHNOLOGIES — v24 DEPLOYMENT NOTE
 
-This file belongs to an earlier release and must not be used to deploy the current site.
-For the current release, use the bundled root-level script: Davonium-DVNM-Final-Route-Robot-v21-DEPLOY.cmd
-The current script checks route policy, backs up the existing main branch, validates the source, stages changes, and stops if checks fail.
+Use the package-level file `Davonium-DVNM-Bot-Cutout-v24-DEPLOY.cmd` included beside the `davoniumtech-corporate-site-main` folder in the full v24 ZIP. Extract the entire ZIP, keep the CMD and website folder together, and run the CMD from that extracted package.
+
+The script targets the existing clone at `%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy`, verifies that its Git origin is the DavoniumTech corporate-site repository, requires a clean `main` branch, fetches GitHub, fast-forwards only, and publishes a timestamped safety backup branch before copying anything. It then uses Robocopy `/E` (never `/MIR`), validates the v24 cutout/cache references, runs `git diff --check`, stages the release, and asks for confirmation before committing and pushing normally. It will not force-push.
+
+If the script reports that the local clone is not at the expected path, stop and update the `REPO` setting inside the CMD to the path of your existing clone. Do not create a new repository or delete your current repository.
+
+A successful push confirms that GitHub received the commit; it does not guarantee Cloudflare has published it. After the push, check Workers & Pages → your corporate site → Deployments, then test the homepage, robot launcher, certificate page, and seven sample demos in a private/incognito browser window on desktop and mobile.

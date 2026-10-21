@@ -4,6 +4,12 @@
 
 Davonium Technologies creates practical digital products and modern website experiences. This repository contains the existing multi-page company site, shared CSS/JavaScript, a public documentation library, installable PWA support, and the DVNM Bot + Demo Studio additions.
 
+## v24 — Standalone DVNM Bot artwork (21 October 2026)
+- The floating DVNM Bot is now rendered from the existing full-body robot artwork using a transparent cutout asset, rather than the former miniature CSS robot made of separate boxed pieces.
+- The homepage preview, first-visit welcome, and assistant panel use a frameless robot presentation with the same speech-state glow and expression overlays.
+- The original source artwork remains in `assets/images/dvnm-bot-3d.webp`; the isolated transparent version is `assets/images/dvnm-bot-cutout.webp`.
+- Service-worker and asset query versions are bumped to v24 to avoid stale cached art. Certificate, demo, QR, theme, and navigation functionality is preserved.
+
 ## New in this release (21 October 2026)
 
 ### DVNM Bot — animated visitor guide

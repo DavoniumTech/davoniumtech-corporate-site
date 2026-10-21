@@ -2,15 +2,16 @@
   "built_at": "2026-10-21",
   "source": "user-uploaded davoniumtech-corporate-site-main ZIP",
   "features": [
-    "DVNM Bot full-body 3D illustration with glowing DVNM chest logo and legs",
-    "speech-only mode while talking with explicit Cancel Speech control",
-    "single logical DVNM Voice option with device-native fallback",
-    "seven DVNM-branded sample demonstrations for global audiences",
-    "homepage, Demo Studio, and per-demo printable QR codes using canonical paths",
-    "printable non-official showcase certificate and QR directory PDF",
-    "extensionless canonical URL routing with no active conflicting _redirects rules",
-    "versioned v22 service worker",
-    "expanded documentation for route reliability, DVNM Bot, samples, mobile and SEO"
+    "DVNM Bot existing full-body 3D illustration with transparent-background cutout and frameless launcher",
+    "Responsive speaking state retains animated eyes, mouth cue, and brighter chest aura",
+    "Speech-only mode while talking with explicit Cancel Speech control",
+    "Single logical DVNM Voice option with device-native fallback",
+    "Seven DVNM-branded sample demonstrations for global audiences",
+    "Homepage, Demo Studio, and per-demo printable QR codes using canonical paths",
+    "Printable non-official showcase certificate and QR directory PDF",
+    "Extensionless canonical URL routing with no active conflicting _redirects rules",
+    "Versioned v24 service worker/cache for the transparent robot cutout",
+    "Expanded documentation for route reliability, DVNM Bot, samples, mobile and SEO"
   ],
   "demo_pages": [
     "demos/index.html",
@@ -31,22 +32,26 @@
   "html_pages": 71,
   "static_validation": {
     "html_pages": 71,
-    "local_references_checked": 2937,
+    "local_references_checked": 3434,
     "link_and_anchor_errors": 0,
     "sitemap_url_count": 66,
     "sitemap_targets": "PASS",
-    "javascript_syntax": "PASS",
-    "css_brace_balance": "PASS",
+    "javascript_syntax": "PASS (Node.js --check: all 3 JavaScript files)",
+    "css_brace_balance": "PASS (all 3 CSS files; rechecked after frameless-stage override)",
     "active_redirect_rules": 0,
     "qr_destinations": "PASS",
     "one_page_certificate_bytes": 195065,
     "demo_dark_theme": "PASS",
-    "deployment_guard": "checks @keyframes dvnm-natural-blink, not a nonexistent class",
-    "live_visual_test": "Still required after Cloudflare deployment; this environment did not complete a live browser screenshot run."
+    "deployment_guard": "v24 CMD verifies source files, exact Git origin, main branch, clean worktree, fast-forward history, backup branch, required v24 references, and git diff --check; no force push or mirror-delete.",
+    "live_visual_test": "Still required after Cloudflare deployment; static checks run on the packaged source, but live desktop/mobile browser visual testing was not available in this environment.",
+    "cutout_alpha": "PASS (RGBA, alpha extrema 0–255)",
+    "v23_asset_queries_remaining": 0,
+    "local_visual_smoke_test": "Asset alpha inspected on checkerboard; local Chromium screenshot attempt timed out. Verify final rendering after Cloudflare deploy on desktop/mobile."
   },
   "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
   "updated_at": "2026-10-21",
   "release_notes": [
+    "v24 replaces the hand-built CSS floating robot with the existing full-body DVNM art as a transparent cutout; the launcher and homepage/welcome/assistant robot wrappers no longer show an image-frame rectangle.",
     "DVNM Bot v22 adds responsive open-eye overlays with natural blinking, subtle gaze motion, and a mouth animation that opens/closes while speech is active; updated the homepage, welcome panel, assistant panel, bot guide, and service-worker cache version.",
     "Static route compatibility repair: explicit .html links, legacy clean-URL redirects, and service-worker offline recovery for failed navigation.",
     "Demo Studio expanded to seven original sample website demonstrations, including Davonium technology and community/event experiences.",
@@ -68,7 +73,7 @@
     "docs/guides/dvnm-welcome-and-voice.html",
     "docs/guides/dvnm-sample-website-planning.html"
   ],
-  "release": "v23-certificate-theme-transparent-bot",
+  "release": "v24-standalone-full-body-dvnm-bot",
   "demo_names": [
     "DVNM Biz",
     "DVNM Growth",
@@ -214,5 +219,6 @@
     "missing_css_assets": 0,
     "local_http_pages_checked": 70,
     "local_http_non200": 0
-  }
+  },
+  "robot_asset_bytes": 81172
 }

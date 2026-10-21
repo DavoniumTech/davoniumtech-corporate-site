@@ -346,7 +346,7 @@ body.dvnm-welcome-visible { overflow:hidden; }
 .dvnm-panel-intro .dvnm-robot-mini-frame{flex:0 0 94px;width:94px;height:auto;aspect-ratio:2/3;overflow:visible;border-radius:14px}
 .dvnm-panel-intro .dvnm-robot-mini-frame .dvnm-robot-art{width:100%;height:100%;aspect-ratio:auto;border-radius:14px;animation:none}
 .dvnm-panel-intro .dvnm-robot-art-image{object-fit:cover}
-.dvnm-launcher .dvnm-mini{background-image:url('../images/dvnm-bot-3d.webp?v=23');background-size:cover;background-position:50% 17%;border-color:rgba(104,234,255,.8);box-shadow:0 0 0 2px rgba(67,212,255,.22),0 0 18px rgba(58,197,255,.45)}
+.dvnm-launcher .dvnm-mini{background-image:url('../images/dvnm-bot-3d.webp?v=24');background-size:cover;background-position:50% 17%;border-color:rgba(104,234,255,.8);box-shadow:0 0 0 2px rgba(67,212,255,.22),0 0 18px rgba(58,197,255,.45)}
 .dvnm-launcher .dvnm-mini::before,.dvnm-launcher .dvnm-mini::after{display:none}
 .dvnm-panel.is-speaking{min-height:360px;max-height:min(78vh,560px);background:radial-gradient(ellipse at 50% 35%,#132b61,#070b1d 78%);border-color:rgba(80,218,255,.48)}
 .dvnm-panel.is-speaking .dvnm-panel-head{position:absolute;z-index:4;top:7px;right:7px;left:7px;padding:0;background:transparent;justify-content:flex-end}
@@ -522,3 +522,107 @@ body.dvnm-welcome-visible { overflow:hidden; }
 }
 @media(max-height:560px) and (orientation:landscape) { .dvnm-bot-dock { bottom:calc(62px + env(safe-area-inset-bottom)); transform:scale(.82); transform-origin:bottom right; } }
 @media(prefers-reduced-motion:reduce) { .dvnm-launcher .dvnm-mini,.dvnm-mini-antenna::after,.dvnm-mini-eye,.dvnm-mini-body span,.dvnm-bot-dock:has(.dvnm-panel.is-speaking) .dvnm-mini-mouth,.dvnm-robot-art.is-speaking .dvnm-robot-chest-aura,.dvnm-hero-robot.is-speaking .dvnm-robot-chest-aura { animation:none!important; } }
+
+
+/* v24: show the existing full-body DVNM artwork as a true cutout, without a boxed robot frame. */
+.dvnm-hero-robot {
+  width:min(250px,68%); height:auto; aspect-ratio:2/3; max-width:78%;
+  margin:0 auto 28px; overflow:visible; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; isolation:isolate;
+  filter:drop-shadow(0 18px 17px rgba(20,35,77,.22));
+}
+.dvnm-hero-robot img {
+  display:block; width:100%; height:100%; object-fit:contain; object-position:center;
+  mix-blend-mode:normal; filter:saturate(1.06) contrast(1.03) drop-shadow(0 5px 7px rgba(5,22,55,.12));
+}
+.dvnm-robot-art {
+  overflow:visible!important; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important;
+  filter:drop-shadow(0 9px 8px rgba(8,24,62,.15));
+}
+.dvnm-robot-art-image {
+  display:block; width:100%; height:100%; object-fit:contain!important; object-position:center;
+  border:0; border-radius:0; background:transparent;
+  filter:saturate(1.06) contrast(1.03) drop-shadow(0 5px 7px rgba(5,22,55,.12));
+}
+.dvnm-welcome-robot .dvnm-robot-art,
+.dvnm-panel-intro .dvnm-robot-mini-frame .dvnm-robot-art,
+.dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-robot-art,
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-robot .dvnm-robot-art {
+  border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important;
+}
+.dvnm-bot-dock {
+  width:100px; min-width:0; padding:0; margin:0;
+  background:transparent!important; border:0!important; box-shadow:none!important;
+  pointer-events:none;
+}
+.dvnm-launcher {
+  position:relative; display:grid; place-items:center; width:100px; height:150px;
+  min-height:0; margin:0; padding:0; overflow:visible;
+  border:0!important; border-radius:0!important; outline-offset:3px;
+  color:var(--ink); background:transparent!important; box-shadow:none!important;
+  pointer-events:auto; cursor:pointer; transform:translateZ(0);
+  filter:none; transition:transform .2s ease;
+}
+.dvnm-launcher:hover { transform:translateY(-3px) scale(1.025); background:transparent!important; box-shadow:none!important; filter:none; }
+.dvnm-launcher:active { transform:scale(.975); }
+.dvnm-launcher:focus-visible { outline:2px solid #36dfff!important; outline-offset:0; border-radius:48% / 44%!important; }
+.dvnm-launcher .dvnm-launcher-robot {
+  position:relative; z-index:1; display:block; width:100%; height:100%;
+  object-fit:contain; object-position:center; background:transparent;
+  border:0; border-radius:0; box-shadow:none;
+  filter:drop-shadow(0 7px 8px rgba(11,31,72,.21));
+  transform-origin:50% 72%; animation:dvnm-launcher-natural-float 4.1s ease-in-out infinite;
+}
+.dvnm-launcher::after {
+  content:""; position:absolute; z-index:2; pointer-events:none;
+  left:39%; top:37%; width:23%; height:9%; border-radius:50%; opacity:.12;
+  background:radial-gradient(ellipse,rgba(115,250,255,.9),rgba(36,168,255,.52) 42%,transparent 76%);
+  filter:blur(4px); mix-blend-mode:screen; transition:opacity .2s ease;
+}
+.dvnm-bot-dock:has(.dvnm-panel.is-speaking) .dvnm-launcher::after {
+  opacity:.95; animation:dvnm-speaking-chest .34s ease-in-out infinite alternate;
+}
+.dvnm-launcher-label { position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important; }
+@keyframes dvnm-launcher-natural-float { 0%,100% { transform:translateY(0) rotate(-.3deg); } 50% { transform:translateY(-3px) rotate(.3deg); } }
+@media(max-width:700px) {
+  .dvnm-bot-dock { right:max(8px,env(safe-area-inset-right)); bottom:calc(104px + env(safe-area-inset-bottom)); width:76px; }
+  .dvnm-launcher { width:76px; height:114px; }
+  .dvnm-launcher:hover .dvnm-launcher-robot { filter:drop-shadow(0 8px 11px rgba(30,124,230,.28)); }
+  .dvnm-hero-robot { width:min(210px,68%); max-width:74%; margin-bottom:36px; }
+}
+@media(max-height:560px) and (orientation:landscape) {
+  .dvnm-bot-dock { bottom:calc(62px + env(safe-area-inset-bottom)); transform:scale(.82); transform-origin:bottom right; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dvnm-launcher .dvnm-launcher-robot { animation:none!important; }
+  .dvnm-bot-dock:has(.dvnm-panel.is-speaking) .dvnm-launcher::after { animation:none!important; }
+  .dvnm-hero-robot,.dvnm-robot-art { animation:none!important; }
+}
+
+.dvnm-robot-art.is-speaking .dvnm-robot-art-image,
+.dvnm-hero-robot.is-speaking img {
+  filter:brightness(1.14) saturate(1.23) contrast(1.04) drop-shadow(0 5px 7px rgba(5,22,55,.12));
+}
+
+/* v24 final refinement: the homepage robot stands freely, not inside a stage/card. */
+.dvnm-stage {
+  min-height:500px; overflow:visible; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; isolation:isolate;
+}
+.dvnm-stage::before,.dvnm-stage::after,.dvnm-stage-grid { display:none!important; }
+.dvnm-hero-robot { margin-bottom:12px; }
+.dvnm-stage-label {
+  position:relative; inset:auto; width:max-content; max-width:100%; margin:0 auto;
+  padding:8px 10px; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; justify-content:center;
+  flex-wrap:wrap; text-align:center;
+}
+.dvnm-stage-label > div { text-align:center; }
+.dvnm-stage-label > span { white-space:nowrap; }
+@media(max-width:850px) { .dvnm-stage { min-height:460px; } }
+@media(max-width:600px) {
+  .dvnm-stage { min-height:410px; }
+  .dvnm-hero-robot { margin-bottom:8px; }
+  .dvnm-stage-label { font-size:.72rem; }
+}
