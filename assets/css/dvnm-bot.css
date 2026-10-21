@@ -1098,3 +1098,69 @@ body.dvnm-welcome-visible { overflow:hidden; }
  .dvnm-css-bot *, .dvnm-css-bot::before, .dvnm-css-bot::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
  .dvnm-css-bot .dvnm-css-bot-eyelid { transform:scaleY(0)!important; }
 }
+
+/* DAVONIUM V29 FINAL — use the existing original full-body cutout rather than separated CSS anatomy. */
+.dvnm-stage {
+  position: relative;
+  isolation: isolate;
+  background-image: radial-gradient(ellipse at 50% 54%, rgba(103, 171, 255, .12), transparent 70%);
+}
+.dvnm-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%; top: 48%; width: min(82%, 560px); aspect-ratio: 1;
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(88,174,255,.28) 0%, rgba(148,117,255,.18) 31%, rgba(89,222,236,.08) 53%, transparent 73%);
+  filter: blur(17px); animation: dvnm-v29-bloom 5.2s ease-in-out infinite alternate;
+}
+/* The old CSS skeleton remains in the source for rollback, but is not used as the visible character. */
+.dvnm-stage .dvnm-css-bot-skeleton { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+.dvnm-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: 50%; top: 0; width: 100%; height: 100%;
+  transform: translateX(-50%); transform-origin: 50% 78%; pointer-events: none;
+  background-image: url("/assets/images/dvnm-bot-cutout.webp");
+  background-repeat: no-repeat; background-position: center bottom;
+  background-size: min(92%, 540px) auto;
+  filter: drop-shadow(0 0 9px rgba(93, 176, 255, .48)) drop-shadow(0 0 22px rgba(132, 99, 255, .24)) drop-shadow(0 0 34px rgba(78, 218, 238, .10));
+  animation: dvnm-v29-real-bot-presence 8.4s ease-in-out infinite;
+}
+.dvnm-stage .dvnm-css-bot-backglow, .dvnm-stage .dvnm-css-bot-orbit {
+  opacity: .56 !important; filter: blur(15px) drop-shadow(0 0 16px rgba(94,170,255,.26));
+  animation: dvnm-v29-bloom 5.2s ease-in-out infinite alternate;
+}
+/* If a page uses the existing original bot image as an img rather than the CSS stage, keep the same glow. */
+.dvnm-hero-robot img[src*="dvnm-bot-cutout"], .dvnm-hero-robot img[src*="dvnm-bot-3d"],
+.dvnm-bot-art img[src*="dvnm-bot-cutout"], .dvnm-bot-art img[src*="dvnm-bot-3d"] {
+  filter: drop-shadow(0 0 10px rgba(91,171,255,.48)) drop-shadow(0 0 26px rgba(133,100,255,.24));
+  transform-origin: 50% 78%; animation: dvnm-v29-real-bot-presence 8.4s ease-in-out infinite;
+}
+/* Preserve real layered elements where a page already uses them; make eye light subtle, not tear-shaped. */
+.dvnm-css-bot-eye, [class*="dvnm-css-bot-eye"], [class*="dvnm-bot-eye"] {
+  filter: drop-shadow(0 0 4px rgba(91,220,255,.75)) drop-shadow(0 0 10px rgba(90,151,255,.35));
+}
+@keyframes dvnm-v29-bloom { from { opacity: .56; scale: .96; } to { opacity: .95; scale: 1.04; } }
+@keyframes dvnm-v29-real-bot-presence {
+  0%, 100% { transform: translateX(-50%) translateY(0) rotateY(0deg) rotateZ(0deg); }
+  23% { transform: translateX(-50%) translateY(-3px) rotateY(-2.5deg) rotateZ(-.35deg); }
+  44% { transform: translateX(-50%) translateY(-1px) rotateY(1.5deg) rotateZ(.2deg); }
+  55% { transform: translateX(-50%) translateY(1px) rotateY(0deg) rotateZ(0deg); }
+  72% { transform: translateX(-50%) translateY(-4px) rotateY(2.2deg) rotateZ(.25deg); }
+}
+@media (max-width: 680px) {
+  .dvnm-stage { min-width: 0; min-height: min(66svh, 540px); }
+  .dvnm-stage::before { width: min(94%, 420px); top: 52%; }
+  .dvnm-stage::after { background-size: min(98%, 440px) auto; }
+}
+@media (max-width: 380px) {
+  .dvnm-stage { min-height: min(60svh, 460px); }
+  .dvnm-stage::after { background-size: 100% auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dvnm-stage::before, .dvnm-stage::after, .dvnm-hero-robot img[src*="dvnm-bot-cutout"],
+  .dvnm-hero-robot img[src*="dvnm-bot-3d"], .dvnm-bot-art img[src*="dvnm-bot-cutout"],
+  .dvnm-bot-art img[src*="dvnm-bot-3d"] { animation: none !important; }
+}

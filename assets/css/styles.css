@@ -802,3 +802,347 @@ html.theme-transition, html.theme-transition body, html.theme-transition .head, 
     background-attachment:fixed;
   }
 }
+
+/* DAVONIUM V29 FINAL — gentle colour system, glass cards, small-screen layout */
+:root {
+  --dv29-sky: rgba(184, 211, 255, .18);
+  --dv29-mint: rgba(184, 239, 216, .17);
+  --dv29-sand: rgba(248, 224, 183, .18);
+  --dv29-lavender: rgba(213, 202, 255, .19);
+  --dv29-rose: rgba(255, 208, 222, .16);
+  --dv29-aqua: rgba(184, 235, 244, .17);
+  --dv29-lilac: rgba(231, 214, 255, .17);
+  --dv29-butter: rgba(255, 237, 185, .18);
+  --dv29-peach: rgba(255, 218, 196, .16);
+  --dv29-seafoam: rgba(194, 239, 230, .17);
+  --dv29-periwinkle: rgba(202, 215, 255, .18);
+  --dv29-powder: rgba(230, 225, 246, .17);
+  --dv29-focus: rgba(107, 87, 235, .52);
+}
+
+/* Lightly tinted section washes repeat through the full page, never as heavy blocks. */
+main > section:not(.hero):nth-of-type(12n + 2) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-sky), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 3) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-mint), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 4) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-sand), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 5) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-lavender), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 6) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-rose), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 7) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-aqua), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 8) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-lilac), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 9) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-butter), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 10) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-peach), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 11) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-seafoam), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 12) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-periwinkle), transparent 78%); }
+main > section:not(.hero):nth-of-type(12n + 1) { background-color: transparent; background-image: linear-gradient(125deg, var(--dv29-powder), transparent 78%); }
+
+/* Alternate pastel washes also work when content sections use wrapper classes. */
+main > .section:nth-child(12n + 1), main > .page-section:nth-child(12n + 1), main > .demo-section:nth-child(12n + 1), main > .content-section:nth-child(12n + 1) { background-image: linear-gradient(125deg, var(--dv29-powder), transparent 78%); }
+main > .section:nth-child(12n + 2), main > .page-section:nth-child(12n + 2), main > .demo-section:nth-child(12n + 2), main > .content-section:nth-child(12n + 2) { background-image: linear-gradient(125deg, var(--dv29-sky), transparent 78%); }
+main > .section:nth-child(12n + 3), main > .page-section:nth-child(12n + 3), main > .demo-section:nth-child(12n + 3), main > .content-section:nth-child(12n + 3) { background-image: linear-gradient(125deg, var(--dv29-mint), transparent 78%); }
+main > .section:nth-child(12n + 4), main > .page-section:nth-child(12n + 4), main > .demo-section:nth-child(12n + 4), main > .content-section:nth-child(12n + 4) { background-image: linear-gradient(125deg, var(--dv29-sand), transparent 78%); }
+main > .section:nth-child(12n + 5), main > .page-section:nth-child(12n + 5), main > .demo-section:nth-child(12n + 5), main > .content-section:nth-child(12n + 5) { background-image: linear-gradient(125deg, var(--dv29-lavender), transparent 78%); }
+main > .section:nth-child(12n + 6), main > .page-section:nth-child(12n + 6), main > .demo-section:nth-child(12n + 6), main > .content-section:nth-child(12n + 6) { background-image: linear-gradient(125deg, var(--dv29-rose), transparent 78%); }
+main > .section:nth-child(12n + 7), main > .page-section:nth-child(12n + 7), main > .demo-section:nth-child(12n + 7), main > .content-section:nth-child(12n + 7) { background-image: linear-gradient(125deg, var(--dv29-aqua), transparent 78%); }
+main > .section:nth-child(12n + 8), main > .page-section:nth-child(12n + 8), main > .demo-section:nth-child(12n + 8), main > .content-section:nth-child(12n + 8) { background-image: linear-gradient(125deg, var(--dv29-lilac), transparent 78%); }
+main > .section:nth-child(12n + 9), main > .page-section:nth-child(12n + 9), main > .demo-section:nth-child(12n + 9), main > .content-section:nth-child(12n + 9) { background-image: linear-gradient(125deg, var(--dv29-butter), transparent 78%); }
+main > .section:nth-child(12n + 10), main > .page-section:nth-child(12n + 10), main > .demo-section:nth-child(12n + 10), main > .content-section:nth-child(12n + 10) { background-image: linear-gradient(125deg, var(--dv29-peach), transparent 78%); }
+main > .section:nth-child(12n + 11), main > .page-section:nth-child(12n + 11), main > .demo-section:nth-child(12n + 11), main > .content-section:nth-child(12n + 11) { background-image: linear-gradient(125deg, var(--dv29-seafoam), transparent 78%); }
+main > .section:nth-child(12n + 12), main > .page-section:nth-child(12n + 12), main > .demo-section:nth-child(12n + 12), main > .content-section:nth-child(12n + 12) { background-image: linear-gradient(125deg, var(--dv29-periwinkle), transparent 78%); }
+
+/* Glazed, translucent cards in both themes; keep text and borders readable. */
+main .card, main .product-card, main .demo-card, main .feature-card,
+main .service-card, main .work-card, main .doc-card, main .demo-panel,
+main .app-promo-card, main .dash, main .notice, main .quote, main .band,
+main [class*="demo-card"], main [class*="feature-card"], main [class*="product-card"],
+main [class$="-tile"], main [class$="-panel"], main .showcase-card, main .stat-card,
+main .metric-card, main .listing-card {
+  background: rgba(255,255,255,.75);
+  background: color-mix(in srgb, var(--surface-solid, #fff) 70%, transparent);
+  border-color: color-mix(in srgb, var(--line-strong, rgba(101,68,227,.25)) 72%, transparent);
+  box-shadow: 0 14px 42px rgba(36, 29, 84, .065), inset 0 1px 0 rgba(255,255,255,.46);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+  transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease, background-color .22s ease;
+}
+footer.foot, .app-footer, .demo-footer {
+  background: rgba(255,255,255,.42);
+  background: color-mix(in srgb, var(--surface-solid, #fff) 52%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(80,70,130,.12)) 78%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+}
+main .card:hover, main .product-card:hover, main .demo-card:hover,
+main .feature-card:hover, main .service-card:hover, main .work-card:hover,
+main .doc-card:hover, main .demo-panel:hover, main .app-promo-card:hover {
+  border-color: var(--line-strong, rgba(101,68,227,.3));
+  box-shadow: var(--glow, 0 0 0 1px rgba(112,72,245,.09)), 0 18px 48px rgba(36,29,84,.09), inset 0 1px 0 rgba(255,255,255,.48);
+}
+
+/* More reliable mobile navigation: keeps the menu button visible at 320px and small tablets. */
+.dvnm-v29-menu-toggle { display: none; }
+.head, header, .demo-header, .site-header, .topbar { position: relative; }
+.nav, .wrap.nav, .demo-nav, .header-inner { min-width: 0; }
+.menu, #menu-toggle, .menu-toggle, .dvnm-v29-menu-toggle, .demo-menu-toggle, .nav-toggle, [data-menu-toggle] {
+  min-width: 42px; min-height: 42px; flex: 0 0 42px; touch-action: manipulation;
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--dv29-focus); outline-offset: 3px;
+}
+
+/* Floating contacts: WhatsApp is the lower button; the robot launcher sits above it. */
+.wa-float, .dvnm-v29-whatsapp-float {
+  position: fixed !important;
+  z-index: 2147481000 !important;
+  right: max(12px, env(safe-area-inset-right, 0px)) !important;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px)) !important;
+  flex: 0 0 auto;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}
+.dvnm-v29-mobile-launcher { pointer-events: auto !important; touch-action: manipulation; }
+.dvnm-v29-mobile-panel { pointer-events: auto !important; }
+@media (max-width: 1050px) {
+  .head { z-index: 1000; isolation: isolate; }
+  .nav { min-height: 64px; gap: 7px; padding-block: 6px; }
+  .brand { min-width: 0; max-width: calc(100% - 88px); flex: 1 1 auto; overflow: hidden; }
+  .brand span { min-width: 0; overflow-wrap: anywhere; }
+  .brand small { max-width: 100%; overflow-wrap: anywhere; }
+  .actions { gap: 5px; flex: 0 0 auto; }
+  .actions > .btn { display: none !important; }
+  #menu-toggle, .menu, .menu-toggle, .dvnm-v29-menu-toggle, .demo-menu-toggle, .nav-toggle, [data-menu-toggle] { display: inline-flex !important; align-items: center; justify-content: center; }
+  .links#primary-nav, .dvnm-v29-responsive-nav:not(.dvnm-v29-menu-open) {
+    display: none !important;
+  }
+  .links#primary-nav.open, .dvnm-v29-responsive-nav.dvnm-v29-menu-open {
+    position: absolute !important; top: calc(100% + 7px) !important; right: 8px !important; left: auto !important;
+    display: flex !important; flex-direction: column !important; align-items: stretch !important; justify-content: flex-start !important;
+    width: min(440px, calc(100vw - 16px)) !important; max-width: calc(100vw - 16px) !important;
+    max-height: min(76dvh, calc(100dvh - 92px)) !important; overflow-x: hidden !important; overflow-y: auto !important;
+    padding: 10px !important; gap: 4px !important; border: 1px solid var(--line-strong, rgba(112,72,245,.25)) !important;
+    border-radius: 18px !important; background: color-mix(in srgb, var(--surface-solid, #fff) 95%, transparent) !important;
+    box-shadow: var(--shadow-lg, 0 20px 50px rgba(20,20,40,.2)) !important; z-index: 2147480000 !important;
+    -webkit-backdrop-filter: blur(22px) saturate(145%); backdrop-filter: blur(22px) saturate(145%);
+  }
+  .links#primary-nav a, .dvnm-v29-responsive-nav a { display: flex !important; width: 100% !important; min-height: 44px; padding: 11px 12px; white-space: normal; overflow-wrap: anywhere; }
+}
+@media (max-width: 560px) {
+  html { scroll-padding-top: 78px; }
+  .wrap { width: calc(100% - 26px); }
+  .nav { min-height: 60px; gap: 5px; }
+  .brand { max-width: calc(100% - 82px); gap: 6px; font-size: clamp(.7rem, 3.1vw, .86rem); }
+  .brand img { width: 32px; height: 32px; flex: 0 0 32px; }
+  .brand small { font-size: clamp(.42rem, 1.8vw, .5rem); line-height: 1.2; }
+  .icon, .menu, #menu-toggle, .menu-toggle, .dvnm-v29-menu-toggle, .demo-menu-toggle, .nav-toggle, [data-menu-toggle] {
+    width: 39px; height: 39px; min-width: 39px; min-height: 39px; flex-basis: 39px; border-radius: 11px;
+  }
+  .links#primary-nav.open, .dvnm-v29-responsive-nav.dvnm-v29-menu-open { right: 5px !important; width: calc(100vw - 12px) !important; max-width: calc(100vw - 12px) !important; }
+  .section, main > section { scroll-margin-top: 72px; }
+  .grid, .three, .two, .docs-grid, .footgrid, .footer-grid, .footer-columns { min-width: 0; }
+  .cta, .hero-actions { gap: 9px; }
+  .cta .btn, .hero-actions .btn { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .wa-float, .dvnm-v29-whatsapp-float { width: 52px !important; height: 52px !important; min-width: 52px; min-height: 52px; right: max(10px, env(safe-area-inset-right, 0px)) !important; bottom: max(10px, env(safe-area-inset-bottom, 0px)) !important; }
+  .wa-float .wa-icon, .dvnm-v29-whatsapp-float .wa-icon { width: 28px; height: 28px; }
+  .dvnm-launcher-dock {
+    position: fixed !important; right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    width: min(360px, calc(100vw - 20px)) !important; min-width: 0 !important; max-width: calc(100vw - 20px) !important;
+    z-index: 2147482000 !important; box-sizing: border-box !important; pointer-events: auto;
+  }
+  .dvnm-v29-mobile-launcher {
+    position: fixed !important; right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 2147482500 !important; isolation: isolate; overflow: visible !important;
+    filter: drop-shadow(0 0 8px rgba(91,171,255,.42)) drop-shadow(0 0 18px rgba(132,99,255,.22));
+  }
+  .dvnm-v29-mobile-launcher::before {
+    content: ""; position: absolute; inset: 1px; z-index: 2; pointer-events: none;
+    background: url("/assets/images/dvnm-bot-cutout.webp") center / contain no-repeat;
+    filter: drop-shadow(0 0 5px rgba(91,205,255,.58));
+    animation: dvnm-v29-launcher-float 5.8s ease-in-out infinite;
+  }
+  @keyframes dvnm-v29-launcher-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    44% { transform: translateY(-2px) rotate(-1.2deg); }
+    72% { transform: translateY(1px) rotate(.8deg); }
+  }
+  .dvnm-assistant-widget, .dvnm-bot-widget, .dvnm-floating-bot, .dvnm-floating-assistant, .dvnm-hoverbot, .dvnm-hoverboard, #dvnm-assistant, #dvnm-bot-widget, [data-dvnm-assistant] { z-index: 2147482000 !important; max-width: calc(100vw - 20px) !important; }
+  .dvnm-assistant-launcher, .dvnm-bot-launcher, .dvnm-widget-launcher, .dvnm-chat-launcher,
+  .dvnm-assistant-toggle, .dvnm-bot-toggle, .dvnm-bot-fab, .dvnm-assistant-fab,
+  .dvnm-widget-fab, #dvnm-launcher, #dvnm-bot-launcher, #dvnm-assistant-launcher,
+  [data-dvnm-launcher], [data-bot-launcher], .chatbot-launcher, .assistant-launcher, .dvnm-v29-mobile-launcher {
+    z-index: 2147482500 !important; max-width: calc(100vw - 20px) !important; pointer-events: auto !important;
+  }
+  .dvnm-assistant-panel, .dvnm-bot-panel, .dvnm-assistant-widget-panel, .dvnm-bot-widget-panel,
+  .dvnm-hoverbot-panel, .dvnm-widget-panel, .dvnm-chat-panel, .dvnm-assistant-window, .dvnm-bot-window,
+  #dvnm-assistant-panel, #dvnm-bot-panel, #dvnm-chat-panel, [data-dvnm-panel], .dvnm-v29-mobile-panel {
+    position: fixed !important; right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(156px + env(safe-area-inset-bottom, 0px)) !important;
+    width: min(360px, calc(100vw - 20px)) !important; min-width: 0 !important; max-width: calc(100vw - 20px) !important;
+    max-height: min(62dvh, calc(100dvh - 164px)) !important; overflow: auto; overscroll-behavior: contain;
+    box-sizing: border-box !important; z-index: 2147483000 !important;
+  }
+}
+@media (max-width: 380px) {
+  .brand { font-size: .7rem; gap: 5px; }
+  .brand img { width: 29px; height: 29px; flex-basis: 29px; }
+  .brand small { display: none; }
+  .actions { gap: 3px; }
+  .icon, .menu, #menu-toggle, .menu-toggle, .dvnm-v29-menu-toggle, .demo-menu-toggle, .nav-toggle, [data-menu-toggle] { width: 36px; height: 36px; min-width: 36px; min-height: 36px; flex-basis: 36px; }
+  .dvnm-launcher-dock { width: min(340px, calc(100vw - 20px)) !important; max-width: calc(100vw - 20px) !important; }
+}
+
+/* Theme-aware gentle pastel palette — especially low contrast tints in dark mode. */
+:root[data-theme="dark"], :root[data-theme="dark"] body {
+  --dv29-sky: rgba(125, 165, 255, .075);
+  --dv29-mint: rgba(91, 207, 165, .060);
+  --dv29-sand: rgba(246, 195, 119, .055);
+  --dv29-lavender: rgba(163, 139, 255, .082);
+  --dv29-rose: rgba(255, 133, 171, .055);
+  --dv29-aqua: rgba(86, 208, 229, .060);
+  --dv29-lilac: rgba(193, 155, 255, .070);
+  --dv29-butter: rgba(255, 222, 116, .052);
+  --dv29-peach: rgba(255, 166, 130, .050);
+  --dv29-seafoam: rgba(98, 218, 190, .058);
+  --dv29-periwinkle: rgba(135, 158, 255, .065);
+  --dv29-powder: rgba(196, 178, 255, .060);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --dv29-sky: rgba(125, 165, 255, .075); --dv29-mint: rgba(91, 207, 165, .060);
+    --dv29-sand: rgba(246, 195, 119, .055); --dv29-lavender: rgba(163, 139, 255, .082);
+    --dv29-rose: rgba(255, 133, 171, .055); --dv29-aqua: rgba(86, 208, 229, .060);
+    --dv29-lilac: rgba(193, 155, 255, .070); --dv29-butter: rgba(255, 222, 116, .052);
+    --dv29-peach: rgba(255, 166, 130, .050); --dv29-seafoam: rgba(98, 218, 190, .058);
+    --dv29-periwinkle: rgba(135, 158, 255, .065); --dv29-powder: rgba(196, 178, 255, .060);
+  }
+  :root[data-theme="dark"] main .card, :root[data-theme="dark"] main .product-card,
+  :root[data-theme="dark"] main .demo-card, :root[data-theme="dark"] main .feature-card,
+  :root[data-theme="dark"] main .service-card, :root[data-theme="dark"] main .work-card,
+  :root[data-theme="dark"] main .doc-card, :root[data-theme="dark"] main .demo-panel,
+  :root[data-theme="dark"] main .app-promo-card, :root[data-theme="dark"] main .dash,
+  :root[data-theme="dark"] main .notice, :root[data-theme="dark"] main .quote,
+  :root[data-theme="dark"] main .band {
+    background: rgba(18,21,37,.58);
+    background: color-mix(in srgb, var(--surface-solid, #121526) 58%, transparent);
+    border-color: color-mix(in srgb, var(--line-strong, rgba(174,149,255,.35)) 82%, transparent);
+    box-shadow: 0 18px 55px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .product-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .demo-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .feature-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .service-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .work-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .doc-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .demo-panel,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .app-promo-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .dash,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .notice,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .quote,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .band {
+    background: rgba(18,21,37,.58);
+    background: color-mix(in srgb, var(--surface-solid, #121526) 58%, transparent);
+    border-color: color-mix(in srgb, var(--line-strong, rgba(174,149,255,.35)) 82%, transparent);
+    box-shadow: 0 18px 55px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+  }
+}
+@media (max-width: 560px) {
+  main .card, main .product-card, main .demo-card, main .feature-card,
+  main .service-card, main .work-card, main .doc-card, main .demo-panel,
+  main .app-promo-card { -webkit-backdrop-filter: blur(10px) saturate(122%); backdrop-filter: blur(10px) saturate(122%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dvnm-v29-mobile-launcher::before { animation: none !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* Glass styles stay theme-aware for additional product and demo card variants. */
+:root[data-theme="dark"] main [class$="-tile"], :root[data-theme="dark"] main [class$="-panel"],
+:root[data-theme="dark"] main .showcase-card, :root[data-theme="dark"] main .stat-card,
+:root[data-theme="dark"] main .metric-card, :root[data-theme="dark"] main .listing-card {
+  background: rgba(18,21,37,.58);
+  background: color-mix(in srgb, var(--surface-solid, #121526) 58%, transparent);
+  border-color: color-mix(in srgb, var(--line-strong, rgba(174,149,255,.35)) 82%, transparent);
+  box-shadow: 0 18px 55px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main [class$="-tile"],
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main [class$="-panel"],
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .showcase-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .stat-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .metric-card,
+  :root:not([data-theme="light"]):not([data-theme="dark"]) main .listing-card {
+    background: rgba(18,21,37,.58);
+    background: color-mix(in srgb, var(--surface-solid, #121526) 58%, transparent);
+    border-color: color-mix(in srgb, var(--line-strong, rgba(174,149,255,.35)) 82%, transparent);
+    box-shadow: 0 18px 55px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+  }
+}
+
+
+/* DAVONIUM V29 FINAL — use the existing original full-body cutout rather than separated CSS anatomy. */
+.dvnm-stage {
+  position: relative;
+  isolation: isolate;
+  background-image: radial-gradient(ellipse at 50% 54%, rgba(103, 171, 255, .12), transparent 70%);
+}
+.dvnm-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%; top: 48%; width: min(82%, 560px); aspect-ratio: 1;
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(88,174,255,.28) 0%, rgba(148,117,255,.18) 31%, rgba(89,222,236,.08) 53%, transparent 73%);
+  filter: blur(17px); animation: dvnm-v29-bloom 5.2s ease-in-out infinite alternate;
+}
+/* The old CSS skeleton remains in the source for rollback, but is not used as the visible character. */
+.dvnm-stage .dvnm-css-bot-skeleton { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+.dvnm-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: 50%; top: 0; width: 100%; height: 100%;
+  transform: translateX(-50%); transform-origin: 50% 78%; pointer-events: none;
+  background-image: url("/assets/images/dvnm-bot-cutout.webp");
+  background-repeat: no-repeat; background-position: center bottom;
+  background-size: min(92%, 540px) auto;
+  filter: drop-shadow(0 0 9px rgba(93, 176, 255, .48)) drop-shadow(0 0 22px rgba(132, 99, 255, .24)) drop-shadow(0 0 34px rgba(78, 218, 238, .10));
+  animation: dvnm-v29-real-bot-presence 8.4s ease-in-out infinite;
+}
+.dvnm-stage .dvnm-css-bot-backglow, .dvnm-stage .dvnm-css-bot-orbit {
+  opacity: .56 !important; filter: blur(15px) drop-shadow(0 0 16px rgba(94,170,255,.26));
+  animation: dvnm-v29-bloom 5.2s ease-in-out infinite alternate;
+}
+/* If a page uses the existing original bot image as an img rather than the CSS stage, keep the same glow. */
+.dvnm-hero-robot img[src*="dvnm-bot-cutout"], .dvnm-hero-robot img[src*="dvnm-bot-3d"],
+.dvnm-bot-art img[src*="dvnm-bot-cutout"], .dvnm-bot-art img[src*="dvnm-bot-3d"] {
+  filter: drop-shadow(0 0 10px rgba(91,171,255,.48)) drop-shadow(0 0 26px rgba(133,100,255,.24));
+  transform-origin: 50% 78%; animation: dvnm-v29-real-bot-presence 8.4s ease-in-out infinite;
+}
+/* Preserve real layered elements where a page already uses them; make eye light subtle, not tear-shaped. */
+.dvnm-css-bot-eye, [class*="dvnm-css-bot-eye"], [class*="dvnm-bot-eye"] {
+  filter: drop-shadow(0 0 4px rgba(91,220,255,.75)) drop-shadow(0 0 10px rgba(90,151,255,.35));
+}
+@keyframes dvnm-v29-bloom { from { opacity: .56; scale: .96; } to { opacity: .95; scale: 1.04; } }
+@keyframes dvnm-v29-real-bot-presence {
+  0%, 100% { transform: translateX(-50%) translateY(0) rotateY(0deg) rotateZ(0deg); }
+  23% { transform: translateX(-50%) translateY(-3px) rotateY(-2.5deg) rotateZ(-.35deg); }
+  44% { transform: translateX(-50%) translateY(-1px) rotateY(1.5deg) rotateZ(.2deg); }
+  55% { transform: translateX(-50%) translateY(1px) rotateY(0deg) rotateZ(0deg); }
+  72% { transform: translateX(-50%) translateY(-4px) rotateY(2.2deg) rotateZ(.25deg); }
+}
+@media (max-width: 680px) {
+  .dvnm-stage { min-width: 0; min-height: min(66svh, 540px); }
+  .dvnm-stage::before { width: min(94%, 420px); top: 52%; }
+  .dvnm-stage::after { background-size: min(98%, 440px) auto; }
+}
+@media (max-width: 380px) {
+  .dvnm-stage { min-height: min(60svh, 460px); }
+  .dvnm-stage::after { background-size: 100% auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dvnm-stage::before, .dvnm-stage::after, .dvnm-hero-robot img[src*="dvnm-bot-cutout"],
+  .dvnm-hero-robot img[src*="dvnm-bot-3d"], .dvnm-bot-art img[src*="dvnm-bot-cutout"],
+  .dvnm-bot-art img[src*="dvnm-bot-3d"] { animation: none !important; }
+}

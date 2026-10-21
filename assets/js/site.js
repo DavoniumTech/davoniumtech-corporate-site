@@ -777,3 +777,58 @@
     window.addEventListener('load', () => navigator.serviceWorker.register(swUrl.href, { scope: swScope }).catch(() => {}));
   }
 })();
+
+/* DAVONIUM V29 FINAL — reliable WhatsApp / DVNM floating-button stacking. */
+(function () {
+  'use strict';
+  function describe(el) {
+    return [el.id || '', typeof el.className === 'string' ? el.className : '',
+      el.getAttribute('aria-label') || '', el.getAttribute('title') || '',
+      el.getAttribute('data-widget') || '', el.getAttribute('href') || ''].join(' ').toLowerCase();
+  }
+  function tagWhatsapp() {
+    var candidates = document.querySelectorAll('.wa-float, a[href*="wa.me"], a[href*="whatsapp.com"], a[href*="api.whatsapp.com"], [aria-label*="whatsapp" i], [title*="whatsapp" i], [class*="whatsapp" i], [id*="whatsapp" i]');
+    candidates.forEach(function (el) {
+      if (!(el instanceof HTMLElement)) return;
+      if (!/(wa\.me|whatsapp|wa-float)/i.test(describe(el))) return;
+      /* Prefer the known real floating control. Never turn a footer/contact link into a floater. */
+      if (el.matches('.wa-float')) { el.classList.add('dvnm-v29-whatsapp-float'); return; }
+      var node = el;
+      for (var i = 0; node && i < 4; i++, node = node.parentElement) {
+        var rect = node.getBoundingClientRect();
+        var style = window.getComputedStyle(node);
+        var nearRight = rect.right >= window.innerWidth - 220;
+        var nearBottom = rect.bottom >= window.innerHeight - 240;
+        if (style.position === 'fixed' && nearRight && nearBottom && rect.width >= 26 && rect.width <= 180 && rect.height >= 26 && rect.height <= 180) {
+          node.classList.add('dvnm-v29-whatsapp-float');
+          break;
+        }
+      }
+    });
+  }
+  function tagBotFloaters(root) {
+    var scope = root || document;
+    var list = Array.prototype.slice.call(scope.querySelectorAll('[id], [class], [data-dvnm-assistant], [data-dvnm-launcher], iframe[title]'));
+    if (scope instanceof HTMLElement && scope.matches('[id], [class], [data-dvnm-assistant], [data-dvnm-launcher], iframe[title]')) list.unshift(scope);
+    list.forEach(function (el) {
+      if (!(el instanceof HTMLElement)) return;
+      var info = describe(el);
+      if (!/(dvnm|hoverbot|hoverboard|assistant|chat.?bot)/i.test(info)) return;
+      if (/(skeleton|torso|forearm|upper.?arm|shin|thigh|hand|foot|eye|head|stage|hero|orbit|backglow)/i.test(info)) return;
+      if (/(panel|window|dialog|drawer|popup|conversation.?box|chat.?panel)/i.test(info)) { el.classList.add('dvnm-v29-mobile-panel'); return; }
+      if (/(launcher|launch|fab|toggle|floating|dock|hoverbot|hoverboard|bot.?button|assistant.?button)/i.test(info)) {
+        var rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.width <= 460 && rect.height > 0 && rect.height <= 220) el.classList.add('dvnm-v29-mobile-launcher');
+      }
+    });
+  }
+  function scan(root) { tagWhatsapp(); tagBotFloaters(root || document); }
+  scan(document);
+  if ('MutationObserver' in window) {
+    var observer = new MutationObserver(function (records) {
+      records.forEach(function (record) { record.addedNodes.forEach(function (node) { if (node.nodeType === 1) scan(node); }); });
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+  window.addEventListener('resize', function () { scan(document); }, { passive: true });
+})();

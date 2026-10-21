@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker — v27 CSS robot joints, floating stars, illustrated demo gallery, luminous night theme. */
-const CACHE_NAME = 'davonium-site-v28-unified-css-bot-single-demo-pages-20261021';
+const CACHE_NAME = 'davonium-site-v29-final-20261021-210655';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
