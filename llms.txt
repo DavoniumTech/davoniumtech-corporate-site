@@ -1,6 +1,6 @@
 # Davonium Technologies
 
-Davonium Technologies develops digital products for students and everyday users and practical websites and digital experiences for small businesses.
+Davonium Technologies builds software, applications, digital products, websites, web tools, and tailored technology experiences for people and organisations worldwide.
 
 Preferred public domain: https://www.davoniumtech.com/
 
@@ -24,6 +24,6 @@ Preferred public domain: https://www.davoniumtech.com/
 We publish public guides about our products, accessibility, installation, offline availability, privacy, security, support, and search discovery. Product status describes current development stage and does not imply that all intended features are generally available.
 
 ## Demo Studio
-- Seven original DVNM demo website concepts for Nigerian businesses, makers, creators, learners, and workers: https://www.davoniumtech.com/demos/
+- Seven original DVNM sample website demonstrations for businesses, makers, creators, learners, and workers worldwide: https://www.davoniumtech.com/demos/
 - DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio

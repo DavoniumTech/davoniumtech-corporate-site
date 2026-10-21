@@ -698,3 +698,18 @@ button,a,input,textarea,select { touch-action:manipulation; }
   .hero { padding-top:30px; }
   .dvnm-panel,.install .panel { max-height:calc(100dvh - 24px); overflow:auto; }
 }
+
+
+/* v21 finish: restrained theme transitions, global footer treatment and responsive overflow guard. */
+html.theme-transition,html.theme-transition body,html.theme-transition .head,html.theme-transition .foot,html.theme-transition .card,html.theme-transition .section,html.theme-transition .btn,html.theme-transition .icon{transition:background-color .28s ease,color .28s ease,border-color .28s ease,box-shadow .28s ease}
+.foot{background:radial-gradient(ellipse at 8% 0%,rgba(104,71,232,.09),transparent 42%),radial-gradient(ellipse at 92% 16%,rgba(28,194,211,.07),transparent 34%),linear-gradient(180deg,var(--surface),var(--surface-raised));}
+.footgrid{position:relative;z-index:1}
+.footgrid>div:first-child>p:first-of-type{max-width:410px;line-height:1.7}
+.footgrid h3{letter-spacing:.015em}
+.footlinks a{width:fit-content;max-width:100%;transition:color .18s ease,transform .18s ease}
+.footlinks a:hover{transform:translateX(3px)}
+.footbottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 22px}
+img,svg,video{max-width:100%}
+html,body{max-width:100%;overflow-x:clip}
+@media(max-width:520px){.footbottom{align-items:flex-start;flex-direction:column;gap:8px}.footgrid{overflow-wrap:anywhere}.footlinks a{min-height:28px;display:inline-flex;align-items:center}}
+@media(prefers-reduced-motion:reduce){html.theme-transition,html.theme-transition body,html.theme-transition .head,html.theme-transition .foot,html.theme-transition .card,html.theme-transition .section,html.theme-transition .btn,html.theme-transition .icon,.footlinks a{transition:none!important}}

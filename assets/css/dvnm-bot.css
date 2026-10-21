@@ -328,3 +328,53 @@ body.dvnm-welcome-visible { overflow:hidden; }
 @keyframes dvnm-eye-glow { 0%,100% { filter:brightness(1); } 50% { filter:brightness(1.14); } }
 @media(max-width:650px) { .dvnm-welcome-voice-controls { grid-template-columns:minmax(0,1fr) auto; } .dvnm-welcome-voice-details { margin-inline:15px; } .dvnm-character .dvnm-chest-label { font-size:11px; } }
 @media(prefers-reduced-motion:reduce) { .dvnm-character .dvnm-head,.dvnm-character .dvnm-face::after,.dvnm-character .dvnm-eye { animation:none !important; } }
+
+
+/* v21: 3D DVNM Bot art, speech-only focus mode, and safer responsive presentation. */
+.dvnm-hero-robot{position:relative;z-index:2;isolation:isolate;height:410px;width:273px;max-width:78%;margin:0 auto 56px;border:1px solid rgba(91,219,255,.3);border-radius:26px;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,rgba(29,112,255,.38),transparent 50%),linear-gradient(150deg,#07142e,#05091b 68%,#1b1450);box-shadow:0 25px 60px rgba(14,25,77,.28),0 0 35px rgba(67,216,255,.15);animation:dvnm-hero-robot-float 5.2s ease-in-out infinite}
+.dvnm-hero-robot img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;mix-blend-mode:normal;filter:saturate(1.08) contrast(1.04)}
+.dvnm-robot-art{position:relative;display:block;width:100%;height:100%;aspect-ratio:2/3;isolation:isolate;overflow:hidden;border:1px solid rgba(82,221,255,.4);border-radius:18px;background:radial-gradient(ellipse at 50% 35%,#163a82 0,#0b1b42 45%,#050914 100%);box-shadow:0 0 25px rgba(56,197,255,.25),inset 0 0 25px rgba(75,119,255,.12);animation:dvnm-robot-idle 4.3s ease-in-out infinite}
+.dvnm-robot-art-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.09) contrast(1.03)}
+.dvnm-robot-mouth-glow{position:absolute;z-index:2;left:46.4%;top:18.1%;width:7.4%;height:1.8%;border-radius:50%;opacity:0;transform:scaleX(.75);background:#83f8ff;box-shadow:0 0 8px #83f8ff,0 0 18px #26baff;pointer-events:none}
+.dvnm-robot-art.is-speaking .dvnm-robot-mouth-glow,.dvnm-hero-robot .dvnm-robot-mouth-glow{opacity:1;animation:dvnm-image-mouth 0.28s ease-in-out infinite alternate}
+.dvnm-robot-art.is-speaking{animation:dvnm-robot-talking .72s ease-in-out infinite alternate}
+.dvnm-robot-art.is-speaking .dvnm-robot-art-image{animation:dvnm-robot-image-talk .72s ease-in-out infinite alternate}
+.dvnm-robot-light-ring{position:absolute;z-index:1;left:17%;right:17%;bottom:6%;height:8%;border:1px solid rgba(49,223,255,.5);border-radius:50%;box-shadow:0 0 24px rgba(49,223,255,.18);pointer-events:none}
+.dvnm-stage{min-height:530px}
+.dvnm-welcome-robot{display:flex;align-items:center;justify-content:center;width:190px;min-width:0;min-height:265px;margin:0 auto}
+.dvnm-welcome-robot .dvnm-robot-art{width:100%;height:auto;aspect-ratio:2/3;border-radius:22px}
+.dvnm-panel-intro .dvnm-robot-mini-frame{flex:0 0 94px;width:94px;height:auto;aspect-ratio:2/3;overflow:visible;border-radius:14px}
+.dvnm-panel-intro .dvnm-robot-mini-frame .dvnm-robot-art{width:100%;height:100%;aspect-ratio:auto;border-radius:14px;animation:none}
+.dvnm-panel-intro .dvnm-robot-art-image{object-fit:cover}
+.dvnm-launcher .dvnm-mini{background-image:url('../images/dvnm-bot-3d.webp?v=21');background-size:cover;background-position:50% 17%;border-color:rgba(104,234,255,.8);box-shadow:0 0 0 2px rgba(67,212,255,.22),0 0 18px rgba(58,197,255,.45)}
+.dvnm-launcher .dvnm-mini::before,.dvnm-launcher .dvnm-mini::after{display:none}
+.dvnm-panel.is-speaking{min-height:360px;max-height:min(78vh,560px);background:radial-gradient(ellipse at 50% 35%,#132b61,#070b1d 78%);border-color:rgba(80,218,255,.48)}
+.dvnm-panel.is-speaking .dvnm-panel-head{position:absolute;z-index:4;top:7px;right:7px;left:7px;padding:0;background:transparent;justify-content:flex-end}
+.dvnm-panel.is-speaking .dvnm-panel-head>div,.dvnm-panel.is-speaking .dvnm-panel-intro>p,.dvnm-panel.is-speaking .dvnm-panel-label,.dvnm-panel.is-speaking .dvnm-questions,.dvnm-panel.is-speaking .dvnm-answerbox,.dvnm-panel.is-speaking .dvnm-voice-settings,.dvnm-panel.is-speaking .dvnm-voice-status,.dvnm-panel.is-speaking #dvnm-bot-speak{display:none!important}
+.dvnm-panel.is-speaking .dvnm-panel-close{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.48)}
+.dvnm-panel.is-speaking .dvnm-panel-intro{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:40px 18px 10px}
+.dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-robot-mini-frame{flex:0 1 min(220px,62vw);width:min(220px,62vw);height:auto;aspect-ratio:2/3}
+.dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-robot-art{height:100%;border-radius:22px;animation:dvnm-robot-talking .72s ease-in-out infinite alternate}
+.dvnm-panel.is-speaking .dvnm-panel-actions{justify-content:center;padding:8px 18px 18px}
+.dvnm-panel.is-speaking #dvnm-bot-stop{width:100%;min-height:48px;color:#fff;background:linear-gradient(120deg,#d94e77,#9145df);border-color:rgba(255,255,255,.35)}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-heading,.dvnm-welcome-overlay.is-speaking .dvnm-welcome-details,.dvnm-welcome-overlay.is-speaking .dvnm-welcome-status,.dvnm-welcome-overlay.is-speaking .dvnm-welcome-voice-details,.dvnm-welcome-overlay.is-speaking .dvnm-welcome-footnote{display:none!important}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-card{background:radial-gradient(ellipse at 50% 30%,#132e6a,#070b1c 78%);border-color:rgba(83,220,255,.55)}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-x{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-hero{display:flex!important;justify-content:center;padding:36px 16px 8px}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-robot{width:min(280px,66vw);min-height:0;height:auto;aspect-ratio:2/3}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-robot .dvnm-robot-art{height:100%;border-radius:23px;animation:dvnm-robot-talking .72s ease-in-out infinite alternate}
+.dvnm-welcome-overlay.is-speaking .dvnm-welcome-actions{justify-content:center;padding-top:12px}
+.dvnm-welcome-overlay.is-speaking #dvnm-welcome-continue,.dvnm-welcome-overlay.is-speaking #dvnm-welcome-hear,.dvnm-welcome-overlay.is-speaking #dvnm-welcome-skip{display:none!important}
+.dvnm-welcome-overlay.is-speaking #dvnm-welcome-stop{width:min(100%,320px);min-height:48px;color:#fff;background:linear-gradient(120deg,#d94e77,#9145df);border-color:rgba(255,255,255,.35)}
+@keyframes dvnm-hero-robot-float{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-7px) rotate(.4deg)}}
+@keyframes dvnm-robot-idle{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-4px) rotate(.4deg)}}
+@keyframes dvnm-robot-talking{0%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-3px) rotate(.7deg)}100%{transform:translateY(1px) rotate(1deg)}}
+@keyframes dvnm-robot-image-talk{0%{filter:saturate(1.04) brightness(1)}100%{filter:saturate(1.18) brightness(1.06)}}
+@keyframes dvnm-image-mouth{from{opacity:.35;transform:scaleX(.62) scaleY(.8)}to{opacity:.98;transform:scaleX(1.35) scaleY(1.2)}}
+@media(max-width:760px){.dvnm-stage{min-height:470px}.dvnm-hero-robot{height:min(350px,48svh);width:auto;aspect-ratio:2/3;max-width:74%;margin-bottom:60px;border-radius:22px}.dvnm-stage-label{left:10px;right:10px;bottom:10px;gap:8px;padding:10px 11px;font-size:.72rem}.dvnm-welcome-robot{width:154px;min-height:232px}.dvnm-panel-intro .dvnm-robot-mini-frame{flex-basis:82px;width:82px}.dvnm-panel.is-speaking{width:min(360px,calc(100vw - 20px));right:0;bottom:calc(66px + env(safe-area-inset-bottom));max-height:min(74svh,520px)}.dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-robot-mini-frame{flex-basis:min(200px,58vw);width:min(200px,58vw)}}
+@media(max-width:440px){.dvnm-welcome-hero{grid-template-columns:minmax(0,1fr)!important}.dvnm-welcome-robot{width:126px;min-height:188px;margin:0 auto 7px}.dvnm-welcome-heading{text-align:left}.dvnm-welcome-actions .btn{min-height:46px}.dvnm-panel{right:0;bottom:calc(64px + env(safe-area-inset-bottom));width:min(380px,calc(100vw - 18px));max-height:min(76svh,650px)}.dvnm-launcher{min-height:52px;padding:6px 12px 6px 7px;font-size:.82rem}.dvnm-launcher .dvnm-mini{width:36px;height:36px}}
+@media(max-height:650px) and (max-width:760px){.dvnm-welcome-card{max-height:calc(100svh - 10px);overflow-y:auto}.dvnm-welcome-robot{width:96px;min-height:144px}.dvnm-welcome-hero{padding-top:14px;padding-bottom:9px}.dvnm-welcome-details{padding-top:8px}.dvnm-welcome-points{gap:3px 10px}.dvnm-panel.is-speaking{min-height:275px}}
+@media(prefers-reduced-motion:reduce){.dvnm-hero-robot,.dvnm-robot-art,.dvnm-robot-art.is-speaking,.dvnm-robot-art.is-speaking .dvnm-robot-art-image{animation:none!important}.dvnm-robot-mouth-glow{animation:none!important}}
+
+.dvnm-robot-art.waving{animation:dvnm-robot-teach 3.8s ease-in-out infinite}
+@keyframes dvnm-robot-teach{0%,100%{transform:translateY(0) rotate(-1.1deg)}30%{transform:translateY(-5px) rotate(.8deg)}60%{transform:translateY(-2px) rotate(1.2deg)}}

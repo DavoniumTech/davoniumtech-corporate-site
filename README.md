@@ -7,7 +7,7 @@ Davonium Technologies creates practical digital products and modern website expe
 ## New in this release (21 October 2026)
 
 ### DVNM Bot — animated visitor guide
-- A friendly CSS-drawn robot character with gentle floating, blinking, waving, glow, and speaking-mouth animation.
+- A 3D illustrated full-body robot character with glowing DVNM chest branding, legs, gentle floating and speaking-state animation.
 - Curated clickable questions for company information, products, services, demo websites, documentation, and contact.
 - Optional spoken answers using the browser/device speech synthesis API. Audio never starts automatically.
 - Mouth animation activates during speech; visual timing follows speech activity approximately and is not phoneme-level lip-sync.
@@ -76,7 +76,7 @@ The speech engine still depends on browser and operating-system support; web cod
 ## 21 October 2026 — DVNM Nigeria demo and QR showcase release
 
 - Renamed the seven sample website demonstrations to the Davonium-owned DVNM family: DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect.
-- Reworked sample content for Nigerian small businesses, independent workers, product makers, creators, job seekers, learners, and community skills sessions.
+- Reworked sample content for small businesses and organisations worldwide, independent workers, product makers, creators, job seekers, learners, and community skills sessions.
 - Added a unique QR PNG and an on-page QR sharing section to each demo; added a directory QR code.
 - Added a printable, non-official sample demonstration showcase record PDF and a page that clearly describes its limitations.
 - Reduced native speech volume and tuned rate/pitch; prioritised Nigerian English if the device provides it and retained written answer/link fallbacks.
@@ -87,7 +87,7 @@ Browser-native voice remains dependent on the operating system and browser. A de
 
 ### Seven DVNM-branded demonstration websites
 
-Our Demo Studio contains DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect. The sample demonstration copy is framed around Nigerian small businesses, workers, makers, creatives, learners, technology services, and community skills sessions. Every sample demonstration page has its own QR code; the directory has a separate QR code. The printable sample demonstration showcase PDF is intentionally non-official and not an accredited certificate.
+Our Demo Studio contains DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect. The sample demonstrations are framed for businesses, organisations, professionals, learners, technology teams, and community groups worldwide. Every sample demonstration page has its own QR code; the directory has a separate QR code. The printable sample demonstration showcase PDF is intentionally non-official and not an accredited certificate.
 
 
 ## 21 October 2026 — DVNM welcome and voice release

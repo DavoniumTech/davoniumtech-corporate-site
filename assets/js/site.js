@@ -48,6 +48,8 @@
   renderTheme();
   // Click cycles from system to the opposite mode, then the system's current mode, then back to system.
   if (theme) theme.addEventListener('click', () => {
+    document.documentElement.classList.add('theme-transition');
+    window.setTimeout(() => document.documentElement.classList.remove('theme-transition'), 360);
     const current = resolvedTheme();
     const systemValue = systemTheme();
     if (themePreference === 'system') {
@@ -333,15 +335,15 @@
   const botBase = botBaseMeta ? botBaseMeta.content : '.';
   const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
   const botUrl = (path) => new URL(path, botRoot).href;
-  const robotMarkup = (extra = '') => `<div class="dvnm-character ${extra}" aria-hidden="true"><span class="dvnm-antenna"></span><span class="dvnm-ear left"></span><span class="dvnm-ear right"></span><div class="dvnm-head"><div class="dvnm-face"><i class="dvnm-eye left"></i><i class="dvnm-eye right"></i><i class="dvnm-cheek left"></i><i class="dvnm-cheek right"></i><i class="dvnm-mouth"></i></div></div><span class="dvnm-neck"></span><div class="dvnm-body"><span class="dvnm-chest" aria-label="DVNM"><span class="dvnm-chest-label">DVNM</span><span class="dvnm-chest-energy" aria-hidden="true"></span></span><span class="dvnm-body-mark">DAVONIUM</span><span class="dvnm-torso-rail left" aria-hidden="true"></span><span class="dvnm-torso-rail right" aria-hidden="true"></span></div><span class="dvnm-arm left"><i class="dvnm-hand"></i></span><span class="dvnm-arm right"><i class="dvnm-hand"></i></span><span class="dvnm-leg left"><i class="dvnm-foot"></i></span><span class="dvnm-leg right"><i class="dvnm-foot"></i></span></div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=20');
+  const robotMarkup = (extra = '') => `<div class="dvnm-robot-art ${extra}" aria-hidden="true"><img class="dvnm-robot-art-image" src="${botUrl('assets/images/dvnm-bot-3d.webp?v=21')}" alt="" width="768" height="1152" loading="eager" decoding="async"><span class="dvnm-robot-mouth-glow" aria-hidden="true"></span><span class="dvnm-robot-light-ring" aria-hidden="true"></span></div>`;
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=21');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
   if (document.body && !$('#dvnm-bot-dock')) {
     const dock = document.createElement('div');
     dock.className = 'dvnm-bot-dock'; dock.id = 'dvnm-bot-dock';
-    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><span class="dvnm-mini" aria-hidden="true"></span><span>Ask DVNM Bot</span><span class="dvnm-launch-star" aria-hidden="true">✦</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi! I’m DVNM Bot, and I’m here to assist you. Choose a topic and I’ll guide you to the right place.</p></div><div class="dvnm-panel-label">What would you like to explore?</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">About Davonium</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Products and status</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Web and digital services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">Seven DVNM samples</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Documentation and offline use</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact our team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite"></p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about.html')}">Learn about the company →</a></div><details class="dvnm-voice-settings" id="dvnm-voice-settings"><summary>Voice and speaking settings</summary><div class="dvnm-voice-settings-inner"><label for="dvnm-bot-voice">Voice / person (installed on this device)<select id="dvnm-bot-voice"><option value="auto">Smooth local voice (recommended)</option></select></label><label for="dvnm-bot-volume">Speech volume <output id="dvnm-bot-volume-value" for="dvnm-bot-volume">15%</output></label><input id="dvnm-bot-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Speech volume"><label for="dvnm-bot-rate">Speaking pace <output id="dvnm-bot-rate-value" for="dvnm-bot-rate">0.86×</output></label><input id="dvnm-bot-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Speaking pace"><p>Voice options come from this device. The recommended option favours a calm English voice and uses Nigerian English when a suitable installed voice is available.</p></div></details><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Your written answer is always available. Press Hear this answer when you want spoken output.</p></section>`;
+    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><span class="dvnm-mini" aria-hidden="true"></span><span>Ask DVNM Bot</span><span class="dvnm-launch-star" aria-hidden="true">✦</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi! I’m DVNM Bot, and I’m here to assist you. Choose a topic and I’ll guide you to the right place.</p></div><div class="dvnm-panel-label">What would you like to explore?</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">About Davonium</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Products and status</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Web and digital services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">Seven DVNM samples</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Documentation and offline use</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact our team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite"></p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about')}">Learn about the company →</a></div><details class="dvnm-voice-settings" id="dvnm-voice-settings"><summary>Voice and speaking settings</summary><div class="dvnm-voice-settings-inner"><label for="dvnm-bot-voice">DVNM Voice<select id="dvnm-bot-voice" disabled><option value="auto">DVNM Voice · automatic device support</option></select></label><label for="dvnm-bot-volume">Speech volume <output id="dvnm-bot-volume-value" for="dvnm-bot-volume">15%</output></label><input id="dvnm-bot-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Speech volume"><label for="dvnm-bot-rate">Speaking pace <output id="dvnm-bot-rate-value" for="dvnm-bot-rate">0.86×</output></label><input id="dvnm-bot-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Speaking pace"><p>Only one voice option is offered: DVNM Voice. It automatically selects a compatible installed English voice and falls back to the device default when needed.</p></div></details><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Your written answer is always available. Press Hear this answer when you want spoken output.</p></section>`;
     document.body.appendChild(dock);
     const panel = $('#dvnm-bot-panel', dock), launcher = $('#dvnm-bot-launcher', dock), closeBot = $('#dvnm-bot-close', dock);
     const answer = $('#dvnm-bot-answer', dock), answerLink = $('#dvnm-bot-link', dock), statusText = $('#dvnm-bot-status', dock);
@@ -352,7 +354,7 @@
     const topics = {
       company: { text: topicText([
         'Welcome to Davonium Technologies, a technology company building useful digital experiences.',
-        'Our work brings together website engineering, practical digital products, and clear documentation.',
+        'Our work brings together website engineering, software, applications, digital products, and clear documentation for people and organisations worldwide.',
         'We aim to make technology easier to understand, access, and use.',
         'We design responsive experiences for phones, tablets, laptops, and desktop screens.',
         'We care about accessibility, page speed, readable content, and useful navigation.',
@@ -361,7 +363,7 @@
         'Those samples show the kinds of experiences we can plan and build; they are not claimed client projects.',
         'Our documentation explains how features work and what is available today.',
         'Explore the company page to learn more about our approach and direction.'
-      ]), link: 'about.html', label: 'Learn about Davonium Technologies →' },
+      ]), link: 'about', label: 'Learn about Davonium Technologies →' },
       products: { text: topicText([
         'Davonium Technologies develops digital products for communication, learning, and work.',
         'Marvel Chat is our communication product and remains under active development and testing.',
@@ -373,7 +375,7 @@
         'When a feature is a sample or under development, we label that status clearly.',
         'Visit the Products page for the current public descriptions and linked product guides.',
         'Please contact us for project questions instead of assuming an unreleased feature is live.'
-      ]), link: 'products.html', label: 'Explore our products and status →' },
+      ]), link: 'products', label: 'Explore our products and status →' },
       services: { text: topicText([
         'We plan and build responsive websites for organisations, small businesses, and growing teams.',
         'A project can include a clear homepage, service pages, contact journeys, and useful calls to action.',
@@ -385,10 +387,10 @@
         'Each project begins with audience, goals, constraints, and a realistic release scope.',
         'Demo pages help start a conversation about layout and functionality without promising an identical final build.',
         'Open Services to see the service areas and contact us to discuss the right scope.'
-      ]), link: 'services.html', label: 'Explore our services →' },
+      ]), link: 'services', label: 'Explore our services →' },
       demos: { text: topicText([
         'Our Demo Studio presents seven Davonium-branded sample website demonstrations.',
-        'DVNM Biz explores a service website for a Nigerian small business.',
+        'DVNM Biz explores a service website for a small business or professional service in any market.',
         'DVNM Growth shows a marketing page for a product, campaign, or small business.',
         'DVNM Market demonstrates product discovery and a sample retail catalogue.',
         'DVNM Creative presents a portfolio for independent creators and technical professionals.',
@@ -421,13 +423,13 @@
         'For a contact form, the website prepares an email in your own email application.',
         'If that does not open, use the published support email or WhatsApp contact.',
         'Never send passwords, one-time verification codes, API keys, or other private credentials.'
-      ]), link: 'contact.html', label: 'Contact Davonium Technologies →' }
+      ]), link: 'contact', label: 'Contact Davonium Technologies →' }
     };
     const welcomeLines = [
       'Hi, I’m DVNM Bot, the Davonium Technologies website guide.',
       'I’m here to assist you and help you find the information you need.',
       'I can introduce our company, explain our products, and guide you through our services.',
-      'I can show you seven DVNM sample website demonstrations inspired by business and work in Nigeria.',
+      'I can show you seven DVNM sample website demonstrations inspired by business, education, commerce, technology and community needs worldwide.',
       'Each sample is an illustration of a possible website experience, not a claim that it is a client project.',
       'I can point you to our documentation, product status notes, and contact details.',
       'You can explore each section at your own pace and return to the homepage at any time.',
@@ -452,7 +454,16 @@
     let selectedVoice = null;
     let selectedVoiceKey = 'auto';
     let availableVoices = [];
-    const setSpeaking = (active) => document.querySelectorAll('.dvnm-character').forEach(character => character.classList.toggle('is-speaking', active));
+    const setSpeaking = (active) => {
+      document.querySelectorAll('.dvnm-character, .dvnm-robot-art').forEach(character => character.classList.toggle('is-speaking', active));
+      if (panel) panel.classList.toggle('is-speaking', active);
+      const welcomeOverlay = $('#dvnm-welcome-overlay');
+      if (welcomeOverlay) welcomeOverlay.classList.toggle('is-speaking', active);
+      document.body.classList.toggle('dvnm-voice-active', active);
+      if (stopBtn) stopBtn.textContent = active ? '■ Cancel speech' : '■ Stop voice';
+      const welcomeStopButton = $('#dvnm-welcome-stop');
+      if (welcomeStopButton) welcomeStopButton.textContent = active ? '■ Cancel speech' : '■ Stop voice';
+    };
     const speechEngine = () => ('speechSynthesis' in window ? window.speechSynthesis : null);
     const setVoiceStatus = (message) => {
       if (statusText) statusText.textContent = message;
@@ -461,29 +472,20 @@
     };
     const refreshVoiceChoices = () => {
       const engine = speechEngine();
-      if (!engine) { const settings = $('#dvnm-voice-settings', dock); if (settings) settings.hidden = true; const welcomeSettings = $('#dvnm-welcome-voice-settings'); if (welcomeSettings) welcomeSettings.hidden = true; return; }
+      if (!engine) return;
       const voices = engine.getVoices?.() || [];
-      if (!voices.length) return;
-      availableVoices = voices;
-      const targets = [voiceSelect, $('#dvnm-welcome-voice')].filter(Boolean);
-      const oldChoice = selectedVoiceKey || voiceSelect.value || 'auto';
-      const english = voices.map((voice, index) => ({ voice, index })).filter(item => /^en(?:-|$)/i.test(item.voice.lang || ''));
-      const options = english.length ? english : voices.map((voice, index) => ({ voice, index }));
-      targets.forEach(target => {
-        const previous = target.value || oldChoice;
+      if (voices.length) availableVoices = voices;
+      selectedVoiceKey = 'auto';
+      [voiceSelect, $('#dvnm-welcome-voice')].filter(Boolean).forEach(target => {
         target.replaceChildren();
-        const auto = document.createElement('option'); auto.value = 'auto'; auto.textContent = 'Recommended smooth voice'; target.appendChild(auto);
-        options.forEach(({ voice, index }) => {
-          const option = document.createElement('option');
-          option.value = voice.voiceURI || `${voice.name}|${voice.lang}|${index}`;
-          option.textContent = `${voice.name || 'Device voice'} — ${voice.lang || 'language unknown'}${voice.localService ? ' · on device' : ''}`;
-          option.dataset.voiceIndex = String(index); target.appendChild(option);
-        });
-        if ([...target.options].some(option => option.value === previous)) target.value = previous;
-        else target.value = [...target.options].some(option => option.value === oldChoice) ? oldChoice : 'auto';
+        const option = document.createElement('option');
+        option.value = 'auto';
+        option.textContent = 'DVNM Voice · automatic device support';
+        target.appendChild(option);
+        target.value = 'auto';
+        target.disabled = true;
+        target.setAttribute('aria-label', 'DVNM Voice, automatically matched to the available device voice');
       });
-      selectedVoiceKey = voiceSelect.value || oldChoice || 'auto';
-      targets.forEach(target => { if (target.value !== selectedVoiceKey && [...target.options].some(option => option.value === selectedVoiceKey)) target.value = selectedVoiceKey; });
     };
     const chooseVoice = () => {
       try {
@@ -666,7 +668,7 @@
     const welcome = document.createElement('section');
     welcome.className = 'dvnm-welcome-overlay'; welcome.id = 'dvnm-welcome-overlay';
     welcome.hidden = true; welcome.setAttribute('role', 'dialog'); welcome.setAttribute('aria-modal', 'true'); welcome.setAttribute('aria-labelledby', 'dvnm-welcome-title');
-    welcome.innerHTML = `<div class="dvnm-welcome-card"><button type="button" class="dvnm-welcome-x" id="dvnm-welcome-x" aria-label="Skip welcome and close">×</button><div class="dvnm-welcome-hero"><div class="dvnm-welcome-robot">${robotMarkup('waving')}</div><div class="dvnm-welcome-heading"><span class="dvnm-welcome-eyebrow"><span class="dvnm-live-dot"></span> YOUR DIGITAL GUIDE</span><h2 id="dvnm-welcome-title">Hi, I’m DVNM Bot.</h2><p class="dvnm-welcome-tagline">I’m here to assist you.</p><p class="dvnm-welcome-subtitle" id="dvnm-welcome-subtitle">Welcome to Davonium Technologies. Let’s find what you came for.</p><label class="dvnm-name-label" for="dvnm-visitor-name">What may I call you? <span>Optional</span></label><input id="dvnm-visitor-name" class="dvnm-visitor-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Enter your name (optional)"><p class="dvnm-welcome-privacy">Your name is used only for this visit greeting and is not sent to a server.</p></div></div><div class="dvnm-welcome-details"><p class="dvnm-welcome-section-title">Here are a few ways I can help</p><ol class="dvnm-welcome-points">${welcomeLines.slice(1, 14).map(line => `<li>${line}</li>`).join('')}</ol></div><p class="dvnm-welcome-status" id="dvnm-welcome-status" aria-live="polite">Audio is off until you choose Hear introduction. You can skip this welcome at any time.</p><details id="dvnm-welcome-voice-settings" class="dvnm-welcome-voice-details"><summary>Choose your voice and volume before listening</summary><div class="dvnm-welcome-voice-controls"><label for="dvnm-welcome-voice">Voice / person<select id="dvnm-welcome-voice"><option value="auto">Recommended smooth voice</option></select></label><label for="dvnm-welcome-volume">Speaking volume <output id="dvnm-welcome-volume-value">15%</output></label><input id="dvnm-welcome-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Welcome speech volume"><label for="dvnm-welcome-rate">Speaking pace <output id="dvnm-welcome-rate-value">0.86×</output></label><input id="dvnm-welcome-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Welcome speech pace"><p>The available voice names come from this device. Volume and pace settings apply when you press Hear introduction.</p></div></details><div class="dvnm-welcome-actions"><button type="button" class="btn" id="dvnm-welcome-continue">Meet DVNM Bot <span aria-hidden="true">✦</span></button><button type="button" class="btn alt" id="dvnm-welcome-hear">▶ Hear introduction</button><button type="button" class="btn alt" id="dvnm-welcome-stop">■ Stop voice</button><button type="button" class="dvnm-welcome-skip" id="dvnm-welcome-skip">Skip and explore the website</button></div><p class="dvnm-welcome-footnote">Sample website demonstrations show possible experiences; each is labelled as a sample. Some cached pages work offline, but voice and connected features may not.</p></div>`;
+    welcome.innerHTML = `<div class="dvnm-welcome-card"><button type="button" class="dvnm-welcome-x" id="dvnm-welcome-x" aria-label="Skip welcome and close">×</button><div class="dvnm-welcome-hero"><div class="dvnm-welcome-robot">${robotMarkup('waving')}</div><div class="dvnm-welcome-heading"><span class="dvnm-welcome-eyebrow"><span class="dvnm-live-dot"></span> YOUR DIGITAL GUIDE</span><h2 id="dvnm-welcome-title">Hi, I’m DVNM Bot.</h2><p class="dvnm-welcome-tagline">I’m here to assist you.</p><p class="dvnm-welcome-subtitle" id="dvnm-welcome-subtitle">Welcome to Davonium Technologies. Let’s find what you came for.</p><label class="dvnm-name-label" for="dvnm-visitor-name">What may I call you? <span>Optional</span></label><input id="dvnm-visitor-name" class="dvnm-visitor-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Enter your name (optional)"><p class="dvnm-welcome-privacy">Your name is used only for this visit greeting and is not sent to a server.</p></div></div><div class="dvnm-welcome-details"><p class="dvnm-welcome-section-title">Here are a few ways I can help</p><ol class="dvnm-welcome-points">${welcomeLines.slice(1, 14).map(line => `<li>${line}</li>`).join('')}</ol></div><p class="dvnm-welcome-status" id="dvnm-welcome-status" aria-live="polite">Audio is off until you choose Hear introduction. You can skip this welcome at any time.</p><details id="dvnm-welcome-voice-settings" class="dvnm-welcome-voice-details"><summary>Set the DVNM Voice volume and speaking pace</summary><div class="dvnm-welcome-voice-controls"><label for="dvnm-welcome-voice">DVNM Voice<select id="dvnm-welcome-voice" disabled><option value="auto">DVNM Voice · automatic device support</option></select></label><label for="dvnm-welcome-volume">Speaking volume <output id="dvnm-welcome-volume-value">15%</output></label><input id="dvnm-welcome-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Welcome speech volume"><label for="dvnm-welcome-rate">Speaking pace <output id="dvnm-welcome-rate-value">0.86×</output></label><input id="dvnm-welcome-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Welcome speech pace"><p>DVNM Voice automatically uses the best available voice on this device. Volume and pace settings apply when you press Hear introduction.</p></div></details><div class="dvnm-welcome-actions"><button type="button" class="btn" id="dvnm-welcome-continue">Meet DVNM Bot <span aria-hidden="true">✦</span></button><button type="button" class="btn alt" id="dvnm-welcome-hear">▶ Hear introduction</button><button type="button" class="btn alt" id="dvnm-welcome-stop">■ Stop voice</button><button type="button" class="dvnm-welcome-skip" id="dvnm-welcome-skip">Skip and explore the website</button></div><p class="dvnm-welcome-footnote">Sample website demonstrations show possible experiences; each is labelled as a sample. Some cached pages work offline, but voice and connected features may not.</p></div>`;
     document.body.appendChild(welcome);
     refreshVoiceChoices();
     const welcomeVoiceSelect = $('#dvnm-welcome-voice', welcome);

@@ -1,35 +1,37 @@
-/* Davonium Technologies PWA service worker — v20 route recovery and offline fallback. */
-const CACHE_NAME = 'davonium-site-v20-route-recovery-20261021';
+/* Davonium Technologies PWA service worker — v21 route loop repair, 3D robot and offline fallback. */
+const CACHE_NAME = 'davonium-site-v21-route-robot-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
-  routeUrl("offline.html"),
-  routeUrl("install.html"),
-  routeUrl("products.html"),
-  routeUrl("about.html"),
-  routeUrl("contact.html"),
-  routeUrl("services.html"),
-  routeUrl("support.html"),
-  routeUrl("work.html"),
-  routeUrl("docs/index.html"),
-  routeUrl("demos/index.html"),
-  routeUrl("docs/guides/dvnm-demo-studio-qr-certificate.html"),
-  routeUrl("demos/certificate.html"),
-  routeUrl("demos/technology.html"),
-  routeUrl("demos/community.html"),
-  routeUrl("docs/guides/mobile-first-quality.html"),
-  routeUrl("docs/guides/speech-and-accessibility.html"),
-  routeUrl("docs/guides/dvnm-welcome-and-voice.html"),
-  routeUrl("docs/guides/dvnm-sample-website-planning.html"),
-  routeUrl("docs/guides/dvnm-bot-interaction-checklist.html"),
-  routeUrl("demos/business.html"),
-  routeUrl("demos/marketing.html"),
-  routeUrl("demos/shop.html"),
-  routeUrl("demos/portfolio.html"),
-  routeUrl("demos/learning.html"),
+  routeUrl("offline"),
+  routeUrl("assets/images/dvnm-bot-3d.webp?v=21"),
+  routeUrl("assets/css/dvnm-bot.css?v=21"),
+  routeUrl("install"),
+  routeUrl("products"),
+  routeUrl("about"),
+  routeUrl("contact"),
+  routeUrl("services"),
+  routeUrl("support"),
+  routeUrl("work"),
+  routeUrl("docs/"),
+  routeUrl("demos/"),
+  routeUrl("docs/guides/dvnm-demo-studio-qr-certificate"),
+  routeUrl("demos/certificate"),
+  routeUrl("demos/technology"),
+  routeUrl("demos/community"),
+  routeUrl("docs/guides/mobile-first-quality"),
+  routeUrl("docs/guides/speech-and-accessibility"),
+  routeUrl("docs/guides/dvnm-welcome-and-voice"),
+  routeUrl("docs/guides/dvnm-sample-website-planning"),
+  routeUrl("docs/guides/dvnm-bot-interaction-checklist"),
+  routeUrl("demos/business"),
+  routeUrl("demos/marketing"),
+  routeUrl("demos/shop"),
+  routeUrl("demos/portfolio"),
+  routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=20"),
+  routeUrl("assets/css/dvnm-bot.css?v=21"),
   routeUrl("demos/demos.css"),
   routeUrl("demos/demos.js"),
   routeUrl("assets/images/davonium-website-qr.png"),
@@ -91,7 +93,7 @@ async function readNavigation(request, url, cache) {
   } catch (_) {
     const cached = await cache.match(request, { ignoreSearch: true });
     if (cached) return cached;
-    const offline = await cache.match(routeUrl('offline.html'));
+    const offline = await cache.match(routeUrl('offline'));
     if (offline) return offline;
     return offlineResponse();
   }
@@ -129,9 +131,9 @@ self.addEventListener('fetch', event => {
         if (cachedHome) { event.waitUntil(refreshHome.catch(() => {})); return cachedHome; }
         try {
           const response = await refreshHome;
-          if (response.status === 404) return await cache.match(routeUrl('offline.html')) || offlineResponse();
+          if (response.status === 404) return await cache.match(routeUrl('offline')) || offlineResponse();
           return response;
-        } catch (_) { return await cache.match(routeUrl('offline.html')) || offlineResponse(); }
+        } catch (_) { return await cache.match(routeUrl('offline')) || offlineResponse(); }
       }
       return readNavigation(request, url, cache);
     })());

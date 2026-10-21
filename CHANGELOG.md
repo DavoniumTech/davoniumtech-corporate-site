@@ -1,3 +1,13 @@
+# Release v21 — Final route and DVNM Bot reliability repair
+
+- Removed the opposing extensionless-to-`.html` redirect rules that caused `ERR_TOO_MANY_REDIRECTS` under Cloudflare `auto-trailing-slash` handling.
+- Normalised internal links, canonical URLs, sitemap entries, and sample QR codes to clean page URLs.
+- Added a compressed full-body DVNM Bot illustration with legs and glowing DVNM chest branding on the homepage, welcome, and visitor guide.
+- During speech, the assistant now focuses on the animated robot and a clear Cancel Speech control rather than showing the answer transcript.
+- Exposed one logical voice option, DVNM Voice, which uses compatible device voice support and fallback; physical voices vary by browser and operating system.
+- Updated the service-worker cache to v21, added route-reliability documentation, broadened worldwide service copy, and refined footer and theme transitions.
+- Kept all seven sample demonstrations, per-demo QR images, printable showcase PDF, documentation, and existing product/status pages.
+
 # Release v20 — Static route and service-worker reliability
 
 - Fixed internal page links to point at the actual static `.html` files.
@@ -52,7 +62,7 @@
 - Replaced unrelated fictitious demo names with seven DVNM family sample demonstrations and Nigeria-relevant SME, creator, learning, product, technology, and work-community use cases.
 - Added unique scannable QR images and responsive QR panels to each demo page plus a directory QR.
 - Added certificate information page, printable non-official demo showcase PDF, and detailed documentation.
-- Tuned browser speech to a softer output level and a more neutral rate/pitch, prioritising Nigerian English when installed and keeping written fallbacks.
+- Tuned browser speech to a softer output level and a more neutral rate/pitch, using the best available English voice on the device and keeping written fallbacks.
 - Updated discoverability metadata, sitemap, and service-worker cache.
 
 ## 21 October 2026 — Welcome, voice and sample presentation

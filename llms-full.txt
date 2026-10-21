@@ -1,6 +1,6 @@
 # Davonium Technologies — Public information guide
 
-Davonium Technologies develops digital products for students and everyday users and practical websites and digital experiences for small businesses.
+Davonium Technologies builds software, applications, digital products, websites, web tools, and tailored technology experiences for people and organisations worldwide.
 
 ## Product status
 - Ready2Go Learning: in development; learning and exam practice for JAMB candidates and students. https://www.davoniumtech.com/docs/guides/ready2go-learning
@@ -56,6 +56,6 @@ Davonium Technologies develops digital products for students and everyday users 
 We keep public product status and guide links aligned. Search submission and crawler access help discovery but do not guarantee crawling, indexing, ranking, or AI citations. Privacy, terms, and browser-storage policies remain drafts pending review against our actual practices.
 
 ## Demo Studio
-- Seven original DVNM demo website concepts for Nigerian businesses, makers, creators, learners, and workers: https://www.davoniumtech.com/demos/
+- Seven original DVNM sample website demonstrations for businesses, makers, creators, learners, and workers worldwide: https://www.davoniumtech.com/demos/
 - DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
