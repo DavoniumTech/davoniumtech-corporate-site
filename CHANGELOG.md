@@ -1,3 +1,12 @@
+
+## v19 — DVNM Bot stylesheet repair (21 October 2026)
+
+- Restored `assets/css/dvnm-bot.css` as a stylesheet. The previous release accidentally shipped JavaScript content at this CSS path, causing the welcome dialog, robot panel, buttons, layout, and spacing to appear unstyled.
+- Reapplied the welcome-dialog, mobile layout, robot glow, chest branding, and voice-control styles.
+- Added `?v=19` to stylesheet links and bumped the service-worker cache to reduce the chance of browsers reusing the broken CSS response.
+- Kept the existing site pages, seven DVNM sample demonstrations, QR assets, and certificate PDF.
+- Validation required: visual checks on a real phone and desktop after deployment; built-in browser speech still depends on voices provided by each operating system/browser.
+
 # Release notes — 15 October 2026
 
 - Rewrote remaining public guidance in Davonium Technologies’ own voice and removed unnecessary descriptions of internal implementation choices.

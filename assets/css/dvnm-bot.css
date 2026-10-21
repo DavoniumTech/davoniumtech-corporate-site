@@ -1,715 +1,330 @@
-(() => {
-  'use strict';
+/* DVNM Bot + demo studio additions. Uses the existing Davonium design tokens. */
+.dvnm-feature { overflow:hidden; }
+.dvnm-feature-grid { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr); gap:clamp(28px,5vw,76px); align-items:center; }
+.dvnm-feature h2 { max-width:13ch; }
+.dvnm-feature .lead { max-width:62ch; }
+.dvnm-feature-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:26px 0 28px; padding:0; list-style:none; }
+.dvnm-feature-list li { display:flex; gap:10px; align-items:flex-start; padding:13px 14px; border:1px solid var(--line); border-radius:16px; background:var(--surface); font-size:.9rem; line-height:1.5; }
+.dvnm-feature-list li::before { content:'✦'; color:var(--purple); font-weight:900; }
+.dvnm-stage { position:relative; display:grid; place-items:center; min-height:440px; overflow:hidden; border:1px solid var(--line); border-radius:32px; background:radial-gradient(circle at 50% 37%,rgba(125,94,255,.18),transparent 43%),linear-gradient(150deg,var(--surface-solid),var(--tint)); box-shadow:var(--shadow); isolation:isolate; }
+.dvnm-stage::before,.dvnm-stage::after { content:''; position:absolute; border:1px solid rgba(112,72,245,.18); border-radius:50%; aspect-ratio:1; width:72%; animation:dvnm-orbit 24s linear infinite; }
+.dvnm-stage::after { width:88%; animation-duration:34s; animation-direction:reverse; border-style:dashed; opacity:.65; }
+.dvnm-stage-grid { position:absolute; inset:0; opacity:.34; background-image:linear-gradient(rgba(112,72,245,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(112,72,245,.10) 1px,transparent 1px); background-size:28px 28px; mask-image:radial-gradient(ellipse at center,#000 10%,transparent 75%); }
+.dvnm-stage-label { position:absolute; bottom:20px; left:20px; right:20px; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 15px; border:1px solid var(--line); border-radius:15px; color:var(--muted); background:var(--surface-solid); box-shadow:var(--shadow-sm); font-size:.8rem; }
+.dvnm-stage-label strong { display:block; color:var(--ink); font-size:.95rem; }
+.dvnm-status-dot { display:inline-block; width:9px; height:9px; margin-right:7px; border-radius:50%; background:#21c79a; box-shadow:0 0 0 5px rgba(33,199,154,.12); }
+.dvnm-character { --robot-size:1; position:relative; z-index:2; zoom:var(--robot-size,1); width:246px; height:334px; transform-origin:50% 70%; animation:dvnm-float 4.5s ease-in-out infinite; filter:drop-shadow(0 20px 16px rgba(36,22,88,.16)); }
+.dvnm-character .dvnm-antenna { position:absolute; top:0; left:119px; width:8px; height:36px; border-radius:99px; background:linear-gradient(#c6baff,#6c49ec); }
+.dvnm-character .dvnm-antenna::before { content:''; position:absolute; top:-10px; left:-7px; width:22px; height:22px; border:4px solid white; border-radius:50%; background:linear-gradient(140deg,#51e1e3,#8f75ff); box-shadow:0 0 0 4px rgba(115,78,241,.14),0 0 22px rgba(55,208,225,.45); }
+.dvnm-character .dvnm-head { position:absolute; top:28px; left:34px; width:178px; height:138px; border:5px solid #dcd5ff; border-radius:47px; background:linear-gradient(145deg,#ffffff,#e9e6ff 72%,#d9f9ff); box-shadow:inset 0 -7px 0 rgba(104,71,232,.08),0 0 0 7px rgba(104,71,232,.08); }
+.dvnm-character .dvnm-ear { position:absolute; top:75px; width:22px; height:43px; border:4px solid white; border-radius:9px; background:linear-gradient(180deg,#8d76fb,#5434ce); box-shadow:0 4px 10px rgba(64,45,140,.16); }
+.dvnm-character .dvnm-ear.left { left:18px; }
+.dvnm-character .dvnm-ear.right { right:18px; }
+.dvnm-character .dvnm-face { position:absolute; inset:15px 13px; overflow:hidden; border-radius:34px; background:linear-gradient(145deg,#2c2557,#161b3e 72%); box-shadow:inset 0 0 0 2px rgba(255,255,255,.14),inset 0 0 24px rgba(74,219,246,.12); }
+.dvnm-character .dvnm-eye { position:absolute; top:34px; width:19px; height:25px; border-radius:55% 55% 48% 48%; background:#8bf5ff; box-shadow:0 0 12px rgba(87,228,255,.65); animation:dvnm-blink 5.4s infinite; }
+.dvnm-character .dvnm-eye.left { left:31px; }
+.dvnm-character .dvnm-eye.right { right:31px; }
+.dvnm-character .dvnm-cheek { position:absolute; top:72px; width:20px; height:8px; border-radius:50%; background:rgba(255,117,176,.6); filter:blur(1px); }
+.dvnm-character .dvnm-cheek.left { left:20px; }
+.dvnm-character .dvnm-cheek.right { right:20px; }
+.dvnm-character .dvnm-mouth { position:absolute; top:75px; left:50%; width:23px; height:9px; transform:translateX(-50%); border:3px solid #9af4ff; border-top:0; border-radius:0 0 99px 99px; background:rgba(88,227,249,.08); box-shadow:0 0 9px rgba(87,228,255,.24); }
+.dvnm-character.is-speaking .dvnm-mouth { animation:dvnm-talk .19s ease-in-out infinite alternate; }
+.dvnm-character .dvnm-neck { position:absolute; z-index:-1; top:155px; left:101px; width:44px; height:30px; border-radius:0 0 13px 13px; background:linear-gradient(90deg,#d7d0ff,#fff,#c9c0ff); }
+.dvnm-character .dvnm-body { position:absolute; top:177px; left:57px; width:132px; height:111px; border:5px solid #ded8ff; border-radius:35px 35px 28px 28px; background:linear-gradient(150deg,#fff,#e6e3ff 74%,#d5f9ff); box-shadow:inset 0 -8px 0 rgba(104,71,232,.06); }
+.dvnm-character .dvnm-chest { position:absolute; top:20px; left:50%; display:grid; place-items:center; width:48px; height:48px; transform:translateX(-50%); border:3px solid white; border-radius:15px; color:white; background:linear-gradient(145deg,#36dce7,#7450ed 75%); box-shadow:0 5px 14px rgba(94,69,208,.25); font-size:19px; font-weight:950; }
+.dvnm-character .dvnm-arm { position:absolute; top:194px; width:30px; height:80px; border:5px solid #e6e0ff; border-radius:99px; background:linear-gradient(180deg,#fff,#dcd5ff); transform-origin:50% 16%; }
+.dvnm-character .dvnm-arm.left { left:33px; transform:rotate(15deg); }
+.dvnm-character .dvnm-arm.right { right:33px; transform:rotate(-16deg); }
+.dvnm-character.waving .dvnm-arm.right { animation:dvnm-wave .55s ease-in-out 3; }
+.dvnm-character .dvnm-hand { position:absolute; bottom:-8px; left:50%; width:34px; height:25px; transform:translateX(-50%); border:4px solid white; border-radius:99px; background:linear-gradient(135deg,#5fdce7,#8b71f6); }
+.dvnm-character .dvnm-leg { position:absolute; top:277px; width:34px; height:47px; border:4px solid #e4deff; border-radius:0 0 14px 14px; background:linear-gradient(180deg,#eeeaff,#fff); }
+.dvnm-character .dvnm-leg.left { left:81px; }
+.dvnm-character .dvnm-leg.right { right:81px; }
+.dvnm-character .dvnm-foot { position:absolute; bottom:0; left:-7px; width:47px; height:15px; border-radius:99px; background:linear-gradient(90deg,#5741d5,#8973ff); }
+.dvnm-spark { position:absolute; z-index:1; color:var(--purple); font-size:1.3rem; animation:dvnm-spark 3.6s ease-in-out infinite; }
+.dvnm-spark.s1 { top:23%; left:18%; } .dvnm-spark.s2 { top:36%; right:13%; animation-delay:-1.2s; } .dvnm-spark.s3 { bottom:25%; left:18%; animation-delay:-2.1s; }
+.dvnm-demo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:stretch; }
+.dvnm-demo-card { display:flex; min-width:0; flex-direction:column; overflow:hidden; padding:0; }
+.dvnm-demo-preview { position:relative; display:grid; min-height:155px; place-items:center; overflow:hidden; padding:18px; background:linear-gradient(135deg,#211346,#5135b9 58%,#21bcd2); }
+.dvnm-demo-preview::before,.dvnm-demo-preview::after { content:''; position:absolute; width:150px; height:150px; border:1px solid rgba(255,255,255,.24); border-radius:50%; }
+.dvnm-demo-preview::after { width:200px; height:200px; }
+.dvnm-preview-window { position:relative; z-index:1; width:min(100%,270px); padding:15px; border:1px solid rgba(255,255,255,.5); border-radius:12px; color:#272049; background:#fff; box-shadow:0 12px 34px rgba(9,4,32,.28); transform:rotate(-2deg); }
+.dvnm-preview-window b { display:block; margin:0 0 5px; font-size:.84rem; letter-spacing:-.03em; }
+.dvnm-preview-window span { display:block; width:75%; height:5px; margin-top:6px; border-radius:9px; background:#dfdaf6; }
+.dvnm-preview-window span:nth-last-child(1) { width:48%; background:#bff3f0; }
+.dvnm-demo-card .dvnm-demo-copy { display:flex; flex:1; flex-direction:column; padding:23px; }
+.dvnm-demo-card .dvnm-demo-copy p { color:var(--muted); line-height:1.7; }
+.dvnm-demo-card .dvnm-demo-copy .more { margin-top:auto; padding-top:12px; }
+.dvnm-qr-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,.55fr); gap:34px; align-items:center; }
+.dvnm-qr-card { display:grid; justify-items:center; gap:14px; width:min(100%,300px); margin-inline:auto; padding:20px; border:1px solid var(--line); border-radius:26px; background:#fff; box-shadow:var(--shadow); }
+.dvnm-qr-card img { width:100%; height:auto; image-rendering:pixelated; }
+.dvnm-qr-card p { margin:0; color:#41375e; font-size:.8rem; font-weight:850; text-align:center; }
+.dvnm-qr-card a { color:#5a3ad8; font-weight:800; }
+/* Shared, accessible floating assistant */
+.dvnm-bot-dock { position:fixed; z-index:1000; right:max(22px,env(safe-area-inset-right)); bottom:98px; font-family:inherit; color:var(--ink); }
+.dvnm-launcher { display:flex; align-items:center; gap:10px; min-height:58px; padding:7px 16px 7px 9px; border:1px solid rgba(255,255,255,.55); border-radius:999px; color:#fff; background:linear-gradient(120deg,#5433cf,#7b54f3 55%,#1fbfcf); box-shadow:0 12px 30px rgba(59,37,152,.34),inset 0 1px 0 rgba(255,255,255,.4); font:inherit; font-size:.87rem; font-weight:900; cursor:pointer; transition:transform .2s ease,box-shadow .2s ease; }
+.dvnm-launcher:hover { transform:translateY(-3px); box-shadow:0 17px 40px rgba(59,37,152,.38); }
+.dvnm-launcher .dvnm-mini { position:relative; display:grid; place-items:center; width:40px; height:40px; border:2px solid #dcd5ff; border-radius:14px; background:#f6f3ff; }
+.dvnm-launcher .dvnm-mini::before { content:''; width:23px; height:18px; border:2px solid #6d4bdc; border-radius:8px; background:#25214a; box-shadow:inset 0 -4px 0 rgba(255,255,255,.08); }
+.dvnm-launcher .dvnm-mini::after { content:'••'; position:absolute; top:8px; left:10px; color:#8df3ff; font-size:12px; letter-spacing:2px; }
+.dvnm-launcher .dvnm-launch-star { margin-left:2px; font-size:1.2rem; }
+.dvnm-panel { position:absolute; right:0; bottom:72px; display:flex; flex-direction:column; width:min(380px,calc(100vw - 28px)); max-height:min(78vh,680px); overflow:auto; border:1px solid var(--line-strong); border-radius:24px; background:var(--surface-solid); box-shadow:0 24px 75px rgba(21,14,58,.30); animation:dvnm-panel-in .22s ease both; }
+.dvnm-panel[hidden] { display:none; }
+.dvnm-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:17px 18px; color:#fff; background:linear-gradient(120deg,#302064,#6244d7 64%,#1aaab8); }
+.dvnm-panel-head strong { display:block; font-size:1rem; }
+.dvnm-panel-head small { display:block; margin-top:3px; color:rgba(255,255,255,.8); font-size:.75rem; }
+.dvnm-panel-close { display:grid; place-items:center; width:35px; height:35px; border:1px solid rgba(255,255,255,.35); border-radius:11px; color:#fff; background:rgba(255,255,255,.10); font-size:1.3rem; cursor:pointer; }
+.dvnm-panel-intro { display:flex; align-items:center; gap:12px; padding:17px 18px 7px; }
+.dvnm-panel-intro .dvnm-robot-mini-frame { position:relative; flex:0 0 84px; width:84px; height:114px; overflow:hidden; }
+.dvnm-panel-intro .dvnm-robot-mini-frame .dvnm-character { --robot-size:.34; zoom:.34; position:absolute; top:0; left:0; width:246px; height:334px; animation:none; }
+.dvnm-panel-intro .dvnm-character .dvnm-head { border-width:2px; }
+.dvnm-panel-intro .dvnm-character .dvnm-mouth { border-width:1.5px; }
+.dvnm-panel-intro p { margin:0; color:var(--muted); font-size:.86rem; line-height:1.55; }
+.dvnm-panel-label { padding:10px 18px 8px; color:var(--subtle); font-size:.72rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+.dvnm-questions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:0 18px 16px; }
+.dvnm-question { min-height:43px; padding:9px 10px; border:1px solid var(--line); border-radius:12px; color:var(--ink); background:var(--surface); font:inherit; font-size:.78rem; font-weight:800; text-align:left; cursor:pointer; transition:border-color .16s,background .16s,transform .16s; }
+.dvnm-question:hover,.dvnm-question[aria-pressed="true"] { border-color:var(--purple); background:var(--tint); transform:translateY(-1px); }
+.dvnm-answerbox { margin:0 18px 12px; padding:13px 14px; border:1px solid var(--line); border-radius:15px; background:var(--tint); }
+.dvnm-answerbox p { margin:0; font-size:.85rem; line-height:1.6; }
+.dvnm-answer-link { display:inline-flex; margin-top:9px; color:var(--purple-deep); font-size:.82rem; font-weight:900; }
+.dvnm-panel-actions { display:flex; flex-wrap:wrap; gap:8px; padding:0 18px 14px; }
+.dvnm-panel-actions .btn { min-height:40px; padding:9px 12px; font-size:.8rem; }
+.dvnm-voice-status { min-height:34px; margin:0; padding:10px 18px 15px; color:var(--subtle); font-size:.75rem; line-height:1.5; }
+.dvnm-panel .dvnm-character.is-speaking .dvnm-mouth { animation-duration:.15s; }
+@keyframes dvnm-float { 0%,100% { transform:translateY(0) rotate(-1deg); } 50% { transform:translateY(-11px) rotate(1deg); } }
+@keyframes dvnm-talk { from { height:5px; border-radius:50%; } to { height:22px; border-radius:45% 45% 60% 60%; background:rgba(87,228,255,.35); } }
+@keyframes dvnm-blink { 0%,43%,48%,100% { transform:scaleY(1); } 45%,46% { transform:scaleY(.1); } }
+@keyframes dvnm-wave { 0%,100% { transform:rotate(-16deg); } 50% { transform:rotate(-65deg); } }
+@keyframes dvnm-spark { 0%,100% { transform:translateY(0) scale(.8); opacity:.65; } 50% { transform:translateY(-13px) scale(1.15); opacity:1; } }
+@keyframes dvnm-orbit { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+@keyframes dvnm-panel-in { from { opacity:0; transform:translateY(10px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media(max-width:1000px) { .dvnm-demo-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:850px) { .dvnm-feature-grid,.dvnm-qr-grid { grid-template-columns:minmax(0,1fr); } .dvnm-stage { min-height:400px; } .dvnm-qr-copy { text-align:center; } .dvnm-qr-copy .cta { justify-content:center; } }
+@media(max-width:600px) { .dvnm-feature-list { grid-template-columns:minmax(0,1fr); } .dvnm-stage { min-height:365px; border-radius:24px; } .dvnm-demo-grid { grid-template-columns:minmax(0,1fr); } .dvnm-demo-preview { min-height:140px; } .dvnm-bot-dock { right:max(12px,env(safe-area-inset-right)); bottom:86px; } .dvnm-launcher { min-height:54px; padding-right:13px; } .dvnm-panel { bottom:66px; max-height:min(74vh,640px); } .dvnm-stage-label { left:12px; right:12px; bottom:12px; font-size:.72rem; } }
+@media(prefers-reduced-motion:reduce) { .dvnm-character,.dvnm-spark,.dvnm-stage::before,.dvnm-stage::after,.dvnm-character .dvnm-eye,.dvnm-character.is-speaking .dvnm-mouth,.dvnm-panel { animation:none !important; } .dvnm-launcher,.dvnm-question { transition:none !important; } }
 
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const safeStore = {
-    get(key) { try { return localStorage.getItem(key); } catch (_) { return null; } },
-    set(key, value) { try { localStorage.setItem(key, value); } catch (_) {} }
-  };
-
-  // Copyright year stays current without changing any published copy.
-  const year = $('#year');
-  if (year) year.textContent = String(new Date().getFullYear());
-
-  // Theme follows the device by default. Only a deliberate choice is saved.
-  // The old davonium-theme key was also written on first load, so ignore it during migration.
-  const theme = $('#theme-toggle');
-  const themeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-  const systemTheme = () => themeMedia && themeMedia.matches ? 'dark' : 'light';
-  let themePreference = safeStore.get('davonium-theme-choice');
-  if (!['light', 'dark'].includes(themePreference)) themePreference = 'system';
-  const resolvedTheme = () => themePreference === 'system' ? systemTheme() : themePreference;
-  const renderTheme = () => {
-    const value = resolvedTheme();
-    const systemValue = systemTheme();
-    document.documentElement.dataset.theme = value;
-    const themeColor = $('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#090b14' : '#6847e8');
-    if (theme) {
-      const other = value === 'dark' ? 'light' : 'dark';
-      theme.textContent = value === 'dark' ? '☀' : '☾';
-      let label;
-      let title;
-      if (themePreference === 'system') {
-        label = `Switch to ${other} theme; currently following system appearance`;
-        title = `Following system appearance (${value}). Click to use ${other} theme.`;
-      } else if (themePreference === systemValue) {
-        label = `Use system appearance; currently showing ${value}`;
-        title = `Manual ${value} theme. Click to return to system appearance.`;
-      } else {
-        label = `Switch to ${systemValue} theme; manual preference is ${value}`;
-        title = `Manual ${value} theme. Click to switch to ${systemValue}; click again to follow the system.`;
-      }
-      theme.setAttribute('aria-label', label);
-      theme.setAttribute('title', title);
-    }
-  };
-  renderTheme();
-  // Click cycles from system to the opposite mode, then the system's current mode, then back to system.
-  if (theme) theme.addEventListener('click', () => {
-    const current = resolvedTheme();
-    const systemValue = systemTheme();
-    if (themePreference === 'system') {
-      themePreference = current === 'dark' ? 'light' : 'dark';
-    } else if (themePreference !== systemValue) {
-      themePreference = systemValue;
-    } else {
-      themePreference = 'system';
-    }
-    safeStore.set('davonium-theme-choice', themePreference);
-    renderTheme();
-  });
-  if (themeMedia) {
-    const onSystemThemeChange = () => { if (themePreference === 'system') renderTheme(); };
-    if (typeof themeMedia.addEventListener === 'function') themeMedia.addEventListener('change', onSystemThemeChange);
-    else if (typeof themeMedia.addListener === 'function') themeMedia.addListener(onSystemThemeChange);
-  }
-
-  // Mobile menu: close after navigation, outside click, or Escape; keep the existing page links unchanged.
-  const menu = $('#menu-toggle');
-  const nav = $('#primary-nav');
-  const closeMenu = () => {
-    if (!menu || !nav) return;
-    nav.classList.remove('open');
-    menu.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-label', 'Open navigation');
-    menu.textContent = '☰';
-  };
-  if (menu && nav) {
-    menu.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const open = nav.classList.toggle('open');
-      menu.setAttribute('aria-expanded', String(open));
-      menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-      menu.textContent = open ? '×' : '☰';
-    });
-    $$('a', nav).forEach(link => link.addEventListener('click', closeMenu));
-    document.addEventListener('click', event => {
-      if (nav.classList.contains('open') && !nav.contains(event.target) && !menu.contains(event.target)) closeMenu();
-    });
-    window.addEventListener('resize', () => { if (window.innerWidth > 1050) closeMenu(); }, { passive: true });
-  }
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-
-  // Slim scroll progress line for long pages and documentation.
-  const progress = document.createElement('div');
-  progress.className = 'scroll-progress';
-  progress.setAttribute('aria-hidden', 'true');
-  document.body.prepend(progress);
-  let progressQueued = false;
-  const updateProgress = () => {
-    const root = document.documentElement;
-    const available = Math.max(1, root.scrollHeight - window.innerHeight);
-    progress.style.transform = `scaleX(${Math.min(1, Math.max(0, window.scrollY / available))})`;
-    progressQueued = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!progressQueued) {
-      progressQueued = true;
-      (window.requestAnimationFrame || (fn => setTimeout(fn, 16)))(updateProgress);
-    }
-  }, { passive: true });
-  window.addEventListener('resize', updateProgress, { passive: true });
-  updateProgress();
-
-  // Gentle reveal-on-scroll. If reduced motion is requested, content stays fully visible.
-  const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const lowPower = Boolean((connection && connection.saveData) || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 2));
-  if (!reduceMotion && !lowPower && 'IntersectionObserver' in window) {
-    const selector = window.innerWidth <= 650
-      ? '.hero-grid, .principles, .section-head, .card, .band, .pagehero .wrap'
-      : '.hero-grid, .principles, .section-head, .card, .band, .quote, .notice, .steps .step, .pagehero .wrap, .prose > h2, .checks li';
-    const revealTargets = $$(selector).slice(0, 54);
-    if (revealTargets.length) {
-      revealTargets.forEach((element, index) => {
-        element.dataset.reveal = 'true';
-        element.style.setProperty('--reveal-index', String(index % 4));
-      });
-      document.body.classList.add('motion-ready');
-      const observer = new IntersectionObserver((entries, instance) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            instance.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
-      revealTargets.forEach(element => observer.observe(element));
-    }
-  }
-
-  // Install invitation: visible navigation affordance everywhere, with a polite recurring offer on key entry pages.
-  let promptEvent = null;
-  const dialog = $('#install-dialog');
-  const installButton = $('#install-action');
-  const status = $('#install-status');
-  let lastFocus = null;
-  const invitationKey = 'davonium-install-invitation-dismissed-at-v4';
-  const installedKey = 'davonium-install-completed-v3';
-  const invitationInterval = 3 * 24 * 60 * 60 * 1000;
-  const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-  const markInvitationDismissed = () => safeStore.set(invitationKey, String(Date.now()));
-  const show = () => {
-    if (!dialog || standalone() || safeStore.get(installedKey) === 'yes') return;
-    lastFocus = document.activeElement;
-    dialog.classList.add('open');
-    document.body.classList.add('install-dialog-open');
-    document.body.style.overflow = 'hidden';
-    window.setTimeout(() => installButton && installButton.focus(), 25);
-  };
-  const hide = (recordDismissal = true) => {
-    if (!dialog) return;
-    dialog.classList.remove('open');
-    document.body.classList.remove('install-dialog-open');
-    document.body.style.overflow = '';
-    if (recordDismissal) markInvitationDismissed();
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-  };
-  window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    promptEvent = event;
-  });
-  window.addEventListener('appinstalled', () => {
-    promptEvent = null;
-    safeStore.set(installedKey, 'yes');
-    markInvitationDismissed();
-    if (status) status.textContent = 'Davonium Technologies has been installed on this device.';
-    hide(false);
-  });
-  const manualInstallHelp = () => {
-    const ua = navigator.userAgent || '';
-    if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-      return 'To install on iPhone or iPad, open this site in Safari, tap Share, choose Add to Home Screen, then confirm.';
-    }
-    if (/Android/i.test(ua)) return 'Open the browser menu and choose Install app or Add to Home screen. Your browser may use a different label.';
-    return 'In a compatible desktop browser, open the browser menu or address bar and choose Install page as app. The option varies by browser.';
-  };
-  async function runInstall(statusElement = status, button = installButton) {
-    if (standalone()) {
-      if (statusElement) statusElement.textContent = 'This website is already running in its installed app window.';
-      return;
-    }
-    if (!promptEvent) {
-      if (statusElement) statusElement.textContent = manualInstallHelp();
-      return;
-    }
-    try {
-      const event = promptEvent;
-      promptEvent = null;
-      await event.prompt();
-      const choice = await event.userChoice;
-      if (statusElement) statusElement.textContent = choice && choice.outcome === 'accepted'
-        ? 'Installation was accepted by your browser.'
-        : 'Installation was not completed. You can try again from the browser menu.';
-      if (choice && choice.outcome === 'accepted') {
-        if (button) button.textContent = 'Installation accepted';
-        markInvitationDismissed();
-      }
-      if (dialog && dialog.classList.contains('open')) hide();
-    } catch (_) {
-      if (statusElement) statusElement.textContent = manualInstallHelp();
-    }
-  }
-  if (installButton) installButton.addEventListener('click', () => runInstall());
-  const pageInstall = $('#install-page-action');
-  if (pageInstall) pageInstall.addEventListener('click', () => runInstall($('#install-page-status'), pageInstall));
-  const close = $('#install-close');
-  const continueButton = $('#install-continue');
-  if (close) close.addEventListener('click', () => hide());
-  if (continueButton) continueButton.addEventListener('click', () => hide());
-  if (dialog) {
-    dialog.addEventListener('click', event => { if (event.target === dialog) hide(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialog.classList.contains('open')) hide(); });
-  }
-  // The revised invitation is shown again for this release; dismissals are respected for three days.
-  const page = document.body.dataset.page || '';
-  const invitePage = page === 'home' || page === 'products';
-  const dismissedAt = Number(safeStore.get(invitationKey) || 0);
-  const invitationDue = !dismissedAt || (Date.now() - dismissedAt) >= invitationInterval;
-  if (dialog && invitePage && invitationDue && !standalone() && safeStore.get(installedKey) !== 'yes') {
-    window.setTimeout(() => {
-      if ((!Number(safeStore.get(invitationKey) || 0) || Date.now() - Number(safeStore.get(invitationKey) || 0) >= invitationInterval)
-          && !standalone() && safeStore.get(installedKey) !== 'yes') show();
-    }, 2100);
-  }
-
-  // Keep keyboard users inside the dialog while it is open.
-  if (dialog) dialog.addEventListener('keydown', event => {
-    if (event.key !== 'Tab' || !dialog.classList.contains('open')) return;
-    const focusable = $$('button, a[href]', dialog).filter(el => !el.hasAttribute('disabled'));
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-  });
-
-  // Documentation search remains local, instant, and compatible with offline use.
-  const search = $('#docs-search');
-  const clear = $('#docs-clear');
-  if (search) {
-    const cards = $$('.doc-card');
-    const groups = $$('.doc-group');
-    const count = $('#docs-result-count');
-    const filter = () => {
-      const query = search.value.trim().toLowerCase();
-      let matches = 0;
-      cards.forEach(card => {
-        const haystack = `${card.dataset.search || ''} ${card.textContent || ''}`.toLowerCase();
-        const hit = !query || haystack.includes(query);
-        card.classList.toggle('hidden', !hit);
-        if (hit) matches++;
-      });
-      groups.forEach(group => group.classList.toggle('hidden', !$$('.doc-card:not(.hidden)', group).length));
-      if (count) count.textContent = query ? `${matches} ${matches === 1 ? 'guide' : 'guides'} match “${search.value.trim()}”.` : `Browse all ${cards.length} published guides.`;
-      let empty = $('#docs-empty');
-      if (!matches) {
-        if (!empty) {
-          empty = document.createElement('div');
-          empty.id = 'docs-empty';
-          empty.className = 'empty';
-          empty.textContent = 'No guides matched. Try a broader term or clear the search.';
-          $('#docs-results')?.appendChild(empty);
-        }
-        empty?.classList.remove('hidden');
-      } else if (empty) empty.classList.add('hidden');
-    };
-    search.addEventListener('input', filter);
-    if (clear) clear.addEventListener('click', () => { search.value = ''; filter(); search.focus(); });
-    filter();
-  }
-
-  // Keep product-to-company navigation contextual when a visitor asks about Nexus.
-  const contactTopic = $('#contact-topic');
-  const requestedTopic = new URLSearchParams(location.search).get('topic');
-  const topicMap = {
-    nexus: 'Product question',
-    'learning-product': 'Product question',
-    website: 'Website project',
-    'marketing-website': 'Website project',
-    'online-store': 'Website project',
-    'portfolio-website': 'Website project',
-    'dvnm-bot': 'Website project',
-    'website-demo-studio': 'Website project'
-  };
-  if (contactTopic && requestedTopic && topicMap[requestedTopic.toLowerCase()]) {
-    contactTopic.value = topicMap[requestedTopic.toLowerCase()];
-  }
-
-  // Static contact form opens a prepared email; it never claims to submit a ticket server-side.
-  const form = $('#contact-form');
-  if (form) form.addEventListener('submit', event => {
-    event.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const topic = String(data.get('topic') || 'Enquiry');
-    const message = String(data.get('message') || '').trim();
-    const subject = `Davonium Technologies enquiry: ${topic}`;
-    const body = `Name: ${name}\nReply email: ${email}\nTopic: ${topic}\n\n${message}`;
-    const feedback = $('#contact-status');
-    if (feedback) feedback.textContent = 'Your email app should open with a prepared message. Review it and press Send there. If no app opens, email support@davoniumtech.com directly.';
-    window.location.href = `mailto:support@davoniumtech.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
-
-  // One-tap contact action; uses the company's published WhatsApp number and does not replace the existing contact links.
-  if (!$('.wa-float')) {
-    const contact = document.createElement('a');
-    contact.className = 'wa-float';
-    contact.href = 'https://wa.me/2348032076924';
-    contact.target = '_blank';
-    contact.rel = 'noopener noreferrer';
-    contact.setAttribute('aria-label', 'Talk to Davonium Technologies on WhatsApp at +234 803 207 6924');
-    contact.title = 'Chat on WhatsApp'; contact.dataset.label = 'Chat on WhatsApp'; contact.innerHTML = '<svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.83 3 3 8.78 3 15.91c0 2.29.61 4.52 1.74 6.49L3.1 29l6.79-1.78a13.1 13.1 0 0 0 6.12 1.55h.01c7.19 0 13.03-5.78 13.03-12.91 0-3.46-1.36-6.71-3.83-9.15A13.02 13.02 0 0 0 16.04 3Zm.01 23.6h-.01a10.9 10.9 0 0 1-5.55-1.5l-.4-.24-4.03 1.06 1.08-3.9-.26-.4a10.65 10.65 0 0 1-1.64-5.7c0-5.9 4.85-10.7 10.81-10.7 2.89 0 5.61 1.11 7.65 3.13a10.57 10.57 0 0 1 3.17 7.57c0 5.9-4.85 10.7-10.82 10.7Zm5.94-8.02c-.32-.16-1.9-.93-2.2-1.04-.29-.1-.51-.16-.73.16-.21.32-.84 1.04-1.03 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.58-1.59-.95-.84-1.59-1.88-1.78-2.2-.19-.32-.02-.49.14-.65.14-.14.32-.38.49-.57.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.73-1.74-1-2.39-.26-.63-.53-.54-.73-.55h-.62c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66s1.14 3.09 1.3 3.3c.16.21 2.24 3.39 5.43 4.76.76.33 1.36.53 1.83.68.77.24 1.47.21 2.02.13.62-.09 1.9-.77 2.17-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.62-.38Z"/></svg><span class="wa-sr">Chat with Davonium Technologies on WhatsApp</span>';
-    document.body.appendChild(contact);
-  }
+body.install-dialog-open .dvnm-bot-dock { opacity:0; pointer-events:none; }
+@media print { .dvnm-bot-dock { display:none !important; } }
 
 
-  // DVNM Bot: browser-native speech, explicit user activation, and simple site navigation.
-  // No audio starts automatically and no visitor content is sent to an external service.
-  const botBaseMeta = $('meta[name="site-base"]');
-  const botBase = botBaseMeta ? botBaseMeta.content : '.';
-  const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
-  const botUrl = (path) => new URL(path, botRoot).href;
-  const robotMarkup = (extra = '') => `<div class="dvnm-character ${extra}" aria-hidden="true"><span class="dvnm-antenna"></span><span class="dvnm-ear left"></span><span class="dvnm-ear right"></span><div class="dvnm-head"><div class="dvnm-face"><i class="dvnm-eye left"></i><i class="dvnm-eye right"></i><i class="dvnm-cheek left"></i><i class="dvnm-cheek right"></i><i class="dvnm-mouth"></i></div></div><span class="dvnm-neck"></span><div class="dvnm-body"><span class="dvnm-chest" aria-label="DVNM"><span class="dvnm-chest-label">DVNM</span><span class="dvnm-chest-energy" aria-hidden="true"></span></span><span class="dvnm-body-mark">DAVONIUM</span><span class="dvnm-torso-rail left" aria-hidden="true"></span><span class="dvnm-torso-rail right" aria-hidden="true"></span></div><span class="dvnm-arm left"><i class="dvnm-hand"></i></span><span class="dvnm-arm right"><i class="dvnm-hand"></i></span><span class="dvnm-leg left"><i class="dvnm-foot"></i></span><span class="dvnm-leg right"><i class="dvnm-foot"></i></span></div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css');
-  if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
-    const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
-  }
-  if (document.body && !$('#dvnm-bot-dock')) {
-    const dock = document.createElement('div');
-    dock.className = 'dvnm-bot-dock'; dock.id = 'dvnm-bot-dock';
-    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><span class="dvnm-mini" aria-hidden="true"></span><span>Ask DVNM Bot</span><span class="dvnm-launch-star" aria-hidden="true">✦</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi! I’m DVNM Bot, and I’m here to assist you. Choose a topic and I’ll guide you to the right place.</p></div><div class="dvnm-panel-label">What would you like to explore?</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">About Davonium</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Products and status</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Web and digital services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">Seven DVNM samples</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Documentation and offline use</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact our team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite"></p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about')}">Learn about the company →</a></div><details class="dvnm-voice-settings" id="dvnm-voice-settings"><summary>Voice and speaking settings</summary><div class="dvnm-voice-settings-inner"><label for="dvnm-bot-voice">Voice / person (installed on this device)<select id="dvnm-bot-voice"><option value="auto">Smooth local voice (recommended)</option></select></label><label for="dvnm-bot-volume">Speech volume <output id="dvnm-bot-volume-value" for="dvnm-bot-volume">15%</output></label><input id="dvnm-bot-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Speech volume"><label for="dvnm-bot-rate">Speaking pace <output id="dvnm-bot-rate-value" for="dvnm-bot-rate">0.86×</output></label><input id="dvnm-bot-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Speaking pace"><p>Voice options come from this device. The recommended option favours a calm English voice and uses Nigerian English when a suitable installed voice is available.</p></div></details><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Your written answer is always available. Press Hear this answer when you want spoken output.</p></section>`;
-    document.body.appendChild(dock);
-    const panel = $('#dvnm-bot-panel', dock), launcher = $('#dvnm-bot-launcher', dock), closeBot = $('#dvnm-bot-close', dock);
-    const answer = $('#dvnm-bot-answer', dock), answerLink = $('#dvnm-bot-link', dock), statusText = $('#dvnm-bot-status', dock);
-    const speakBtn = $('#dvnm-bot-speak', dock), stopBtn = $('#dvnm-bot-stop', dock);
-    const voiceSelect = $('#dvnm-bot-voice', dock), volumeControl = $('#dvnm-bot-volume', dock), rateControl = $('#dvnm-bot-rate', dock);
-    const volumeOutput = $('#dvnm-bot-volume-value', dock), rateOutput = $('#dvnm-bot-rate-value', dock);
-    const topicText = (lines) => lines.join('\n');
-    const topics = {
-      company: { text: topicText([
-        'Welcome to Davonium Technologies, a technology company building useful digital experiences.',
-        'Our work brings together website engineering, practical digital products, and clear documentation.',
-        'We aim to make technology easier to understand, access, and use.',
-        'We design responsive experiences for phones, tablets, laptops, and desktop screens.',
-        'We care about accessibility, page speed, readable content, and useful navigation.',
-        'Our public website explains the company, our service areas, and product development status.',
-        'The DVNM Demo Studio contains seven original sample website demonstrations.',
-        'Those samples show the kinds of experiences we can plan and build; they are not claimed client projects.',
-        'Our documentation explains how features work and what is available today.',
-        'Explore the company page to learn more about our approach and direction.'
-      ]), link: 'about', label: 'Learn about Davonium Technologies →' },
-      products: { text: topicText([
-        'Davonium Technologies develops digital products for communication, learning, and work.',
-        'Marvel Chat is our communication product and remains under active development and testing.',
-        'Davonium Nexus is a developing workspace concept for clearer project coordination and handoffs.',
-        'Ready2Go Learning is under development and is not presented as a public production launch.',
-        'We publish the status of these products so visitors can understand what is available.',
-        'A product page may explain the purpose and direction without implying every feature is released.',
-        'Our team prioritises reliability, safety, understandable interfaces, and a practical first release.',
-        'When a feature is a sample or under development, we label that status clearly.',
-        'Visit the Products page for the current public descriptions and linked product guides.',
-        'Please contact us for project questions instead of assuming an unreleased feature is live.'
-      ]), link: 'products', label: 'Explore our products and status →' },
-      services: { text: topicText([
-        'We plan and build responsive websites for organisations, small businesses, and growing teams.',
-        'A project can include a clear homepage, service pages, contact journeys, and useful calls to action.',
-        'We can design campaign landing pages that explain an offer and guide visitors to the next step.',
-        'We also plan catalogue and shop experiences, while payment processing is scoped separately.',
-        'Progressive web app work can include installability and selected offline access where appropriate.',
-        'Technical SEO foundations include page titles, descriptions, canonical URLs, structured data, and sitemaps.',
-        'We value readable documentation, accessibility, fast loading, and graceful error states.',
-        'Each project begins with audience, goals, constraints, and a realistic release scope.',
-        'Demo pages help start a conversation about layout and functionality without promising an identical final build.',
-        'Open Services to see the service areas and contact us to discuss the right scope.'
-      ]), link: 'services', label: 'Explore our services →' },
-      demos: { text: topicText([
-        'Our Demo Studio presents seven Davonium-branded sample website demonstrations.',
-        'DVNM Biz explores a service website for a Nigerian small business.',
-        'DVNM Growth shows a marketing page for a product, campaign, or small business.',
-        'DVNM Market demonstrates product discovery and a sample retail catalogue.',
-        'DVNM Creative presents a portfolio for independent creators and technical professionals.',
-        'DVNM Skills explores learning and practical skills-development content.',
-        'DVNM Digital showcases the Davonium Technologies brand and digital service pathways.',
-        'DVNM Connect demonstrates community, work, and skills-sharing activities.',
-        'Each sample has its own page and QR code so visitors can open it quickly on a phone.',
-        'These are illustrative samples, not claims of commissioned client work or live production services.'
-      ]), link: 'demos/', label: 'Explore the seven sample demonstrations →' },
-      docs: { text: topicText([
-        'Our documentation is written by Davonium Technologies to help visitors understand our work.',
-        'It covers company information, our product status, website delivery, and how to contact us.',
-        'Engineering guides explain accessibility, security basics, performance, browser compatibility, and SEO.',
-        'The DVNM Bot guide explains voice controls, curated answers, privacy, and device limitations.',
-        'Demo Studio guides explain sample scope, QR codes, and the non-official showcase record.',
-        'The website uses a service worker to cache selected pages and assets after they are available online.',
-        'Some visited or pre-cached pages may remain available offline when the browser retains its cache.',
-        'Offline access does not mean contact delivery, hosted services, voice synthesis, or every interaction works offline.',
-        'Open the install page for help adding the site to a compatible device.',
-        'Visit Documentation to search the guides and read the details at your own pace.'
-      ]), link: 'docs/', label: 'Browse the documentation library →' },
-      contact: { text: topicText([
-        'We welcome enquiries about websites, digital products, product demonstrations, and technical project needs.',
-        'Tell us what your organisation does and who the website or product is for.',
-        'Share the main goal, the pages or features you need, and your preferred launch window.',
-        'A budget range can help us discuss a realistic first release and priorities.',
-        'You can point our team to a DVNM sample that resembles the direction you have in mind.',
-        'We can then discuss how a real project would differ from that sample.',
-        'Use the contact page to see the available ways to reach Davonium Technologies.',
-        'For a contact form, the website prepares an email in your own email application.',
-        'If that does not open, use the published support email or WhatsApp contact.',
-        'Never send passwords, one-time verification codes, API keys, or other private credentials.'
-      ]), link: 'contact', label: 'Contact Davonium Technologies →' }
-    };
-    const welcomeLines = [
-      'Hi, I’m DVNM Bot, the Davonium Technologies website guide.',
-      'I’m here to assist you and help you find the information you need.',
-      'I can introduce our company, explain our products, and guide you through our services.',
-      'I can show you seven DVNM sample website demonstrations inspired by business and work in Nigeria.',
-      'Each sample is an illustration of a possible website experience, not a claim that it is a client project.',
-      'I can point you to our documentation, product status notes, and contact details.',
-      'You can explore each section at your own pace and return to the homepage at any time.',
-      'The website QR code and the demo QR codes make it easy to open pages on another device.',
-      'Selected pages and assets may work offline after the site has been loaded and cached.',
-      'Contact delivery, live services, and every interactive action are not guaranteed to work without a connection.',
-      'If you want to hear me, press Hear introduction or Hear this answer; I never start speaking automatically.',
-      'You can choose a voice installed on your device and lower the speech volume in my settings.',
-      'You may enter your name so I can greet you, but it is optional and stays only for this page session.',
-      'Now choose Meet DVNM Bot to start exploring, or Skip to go straight to the website.'
-    ];
-    const welcomeIntroText = () => {
-      const fieldName = String($('#dvnm-visitor-name')?.value || visitorName || '').trim().slice(0, 40);
-      const lines = [...welcomeLines];
-      lines[0] = fieldName
-        ? `Hello, ${fieldName}. I’m DVNM Bot, the Davonium Technologies website guide.`
-        : 'Hi, I’m DVNM Bot, the Davonium Technologies website guide.';
-      return topicText(lines);
-    };
-    let visitorName = '';
-    let selectedAnswer = topics.company.text;
-    let selectedVoice = null;
-    let selectedVoiceKey = 'auto';
-    let availableVoices = [];
-    const setSpeaking = (active) => document.querySelectorAll('.dvnm-character').forEach(character => character.classList.toggle('is-speaking', active));
-    const speechEngine = () => ('speechSynthesis' in window ? window.speechSynthesis : null);
-    const setVoiceStatus = (message) => {
-      if (statusText) statusText.textContent = message;
-      const welcomeStatus = $('#dvnm-welcome-status');
-      if (welcomeStatus) welcomeStatus.textContent = message;
-    };
-    const refreshVoiceChoices = () => {
-      const engine = speechEngine();
-      if (!engine) { const settings = $('#dvnm-voice-settings', dock); if (settings) settings.hidden = true; return; }
-      const voices = engine.getVoices?.() || [];
-      if (!voices.length) return;
-      availableVoices = voices;
-      const targets = [voiceSelect, $('#dvnm-welcome-voice')].filter(Boolean);
-      const oldChoice = selectedVoiceKey || voiceSelect.value || 'auto';
-      const english = voices.map((voice, index) => ({ voice, index })).filter(item => /^en(?:-|$)/i.test(item.voice.lang || ''));
-      const options = english.length ? english : voices.map((voice, index) => ({ voice, index }));
-      targets.forEach(target => {
-        const previous = target.value || oldChoice;
-        target.replaceChildren();
-        const auto = document.createElement('option'); auto.value = 'auto'; auto.textContent = 'Recommended smooth voice'; target.appendChild(auto);
-        options.forEach(({ voice, index }) => {
-          const option = document.createElement('option');
-          option.value = voice.voiceURI || `${voice.name}|${voice.lang}|${index}`;
-          option.textContent = `${voice.name || 'Device voice'} — ${voice.lang || 'language unknown'}${voice.localService ? ' · on device' : ''}`;
-          option.dataset.voiceIndex = String(index); target.appendChild(option);
-        });
-        if ([...target.options].some(option => option.value === previous)) target.value = previous;
-        else target.value = [...target.options].some(option => option.value === oldChoice) ? oldChoice : 'auto';
-      });
-      selectedVoiceKey = voiceSelect.value || oldChoice || 'auto';
-      targets.forEach(target => { if (target.value !== selectedVoiceKey && [...target.options].some(option => option.value === selectedVoiceKey)) target.value = selectedVoiceKey; });
-    };
-    const chooseVoice = () => {
-      try {
-        const voices = speechEngine()?.getVoices?.() || availableVoices;
-        if (!voices.length) return null;
-        if (selectedVoiceKey !== 'auto') {
-          const chosen = voices.find((voice, index) => (voice.voiceURI || `${voice.name}|${voice.lang}|${index}`) === selectedVoiceKey);
-          if (chosen) return chosen;
-        }
-        const english = voices.filter(voice => /^en(?:-|$)/i.test(voice.lang || ''));
-        const pool = english.length ? english : voices;
-        // Prefer a smoother voice that is already installed on the device for faster start-up
-        // and better offline resilience. Voice names are only hints, not a guarantee of accent.
-        const local = pool.filter(voice => voice.localService);
-        const softer = voice => /samantha|ava|aria|jenny|sonia|serena|zira|victoria|susan|karen|hazel|emma|joanna|libby|tessa|moira|fiona/i.test(voice.name || '');
-        const nigerian = voice => /^en-NG$/i.test(voice.lang || '');
-        const british = voice => /^en-GB/i.test(voice.lang || '');
-        const american = voice => /^en-US/i.test(voice.lang || '');
-        return local.find(softer)
-          || local.find(nigerian)
-          || local.find(british)
-          || local.find(american)
-          || local[0]
-          || pool.find(softer)
-          || pool.find(nigerian)
-          || pool.find(british)
-          || pool[0]
-          || null;
-      } catch (_) { return null; }
-    };
-    const clearSpeechTimers = () => {
-      if (window.__dvnmVoiceStartTimer) window.clearTimeout(window.__dvnmVoiceStartTimer);
-      if (window.__dvnmVoiceWatchdog) window.clearTimeout(window.__dvnmVoiceWatchdog);
-      window.__dvnmVoiceStartTimer = 0; window.__dvnmVoiceWatchdog = 0;
-    };
-    let speechRun = 0;
-    let intentionallyStopped = false;
-    const stopSpeechOnly = () => {
-      speechRun += 1; intentionallyStopped = true; clearSpeechTimers();
-      const engine = speechEngine();
-      if (engine && (engine.speaking || engine.pending)) { try { engine.cancel(); } catch (_) {} }
-      setSpeaking(false); if (speakBtn) speakBtn.disabled = false;
-    };
-    const stopVoice = (message = 'Voice stopped.') => { stopSpeechOnly(); setVoiceStatus(message); };
-    const showPanel = (open) => {
-      panel.hidden = !open; launcher.setAttribute('aria-expanded', String(open));
-      if (open) { const firstQuestion = $('.dvnm-question', dock); if (firstQuestion) firstQuestion.focus({ preventScroll: true }); }
-      else stopVoice('DVNM Bot closed. Voice stopped. Your written answer remains available.');
-    };
-    launcher.addEventListener('click', () => showPanel(panel.hidden));
-    closeBot.addEventListener('click', () => { showPanel(false); launcher.focus(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) { showPanel(false); launcher.focus(); } });
-    $$('[data-dvnm-topic]', dock).forEach(button => button.addEventListener('click', () => {
-      const topic = topics[button.dataset.dvnmTopic]; if (!topic) return;
-      selectedAnswer = topic.text; answer.textContent = topic.text; answerLink.href = botUrl(topic.link); answerLink.textContent = topic.label;
-      $$('[data-dvnm-topic]', dock).forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      stopVoice('Answer selected. Press “Hear this answer” when you want to listen.');
-    }));
-    const makeUtterance = (text, token, useSelectedVoice) => {
-      const engine = speechEngine();
-      if (!engine || !('SpeechSynthesisUtterance' in window)) {
-        setVoiceStatus('Spoken output is not supported by this browser. The full written answer and its link are ready to use.');
-        speakBtn.disabled = false; return;
-      }
-      const utterance = new SpeechSynthesisUtterance(text);
-      const voice = useSelectedVoice ? chooseVoice() : null;
-      selectedVoice = voice;
-      if (voice) utterance.voice = voice;
-      utterance.lang = voice?.lang || navigator.language || 'en-GB';
-      utterance.rate = Math.max(0.75, Math.min(1.05, Number(rateControl.value) || 0.86));
-      utterance.pitch = 1.00;
-      utterance.volume = Math.max(0.03, Math.min(0.45, Number(volumeControl.value) || 0.15));
-      let started = false;
-      utterance.onstart = () => {
-        if (token !== speechRun) return;
-        started = true; clearSpeechTimers(); speakBtn.disabled = false; setSpeaking(true);
-        setVoiceStatus(`DVNM Bot is speaking${voice ? ` with ${voice.name}` : ' using your device’s default voice'}. Use Stop voice at any time.`);
-      };
-      utterance.onboundary = () => { if (token === speechRun) setSpeaking(true); };
-      utterance.onend = () => {
-        if (token !== speechRun) return;
-        clearSpeechTimers(); setSpeaking(false); speakBtn.disabled = false;
-        setVoiceStatus('Introduction complete. Choose another question or follow the link above.');
-      };
-      utterance.onerror = (event) => {
-        if (token !== speechRun) return;
-        clearSpeechTimers(); setSpeaking(false); speakBtn.disabled = false;
-        const reason = String(event?.error || '').toLowerCase();
-        if (intentionallyStopped || reason === 'canceled' || reason === 'interrupted') {
-          setVoiceStatus('Voice stopped. Your written answer and link are still ready.'); return;
-        }
-        if (useSelectedVoice && voice) {
-          setVoiceStatus('Trying the device’s default voice…'); speakBtn.disabled = true;
-          window.__dvnmVoiceStartTimer = window.setTimeout(() => {
-            if (token !== speechRun) return;
-            try { makeUtterance(text, token, false); }
-            catch (_) { setVoiceStatus('Voice is unavailable on this device right now. The written answer and link still work.'); }
-          }, 160);
-          return;
-        }
-        setVoiceStatus('The device could not start speech. Check media volume or installed voice settings, then tap Hear this answer again. Your written answer and link still work.');
-      };
-      try {
-        engine.resume?.(); engine.speak(utterance);
-        window.__dvnmVoiceWatchdog = window.setTimeout(() => {
-          if (token === speechRun && !started) {
-            speechRun += 1; clearSpeechTimers();
-            try { engine.cancel(); } catch (_) {}
-            setSpeaking(false); speakBtn.disabled = false;
-            setVoiceStatus('The device did not start the voice in time. Tap Hear this answer to retry; the complete written answer is still ready.');
-          }
-        }, 6500);
-      } catch (_) {
-        clearSpeechTimers(); speakBtn.disabled = false; setSpeaking(false);
-        setVoiceStatus('The device could not start speech. Check the browser and device voice settings; your written answer and link remain available.');
-      }
-    };
-    const startSpeaking = (text) => {
-      const engine = speechEngine();
-      if (!engine || !('SpeechSynthesisUtterance' in window)) {
-        setVoiceStatus('Spoken output is not supported by this browser. The full written answer and link are ready to use.'); return;
-      }
-      if (speakBtn.disabled) return;
-      clearSpeechTimers(); const token = ++speechRun; intentionallyStopped = false;
-      speakBtn.disabled = true; setVoiceStatus('Starting the voice…');
-      if (engine.speaking || engine.pending) {
-        try { engine.cancel(); } catch (_) {}
-        window.__dvnmVoiceStartTimer = window.setTimeout(() => { if (token === speechRun) makeUtterance(text, token, true); }, 140);
-      } else makeUtterance(text, token, true);
-    };
-    speakBtn.addEventListener('click', () => startSpeaking(selectedAnswer));
-    stopBtn.addEventListener('click', () => stopVoice('Voice stopped. Your written answer remains available.'));
-    voiceSelect.addEventListener('change', () => { const value = voiceSelect.value || 'auto'; selectedVoiceKey = value; const welcomeVoice = $('#dvnm-welcome-voice'); if (welcomeVoice && [...welcomeVoice.options].some(option => option.value === value)) welcomeVoice.value = value; });
-    const updateVolume = () => { volumeOutput.value = `${Math.round(Number(volumeControl.value) * 100)}%`; volumeOutput.textContent = volumeOutput.value; const welcomeOutput = $('#dvnm-welcome-volume-value'); const welcomeRange = $('#dvnm-welcome-volume'); if (welcomeOutput) welcomeOutput.textContent = volumeOutput.value; if (welcomeRange && welcomeRange.value !== volumeControl.value) welcomeRange.value = volumeControl.value; };
-    const updateRate = () => { rateOutput.value = `${Number(rateControl.value).toFixed(2)}×`; rateOutput.textContent = rateOutput.value; const welcomeOutput = $('#dvnm-welcome-rate-value'); const welcomeRange = $('#dvnm-welcome-rate'); if (welcomeOutput) welcomeOutput.textContent = rateOutput.value; if (welcomeRange && welcomeRange.value !== rateControl.value) welcomeRange.value = rateControl.value; };
-    volumeControl.addEventListener('input', updateVolume); rateControl.addEventListener('input', updateRate);
-    updateVolume(); updateRate(); refreshVoiceChoices();
-    if (speechEngine()) speechEngine().addEventListener?.('voiceschanged', refreshVoiceChoices);
-    if (speechEngine()) speechEngine().onvoiceschanged = refreshVoiceChoices;
+/* DVNM Bot luminous hardware pass: brighter lenses, plated joints, a pulsing core, and hologram floor. */
+.dvnm-stage { background:radial-gradient(ellipse at 50% 82%,rgba(59,215,235,.17),transparent 32%),radial-gradient(circle at 50% 35%,rgba(125,94,255,.25),transparent 46%),linear-gradient(150deg,var(--surface-solid),var(--tint)); }
+.dvnm-character { filter:drop-shadow(0 18px 14px rgba(36,22,88,.2)) drop-shadow(0 0 16px rgba(94,213,245,.12)); }
+.dvnm-character::after { content:""; position:absolute; z-index:-1; left:36px; right:36px; bottom:-1px; height:17px; border:1px solid rgba(89,220,246,.75); border-radius:50%; background:radial-gradient(ellipse,rgba(70,215,244,.27),rgba(99,75,230,.07) 55%,transparent 72%); box-shadow:0 0 22px rgba(62,203,244,.23); animation:dvnm-hologram 2.8s ease-in-out infinite; }
+.dvnm-character .dvnm-antenna { box-shadow:0 0 11px rgba(87,228,255,.45); background:linear-gradient(#b9faff,#9c8aff 45%,#5c42d7); }
+.dvnm-character .dvnm-antenna::before { animation:dvnm-beacon 2.4s ease-in-out infinite; }
+.dvnm-character .dvnm-head { border-color:#f7f5ff; background:linear-gradient(145deg,#fff 0%,#e8e4ff 62%,#c6f8ff 100%); box-shadow:inset 0 -7px 0 rgba(104,71,232,.09),0 0 0 7px rgba(104,71,232,.11),0 0 30px rgba(103,82,239,.17); }
+.dvnm-character .dvnm-head::before { content:""; position:absolute; top:5px; left:33px; right:33px; height:5px; border-radius:99px; background:linear-gradient(90deg,transparent,#fff,transparent); opacity:.9; }
+.dvnm-character .dvnm-head::after { content:""; position:absolute; right:11px; top:13px; width:8px; height:8px; border-radius:50%; background:#44e4ee; box-shadow:0 0 0 3px rgba(68,228,238,.14),0 0 13px rgba(68,228,238,.75); }
+.dvnm-character .dvnm-face { border:1px solid rgba(135,235,255,.58); background:radial-gradient(ellipse at 50% 18%,#38346f,#181b40 65%,#10172e); box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),inset 0 0 27px rgba(74,219,246,.2),0 0 16px rgba(52,214,243,.16); }
+.dvnm-character .dvnm-face::before { content:""; position:absolute; left:12px; right:12px; top:7px; height:1px; background:linear-gradient(90deg,transparent,rgba(146,246,255,.9),transparent); box-shadow:0 5px 0 rgba(146,246,255,.14),0 10px 0 rgba(146,246,255,.07); }
+.dvnm-character .dvnm-eye { width:21px; height:27px; background:radial-gradient(ellipse at 34% 28%,#fff 0 10%,#c8fcff 18%,#67eaf8 46%,#35aacb 100%); border:1px solid rgba(255,255,255,.9); box-shadow:0 0 5px #fff,0 0 14px rgba(87,228,255,.85),0 0 26px rgba(87,228,255,.38); transform-origin:center; }
+.dvnm-character .dvnm-eye::after { content:""; position:absolute; right:4px; bottom:4px; width:5px; height:7px; border-radius:50%; background:#183158; opacity:.72; }
+.dvnm-character .dvnm-cheek { height:6px; background:rgba(255,117,176,.72); box-shadow:0 0 10px rgba(255,117,176,.45); }
+.dvnm-character .dvnm-mouth { border-color:#a6fbff; box-shadow:0 0 5px rgba(87,228,255,.55),0 0 15px rgba(87,228,255,.3); }
+.dvnm-character .dvnm-neck { background:linear-gradient(90deg,#bdb2ff,#f7f8ff 38%,#d3fbff 60%,#a99af8); box-shadow:0 0 14px rgba(118,103,234,.18); }
+.dvnm-character .dvnm-body { border-color:#faf9ff; background:linear-gradient(140deg,#fff,#e9e6ff 58%,#c9f6fb); box-shadow:inset 0 -8px 0 rgba(104,71,232,.07),0 0 23px rgba(115,100,235,.14); }
+.dvnm-character .dvnm-body::before { position:absolute; content:""; position:absolute; top:11px; left:11px; width:18px; height:5px; border-radius:99px; background:#7f68ee; box-shadow:0 0 8px rgba(127,104,238,.45); }
+.dvnm-character .dvnm-body::after { position:absolute; content:""; position:absolute; right:12px; bottom:13px; width:6px; height:6px; border-radius:50%; background:#30d9d9; box-shadow:-10px 0 0 #8b7bff,-20px 0 0 #ffb96f,0 0 9px rgba(48,217,217,.7); }
+.dvnm-character .dvnm-chest { border-color:#fff; background:radial-gradient(circle at 35% 25%,#68f2f5,#5b65e5 53%,#4b2bc0); box-shadow:0 0 0 4px rgba(106,82,235,.11),0 0 18px rgba(65,202,239,.45),inset 0 0 11px rgba(255,255,255,.36); text-shadow:0 0 12px rgba(255,255,255,.7); animation:dvnm-core 3s ease-in-out infinite; }
+.dvnm-character .dvnm-arm { border-color:#fff; background:linear-gradient(90deg,#cac3ff,#fff 44%,#d4faff); box-shadow:0 4px 11px rgba(70,57,136,.12); }
+.dvnm-character .dvnm-arm::before { content:""; position:absolute; top:12px; left:2px; right:2px; height:8px; border-radius:99px; background:linear-gradient(90deg,#7f6ae8,#b9f7ff,#7f6ae8); opacity:.75; }
+.dvnm-character .dvnm-hand { border-color:#fff; box-shadow:0 0 12px rgba(78,196,232,.22); }
+.dvnm-character .dvnm-leg { border-color:#fff; background:linear-gradient(90deg,#d7d0ff,#fff 52%,#d1f8fd); box-shadow:0 5px 10px rgba(70,57,136,.12); }
+.dvnm-character .dvnm-foot { box-shadow:0 0 12px rgba(111,81,239,.28); }
+.dvnm-character.is-speaking .dvnm-face { box-shadow:inset 0 0 0 2px rgba(255,255,255,.16),inset 0 0 31px rgba(74,219,246,.3),0 0 22px rgba(52,214,243,.27); }
+.dvnm-character.is-speaking .dvnm-chest { box-shadow:0 0 0 4px rgba(106,82,235,.14),0 0 28px rgba(65,202,239,.68),inset 0 0 15px rgba(255,255,255,.48); }
+.dvnm-bot-dock { width:min(390px,calc(100vw - 24px)); right:max(12px,env(safe-area-inset-right)); bottom:max(92px,calc(env(safe-area-inset-bottom) + 86px)); }
+.dvnm-panel { width:100%; max-height:min(76vh,680px); max-height:min(76dvh,680px); overscroll-behavior:contain; }
+.dvnm-launcher { box-shadow:0 12px 30px rgba(59,37,152,.30),0 0 0 1px rgba(118,232,255,.22),inset 0 1px 0 rgba(255,255,255,.45); }
+.dvnm-launcher .dvnm-mini { box-shadow:0 0 18px rgba(69,217,236,.23); }
+@keyframes dvnm-beacon { 0%,100% { box-shadow:0 0 0 4px rgba(115,78,241,.14),0 0 18px rgba(55,208,225,.42); } 50% { box-shadow:0 0 0 8px rgba(115,78,241,.08),0 0 31px rgba(55,208,225,.72); } }
+@keyframes dvnm-hologram { 0%,100% { opacity:.62; transform:scaleX(.92); } 50% { opacity:1; transform:scaleX(1.06); } }
+@keyframes dvnm-core { 0%,100% { filter:saturate(1); } 50% { filter:saturate(1.32) brightness(1.06); } }
+@media(max-width:760px) {
+  .dvnm-bot-dock { right:max(10px,env(safe-area-inset-right)); bottom:max(88px,calc(env(safe-area-inset-bottom) + 78px)); width:min(370px,calc(100vw - 20px)); }
+  .dvnm-panel { bottom:68px; max-height:min(70vh,640px); max-height:min(70dvh,640px); border-radius:20px; }
+  .dvnm-panel-head { padding:14px 15px; }
+  .dvnm-panel-intro { gap:9px; padding:12px 14px 6px; }
+  .dvnm-questions { gap:7px; padding:0 14px 12px; }
+  .dvnm-answerbox { margin:0 14px 10px; }
+  .dvnm-panel-actions { padding:0 14px 12px; }
+  .dvnm-voice-status { padding:7px 14px 12px; }
+  .dvnm-character { filter:drop-shadow(0 12px 9px rgba(36,22,88,.18)) drop-shadow(0 0 9px rgba(94,213,245,.1)); }
+}
+@media(max-width:360px) {
+  .dvnm-panel { max-height:min(66vh,590px); max-height:min(66dvh,590px); }
+  .dvnm-questions { grid-template-columns:minmax(0,1fr); }
+  .dvnm-launcher { gap:7px; min-height:49px; padding:5px 11px 5px 6px; font-size:.78rem; }
+  .dvnm-launcher .dvnm-mini { width:36px; height:36px; }
+  .dvnm-panel-actions .btn { flex:1 1 100%; width:100%; }
+}
+@media(max-height:540px) and (orientation:landscape) {
+  .dvnm-bot-dock { bottom:max(12px,env(safe-area-inset-bottom)); }
+  .dvnm-panel { bottom:60px; max-height:calc(100dvh - 85px); }
+  .dvnm-panel-intro { padding-top:8px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dvnm-character::after,.dvnm-character .dvnm-antenna::before,.dvnm-character .dvnm-chest { animation:none !important; }
+}
 
-    // First-visit welcome: visible automatically, but audio is always visitor-initiated.
-    const welcome = document.createElement('section');
-    welcome.className = 'dvnm-welcome-overlay'; welcome.id = 'dvnm-welcome-overlay';
-    welcome.hidden = true; welcome.setAttribute('role', 'dialog'); welcome.setAttribute('aria-modal', 'true'); welcome.setAttribute('aria-labelledby', 'dvnm-welcome-title');
-    welcome.innerHTML = `<div class="dvnm-welcome-card"><button type="button" class="dvnm-welcome-x" id="dvnm-welcome-x" aria-label="Skip welcome and close">×</button><div class="dvnm-welcome-hero"><div class="dvnm-welcome-robot">${robotMarkup('waving')}</div><div class="dvnm-welcome-heading"><span class="dvnm-welcome-eyebrow"><span class="dvnm-live-dot"></span> YOUR DIGITAL GUIDE</span><h2 id="dvnm-welcome-title">Hi, I’m DVNM Bot.</h2><p class="dvnm-welcome-tagline">I’m here to assist you.</p><p class="dvnm-welcome-subtitle" id="dvnm-welcome-subtitle">Welcome to Davonium Technologies. Let’s find what you came for.</p><label class="dvnm-name-label" for="dvnm-visitor-name">What may I call you? <span>Optional</span></label><input id="dvnm-visitor-name" class="dvnm-visitor-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Enter your name (optional)"><p class="dvnm-welcome-privacy">Your name is used only for this visit greeting and is not sent to a server.</p></div></div><div class="dvnm-welcome-details"><p class="dvnm-welcome-section-title">Here are a few ways I can help</p><ol class="dvnm-welcome-points">${welcomeLines.slice(1, 14).map(line => `<li>${line}</li>`).join('')}</ol></div><p class="dvnm-welcome-status" id="dvnm-welcome-status" aria-live="polite">Audio is off until you choose Hear introduction. You can skip this welcome at any time.</p><details class="dvnm-welcome-voice-details"><summary>Choose your voice and volume before listening</summary><div class="dvnm-welcome-voice-controls"><label for="dvnm-welcome-voice">Voice / person<select id="dvnm-welcome-voice"><option value="auto">Recommended smooth voice</option></select></label><label for="dvnm-welcome-volume">Speaking volume <output id="dvnm-welcome-volume-value">15%</output></label><input id="dvnm-welcome-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Welcome speech volume"><label for="dvnm-welcome-rate">Speaking pace <output id="dvnm-welcome-rate-value">0.86×</output></label><input id="dvnm-welcome-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Welcome speech pace"><p>The available voice names come from this device. Volume and pace settings apply when you press Hear introduction.</p></div></details><div class="dvnm-welcome-actions"><button type="button" class="btn" id="dvnm-welcome-continue">Meet DVNM Bot <span aria-hidden="true">✦</span></button><button type="button" class="btn alt" id="dvnm-welcome-hear">▶ Hear introduction</button><button type="button" class="btn alt" id="dvnm-welcome-stop">■ Stop voice</button><button type="button" class="dvnm-welcome-skip" id="dvnm-welcome-skip">Skip and explore the website</button></div><p class="dvnm-welcome-footnote">Sample website demonstrations show possible experiences; each is labelled as a sample. Some cached pages work offline, but voice and connected features may not.</p></div>`;
-    document.body.appendChild(welcome);
-    refreshVoiceChoices();
-    const welcomeVoiceSelect = $('#dvnm-welcome-voice', welcome);
-    const welcomeVolume = $('#dvnm-welcome-volume', welcome);
-    const welcomeRate = $('#dvnm-welcome-rate', welcome);
-    const welcomeVolumeOutput = $('#dvnm-welcome-volume-value', welcome);
-    const welcomeRateOutput = $('#dvnm-welcome-rate-value', welcome);
-    const syncVoiceSelection = (value) => {
-      selectedVoiceKey = value || 'auto';
-      [voiceSelect, welcomeVoiceSelect].filter(Boolean).forEach(target => {
-        if ([...target.options].some(option => option.value === selectedVoiceKey)) target.value = selectedVoiceKey;
-      });
-    };
-    if (welcomeVoiceSelect) welcomeVoiceSelect.addEventListener('change', () => syncVoiceSelection(welcomeVoiceSelect.value));
-    if (welcomeVolume) welcomeVolume.addEventListener('input', () => { volumeControl.value = welcomeVolume.value; updateVolume(); });
-    if (welcomeRate) welcomeRate.addEventListener('input', () => { rateControl.value = welcomeRate.value; updateRate(); });
-    const nameField = $('#dvnm-visitor-name', welcome);
-    const welcomeTitle = $('#dvnm-welcome-title', welcome);
-    nameField.addEventListener('input', () => {
-      visitorName = String(nameField.value || '').trim().slice(0, 40);
-      if (welcomeTitle) welcomeTitle.textContent = visitorName ? `Hi, ${visitorName}! I’m DVNM Bot.` : 'Hi, I’m DVNM Bot.';
-      const subtitle = $('#dvnm-welcome-subtitle', welcome);
-      if (subtitle) subtitle.textContent = visitorName ? `Welcome to Davonium Technologies, ${visitorName}. Let’s find what you came for.` : 'Welcome to Davonium Technologies. Let’s find what you came for.';
-    });
-    const closeWelcome = (openAssistant = false) => {
-      welcome.hidden = true; document.body.classList.remove('dvnm-welcome-visible');
-      try { sessionStorage.setItem('dvnmWelcomeSeen_20261021_v17', '1'); } catch (_) {}
-      stopVoice('Welcome closed. You can continue exploring the website.');
-      if (openAssistant) {
-        visitorName = String(nameField.value || '').trim().slice(0, 40);
-        const greeting = $('#dvnm-bot-greeting', dock);
-        if (greeting) greeting.textContent = visitorName ? `Welcome, ${visitorName}! I’m DVNM Bot, and I’m here to assist you. Choose any topic and I’ll guide you through Davonium Technologies.` : 'Welcome! I’m DVNM Bot, and I’m here to assist you. Choose any topic and I’ll guide you through Davonium Technologies.';
-        const companyButton = $('[data-dvnm-topic="company"]', dock);
-        if (companyButton) companyButton.click();
-        showPanel(true);
-      } else { const main = $('#main'); if (main) main.setAttribute('tabindex', '-1'); }
-    };
-    $('#dvnm-welcome-continue', welcome).addEventListener('click', () => closeWelcome(true));
-    $('#dvnm-welcome-skip', welcome).addEventListener('click', () => closeWelcome(false));
-    $('#dvnm-welcome-x', welcome).addEventListener('click', () => closeWelcome(false));
-    $('#dvnm-welcome-hear', welcome).addEventListener('click', () => {
-      setVoiceStatus('Playing the introduction you requested. Use Stop voice to end it.');
-      startSpeaking(welcomeIntroText());
-    });
-    $('#dvnm-welcome-stop', welcome).addEventListener('click', () => stopVoice('Voice stopped. You can keep reading or continue to the website.'));
-    welcome.addEventListener('keydown', event => {
-      if (event.key === 'Escape') { closeWelcome(false); $('#dvnm-welcome-skip', welcome).focus(); }
-      if (event.key === 'Tab') {
-        const controls = $$('button:not([disabled]), input:not([disabled])', welcome).filter(el => !el.hidden);
-        if (!controls.length) return;
-        const first = controls[0], last = controls[controls.length - 1];
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-      }
-    });
-    let welcomeWasSeen = false;
-    try { welcomeWasSeen = sessionStorage.getItem('dvnmWelcomeSeen_20261021_v17') === '1'; } catch (_) {}
-    if (!welcomeWasSeen) window.setTimeout(() => {
-      if (welcomeWasSeen || !welcome.isConnected) return;
-      welcome.hidden = false; document.body.classList.add('dvnm-welcome-visible');
-      $('#dvnm-welcome-continue', welcome).focus({ preventScroll: true });
-    }, 100);
-  }
+/* DVNM Bot welcome experience — designed for first-time visitors and narrow screens. */
+.dvnm-character { isolation:isolate; }
+.dvnm-character::before { content:""; position:absolute; z-index:-2; top:56px; left:12px; width:222px; height:208px; border:1px solid rgba(121,235,255,.22); border-radius:46% 46% 40% 40%; background:radial-gradient(ellipse at 50% 42%,rgba(81,210,244,.12),rgba(112,83,239,.04) 58%,transparent 72%); box-shadow:inset 0 0 24px rgba(101,92,243,.08),0 0 22px rgba(87,219,247,.1); animation:dvnm-shell-pulse 4.5s ease-in-out infinite; }
+.dvnm-character .dvnm-head { border-width:6px; border-radius:42px 42px 37px 37px; box-shadow:inset 0 -8px 0 rgba(104,71,232,.08),0 0 0 7px rgba(104,71,232,.1),0 0 34px rgba(103,82,239,.21); }
+.dvnm-character .dvnm-ear { width:25px; border-radius:8px; }
+.dvnm-character .dvnm-ear::before { content:""; position:absolute; top:7px; left:5px; right:5px; height:6px; border-radius:99px; background:#8bf5ff; box-shadow:0 0 8px #8bf5ff; }
+.dvnm-character .dvnm-body { overflow:visible; border-width:6px; border-radius:26px 26px 31px 31px; box-shadow:inset 0 -10px 0 rgba(104,71,232,.08),0 0 0 4px rgba(91,212,241,.07),0 0 26px rgba(115,100,235,.18); }
+.dvnm-character .dvnm-body::before { top:10px; left:10px; width:16px; height:5px; background:linear-gradient(90deg,#8b75fb,#55eff5); box-shadow:0 0 9px rgba(85,239,245,.7); }
+.dvnm-character .dvnm-body::after { right:11px; bottom:12px; width:6px; height:6px; background:#36e4ef; box-shadow:-10px 0 0 #9b85ff,-20px 0 0 #ffbf72,0 0 13px rgba(48,217,217,.8); }
+.dvnm-character .dvnm-chest { top:21px; width:70px; height:39px; border-radius:12px; border:2px solid rgba(255,255,255,.98); background:linear-gradient(135deg,#1b2450 0%,#5f45e6 47%,#21d5e1 100%); box-shadow:0 0 0 3px rgba(101,94,246,.16),0 0 12px rgba(65,202,239,.68),0 0 28px rgba(65,202,239,.42),inset 0 0 10px rgba(255,255,255,.3); color:#fff; font-size:12px; line-height:1; letter-spacing:.075em; font-weight:1000; text-shadow:0 0 4px #fff,0 0 9px rgba(90,241,255,.96); }
+.dvnm-character .dvnm-body-mark { position:absolute; top:68px; left:0; right:0; color:#5a55c9; font-size:6px; text-align:center; letter-spacing:.18em; font-weight:950; text-shadow:0 0 9px rgba(91,217,244,.2); }
+.dvnm-character .dvnm-arm { border-width:6px; }
+.dvnm-character .dvnm-arm::after { content:""; position:absolute; top:37px; left:3px; right:3px; height:10px; border-radius:99px; border:1px solid rgba(124,112,236,.36); background:linear-gradient(90deg,#9c8bff,#e3fdff,#8a74fb); }
+.dvnm-character .dvnm-hand { border-width:3px; }
+.dvnm-character .dvnm-foot { box-shadow:0 0 12px rgba(111,81,239,.35),0 0 20px rgba(63,217,245,.18); }
+.dvnm-character.is-speaking .dvnm-chest { animation:dvnm-core-speech .52s ease-in-out infinite alternate; }
+.dvnm-answerbox p { white-space:pre-line; max-height:240px; overflow:auto; overscroll-behavior:contain; padding-right:2px; }
+.dvnm-voice-settings { margin:0 18px 12px; border:1px solid var(--line); border-radius:14px; background:var(--surface); }
+.dvnm-voice-settings summary { cursor:pointer; padding:10px 12px; font-size:.82rem; font-weight:800; }
+.dvnm-voice-settings-inner { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 12px; padding:0 12px 12px; align-items:center; }
+.dvnm-voice-settings-inner label { font-size:.78rem; color:var(--muted); font-weight:700; }
+.dvnm-voice-settings-inner select { display:block; margin-top:5px; width:100%; max-width:100%; border:1px solid var(--line); border-radius:9px; padding:9px 10px; color:var(--ink); background:var(--surface); font:inherit; font-size:.8rem; }
+.dvnm-voice-settings-inner label[for="dvnm-bot-voice"] { grid-column:1/-1; }
+.dvnm-voice-settings-inner output { font-size:.77rem; font-weight:800; color:var(--ink); }
+.dvnm-voice-settings-inner input[type="range"] { grid-column:1/-1; width:100%; accent-color:var(--purple); min-height:24px; margin:0; }
+.dvnm-voice-settings-inner p { grid-column:1/-1; margin:3px 0 0; color:var(--muted); font-size:.73rem; line-height:1.5; }
+.dvnm-welcome-overlay { position:fixed; z-index:10050; inset:0; display:grid; place-items:center; padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)); background:rgba(12,14,35,.76); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+.dvnm-welcome-overlay[hidden] { display:none !important; }
+body.dvnm-welcome-visible { overflow:hidden; }
+.dvnm-welcome-card { position:relative; width:min(900px,100%); max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); overflow:auto; overscroll-behavior:contain; border:1px solid rgba(174,168,255,.48); border-radius:28px; color:var(--ink); background:var(--surface); box-shadow:0 30px 100px rgba(0,0,0,.38),0 0 0 1px rgba(94,225,255,.12),0 0 55px rgba(107,75,240,.22); animation:dvnm-welcome-in .35s cubic-bezier(.2,.8,.2,1) both; }
+.dvnm-welcome-card::before { content:""; display:block; height:5px; background:linear-gradient(90deg,#6750ec,#48dfea,#b18bff,#6750ec); background-size:240% 100%; animation:dvnm-welcome-spectrum 5s linear infinite; }
+.dvnm-welcome-x { position:absolute; z-index:2; top:15px; right:15px; display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(255,255,255,.24); border-radius:50%; color:white; background:rgba(27,25,66,.68); font-size:1.6rem; cursor:pointer; }
+.dvnm-welcome-hero { display:grid; grid-template-columns:minmax(160px,.72fr) minmax(0,1.4fr); align-items:center; gap:clamp(12px,3vw,32px); padding:clamp(22px,4vw,40px) clamp(18px,4vw,40px) 20px; color:#fff; background:radial-gradient(ellipse at 22% 54%,rgba(72,221,244,.2),transparent 42%),linear-gradient(120deg,#151932,#2d2266 54%,#4630a4); }
+.dvnm-welcome-robot { display:grid; place-items:center; min-height:180px; overflow:hidden; }
+.dvnm-welcome-robot .dvnm-character { --robot-size:.61; zoom:.61; transform:scale(.94); animation:dvnm-float 4s ease-in-out infinite; }
+.dvnm-welcome-heading { min-width:0; padding-right:22px; }
+.dvnm-welcome-eyebrow { display:inline-flex; align-items:center; gap:8px; color:#b8f7ff; font-size:.75rem; font-weight:900; letter-spacing:.16em; }
+.dvnm-live-dot { width:8px; height:8px; border-radius:50%; background:#57f2d0; box-shadow:0 0 0 4px rgba(87,242,208,.12),0 0 15px rgba(87,242,208,.7); animation:dvnm-beacon 2.3s ease-in-out infinite; }
+.dvnm-welcome-heading h2 { margin:12px 0 3px; color:#fff; font-size:clamp(1.9rem,5vw,3.25rem); line-height:1.05; letter-spacing:-.045em; }
+.dvnm-welcome-tagline { margin:0 0 9px; color:#bdf9ff; font-size:clamp(1.05rem,2.4vw,1.35rem); font-weight:800; }
+.dvnm-welcome-subtitle { max-width:45ch; margin:0 0 19px; color:rgba(255,255,255,.83); font-size:.94rem; line-height:1.55; }
+.dvnm-name-label { display:flex; align-items:center; gap:8px; margin-bottom:7px; color:#fff; font-size:.82rem; font-weight:800; }
+.dvnm-name-label span { color:rgba(255,255,255,.62); font-size:.72rem; font-weight:600; }
+.dvnm-visitor-name { width:100%; min-height:46px; border:1px solid rgba(202,221,255,.48); border-radius:12px; padding:11px 13px; color:#fff; background:rgba(9,14,38,.45); font:inherit; font-size:16px; }
+.dvnm-visitor-name::placeholder { color:rgba(255,255,255,.55); }
+.dvnm-visitor-name:focus-visible { outline:3px solid #7af3ff; outline-offset:2px; }
+.dvnm-welcome-privacy { margin:7px 0 0; color:rgba(255,255,255,.64); font-size:.72rem; line-height:1.45; }
+.dvnm-welcome-details { padding:20px clamp(18px,4vw,40px) 6px; }
+.dvnm-welcome-section-title { margin:0 0 10px; font-size:.9rem; font-weight:900; color:var(--ink); }
+.dvnm-welcome-points { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 18px; margin:0; padding:0; list-style:none; counter-reset:welcome; }
+.dvnm-welcome-points li { position:relative; padding:0 0 0 27px; color:var(--muted); font-size:.79rem; line-height:1.45; counter-increment:welcome; }
+.dvnm-welcome-points li::before { content:counter(welcome,decimal-leading-zero); position:absolute; left:0; top:0; color:#7961e8; font-size:.7rem; font-weight:950; }
+.dvnm-welcome-status { min-height:20px; margin:11px clamp(18px,4vw,40px) 0; color:var(--muted); font-size:.76rem; line-height:1.45; }
+.dvnm-welcome-actions { display:flex; flex-wrap:wrap; align-items:center; gap:9px; padding:15px clamp(18px,4vw,40px) 10px; }
+.dvnm-welcome-actions .btn { min-height:46px; }
+.dvnm-welcome-skip { min-height:42px; padding:9px 12px; border:0; color:var(--muted); background:transparent; font:inherit; font-size:.84rem; font-weight:800; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.dvnm-welcome-footnote { margin:0; padding:0 clamp(18px,4vw,40px) 22px; color:var(--muted); font-size:.72rem; line-height:1.5; }
+@keyframes dvnm-shell-pulse { 0%,100% { opacity:.62; transform:scale(.98); } 50% { opacity:1; transform:scale(1.025); } }
+@keyframes dvnm-core-speech { from { filter:brightness(1); } to { filter:brightness(1.38); } }
+@keyframes dvnm-welcome-in { from { opacity:0; transform:translateY(12px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes dvnm-welcome-spectrum { from { background-position:0% 50%; } to { background-position:240% 50%; } }
+@media(max-width:680px) {
+  .dvnm-welcome-overlay { padding:7px; align-items:center; }
+  .dvnm-welcome-card { max-height:calc(100vh - 14px); max-height:calc(100dvh - 14px); border-radius:20px; }
+  .dvnm-welcome-x { top:10px; right:10px; width:37px; height:37px; }
+  .dvnm-welcome-hero { grid-template-columns:94px minmax(0,1fr); gap:8px; padding:24px 15px 17px; align-items:center; }
+  .dvnm-welcome-robot { min-height:130px; width:96px; }
+  .dvnm-welcome-robot .dvnm-character { --robot-size:.39; zoom:.39; }
+  .dvnm-welcome-heading { padding:0 22px 0 0; }
+  .dvnm-welcome-heading h2 { font-size:clamp(1.5rem,7vw,2.05rem); }
+  .dvnm-welcome-eyebrow { font-size:.61rem; letter-spacing:.12em; }
+  .dvnm-welcome-subtitle { font-size:.82rem; margin-bottom:12px; }
+  .dvnm-name-label { font-size:.76rem; }
+  .dvnm-visitor-name { min-height:43px; padding:9px 10px; }
+  .dvnm-welcome-details { padding:14px 16px 3px; }
+  .dvnm-welcome-points { grid-template-columns:minmax(0,1fr); gap:7px; }
+  .dvnm-welcome-points li { font-size:.78rem; }
+  .dvnm-welcome-actions { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding:13px 16px 8px; gap:8px; }
+  .dvnm-welcome-actions .btn { width:100%; min-height:46px; padding:10px 9px; font-size:.82rem; }
+  .dvnm-welcome-skip { grid-column:1/-1; justify-self:center; }
+  .dvnm-welcome-status { margin:8px 16px 0; font-size:.73rem; }
+  .dvnm-welcome-footnote { padding:0 16px 16px; }
+  .dvnm-voice-settings { margin:0 12px 10px; }
+  .dvnm-voice-settings-inner { grid-template-columns:minmax(0,1fr) auto; }
+  .dvnm-answerbox { margin-left:12px; margin-right:12px; }
+  .dvnm-answerbox p { max-height:260px; }
+}
+@media(max-width:390px) {
+  .dvnm-welcome-hero { grid-template-columns:72px minmax(0,1fr); gap:6px; padding:22px 12px 14px; }
+  .dvnm-welcome-robot { width:75px; min-height:120px; }
+  .dvnm-welcome-robot .dvnm-character { --robot-size:.31; zoom:.31; }
+  .dvnm-welcome-heading { padding-right:20px; }
+  .dvnm-welcome-heading h2 { font-size:1.45rem; }
+  .dvnm-welcome-tagline { font-size:1rem; }
+  .dvnm-welcome-points li { font-size:.75rem; }
+  .dvnm-welcome-actions { grid-template-columns:minmax(0,1fr); }
+  .dvnm-welcome-skip { grid-column:auto; }
+}
+@media(max-height:720px) and (min-width:681px) {
+  .dvnm-welcome-card { max-height:calc(100dvh - 14px); }
+  .dvnm-welcome-hero { padding-top:20px; padding-bottom:12px; }
+  .dvnm-welcome-robot { min-height:140px; }
+  .dvnm-welcome-robot .dvnm-character { --robot-size:.46; zoom:.46; }
+  .dvnm-welcome-details { padding-top:13px; }
+  .dvnm-welcome-points { gap:5px 15px; }
+  .dvnm-welcome-actions { padding-top:10px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dvnm-welcome-card,.dvnm-welcome-card::before,.dvnm-welcome-robot .dvnm-character,.dvnm-character::before,.dvnm-live-dot { animation:none !important; }
+}
 
-  // The large home-page welcome uses the same character; speaking still requires a click.
-  const welcomeButton = $('#dvnm-welcome-speak');
-  if (welcomeButton) welcomeButton.addEventListener('click', () => {
-    const openBot = $('#dvnm-bot-launcher'); const panel = $('#dvnm-bot-panel');
-    if (openBot && panel && panel.hidden) openBot.click();
-    const companyQuestion = $('[data-dvnm-topic="company"]'); if (companyQuestion) companyQuestion.click();
-    const speak = $('#dvnm-bot-speak'); if (speak) speak.click();
-  });
-  $$('[data-dvnm-open]').forEach(button => button.addEventListener('click', () => {
-    const launcher = $('#dvnm-bot-launcher'); if (launcher) { if ($('#dvnm-bot-panel')?.hidden) launcher.click(); else $('#dvnm-bot-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-  }));
+/* DVNM Bot v16: precision hardware detailing and a warmer, calmer welcome. */
+.dvnm-character .dvnm-head { background:linear-gradient(145deg,#fff 0%,#eef1ff 45%,#c8f6ff 100%); }
+.dvnm-character .dvnm-face { background:radial-gradient(ellipse at 50% 10%,rgba(116,100,245,.5),transparent 60%),linear-gradient(145deg,#242044,#10172f 78%); }
+.dvnm-character .dvnm-eye { background:radial-gradient(circle at 34% 28%,#fff 0 12%,#b7fbff 19%,#52dceb 70%); box-shadow:0 0 8px #90f7ff,0 0 19px rgba(75,221,246,.9),0 0 34px rgba(118,105,255,.55); }
+.dvnm-character .dvnm-chest { position:absolute; isolation:isolate; overflow:visible; background:linear-gradient(135deg,#171b3d 0%,#6348e8 43%,#19c6d9 100%); border-color:#effdff; box-shadow:0 0 0 3px rgba(108,89,239,.2),0 0 16px rgba(65,202,239,.8),0 0 34px rgba(65,202,239,.45),inset 0 0 13px rgba(255,255,255,.34); animation:dvnm-reactor-pulse 3.4s ease-in-out infinite; }
+.dvnm-character .dvnm-chest::before,.dvnm-character .dvnm-chest::after { content:""; position:absolute; top:4px; width:4px; height:4px; border-radius:50%; background:#caffff; box-shadow:0 0 6px #6df5ff; }
+.dvnm-character .dvnm-chest::before { left:4px; }
+.dvnm-character .dvnm-chest::after { right:4px; }
+.dvnm-character .dvnm-body { background:linear-gradient(145deg,#fff 0%,#e5e5ff 44%,#c8f3fa 100%); }
+.dvnm-character .dvnm-arm::before { content:""; position:absolute; top:-8px; left:50%; width:18px; height:18px; transform:translateX(-50%); border:3px solid #f9f8ff; border-radius:50%; background:linear-gradient(140deg,#51e1e3,#8b70f3); box-shadow:0 0 0 2px rgba(104,71,232,.12),0 0 12px rgba(75,221,246,.4); }
+.dvnm-character .dvnm-leg::before { content:""; position:absolute; top:5px; left:50%; width:11px; height:8px; transform:translateX(-50%); border-radius:5px; background:linear-gradient(90deg,#9583ff,#e8fdff,#6dcfe5); box-shadow:0 0 8px rgba(80,215,236,.48); }
+.dvnm-character.is-speaking .dvnm-chest { animation:dvnm-core-speech .42s ease-in-out infinite alternate; }
+@keyframes dvnm-reactor-pulse { 0%,100% { filter:brightness(1); box-shadow:0 0 0 3px rgba(108,89,239,.2),0 0 16px rgba(65,202,239,.65),0 0 29px rgba(65,202,239,.28),inset 0 0 13px rgba(255,255,255,.28); } 50% { filter:brightness(1.13); box-shadow:0 0 0 4px rgba(108,89,239,.22),0 0 23px rgba(65,202,239,.9),0 0 43px rgba(65,202,239,.38),inset 0 0 16px rgba(255,255,255,.4); } }
+.dvnm-welcome-points li { font-size:.82rem; line-height:1.55; }
+.dvnm-welcome-heading h2 { text-wrap:balance; }
+.dvnm-welcome-actions button:focus-visible,.dvnm-voice-settings summary:focus-visible,.dvnm-question:focus-visible { outline:3px solid #36d9e7; outline-offset:3px; }
+.dvnm-sample-expanded { scroll-margin-top:24px; }
+.dvnm-sample-faq { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:22px; }
+.dvnm-sample-faq details { min-width:0; padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:var(--surface); }
+.dvnm-sample-faq summary { cursor:pointer; color:var(--ink); font-weight:850; line-height:1.45; }
+.dvnm-sample-faq p { margin:10px 0 0; color:var(--muted); font-size:.88rem; line-height:1.7; }
+@media(max-width:650px) { .dvnm-sample-faq { grid-template-columns:minmax(0,1fr); } .dvnm-welcome-points { grid-template-columns:minmax(0,1fr); } }
+@media(prefers-reduced-motion:reduce) { .dvnm-character .dvnm-chest { animation:none !important; } }
 
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    const baseMeta = $('meta[name="site-base"]');
-    const basePath = baseMeta ? baseMeta.content : '.';
-    const swUrl = new URL(`${basePath}/sw.js`, location.href);
-    const swScope = new URL(`${basePath}/`, location.href).pathname;
-    window.addEventListener('load', () => navigator.serviceWorker.register(swUrl.href, { scope: swScope }).catch(() => {}));
-  }
-})();
+/* DVNM Bot v17: precision hardware details, calm speech controls, and small-screen ergonomics. */
+.dvnm-character .dvnm-head { transform-origin:50% 72%; animation:dvnm-head-scan 8s ease-in-out infinite; }
+.dvnm-character .dvnm-face::after { content:""; position:absolute; pointer-events:none; z-index:2; left:0; right:0; top:-35%; height:27%; background:linear-gradient(180deg,transparent,rgba(113,244,255,.12),rgba(255,255,255,.08),transparent); border-bottom:1px solid rgba(138,247,255,.35); animation:dvnm-face-scan 6.5s ease-in-out infinite; }
+.dvnm-character .dvnm-chest { display:grid; place-items:center; }
+.dvnm-character .dvnm-chest-label { position:relative; z-index:2; color:#fff; font-size:12px; line-height:1; letter-spacing:.10em; font-weight:1000; text-shadow:0 0 4px #fff,0 0 10px rgba(90,241,255,.98); }
+.dvnm-character .dvnm-chest-energy { position:absolute; z-index:1; left:10px; right:10px; bottom:5px; height:2px; border-radius:99px; background:linear-gradient(90deg,transparent,#d8ffff,#46f2ff,#d8ffff,transparent); box-shadow:0 0 7px rgba(105,246,255,.9); opacity:.9; }
+.dvnm-character .dvnm-torso-rail { position:absolute; top:23px; bottom:12px; width:3px; border-radius:99px; background:linear-gradient(180deg,transparent,rgba(111,94,231,.46),rgba(67,218,235,.4),transparent); box-shadow:0 0 7px rgba(83,222,241,.22); }
+.dvnm-character .dvnm-torso-rail.left { left:7px; }
+.dvnm-character .dvnm-torso-rail.right { right:7px; }
+.dvnm-character .dvnm-body { background-image:linear-gradient(145deg,rgba(255,255,255,.96),rgba(229,229,255,.96) 44%,rgba(200,243,250,.96)),repeating-linear-gradient(90deg,transparent 0 17px,rgba(103,82,239,.035) 17px 18px); }
+.dvnm-character .dvnm-eye { animation:dvnm-blink 5.4s infinite, dvnm-eye-glow 3.1s ease-in-out infinite; }
+.dvnm-welcome-voice-details { margin:0 clamp(18px,4vw,40px); border:1px solid var(--line); border-radius:15px; background:var(--surface); }
+.dvnm-welcome-voice-details summary { padding:11px 13px; cursor:pointer; font-size:.82rem; font-weight:850; }
+.dvnm-welcome-voice-controls { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 12px; align-items:center; padding:0 13px 13px; }
+.dvnm-welcome-voice-controls label { color:var(--muted); font-size:.77rem; font-weight:800; }
+.dvnm-welcome-voice-controls label:first-child { grid-column:1/-1; }
+.dvnm-welcome-voice-controls select { display:block; width:100%; margin-top:5px; padding:10px; border:1px solid var(--line); border-radius:10px; color:var(--ink); background:var(--surface); font:inherit; font-size:.82rem; }
+.dvnm-welcome-voice-controls output { color:var(--ink); font-size:.77rem; font-weight:900; }
+.dvnm-welcome-voice-controls input[type="range"] { grid-column:1/-1; width:100%; min-height:25px; margin:0; accent-color:var(--purple); }
+.dvnm-welcome-voice-controls p { grid-column:1/-1; margin:2px 0 0; color:var(--muted); font-size:.72rem; line-height:1.5; }
+@keyframes dvnm-head-scan { 0%,88%,100% { rotate:0deg; } 91% { rotate:1.1deg; } 95% { rotate:-1deg; } }
+@keyframes dvnm-face-scan { 0%,8% { top:-35%; opacity:0; } 18% { opacity:.9; } 60% { top:108%; opacity:.5; } 72%,100% { top:108%; opacity:0; } }
+@keyframes dvnm-eye-glow { 0%,100% { filter:brightness(1); } 50% { filter:brightness(1.14); } }
+@media(max-width:650px) { .dvnm-welcome-voice-controls { grid-template-columns:minmax(0,1fr) auto; } .dvnm-welcome-voice-details { margin-inline:15px; } .dvnm-character .dvnm-chest-label { font-size:11px; } }
+@media(prefers-reduced-motion:reduce) { .dvnm-character .dvnm-head,.dvnm-character .dvnm-face::after,.dvnm-character .dvnm-eye { animation:none !important; } }

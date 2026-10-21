@@ -334,7 +334,7 @@
   const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
   const botUrl = (path) => new URL(path, botRoot).href;
   const robotMarkup = (extra = '') => `<div class="dvnm-character ${extra}" aria-hidden="true"><span class="dvnm-antenna"></span><span class="dvnm-ear left"></span><span class="dvnm-ear right"></span><div class="dvnm-head"><div class="dvnm-face"><i class="dvnm-eye left"></i><i class="dvnm-eye right"></i><i class="dvnm-cheek left"></i><i class="dvnm-cheek right"></i><i class="dvnm-mouth"></i></div></div><span class="dvnm-neck"></span><div class="dvnm-body"><span class="dvnm-chest" aria-label="DVNM"><span class="dvnm-chest-label">DVNM</span><span class="dvnm-chest-energy" aria-hidden="true"></span></span><span class="dvnm-body-mark">DAVONIUM</span><span class="dvnm-torso-rail left" aria-hidden="true"></span><span class="dvnm-torso-rail right" aria-hidden="true"></span></div><span class="dvnm-arm left"><i class="dvnm-hand"></i></span><span class="dvnm-arm right"><i class="dvnm-hand"></i></span><span class="dvnm-leg left"><i class="dvnm-foot"></i></span><span class="dvnm-leg right"><i class="dvnm-foot"></i></span></div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css');
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=19');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -693,7 +693,7 @@
     });
     const closeWelcome = (openAssistant = false) => {
       welcome.hidden = true; document.body.classList.remove('dvnm-welcome-visible');
-      try { sessionStorage.setItem('dvnmWelcomeSeen_20261021_v18', '1'); } catch (_) {}
+      try { sessionStorage.setItem('dvnmWelcomeSeen_20261021_v19', '1'); } catch (_) {}
       stopVoice('Welcome closed. You can continue exploring the website.');
       if (openAssistant) {
         visitorName = String(nameField.value || '').trim().slice(0, 40);
@@ -723,7 +723,7 @@
       }
     });
     let welcomeWasSeen = false;
-    try { welcomeWasSeen = sessionStorage.getItem('dvnmWelcomeSeen_20261021_v18') === '1'; } catch (_) {}
+    try { welcomeWasSeen = sessionStorage.getItem('dvnmWelcomeSeen_20261021_v19') === '1'; } catch (_) {}
     if (!welcomeWasSeen) window.setTimeout(() => {
       if (welcomeWasSeen || !welcome.isConnected) return;
       welcome.hidden = false; document.body.classList.add('dvnm-welcome-visible');
