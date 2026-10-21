@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker — reliable root routing and progressive cache. */
-const CACHE_NAME = 'davonium-site-v14-dvnm-nigeria-qr-certificate-20261021';
+const CACHE_NAME = 'davonium-site-v18-dvnm-welcome-voice-samples-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -19,6 +19,17 @@ const CORE = [
   routeUrl('demos/community.html'),
   routeUrl('docs/guides/mobile-first-quality'),
   routeUrl('docs/guides/speech-and-accessibility'),
+  routeUrl('docs/guides/dvnm-welcome-and-voice'),
+  routeUrl('docs/guides/dvnm-sample-website-planning'),
+  routeUrl('docs/guides/dvnm-bot-interaction-checklist'),
+  routeUrl('demos/business.html'),
+  routeUrl('demos/marketing.html'),
+  routeUrl('demos/shop.html'),
+  routeUrl('demos/portfolio.html'),
+  routeUrl('demos/learning.html'),
+  routeUrl('demos/technology.html'),
+  routeUrl('demos/community.html'),
+  routeUrl('docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf'),
   routeUrl('assets/css/dvnm-bot.css'),
   routeUrl('demos/demos.css'),
   routeUrl('demos/demos.js'),

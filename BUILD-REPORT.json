@@ -4,50 +4,66 @@
   "features": [
     "DVNM Bot visitor guide",
     "browser-native opt-in speech",
-    "five fictional website demos",
+    "seven DVNM sample website demonstrations",
     "real homepage QR PNG",
-    "two documentation guides",
+    "expanded documentation library with welcome, planning, and release-checklist guides",
     "removed Ready2Go public entry links",
-    "sitemap and service-worker cache refresh"
+    "sitemap and service-worker cache refresh",
+    "first-visit DVNM Bot welcome banner with name personalisation and skip controls",
+    "welcome-stage installed voice selector and shared volume/pace controls",
+    "quiet 15% voice default and 0.86x starting pace",
+    "precision robot hardware and face-scan animation with glowing DVNM chest branding",
+    "DVNM Bot and Demo Studio release acceptance checklist documentation",
+    "mobile-first quality guide",
+    "speech and accessibility guide",
+    "sentence-sized speech queue with device-default voice fallback",
+    "welcome voice selector, volume slider, and pace slider",
+    "service-worker cache refreshed for the v18 welcome experience"
   ],
   "demo_pages": [
-    "demos/business.html",
     "demos/index.html",
-    "demos/learning.html",
+    "demos/business.html",
     "demos/marketing.html",
+    "demos/shop.html",
     "demos/portfolio.html",
-    "demos/shop.html"
+    "demos/learning.html",
+    "demos/technology.html",
+    "demos/community.html",
+    "demos/certificate.html"
   ],
   "direct_ready2go_hosts_in_html": [],
   "qr_size": [
     492,
     492
   ],
-  "html_pages": 61,
+  "html_pages": 70,
   "static_validation": {
-    "html_pages": 61,
+    "html_pages": 70,
     "relative_link_errors": 0,
     "broken_anchor_errors": 0,
     "invalid_jsonld_scripts": 0,
     "pages_missing_demo_nav": 0,
     "direct_ready2go_app_host_links": 0,
-    "sitemap_url_count": 51,
+    "sitemap_url_count": 65,
     "qr_decodes_to": "https://www.davoniumtech.com/",
     "js_syntax_checks": {
       "assets/js/site.js": "PASS",
       "demos/demos.js": "PASS"
     },
-    "visual_browser_smoke_test": "Not completed: headless Chromium could not start reliably in this environment; verify on desktop and mobile after deployment."
+    "visual_browser_smoke_test": "Not completed in this environment; verify on real desktop and mobile devices after deployment.",
+    "jsonld_check": "PASS",
+    "sitemap_check": "PASS"
   },
   "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
   "updated_at": "2026-10-21",
   "release_notes": [
-    "Demo Studio expanded to seven original concepts, including Davonium technology and community/event experiences.",
+    "Demo Studio expanded to seven original sample website demonstrations, including Davonium technology and community/event experiences.",
     "Website QR code moved immediately below the homepage hero.",
     "DVNM Bot speech cancellation/start flow revised for more reliable mobile browser speech and default-voice fallback.",
     "Robot visual styling upgraded with glowing optical lenses, chest core, antenna beacon, and hologram floor.",
     "Responsive CSS hardening added for phone, tablet, laptop, landscape and short-height layouts.",
-    "New mobile-first quality and speech/accessibility guides added; sitemap and service-worker cache updated."
+    "New mobile-first quality and speech/accessibility guides added; sitemap and service-worker cache updated.",
+    "DVNM Bot now speaks line-by-line in shorter browser utterances with default-voice fallback to improve resilience on mobile speech engines."
   ],
   "demo_count": 7,
   "new_demo_pages": [
@@ -56,9 +72,11 @@
   ],
   "new_guides": [
     "docs/guides/mobile-first-quality.html",
-    "docs/guides/speech-and-accessibility.html"
+    "docs/guides/speech-and-accessibility.html",
+    "docs/guides/dvnm-welcome-and-voice.html",
+    "docs/guides/dvnm-sample-website-planning.html"
   ],
-  "release": "DVNM Nigeria Demo, QR, Voice and Showcase PDF",
+  "release": "DVNM Bot personalised welcome, calm mobile voice, seven sample journeys and expanded quality documentation — v18, 2026-10-21",
   "demo_names": [
     "DVNM Biz",
     "DVNM Growth",
@@ -82,9 +100,9 @@
   ],
   "certificate_pdf": "docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf",
   "notes": [
-    "Prototype showcase record is explicitly non-official and non-accredited.",
-    "Browser-native speech is device-dependent; text remains available.",
-    "All sample forms, RSVP actions, and shop interactions are demo-only."
+    "Sample website demonstration showcase record is explicitly non-official and non-accredited.",
+    "All sample forms, RSVP actions, and shop interactions are demo-only.",
+    "Browser-native speech is device-dependent; text remains available, and the speech queue uses short line-sized utterances with a default-device voice fallback."
   ],
   "site_qr_assets": [
     "assets/images/qr-dvnm-biz.png",
@@ -95,5 +113,74 @@
     "assets/images/qr-dvnm-digital.png",
     "assets/images/qr-dvnm-connect.png",
     "assets/images/qr-dvnm-demo-studio.png"
-  ]
+  ],
+  "demos": 7,
+  "welcomeBanner": true,
+  "visitorNameStorage": "page-session-memory-only; not sent to server",
+  "voiceControls": [
+    "installed device voice selection in welcome and bot panel",
+    "15% default speech volume",
+    "0.86 default speaking rate",
+    "sentence-sized speech utterance queue for mobile resilience",
+    "fallback to device default voice if the selected voice fails",
+    "visitor-initiated speech only",
+    "written-answer fallback remains available"
+  ],
+  "documentationAdded": [
+    "docs/guides/dvnm-welcome-and-voice.html",
+    "docs/guides/dvnm-sample-website-planning.html",
+    "docs/guides/dvnm-bot-interaction-checklist.html"
+  ],
+  "samplePresentation": "Davonium-created sample website demonstrations; not claimed client deployments.",
+  "demo_audit": {
+    "business": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "marketing": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "shop": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "portfolio": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "learning": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "technology": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    },
+    "community": {
+      "exists": true,
+      "sample_notice": true,
+      "qr": true,
+      "faq": true,
+      "front_end_label": false
+    }
+  }
 }

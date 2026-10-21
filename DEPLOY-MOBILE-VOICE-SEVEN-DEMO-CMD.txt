@@ -60,7 +60,7 @@ open https://www.davoniumtech.com/demos/ from a phone and a laptop. The static s
 your configured hosting provider finishes its deploy.
 
 IMPORTANT
-- This release contains seven DVNM-branded demo prototypes relevant to Nigerian SMEs, makers,
+- This release contains seven DVNM-branded sample website demonstrations relevant to Nigerian SMEs, makers,
   creators, learners, workers, and community skills events.
 - Every demo has a unique downloadable QR code. The PDF includes the directory code and each demo code.
 - The PDF is a non-official portfolio showcase record; it is NOT an accredited qualification or official credential.

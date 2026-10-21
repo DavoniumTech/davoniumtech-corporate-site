@@ -62,4 +62,7 @@
   <url><loc>https://www.davoniumtech.com/demos/shop.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.davoniumtech.com/demos/portfolio.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.davoniumtech.com/demos/learning.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/dvnm-welcome-and-voice</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/dvnm-sample-website-planning</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/dvnm-bot-interaction-checklist</loc><lastmod>2026-10-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

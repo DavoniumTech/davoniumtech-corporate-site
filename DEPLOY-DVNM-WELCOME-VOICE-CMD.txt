@@ -1,0 +1,64 @@
+DAVONIUM TECHNOLOGIES — DVNM WELCOME, VOICE & SAMPLE-SHOWCASE RELEASE
+Windows CMD instructions for updating the existing GitHub repository
+
+1) Download this single ZIP into your Downloads folder:
+   Davonium-DVNM-Welcome-Voice-Sample-Showcase-20261021.zip
+
+2) Extract it to a known path:
+
+set "ZIP=%USERPROFILE%\Downloads\Davonium-DVNM-Welcome-Voice-Sample-Showcase-20261021.zip"
+set "OUT=%USERPROFILE%\Downloads\dvnm-welcome-release-extracted"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%OUT%' -Force"
+
+3) Verify the source before copying (each command must find a file):
+
+dir "%OUT%\davoniumtech-corporate-site-main\index.html"
+dir "%OUT%\davoniumtech-corporate-site-main\demos\index.html"
+dir "%OUT%\davoniumtech-corporate-site-main\docs\guides\dvnm-sample-website-planning.html"
+dir "%OUT%\davoniumtech-corporate-site-main\docs\media\Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"
+
+If any file is missing, STOP and check the ZIP filename/folder structure.
+
+4) Refresh your existing repository and create a backup branch:
+
+cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
+git status
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git branch backup-before-dvnm-welcome-sample-20261021
+git push origin backup-before-dvnm-welcome-sample-20261021
+
+If the backup branch already exists, do not delete it; choose another unused backup name for both branch commands above.
+
+5) Copy the website files without touching .git. DO NOT use /MIR:
+
+robocopy "%OUT%\davoniumtech-corporate-site-main" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git /R:2 /W:2
+
+If Robocopy says ERROR 3 or cannot find the source, STOP. A Robocopy exit code 0–7 means the copy ran without a fatal copy failure; 8 or higher indicates a failure.
+
+6) Review and stage the actual changes:
+
+git status --short
+git add -A
+git diff --cached --stat
+git diff --cached --check
+
+Git may print LF/CRLF conversion warnings. The PDF can report apparent trailing whitespace because it is a binary-format file; do not edit a PDF as text. If the whitespace check mentions only the PDF and the PDF opens normally, review the staged file summary and proceed. If the diff is empty, STOP and do not commit.
+
+7) Commit and push:
+
+git commit -m "Improve DVNM Bot welcome and sample website journeys"
+git push origin main
+
+8) After the push, check the Actions tab and test the live site on both a real phone and a desktop:
+https://github.com/DavoniumTech/davoniumtech-corporate-site/actions
+https://www.davoniumtech.com/
+
+FEATURE NOTES
+- The visual welcome appears once per browser tab session and can be skipped.
+- Spoken output never autoplays. Press Hear introduction to request speech.
+- The optional visitor name is used only for the current page session and is not sent to a server.
+- The voice selector only offers voices supplied by the device/browser. The site defaults to a quiet volume and smoother pace; exact voices vary by device.
+- Selected pages/assets may work offline after they have been cached. Live contact delivery, payments, connected services, and some voices still require connection or device support.
+- All seven demo pages are clearly described as sample website demonstrations, not claimed client deployments.

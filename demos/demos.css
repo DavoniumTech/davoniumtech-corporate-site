@@ -108,3 +108,10 @@
  .dvnm-certificate-actions { display:grid; grid-template-columns:minmax(0,1fr); }
  .dvnm-certificate-actions .btn { width:100%; }
 }
+
+
+/* Clear sample status without underselling the design quality. */
+.dvnm-sample-notice { position:relative; display:flex; align-items:flex-start; gap:12px; max-width:1180px; margin:14px auto 0; padding:13px 16px; border:1px solid rgba(117,94,232,.24); border-radius:14px; background:linear-gradient(110deg,rgba(117,94,232,.09),rgba(42,202,222,.07)); color:var(--ink); line-height:1.55; font-size:.88rem; }
+.dvnm-sample-notice strong { display:block; margin-bottom:2px; }
+.dvnm-sample-notice .dvnm-sample-mark { flex:0 0 32px; display:grid; place-items:center; width:32px; height:32px; border-radius:10px; color:#fff; background:linear-gradient(145deg,#7355eb,#2fc9d9); box-shadow:0 0 16px rgba(89,193,237,.25); }
+@media(max-width:680px) { .dvnm-sample-notice { margin:10px 14px 0; padding:12px; font-size:.82rem; } }

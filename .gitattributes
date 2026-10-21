@@ -1,0 +1,2 @@
+# PDFs contain encoded object streams; do not diff/check them as source text.
+docs/media/*.pdf binary
