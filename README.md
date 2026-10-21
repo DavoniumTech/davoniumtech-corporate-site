@@ -104,3 +104,9 @@ Our Demo Studio contains DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM
 ## DVNM Bot and Demo Studio release checklist
 
 See [`docs/guides/dvnm-bot-interaction-checklist.html`](docs/guides/dvnm-bot-interaction-checklist.html) for visitor welcome, voice, mobile, seven sample journeys, QR, offline, privacy, SEO, and release-verification checks. The combined sample showcase PDF and QR images remain inside the website repository under `docs/media/` and `assets/images/`.
+
+## Route reliability release v20
+
+Internal links now point to actual static HTML files, the sitemap/canonical paths match files in the repository, and `_redirects` preserves older extensionless URLs on Cloudflare Workers Static Assets. The service worker uses a new cache version and an accessible offline fallback rather than returning a generic network error for failed page navigation.
+
+After pushing, confirm that Cloudflare publishes the new deployment. The source repository contains `demos/business.html`, but a GitHub file existing does not prove that the live Worker has deployed it. See `ROUTE-RELIABILITY-REPAIR-v20.md`.

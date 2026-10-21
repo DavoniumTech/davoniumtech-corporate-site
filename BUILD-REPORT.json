@@ -48,15 +48,27 @@
     "qr_decodes_to": "https://www.davoniumtech.com/",
     "js_syntax_checks": {
       "assets/js/site.js": "PASS",
-      "demos/demos.js": "PASS"
+      "demos/demos.js": "PASS",
+      "sw.js": "PASS"
     },
-    "visual_browser_smoke_test": "Not completed in this environment; verify on real desktop and mobile devices after deployment.",
+    "visual_browser_smoke_test": "Local Chromium navigation was blocked by the execution environment (net::ERR_BLOCKED_BY_ADMINISTRATOR), not a website response. Verify the published site on real desktop and mobile devices after Cloudflare deploys this commit.",
     "jsonld_check": "PASS",
-    "sitemap_check": "PASS"
+    "sitemap_check": "PASS",
+    "local_reference_count": 2827,
+    "duplicate_id_pages": 0,
+    "redirect_rules": 133,
+    "redirect_validation": "PASS",
+    "css_parse_check": "PASS",
+    "missing_local_references": 0,
+    "broken_anchors": 0,
+    "missing_css_local_assets": 0,
+    "local_http_page_smoke_test": "PASS — all 70 HTML pages returned HTTP 200 from a local static file server",
+    "browser_visual_validation": "Not completed: local Chromium navigation was blocked by execution-environment policy (ERR_BLOCKED_BY_ADMINISTRATOR); live desktop/mobile testing is still required after Cloudflare deploy."
   },
   "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
   "updated_at": "2026-10-21",
   "release_notes": [
+    "Static route compatibility repair: explicit .html links, legacy clean-URL redirects, and service-worker offline recovery for failed navigation.",
     "Demo Studio expanded to seven original sample website demonstrations, including Davonium technology and community/event experiences.",
     "Website QR code moved immediately below the homepage hero.",
     "DVNM Bot speech cancellation/start flow revised for more reliable mobile browser speech and default-voice fallback.",
@@ -76,7 +88,7 @@
     "docs/guides/dvnm-welcome-and-voice.html",
     "docs/guides/dvnm-sample-website-planning.html"
   ],
-  "release": "DVNM Bot personalised welcome, calm mobile voice, seven sample journeys and expanded quality documentation — v18, 2026-10-21",
+  "release": "v20-route-reliability-2026-10-21",
   "demo_names": [
     "DVNM Biz",
     "DVNM Growth",
@@ -199,5 +211,28 @@
       "service_worker_cache_bumped": true,
       "all_passed": true
     }
+  },
+  "route_reliability": {
+    "internal_links_rewritten_to_existing_html": 1431,
+    "absolute_urls_aligned_to_existing_html": 244,
+    "redirects_file": "_redirects",
+    "service_worker_cache": "davonium-site-v20-route-recovery-20261021",
+    "never_returns_response_error": true,
+    "all_seven_sample_demos_preserved": true,
+    "local_reference_count": 2827,
+    "local_reference_errors": 0,
+    "broken_anchor_errors": 0,
+    "duplicate_id_pages": 0,
+    "redirect_rules": 133,
+    "redirect_validation": "PASS — all local file destinations exist and sources are unique",
+    "sitemap_urls": 65,
+    "sitemap_invalid_urls": 0,
+    "worker_navigation_failure_strategy": "cached page, then cached offline page, then accessible HTTP 503 offline document; no generic network error response",
+    "deployment_verification": "Cloudflare deployment must be checked after the Git push; GitHub Actions page has no configured workflow run visible",
+    "broken_anchors": 0,
+    "invalid_jsonld_scripts": 0,
+    "missing_css_assets": 0,
+    "local_http_pages_checked": 70,
+    "local_http_non200": 0
   }
 }

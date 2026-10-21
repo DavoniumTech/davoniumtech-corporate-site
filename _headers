@@ -33,3 +33,7 @@
 
 https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /

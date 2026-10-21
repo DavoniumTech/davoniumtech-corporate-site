@@ -1,58 +1,57 @@
-/* Davonium Technologies PWA service worker — reliable root routing and progressive cache. */
-const CACHE_NAME = 'davonium-site-v19-dvnm-css-repair-20261021';
+/* Davonium Technologies PWA service worker — v20 route recovery and offline fallback. */
+const CACHE_NAME = 'davonium-site-v20-route-recovery-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
-  BASE_URL.href,
-  routeUrl('offline.html'),
-  routeUrl('install'),
-  routeUrl('products'),
-  routeUrl('about'),
-  routeUrl('contact'),
-  routeUrl('services'),
-  routeUrl('support'),
-  routeUrl('docs/'),
-  routeUrl('demos/'),
-  routeUrl('docs/guides/dvnm-demo-studio-qr-certificate'),
-  routeUrl('demos/certificate.html'),
-  routeUrl('demos/technology.html'),
-  routeUrl('demos/community.html'),
-  routeUrl('docs/guides/mobile-first-quality'),
-  routeUrl('docs/guides/speech-and-accessibility'),
-  routeUrl('docs/guides/dvnm-welcome-and-voice'),
-  routeUrl('docs/guides/dvnm-sample-website-planning'),
-  routeUrl('docs/guides/dvnm-bot-interaction-checklist'),
-  routeUrl('demos/business.html'),
-  routeUrl('demos/marketing.html'),
-  routeUrl('demos/shop.html'),
-  routeUrl('demos/portfolio.html'),
-  routeUrl('demos/learning.html'),
-  routeUrl('demos/technology.html'),
-  routeUrl('demos/community.html'),
-  routeUrl('docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf'),
-  routeUrl('assets/css/dvnm-bot.css?v=19'),
-  routeUrl('demos/demos.css'),
-  routeUrl('demos/demos.js'),
-  routeUrl('assets/images/davonium-website-qr.png'),
-  routeUrl('assets/images/qr-dvnm-demo-studio.png'),
-  routeUrl('assets/images/qr-dvnm-connect.png'),
-  routeUrl('assets/images/qr-dvnm-digital.png'),
-  routeUrl('assets/images/qr-dvnm-skills.png'),
-  routeUrl('assets/images/qr-dvnm-creative.png'),
-  routeUrl('assets/images/qr-dvnm-market.png'),
-  routeUrl('assets/images/qr-dvnm-growth.png'),
-  routeUrl('assets/images/qr-dvnm-biz.png'),
-  routeUrl('assets/css/styles.css'),
-  routeUrl('assets/js/site.js'),
-  routeUrl('manifest.webmanifest'),
-  routeUrl('assets/icons/favicon-32.png'),
-  routeUrl('assets/icons/icon-192-rounded.png'),
-  routeUrl('assets/images/davonium-d-icon.webp'),
-  routeUrl('assets/icons/products/ready2go.svg'),
-  routeUrl('assets/icons/products/marvel-chat.svg'),
-  routeUrl('assets/icons/products/davonium-nexus.svg')
+  routeUrl(""),
+  routeUrl("offline.html"),
+  routeUrl("install.html"),
+  routeUrl("products.html"),
+  routeUrl("about.html"),
+  routeUrl("contact.html"),
+  routeUrl("services.html"),
+  routeUrl("support.html"),
+  routeUrl("work.html"),
+  routeUrl("docs/index.html"),
+  routeUrl("demos/index.html"),
+  routeUrl("docs/guides/dvnm-demo-studio-qr-certificate.html"),
+  routeUrl("demos/certificate.html"),
+  routeUrl("demos/technology.html"),
+  routeUrl("demos/community.html"),
+  routeUrl("docs/guides/mobile-first-quality.html"),
+  routeUrl("docs/guides/speech-and-accessibility.html"),
+  routeUrl("docs/guides/dvnm-welcome-and-voice.html"),
+  routeUrl("docs/guides/dvnm-sample-website-planning.html"),
+  routeUrl("docs/guides/dvnm-bot-interaction-checklist.html"),
+  routeUrl("demos/business.html"),
+  routeUrl("demos/marketing.html"),
+  routeUrl("demos/shop.html"),
+  routeUrl("demos/portfolio.html"),
+  routeUrl("demos/learning.html"),
+  routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
+  routeUrl("assets/css/dvnm-bot.css?v=20"),
+  routeUrl("demos/demos.css"),
+  routeUrl("demos/demos.js"),
+  routeUrl("assets/images/davonium-website-qr.png"),
+  routeUrl("assets/images/qr-dvnm-demo-studio.png"),
+  routeUrl("assets/images/qr-dvnm-connect.png"),
+  routeUrl("assets/images/qr-dvnm-digital.png"),
+  routeUrl("assets/images/qr-dvnm-skills.png"),
+  routeUrl("assets/images/qr-dvnm-creative.png"),
+  routeUrl("assets/images/qr-dvnm-market.png"),
+  routeUrl("assets/images/qr-dvnm-growth.png"),
+  routeUrl("assets/images/qr-dvnm-biz.png"),
+  routeUrl("assets/css/styles.css"),
+  routeUrl("assets/js/site.js"),
+  routeUrl("manifest.webmanifest"),
+  routeUrl("assets/icons/favicon-32.png"),
+  routeUrl("assets/icons/icon-192-rounded.png"),
+  routeUrl("assets/images/davonium-d-icon.webp"),
+  routeUrl("assets/icons/products/ready2go.svg"),
+  routeUrl("assets/icons/products/marvel-chat.svg"),
+  routeUrl("assets/icons/products/davonium-nexus.svg")
 ];
-const homePath = new URL('./', BASE_URL).pathname;
+const homePath = BASE_URL.pathname;
 const explicitIndexPath = new URL('index.html', BASE_URL).pathname;
 const isHomeRequest = (url) => url.pathname === homePath || url.pathname === explicitIndexPath;
 async function remember(cache, key, response) {
@@ -60,11 +59,47 @@ async function remember(cache, key, response) {
     try { await cache.put(key, response.clone()); } catch (_) {}
   }
 }
+function offlineResponse() {
+  return new Response(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Connection unavailable · Davonium Technologies</title><style>body{margin:0;padding:24px;font:16px/1.6 system-ui,sans-serif;color:#211b3a;background:#f7f5ff;display:grid;min-height:100vh;place-items:center;box-sizing:border-box}.card{max-width:560px;padding:clamp(22px,5vw,40px);background:white;border:1px solid #e5def8;border-radius:24px;box-shadow:0 20px 70px #24145a18}a{color:#6144df;font-weight:700}</style><main class="card"><p>DAVONIUM TECHNOLOGIES</p><h1>This page is temporarily unavailable.</h1><p>Your browser could not reach the page just now. Check your connection, then try again. Cached pages may still be available on this device.</p><p><a href="${BASE_URL.href}">Return to the Davonium homepage</a></p><p><button type="button" onclick="location.reload()">Try again</button></p></main></html>`, {
+    status: 503,
+    headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '30' }
+  });
+}
+function extensionlessCandidate(url) {
+  const path = url.pathname;
+  if (!path || path === '/' || path.endsWith('/') || /\.[A-Za-z0-9]{1,8}$/.test(path)) return null;
+  const u = new URL(url.href); u.pathname = path + '.html'; return u.href;
+}
+function indexCandidate(url) {
+  if (!url.pathname.endsWith('/')) return null;
+  return new URL('index.html', url.href).href;
+}
+async function readNavigation(request, url, cache) {
+  try {
+    let response = await fetch(request, { cache: 'no-store' });
+    if (response.status === 404) {
+      const fallback = extensionlessCandidate(url) || indexCandidate(url);
+      if (fallback) {
+        try {
+          const alternative = await fetch(fallback, { cache: 'no-store' });
+          if (alternative.ok) { await remember(cache, fallback, alternative); return alternative; }
+        } catch (_) {}
+      }
+    }
+    await remember(cache, request, response);
+    return response;
+  } catch (_) {
+    const cached = await cache.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+    const offline = await cache.match(routeUrl('offline.html'));
+    if (offline) return offline;
+    return offlineResponse();
+  }
+}
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    // Cache each core asset independently so a single optional file cannot cancel the worker install.
-    await Promise.allSettled(CORE.map(async (url) => {
+    await Promise.allSettled(CORE.map(async url => {
       try {
         const response = await fetch(url, { cache: 'reload' });
         if (response.ok) await remember(cache, url, response);
@@ -86,43 +121,33 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
-      // Both / and /index.html resolve through the same root document cache entry.
       if (isHomeRequest(url)) {
         const cachedHome = await cache.match(BASE_URL.href);
-        const refreshHome = fetch(BASE_URL.href).then(async response => {
-          await remember(cache, BASE_URL.href, response);
-          return response;
+        const refreshHome = fetch(BASE_URL.href, { cache: 'no-store' }).then(async response => {
+          await remember(cache, BASE_URL.href, response); return response;
         });
-        if (cachedHome) {
-          event.waitUntil(refreshHome.catch(() => {}));
-          return cachedHome;
-        }
-        try { return await refreshHome; }
-        catch (_) { return await cache.match(routeUrl('offline.html')) || Response.error(); }
+        if (cachedHome) { event.waitUntil(refreshHome.catch(() => {})); return cachedHome; }
+        try {
+          const response = await refreshHome;
+          if (response.status === 404) return await cache.match(routeUrl('offline.html')) || offlineResponse();
+          return response;
+        } catch (_) { return await cache.match(routeUrl('offline.html')) || offlineResponse(); }
       }
-      const cached = await cache.match(request);
-      const refresh = fetch(request).then(async response => {
-        await remember(cache, request, response);
-        return response;
-      });
-      if (cached) {
-        event.waitUntil(refresh.catch(() => {}));
-        return cached;
-      }
-      try { return await refresh; }
-      catch (_) { return await cache.match(routeUrl('offline.html')) || await cache.match(BASE_URL.href) || Response.error(); }
+      return readNavigation(request, url, cache);
     })());
     return;
   }
-  // Static assets: cache-first for repeat visits, network-first only when the asset is not cached.
+  // Cache-first for assets is safe after versioned cache rotation; failed requests return safe responses.
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(request);
+    const cached = await cache.match(request, { ignoreSearch: true });
     if (cached) return cached;
     try {
       const response = await fetch(request);
       await remember(cache, request, response);
       return response;
-    } catch (_) { return Response.error(); }
+    } catch (_) {
+      return new Response('', { status: 503, headers: { 'Cache-Control': 'no-store' } });
+    }
   })());
 });

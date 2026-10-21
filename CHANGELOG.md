@@ -1,3 +1,13 @@
+# Release v20 — Static route and service-worker reliability
+
+- Fixed internal page links to point at the actual static `.html` files.
+- Added Cloudflare Static Assets `_redirects` compatibility paths for older clean URLs and directory indexes.
+- Updated canonical page URLs and the XML sitemap to actual page URLs.
+- Updated DVNM Bot answer links to explicit files.
+- Replaced service-worker `Response.error()` navigation failure with a readable offline fallback, and added extensionless route recovery.
+- Rotated the service-worker cache to v20, versioned DVNM Bot CSS to `?v=20`, and added no-cache headers for `sw.js`.
+- Preserved visual branding, all seven DVNM sample websites, QR images, certificate PDF, and the documentation library.
+
 
 ## v19 — DVNM Bot stylesheet repair (21 October 2026)
 
