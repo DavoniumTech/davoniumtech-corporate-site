@@ -1,22 +1,43 @@
 {
-  "release": "Davonium Technologies Public Company Release",
-  "date": "2026-10-15",
-  "canonical_domain": "https://www.davoniumtech.com/",
-  "html_pages": 53,
-  "documentation_guides": 39,
-  "sitemap_urls": 48,
+  "built_at": "2026-10-21",
+  "source": "user-uploaded davoniumtech-corporate-site-main ZIP",
+  "features": [
+    "DVNM Bot visitor guide",
+    "browser-native opt-in speech",
+    "five fictional website demos",
+    "real homepage QR PNG",
+    "two documentation guides",
+    "removed Ready2Go public entry links",
+    "sitemap and service-worker cache refresh"
+  ],
+  "demo_pages": [
+    "demos/business.html",
+    "demos/index.html",
+    "demos/learning.html",
+    "demos/marketing.html",
+    "demos/portfolio.html",
+    "demos/shop.html"
+  ],
+  "direct_ready2go_hosts_in_html": [],
+  "qr_size": [
+    492,
+    492
+  ],
+  "html_pages": 61,
   "static_validation": {
-    "html_parse_and_metadata": "passed",
-    "internal_routes_and_fragments": "passed; zero errors",
-    "structured_data": "passed",
-    "manifest_and_wrangler_configuration": "valid JSON",
-    "sitemap": "valid XML; canonical URLs only; draft legal pages excluded",
-    "public_copy": "implementation-stack terms removed from public HTML prose",
-    "browser_automation": "not completed; sandbox browser access was blocked, so live-device review remains necessary"
+    "html_pages": 61,
+    "relative_link_errors": 0,
+    "broken_anchor_errors": 0,
+    "invalid_jsonld_scripts": 0,
+    "pages_missing_demo_nav": 0,
+    "direct_ready2go_app_host_links": 0,
+    "sitemap_url_count": 51,
+    "qr_decodes_to": "https://www.davoniumtech.com/",
+    "js_syntax_checks": {
+      "assets/js/site.js": "PASS",
+      "demos/demos.js": "PASS"
+    },
+    "visual_browser_smoke_test": "Not completed: headless Chromium could not start reliably in this environment; verify on desktop and mobile after deployment."
   },
-  "product_status": {
-    "Ready2Go Learning": "In development",
-    "Marvel Chat": "Built; active development",
-    "Davonium Nexus": "In development"
-  }
+  "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately."
 }

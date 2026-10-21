@@ -1,17 +1,21 @@
-DAVONIUM TECHNOLOGIES — COMPANY RELEASE DEPLOYMENT GUIDE
-Updated: 15 October 2026
+DAVONIUM TECHNOLOGIES — DVNM BOT + DEMO STUDIO RELEASE
+Updated: 21 October 2026
 
-READ FIRST
-This release is designed for https://www.davoniumtech.com/. The public guides focus on products, visitor outcomes, support, and verified company practices instead of advertising internal implementation choices. Browser-delivered resources can still be inspected; do not store secrets in public files. Keep the source repository private if source-history visibility matters, after verifying the hosting integration retains access.
+IMPORTANT: This package modifies the provided corporate-site source and does not push anything to GitHub automatically. Review it locally first. Deploy from the existing repository connected to Cloudflare so the configured production route remains unchanged.
 
-1. EXTRACT THE ZIP
-Run these commands from Windows CMD after saving the ZIP in Downloads:
+1) BACK UP AND PREPARE
+
+Open Windows CMD. Adjust the Downloads path if you saved this ZIP elsewhere:
 
 cd /d "%USERPROFILE%\Downloads"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davonium-technologies-public-company-release.zip' -DestinationPath '%USERPROFILE%\Downloads\davonium-technologies-public-company-release' -Force"
-dir "%USERPROFILE%\Downloads\davonium-technologies-public-company-release\index.html"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021.zip' -DestinationPath '%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021' -Force"
 
-2. UPDATE THE EXISTING COMPANY REPOSITORY
+The extracted folder contains the website root. Confirm index.html exists:
+
+dir "%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021\davoniumtech-corporate-site-main\index.html"
+
+Open your EXISTING local repository folder (do not make a new repo):
+
 cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
 git remote -v
 git status
@@ -19,52 +23,70 @@ git fetch origin
 git switch main
 git pull --ff-only origin main
 
-Confirm that origin is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. Stop if the working tree contains changes you need to preserve. Create a backup branch with a unique name before copying:
+Confirm origin is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If `git status` shows local changes that you need, stop and back them up before copying.
 
-git branch backup-before-public-company-release-20261015-2045
-git push origin backup-before-public-company-release-20261015-2045
+2) MAKE A BACKUP BRANCH FIRST
 
-If that branch name already exists, choose a different name.
+Use a unique name if this branch already exists:
 
-3. COPY AND REVIEW
-robocopy "%USERPROFILE%\Downloads\davonium-technologies-public-company-release" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
-echo %ERRORLEVEL%
+git branch backup-before-dvnm-bot-demo-studio-20261021
+git push origin backup-before-dvnm-bot-demo-studio-20261021
 
-Robocopy exit codes 0–7 usually mean the copy completed; 8 or higher means failure. Never use /MIR for this operation.
+3) COPY THE UPDATED WEBSITE SAFELY
 
+Replace the source-folder path below if you extracted somewhere else. The destination must be your existing repository folder. `/E` copies new and updated files but does not delete unrelated files; do NOT use `/MIR`.
+
+robocopy "%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021\davoniumtech-corporate-site-main" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
+
+echo Robocopy exit code: %ERRORLEVEL%
+
+Robocopy exit codes 0–7 usually indicate a successful copy; 8 or higher indicates a failure. Check the target folder before continuing. If the extracted folder name differs, use `dir` to locate the actual index.html and adapt the path.
+
+4) REVIEW BEFORE COMMITTING
+
+cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
 git status
+git diff --stat
+git diff -- index.html products.html work.html robots.txt sitemap.xml sw.js
+
+Check that:
+- the homepage and each core page still open;
+- `demos/` contains index.html, business.html, marketing.html, shop.html, portfolio.html, learning.html, demos.css, and demos.js;
+- the QR image is `assets\images\davonium-website-qr.png`;
+- the Ready2Go live URL is no longer linked from Home, Products, or Our Work;
+- `assets\js\site.js` remains the site's shared script and Firebase/other unrelated systems have not been introduced into this static site.
+
+5) STAGE, REVIEW, COMMIT, AND PUSH
+
 git add .
 git diff --cached --stat
+git diff --cached --check
 
-Review the files, then commit and push:
+Review the staged diff. If it is correct:
 
-git commit -m "Improve Davonium company experience and public discovery"
+git commit -m "Add DVNM Bot and website demo studio"
 git push origin main
 
-A successful push does not prove that production deployed. Check the latest Cloudflare build and open the live pages on a phone and desktop.
+6) VERIFY THE HOSTED RELEASE
 
-4. CANONICAL DOMAIN
-The preferred public address is https://www.davoniumtech.com/. The Search Console screenshot shows the www homepage request was accepted, while the bare-domain inspection reported issues. In Cloudflare, open the davoniumtech.com zone → Rules → Redirect Rules and create a 301 wildcard redirect:
-Request URL: http*://davoniumtech.com/*
-Target URL: https://www.davoniumtech.com/${2}
-Status code: 301
-Preserve query string: enabled
+Open the existing Cloudflare Pages/Workers deployment dashboard and confirm that the new Git commit has deployed. Check these paths in the browser:
+- https://www.davoniumtech.com/
+- https://www.davoniumtech.com/demos/
+- https://www.davoniumtech.com/demos/business.html
+- https://www.davoniumtech.com/demos/marketing.html
+- https://www.davoniumtech.com/demos/shop.html
+- https://www.davoniumtech.com/demos/portfolio.html
+- https://www.davoniumtech.com/demos/learning.html
+- https://www.davoniumtech.com/docs/guides/dvnm-bot
+- https://www.davoniumtech.com/docs/guides/website-demo-studio
+- https://www.davoniumtech.com/assets/images/davonium-website-qr.png
 
-Test the bare-domain homepage and a nested path. Both should redirect once to the matching www URL. Do not create a rule that redirects www back to itself. See https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-domain/.
+Test on a phone and a laptop. Check theme toggle, navigation menu, demo buttons/forms, cart sample, reduced-motion mode, QR scanning, and browser speech. Speech requires user activation and supported browser voices.
 
-5. SEARCH DISCOVERY
-Google Search Console accepted the www homepage into a priority crawl queue. Bing accepted the sitemap submission with no sitemap errors, but the screenshot showed zero URLs discovered at that initial moment. These are positive initial steps, not a guarantee that every page will be indexed within a week. Submit https://www.davoniumtech.com/sitemap.xml once, inspect the www homepage and important guide URLs, and check the processing report again after the services have had time to crawl. Google says crawling and indexing timing cannot be guaranteed: https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl.
+7) IMPORTANT — READY2GO ACCESS RESTRICTION
 
-Bing IndexNow notification (optional, run in PowerShell after deploy, not CMD):
-$body = @{ host = "www.davoniumtech.com"; key = "cdc1781eecd88b39bcc5f4ad15872ca7"; keyLocation = "https://www.davoniumtech.com/cdc1781eecd88b39bcc5f4ad15872ca7.txt"; urlList = @("https://www.davoniumtech.com/", "https://www.davoniumtech.com/products", "https://www.davoniumtech.com/docs/", "https://www.davoniumtech.com/contact", "https://www.davoniumtech.com/docs/guides/seo-discovery", "https://www.davoniumtech.com/docs/guides/ai-discovery") } | ConvertTo-Json -Depth 4
-Invoke-RestMethod -Method Post -Uri "https://api.indexnow.org/indexnow" -ContentType "application/json; charset=utf-8" -Body $body
+This repository controls the corporate website, not necessarily the separate `ready2go.davoniumtech.com` host. The updated corporate pages remove its direct links, but users may still reach the separate host if it is independently deployed and public. To actually block access, add a Cloudflare Access gate/redirect or disable/restrict the Ready2Go deployment and test the subdomain separately. `robots.txt` and hidden links are not security controls. Do not announce the app is inaccessible until the subdomain itself has been tested.
 
-IndexNow is a discovery notification, not a guarantee of indexing; it does not replace Google Search Console.
+8) SEO CHECK
 
-6. SECURITY AND VISIBILITY
-The _headers file adds browser security headers for static page responses. After deployment, verify the live headers and check browser console for any Content-Security-Policy violations. The site has no server-side account or payment system by virtue of being a company information site; browser-side checks cannot protect secrets. Never place passwords, private API keys, customer records, or recovery codes in public files.
-
-robots.txt allows OAI-SearchBot for ChatGPT Search discovery while expressing a separate disallow preference for GPTBot training crawl. Other crawlers have their own rules. Crawler instructions are not access control. To hide the GitHub source repository from public browsing, change its visibility to Private only after confirming the Cloudflare Git integration is authorised to read the private repository. Browser-delivered files will remain inspectable regardless.
-
-7. AFTER DEPLOYMENT
-Check the home page, products, services, contact, documentation index, representative guides, WhatsApp action, system theme, installation help, direct links, missing-page response, and offline reopening after the required pages have been visited online. Verify sitemap URLs are canonical and that draft policy pages remain excluded from indexing until reviewed.
+After deployment, inspect `https://www.davoniumtech.com/sitemap.xml` and submit it in Google Search Console/Bing Webmaster Tools if those properties are configured. Crawling and indexing timing is not guaranteed. Individual demo pages intentionally use `noindex`; the Demo Studio index remains publicly discoverable.

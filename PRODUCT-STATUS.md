@@ -12,3 +12,9 @@ The initial product build exists. We continue testing, refining, and improving t
 We are developing a workspace for clearer project progress, deliverables, and client handoff. The label does not mean every intended workflow is already available.
 
 We update public product pages and guides when a verified release changes these statuses.
+
+
+## Release visibility update — 21 October 2026
+
+- Ready2Go Learning stays under development. The corporate site does not expose a direct public application link in Home, Products, or Our Work. This is not equivalent to server-side access control on its separate host.
+- DVNM Bot and five Demo Studio concepts are included in the corporate-site release.

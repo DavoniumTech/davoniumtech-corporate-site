@@ -54,3 +54,8 @@ Davonium Technologies develops digital products for students and everyday users 
 - Security contact: https://www.davoniumtech.com/.well-known/security.txt
 
 We keep public product status and guide links aligned. Search submission and crawler access help discovery but do not guarantee crawling, indexing, ranking, or AI citations. Privacy, terms, and browser-storage policies remain drafts pending review against our actual practices.
+
+## Demo Studio
+- Five original demo website concepts: https://www.davoniumtech.com/demos/
+- DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
+- Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio

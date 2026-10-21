@@ -284,8 +284,18 @@
   // Keep product-to-company navigation contextual when a visitor asks about Nexus.
   const contactTopic = $('#contact-topic');
   const requestedTopic = new URLSearchParams(location.search).get('topic');
-  if (contactTopic && requestedTopic && requestedTopic.toLowerCase() === 'nexus') {
-    contactTopic.value = 'Product question';
+  const topicMap = {
+    nexus: 'Product question',
+    'learning-product': 'Product question',
+    website: 'Website project',
+    'marketing-website': 'Website project',
+    'online-store': 'Website project',
+    'portfolio-website': 'Website project',
+    'dvnm-bot': 'Website project',
+    'website-demo-studio': 'Website project'
+  };
+  if (contactTopic && requestedTopic && topicMap[requestedTopic.toLowerCase()]) {
+    contactTopic.value = topicMap[requestedTopic.toLowerCase()];
   }
 
   // Static contact form opens a prepared email; it never claims to submit a ticket server-side.
@@ -315,6 +325,90 @@
     contact.title = 'Chat on WhatsApp'; contact.dataset.label = 'Chat on WhatsApp'; contact.innerHTML = '<svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.83 3 3 8.78 3 15.91c0 2.29.61 4.52 1.74 6.49L3.1 29l6.79-1.78a13.1 13.1 0 0 0 6.12 1.55h.01c7.19 0 13.03-5.78 13.03-12.91 0-3.46-1.36-6.71-3.83-9.15A13.02 13.02 0 0 0 16.04 3Zm.01 23.6h-.01a10.9 10.9 0 0 1-5.55-1.5l-.4-.24-4.03 1.06 1.08-3.9-.26-.4a10.65 10.65 0 0 1-1.64-5.7c0-5.9 4.85-10.7 10.81-10.7 2.89 0 5.61 1.11 7.65 3.13a10.57 10.57 0 0 1 3.17 7.57c0 5.9-4.85 10.7-10.82 10.7Zm5.94-8.02c-.32-.16-1.9-.93-2.2-1.04-.29-.1-.51-.16-.73.16-.21.32-.84 1.04-1.03 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.58-1.59-.95-.84-1.59-1.88-1.78-2.2-.19-.32-.02-.49.14-.65.14-.14.32-.38.49-.57.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.73-1.74-1-2.39-.26-.63-.53-.54-.73-.55h-.62c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66s1.14 3.09 1.3 3.3c.16.21 2.24 3.39 5.43 4.76.76.33 1.36.53 1.83.68.77.24 1.47.21 2.02.13.62-.09 1.9-.77 2.17-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.62-.38Z"/></svg><span class="wa-sr">Chat with Davonium Technologies on WhatsApp</span>';
     document.body.appendChild(contact);
   }
+
+
+  // DVNM Bot: browser-native speech, explicit user activation, and simple site navigation.
+  // No audio starts automatically and no visitor content is sent to an external service.
+  const botBaseMeta = $('meta[name="site-base"]');
+  const botBase = botBaseMeta ? botBaseMeta.content : '.';
+  const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
+  const botUrl = (path) => new URL(path, botRoot).href;
+  const robotMarkup = (extra = '') => `<div class="dvnm-character ${extra}" aria-hidden="true"><span class="dvnm-antenna"></span><span class="dvnm-ear left"></span><span class="dvnm-ear right"></span><div class="dvnm-head"><div class="dvnm-face"><i class="dvnm-eye left"></i><i class="dvnm-eye right"></i><i class="dvnm-cheek left"></i><i class="dvnm-cheek right"></i><i class="dvnm-mouth"></i></div></div><span class="dvnm-neck"></span><div class="dvnm-body"><span class="dvnm-chest">D</span></div><span class="dvnm-arm left"><i class="dvnm-hand"></i></span><span class="dvnm-arm right"><i class="dvnm-hand"></i></span><span class="dvnm-leg left"><i class="dvnm-foot"></i></span><span class="dvnm-leg right"><i class="dvnm-foot"></i></span></div>`;
+  const botCssHref = botUrl('assets/css/dvnm-bot.css');
+  if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
+    const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
+  }
+  if (document.body && !$('#dvnm-bot-dock')) {
+    const dock = document.createElement('div');
+    dock.className = 'dvnm-bot-dock'; dock.id = 'dvnm-bot-dock';
+    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><span class="dvnm-mini" aria-hidden="true"></span><span>Ask DVNM Bot</span><span class="dvnm-launch-star" aria-hidden="true">✦</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi there! I’m DVNM Bot. Pick a topic and I’ll point you to the right place.</p></div><div class="dvnm-panel-label">Choose a quick question</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">What is Davonium?</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Our products</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Website services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">See website demos</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Read documentation</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact the team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite">Davonium Technologies builds digital products and practical websites, with a focus on clear journeys, thoughtful engineering, and useful documentation.</p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about')}">Learn about the company →</a></div><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Voice starts only when you press “Hear this answer”. The available voice depends on your browser and device.</p></section>`;
+    document.body.appendChild(dock);
+    const panel = $('#dvnm-bot-panel', dock), launcher = $('#dvnm-bot-launcher', dock), closeBot = $('#dvnm-bot-close', dock);
+    const answer = $('#dvnm-bot-answer', dock), answerLink = $('#dvnm-bot-link', dock), statusText = $('#dvnm-bot-status', dock);
+    const speakBtn = $('#dvnm-bot-speak', dock), stopBtn = $('#dvnm-bot-stop', dock);
+    const topics = {
+      company: { text: 'Davonium Technologies builds digital products and practical websites, with a focus on clear journeys, thoughtful engineering, and useful documentation.', link: 'about', label: 'Learn about the company →' },
+      products: { text: 'Explore the product family: Marvel Chat is in active development, Davonium Nexus is being developed for client project handoffs, and Ready2Go Learning remains under development with no public launch link on this website.', link: 'products', label: 'Explore product status →' },
+      services: { text: 'We work on responsive websites, landing pages, progressive web app experiences, technical SEO foundations, documentation, interface refinement, and launch support.', link: 'services', label: 'Explore our services →' },
+      demos: { text: 'The Demo Studio contains five fictional website concepts: a local business site, a marketing landing page, an online shop prototype, a creative portfolio, and a learning product page.', link: 'demos/', label: 'Open the Demo Studio →' },
+      docs: { text: 'Our documentation covers company information, product status, web engineering, accessibility, security basics, performance, SEO, privacy, and support.', link: 'docs/', label: 'Browse documentation →' },
+      contact: { text: 'Tell our team about your audience, goals, budget range, and what you need the first release to do. Please do not include passwords or private keys.', link: 'contact', label: 'Contact Davonium →' }
+    };
+    let selectedAnswer = topics.company.text;
+    let selectedVoice = null;
+    const speakingCharacters = () => $$('.dvnm-character', dock);
+    const setSpeaking = (active) => document.querySelectorAll('.dvnm-character').forEach(character => character.classList.toggle('is-speaking', active));
+    const stopVoice = (message = 'Voice stopped.') => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      setSpeaking(false); if (statusText) statusText.textContent = message;
+      if (speakBtn) speakBtn.disabled = false;
+    };
+    const showPanel = (open) => {
+      panel.hidden = !open; launcher.setAttribute('aria-expanded', String(open));
+      if (open) { const firstQuestion = $('.dvnm-question', dock); if (firstQuestion) firstQuestion.focus({ preventScroll: true }); }
+      else stopVoice('DVNM Bot closed. Voice stopped.');
+    };
+    launcher.addEventListener('click', () => showPanel(panel.hidden));
+    closeBot.addEventListener('click', () => { showPanel(false); launcher.focus(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) { showPanel(false); launcher.focus(); } });
+    $$('[data-dvnm-topic]', dock).forEach(button => button.addEventListener('click', () => {
+      const topic = topics[button.dataset.dvnmTopic]; if (!topic) return;
+      selectedAnswer = topic.text; answer.textContent = topic.text; answerLink.href = botUrl(topic.link); answerLink.textContent = topic.label;
+      $$('[data-dvnm-topic]', dock).forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      stopVoice('Answer selected. Press “Hear this answer” to listen.');
+    }));
+    speakBtn.addEventListener('click', () => {
+      if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+        statusText.textContent = 'This browser does not support speech output here. You can still read the answer and open the link.'; return;
+      }
+      stopVoice('Preparing voice…');
+      const utterance = new SpeechSynthesisUtterance(selectedAnswer);
+      utterance.rate = 0.96; utterance.pitch = 1.08; utterance.volume = 1;
+      try {
+        const voices = window.speechSynthesis.getVoices();
+        selectedVoice = voices.find(voice => /^en-NG$/i.test(voice.lang)) || voices.find(voice => /^en-/i.test(voice.lang)) || voices[0] || null;
+        if (selectedVoice) utterance.voice = selectedVoice;
+      } catch (_) {}
+      utterance.onstart = () => { setSpeaking(true); statusText.textContent = `DVNM Bot is speaking${selectedVoice ? ` with ${selectedVoice.name}` : ''}. Mouth animation follows speech activity approximately.`; speakBtn.disabled = true; };
+      utterance.onboundary = () => { setSpeaking(false); requestAnimationFrame(() => setSpeaking(true)); };
+      utterance.onend = () => { setSpeaking(false); speakBtn.disabled = false; statusText.textContent = 'That’s the answer. Choose another question or follow the link above.'; };
+      utterance.onerror = () => { setSpeaking(false); speakBtn.disabled = false; statusText.textContent = 'Speech was interrupted or is unavailable. The written answer and links still work.'; };
+      window.speechSynthesis.speak(utterance);
+    });
+    stopBtn.addEventListener('click', () => stopVoice());
+  }
+
+  // The large home-page welcome uses the same character; speaking still requires a click.
+  const welcomeButton = $('#dvnm-welcome-speak');
+  if (welcomeButton) welcomeButton.addEventListener('click', () => {
+    const openBot = $('#dvnm-bot-launcher'); const panel = $('#dvnm-bot-panel');
+    if (openBot && panel && panel.hidden) openBot.click();
+    const companyQuestion = $('[data-dvnm-topic="company"]'); if (companyQuestion) companyQuestion.click();
+    const speak = $('#dvnm-bot-speak'); if (speak) speak.click();
+  });
+  $$('[data-dvnm-open]').forEach(button => button.addEventListener('click', () => {
+    const launcher = $('#dvnm-bot-launcher'); if (launcher) { if ($('#dvnm-bot-panel')?.hidden) launcher.click(); else $('#dvnm-bot-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  }));
 
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     const baseMeta = $('meta[name="site-base"]');
