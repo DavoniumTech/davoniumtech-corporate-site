@@ -33,16 +33,16 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #090b14;
-  --surface: rgba(18, 21, 37, .84);
-  --surface-solid: #121526;
-  --surface-raised: #171a2d;
-  --tint: #1c1c35;
+  --bg: #171a2d;
+  --surface: rgba(31, 35, 59, .92);
+  --surface-solid: #232743;
+  --surface-raised: #2a2f4d;
+  --tint: #313456;
   --ink: #f5f3ff;
-  --muted: #b2b1c9;
-  --subtle: #8988a7;
-  --line: rgba(213, 203, 255, .13);
-  --line-strong: rgba(174, 149, 255, .35);
+  --muted: #c5c7df;
+  --subtle: #a2a5c3;
+  --line: rgba(213, 203, 255, .19);
+  --line-strong: rgba(174, 149, 255, .46);
   --purple: #a58aff;
   --purple-deep: #c0afff;
   --purple-light: #6f50ed;
@@ -50,26 +50,26 @@
   --coral: #ff9297;
   --mint: #6ce0bd;
   --gold: #ffca76;
-  --header: rgba(9, 11, 20, .82);
-  --shadow-sm: 0 8px 26px rgba(0,0,0,.18);
-  --shadow: 0 20px 65px rgba(0,0,0,.28);
-  --shadow-lg: 0 34px 95px rgba(0,0,0,.43);
+  --header: rgba(23, 26, 45, .90);
+  --shadow-sm: 0 8px 26px rgba(2, 5, 18, .20);
+  --shadow: 0 20px 65px rgba(2, 5, 18, .26);
+  --shadow-lg: 0 34px 95px rgba(2, 5, 18, .34);
   --glow: 0 0 0 1px rgba(165,138,255,.17), 0 10px 44px rgba(112,72,245,.18);
 }
 /* System appearance fallback before JavaScript runs. Explicit visitor choice is handled by [data-theme]. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
   color-scheme: dark;
-  --bg: #090b14;
-  --surface: rgba(18, 21, 37, .84);
-  --surface-solid: #121526;
-  --surface-raised: #171a2d;
-  --tint: #1c1c35;
+  --bg: #171a2d;
+  --surface: rgba(31, 35, 59, .92);
+  --surface-solid: #232743;
+  --surface-raised: #2a2f4d;
+  --tint: #313456;
   --ink: #f5f3ff;
-  --muted: #b2b1c9;
-  --subtle: #8988a7;
-  --line: rgba(213, 203, 255, .13);
-  --line-strong: rgba(174, 149, 255, .35);
+  --muted: #c5c7df;
+  --subtle: #a2a5c3;
+  --line: rgba(213, 203, 255, .19);
+  --line-strong: rgba(174, 149, 255, .46);
   --purple: #a58aff;
   --purple-deep: #c0afff;
   --purple-light: #6f50ed;
@@ -77,10 +77,10 @@
   --coral: #ff9297;
   --mint: #6ce0bd;
   --gold: #ffca76;
-  --header: rgba(9, 11, 20, .82);
-  --shadow-sm: 0 8px 26px rgba(0,0,0,.18);
-  --shadow: 0 20px 65px rgba(0,0,0,.28);
-  --shadow-lg: 0 34px 95px rgba(0,0,0,.43);
+  --header: rgba(23, 26, 45, .90);
+  --shadow-sm: 0 8px 26px rgba(2, 5, 18, .20);
+  --shadow: 0 20px 65px rgba(2, 5, 18, .26);
+  --shadow-lg: 0 34px 95px rgba(2, 5, 18, .34);
   --glow: 0 0 0 1px rgba(165,138,255,.17), 0 10px 44px rgba(112,72,245,.18);
 
   }
@@ -713,3 +713,41 @@ img,svg,video{max-width:100%}
 html,body{max-width:100%;overflow-x:clip}
 @media(max-width:520px){.footbottom{align-items:flex-start;flex-direction:column;gap:8px}.footgrid{overflow-wrap:anywhere}.footlinks a{min-height:28px;display:inline-flex;align-items:center}}
 @media(prefers-reduced-motion:reduce){html.theme-transition,html.theme-transition body,html.theme-transition .head,html.theme-transition .foot,html.theme-transition .card,html.theme-transition .section,html.theme-transition .btn,html.theme-transition .icon,.footlinks a{transition:none!important}}
+
+
+/* v25: luminous midnight-violet theme refinement. */
+:root[data-theme="dark"] body {
+  background-image:
+    radial-gradient(ellipse at 12% 0%, rgba(116, 89, 231, .16), transparent 42%),
+    radial-gradient(ellipse at 92% 12%, rgba(33, 190, 208, .10), transparent 38%),
+    linear-gradient(160deg, #171a2d, #1a1d34 58%, #181b30);
+  background-attachment: fixed;
+}
+:root[data-theme="dark"] .head,
+:root[data-theme="dark"] .foot {
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+}
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .dash,
+:root[data-theme="dark"] .notice,
+:root[data-theme="dark"] .band {
+  border-color: rgba(191, 184, 255, .20);
+  box-shadow: 0 14px 42px rgba(3, 6, 22, .18), 0 0 24px rgba(112, 72, 245, .045);
+}
+:root[data-theme="dark"] .btn.alt {
+  background: rgba(44, 48, 78, .82);
+  border-color: rgba(185, 172, 255, .30);
+}
+:root[data-theme="dark"] .btn.alt:hover {
+  background: rgba(67, 61, 111, .92);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) body {
+    background-image:
+      radial-gradient(ellipse at 12% 0%, rgba(116, 89, 231, .16), transparent 42%),
+      radial-gradient(ellipse at 92% 12%, rgba(33, 190, 208, .10), transparent 38%),
+      linear-gradient(160deg, #171a2d, #1a1d34 58%, #181b30);
+    background-attachment: fixed;
+  }
+}

@@ -207,3 +207,88 @@
  .dvnm-certificate-sheet { width:100%; max-width:none; border:7px double #8ca4cf; box-shadow:none; break-inside:avoid; }
  @page { size:A4 landscape; margin:9mm; }
 }
+
+
+/* v26: luminous midnight theme for every sample page; intentionally not near-black. */
+:root[data-theme="dark"] .demo-page {
+  --demo-ink: #f6f3ff;
+  --demo-muted: #c8cce7;
+  --demo-line: rgba(202, 204, 255, .23);
+  --demo-paper: #282d4b;
+  --demo-accent: #b8a8ff;
+  --demo-glow: #37335f;
+  background: #191d35 !important;
+  color: var(--demo-ink) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-hero {
+  background: radial-gradient(ellipse at 78% 8%, rgba(57,221,235,.17), transparent 36%),
+              radial-gradient(ellipse at 5% 75%, rgba(127,94,255,.16), transparent 42%),
+              linear-gradient(140deg,#242949 0%,#302b52 58%,#1d3a4d 100%) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-section,
+:root[data-theme="dark"] .demo-page .demo-section.soft,
+:root[data-theme="dark"] .demo-page .community-soft {
+  background: linear-gradient(145deg,#202641,#292747) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-section:nth-of-type(even) {
+  background: linear-gradient(145deg,#242a47,#2c2b50) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-hero-art {
+  border-color: rgba(151,177,255,.32) !important;
+  background: radial-gradient(circle at 70% 18%,rgba(79,225,228,.16),transparent 38%),
+              linear-gradient(140deg,#30365b,#252a46) !important;
+  box-shadow: 0 20px 48px rgba(4,8,30,.20), inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-panel,
+:root[data-theme="dark"] .demo-page .demo-card,
+:root[data-theme="dark"] .demo-page .tech-product,
+:root[data-theme="dark"] .demo-page .community-event,
+:root[data-theme="dark"] .demo-page .demo-cart-summary {
+  color: var(--demo-ink) !important;
+  border-color: rgba(199,202,255,.24) !important;
+  background: linear-gradient(145deg,#303552,#292f4b) !important;
+  box-shadow: 0 14px 38px rgba(5,9,32,.19), inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-filterbar,
+:root[data-theme="dark"] .demo-page .demo-filterbar button {
+  color: var(--demo-ink) !important;
+  border-color: rgba(202,204,255,.22) !important;
+  background: #2b304d !important;
+}
+:root[data-theme="dark"] .demo-page .demo-filterbar button[aria-pressed="true"] {
+  color: #fff !important;
+  background: linear-gradient(120deg,#6955d9,#387fba) !important;
+  border-color: rgba(178,205,255,.52) !important;
+}
+:root[data-theme="dark"] .demo-page .demo-pill,
+:root[data-theme="dark"] .demo-page .demo-panel .demo-chip {
+  color: #e1d9ff !important;
+  background: #47416e !important;
+}
+:root[data-theme="dark"] .demo-page .community-sign {
+  background: rgba(42,49,76,.94) !important;
+  border-color: rgba(215,235,255,.25) !important;
+}
+:root[data-theme="dark"] .demo-page .community-sign b,
+:root[data-theme="dark"] .demo-page .community-sign span,
+:root[data-theme="dark"] .demo-page .community-sign small,
+:root[data-theme="dark"] .demo-page .community-event h3,
+:root[data-theme="dark"] .demo-page .demo-card h3,
+:root[data-theme="dark"] .demo-page .tech-product h3 { color: #f6f3ff !important; }
+:root[data-theme="dark"] .demo-page .community-event p,
+:root[data-theme="dark"] .demo-page .event-meta,
+:root[data-theme="dark"] .demo-page .event-date span,
+:root[data-theme="dark"] .demo-page .demo-card p,
+:root[data-theme="dark"] .demo-page .tech-product p,
+:root[data-theme="dark"] .demo-page .demo-hero p { color: #c8cce7 !important; }
+:root[data-theme="dark"] .demo-page .tech-contact {
+  background: radial-gradient(circle at 90% 5%,rgba(48,204,215,.15),transparent 28%), linear-gradient(145deg,#2e3453,#26334b) !important;
+}
+:root[data-theme="dark"] .demo-page .tech-product>a { color: #9de7ff !important; }
+:root[data-theme="dark"] .demo-page .dvnm-certificate-preview { background: linear-gradient(135deg,#2c3658,#39305e) !important; border-color:rgba(137,221,255,.42) !important; }
+:root[data-theme="dark"] .demo-page .dvnm-certificate-sheet { background:linear-gradient(135deg,#fff 0%,#f5f9ff 52%,#f8f4ff 100%) !important; }
+:root[data-theme="dark"] .demo-page .demo-foot { color:#c5c9e5 !important; border-color:rgba(202,204,255,.16) !important; background:linear-gradient(145deg,#1d233e,#292744) !important; }
+:root[data-theme="dark"] .demo-page a:not(.btn) { text-underline-offset: .2em; }
+:root[data-theme="dark"] .demo-page :is(input,select,textarea) {
+  color:#f6f3ff !important; background:#292f4b !important; border-color:rgba(202,204,255,.26) !important;
+}

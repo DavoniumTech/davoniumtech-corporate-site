@@ -1,3 +1,22 @@
+# Release v26 — DVNM Bot panel interaction, clean visor, chest glow, and brighter demo dark mode
+- Refined the dark glass visor geometry so it fully covers the source artwork's curved closed-eye marks and uses clean circular optical lenses with a natural blink overlay.
+- Repositioned and strengthened the chest aura so it illuminates the existing DVNM chest insignia rather than the lower torso; glow is more visible while speech is active.
+- Kept the assistant panel fixed to the viewport independently of the narrow floating launcher, with a higher stacking level, mobile-safe dimensions, scroll handling, and usable close/question/voice controls.
+- Applied a brighter midnight-violet/blue palette across the seven demo websites. Cards, forms, filters, sections, and footers now use clearer surfaces, gentler ambient gradients, and readable light text instead of near-black backgrounds.
+- Bumped stylesheet, cutout asset and service-worker versions to prevent clients from reusing the previous cached release.
+- Preserved the existing 71-page website, original images, certificate PDFs, QR codes, site navigation and backend-free demo interactions.
+
+Known visual limitation: the supplied robot artwork still has its original outward-arm pose. No replacement robot image was generated or substituted. The previous no-generation arm-edit experiment produced visibly artificial replacement limbs and was deliberately not shipped. A polished, anatomically coherent hands-down pose remains a separate artwork change.
+
+# Release v25 — DVNM Bot panel repair, natural lens eyes, and refined dark theme
+- Fixed the floating assistant panel width. It is now sized independently of the narrow robot launcher, uses a viewport-safe fixed position, and retains working topic, voice, and close controls on desktop and mobile.
+- Fixed click targets and panel interactivity while preserving the transparent floating launcher and the existing site navigation.
+- Added a clean glass visor overlay so the original curved eye marks are hidden; the overlay lenses blink naturally and gaze subtly without the appearance of tears.
+- Strengthened the DVNM chest aura while speaking and extended the speaking state to the floating robot launcher.
+- Refined dark mode into a brighter midnight-violet palette with teal/purple ambient light, clearer surfaces, softer shadows, and gentle theme transitions.
+- Bumped bot asset/style references and service-worker cache to v25 so deployments do not reuse the previous panel CSS.
+- The robot art source remains the existing full-body DVNM illustration. The source illustration's outward arm pose is retained in this patch; no new generated artwork was used.
+
 # Release v24 — Standalone full-body DVNM Bot
 - Reused the existing branded DVNM robot artwork and made a transparent-background cutout asset for natural, full-body presentation; no new character artwork was generated.
 - Replaced the old floating launcher made from CSS head/body pieces with the existing full-body robot image. The launcher itself has no card, square, border, pill, or background panel.

@@ -25,7 +25,7 @@
     const systemValue = systemTheme();
     document.documentElement.dataset.theme = value;
     const themeColor = $('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#090b14' : '#6847e8');
+    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#171a2d' : '#6847e8');
     if (theme) {
       const other = value === 'dark' ? 'light' : 'dark';
       theme.textContent = value === 'dark' ? '☀' : '☾';
@@ -337,16 +337,16 @@
   const botUrl = (path) => new URL(path, botRoot).href;
   // The face overlays animate the eyes and mouth on top of the branded 3D artwork.
   // Mouth motion follows active speech; it is an expressive visual cue, not phoneme-perfect lip-sync.
-  const robotFaceMarkup = () => `<span class="dvnm-robot-eye dvnm-robot-eye-left" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-eye dvnm-robot-eye-right" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-mouth" aria-hidden="true"></span>`;
-  const robotMarkup = (extra = '') => `<div class="dvnm-robot-art ${extra}" aria-hidden="true"><img class="dvnm-robot-art-image" src="${botUrl('assets/images/dvnm-bot-cutout.webp?v=24')}" alt="" width="768" height="1152" loading="eager" decoding="async">${robotFaceMarkup()}<span class="dvnm-robot-chest-aura" aria-hidden="true"></span><span class="dvnm-robot-light-ring" aria-hidden="true"></span></div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=24');
+  const robotFaceMarkup = () => `<span class="dvnm-robot-faceplate" aria-hidden="true"></span><span class="dvnm-robot-eye dvnm-robot-eye-left" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-eye dvnm-robot-eye-right" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-mouth" aria-hidden="true"></span>`;
+  const robotMarkup = (extra = '') => `<div class="dvnm-robot-art ${extra}" aria-hidden="true"><img class="dvnm-robot-art-image" src="${botUrl('assets/images/dvnm-bot-cutout.webp?v=26')}" alt="" width="768" height="1152" loading="eager" decoding="async">${robotFaceMarkup()}<span class="dvnm-robot-chest-aura" aria-hidden="true"></span><span class="dvnm-robot-light-ring" aria-hidden="true"></span></div>`;
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=26');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
   if (document.body && !$('#dvnm-bot-dock')) {
     const dock = document.createElement('div');
     dock.className = 'dvnm-bot-dock'; dock.id = 'dvnm-bot-dock';
-    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><img class="dvnm-launcher-robot" src="${botUrl('assets/images/dvnm-bot-cutout.webp?v=24')}" alt="" width="768" height="1152" loading="eager" decoding="async"><span class="dvnm-launcher-label">DVNM Bot</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi! I’m DVNM Bot, and I’m here to assist you. Choose a topic and I’ll guide you to the right place.</p></div><div class="dvnm-panel-label">What would you like to explore?</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">About Davonium</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Products and status</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Web and digital services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">Seven DVNM samples</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Documentation and offline use</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact our team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite"></p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about')}">Learn about the company →</a></div><details class="dvnm-voice-settings" id="dvnm-voice-settings"><summary>Voice and speaking settings</summary><div class="dvnm-voice-settings-inner"><label for="dvnm-bot-voice">DVNM Voice<select id="dvnm-bot-voice" disabled><option value="auto">DVNM Voice · automatic device support</option></select></label><label for="dvnm-bot-volume">Speech volume <output id="dvnm-bot-volume-value" for="dvnm-bot-volume">15%</output></label><input id="dvnm-bot-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Speech volume"><label for="dvnm-bot-rate">Speaking pace <output id="dvnm-bot-rate-value" for="dvnm-bot-rate">0.86×</output></label><input id="dvnm-bot-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Speaking pace"><p>Only one voice option is offered: DVNM Voice. It automatically selects a compatible installed English voice and falls back to the device default when needed.</p></div></details><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Your written answer is always available. Press Hear this answer when you want spoken output.</p></section>`;
+    dock.innerHTML = `<button class="dvnm-launcher" id="dvnm-bot-launcher" type="button" aria-expanded="false" aria-controls="dvnm-bot-panel" aria-label="Open DVNM Bot, the Davonium website guide"><img class="dvnm-launcher-robot" src="${botUrl('assets/images/dvnm-bot-cutout.webp?v=26')}" alt="" width="768" height="1152" loading="eager" decoding="async">${robotFaceMarkup()}<span class="dvnm-robot-chest-aura" aria-hidden="true"></span><span class="dvnm-launcher-label">DVNM Bot</span></button><section class="dvnm-panel" id="dvnm-bot-panel" role="dialog" aria-modal="false" aria-label="DVNM Bot website guide" hidden><header class="dvnm-panel-head"><div><strong>DVNM Bot</strong><small>Your Davonium Technologies guide</small></div><button class="dvnm-panel-close" type="button" id="dvnm-bot-close" aria-label="Close DVNM Bot">×</button></header><div class="dvnm-panel-intro"><div class="dvnm-robot-mini-frame">${robotMarkup()}</div><p id="dvnm-bot-greeting">Hi! I’m DVNM Bot, and I’m here to assist you. Choose a topic and I’ll guide you to the right place.</p></div><div class="dvnm-panel-label">What would you like to explore?</div><div class="dvnm-questions" role="group" aria-label="Questions for DVNM Bot"><button class="dvnm-question" type="button" data-dvnm-topic="company" aria-pressed="true">About Davonium</button><button class="dvnm-question" type="button" data-dvnm-topic="products" aria-pressed="false">Products and status</button><button class="dvnm-question" type="button" data-dvnm-topic="services" aria-pressed="false">Web and digital services</button><button class="dvnm-question" type="button" data-dvnm-topic="demos" aria-pressed="false">Seven DVNM samples</button><button class="dvnm-question" type="button" data-dvnm-topic="docs" aria-pressed="false">Documentation and offline use</button><button class="dvnm-question" type="button" data-dvnm-topic="contact" aria-pressed="false">Contact our team</button></div><div class="dvnm-answerbox"><p id="dvnm-bot-answer" aria-live="polite"></p><a class="dvnm-answer-link" id="dvnm-bot-link" href="${botUrl('about')}">Learn about the company →</a></div><details class="dvnm-voice-settings" id="dvnm-voice-settings"><summary>Voice and speaking settings</summary><div class="dvnm-voice-settings-inner"><label for="dvnm-bot-voice">DVNM Voice<select id="dvnm-bot-voice" disabled><option value="auto">DVNM Voice · automatic device support</option></select></label><label for="dvnm-bot-volume">Speech volume <output id="dvnm-bot-volume-value" for="dvnm-bot-volume">15%</output></label><input id="dvnm-bot-volume" type="range" min="0.03" max="0.45" step="0.02" value="0.15" aria-label="Speech volume"><label for="dvnm-bot-rate">Speaking pace <output id="dvnm-bot-rate-value" for="dvnm-bot-rate">0.86×</output></label><input id="dvnm-bot-rate" type="range" min="0.75" max="1.05" step="0.01" value="0.86" aria-label="Speaking pace"><p>Only one voice option is offered: DVNM Voice. It automatically selects a compatible installed English voice and falls back to the device default when needed.</p></div></details><div class="dvnm-panel-actions"><button class="btn" id="dvnm-bot-speak" type="button">▶ Hear this answer</button><button class="btn alt" id="dvnm-bot-stop" type="button">■ Stop voice</button></div><p class="dvnm-voice-status" id="dvnm-bot-status" aria-live="polite">Your written answer is always available. Press Hear this answer when you want spoken output.</p></section>`;
     document.body.appendChild(dock);
     const panel = $('#dvnm-bot-panel', dock), launcher = $('#dvnm-bot-launcher', dock), closeBot = $('#dvnm-bot-close', dock);
     const answer = $('#dvnm-bot-answer', dock), answerLink = $('#dvnm-bot-link', dock), statusText = $('#dvnm-bot-status', dock);
@@ -458,7 +458,7 @@
     let selectedVoiceKey = 'auto';
     let availableVoices = [];
     const setSpeaking = (active) => {
-      document.querySelectorAll('.dvnm-character, .dvnm-robot-art, .dvnm-hero-robot').forEach(character => character.classList.toggle('is-speaking', active));
+      document.querySelectorAll('.dvnm-character, .dvnm-robot-art, .dvnm-hero-robot, .dvnm-launcher').forEach(character => character.classList.toggle('is-speaking', active));
       if (panel) panel.classList.toggle('is-speaking', active);
       const welcomeOverlay = $('#dvnm-welcome-overlay');
       if (welcomeOverlay) welcomeOverlay.classList.toggle('is-speaking', active);
@@ -534,9 +534,16 @@
     };
     const stopVoice = (message = 'Voice stopped.') => { stopSpeechOnly(); setVoiceStatus(message); };
     const showPanel = (open) => {
-      panel.hidden = !open; launcher.setAttribute('aria-expanded', String(open));
-      if (open) { const firstQuestion = $('.dvnm-question', dock); if (firstQuestion) firstQuestion.focus({ preventScroll: true }); }
-      else stopVoice('DVNM Bot closed. Voice stopped. Your written answer remains available.');
+      panel.hidden = !open;
+      panel.classList.toggle('is-open', open);
+      dock.classList.toggle('is-open', open);
+      launcher.setAttribute('aria-expanded', String(open));
+      if (open) {
+        const firstQuestion = $('.dvnm-question', dock);
+        if (firstQuestion) firstQuestion.focus({ preventScroll: true });
+      } else {
+        stopVoice('DVNM Bot closed. Voice stopped. Your written answer remains available.');
+      }
     };
     launcher.addEventListener('click', () => showPanel(panel.hidden));
     closeBot.addEventListener('click', () => { showPanel(false); launcher.focus(); });
