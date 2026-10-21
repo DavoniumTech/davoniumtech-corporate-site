@@ -946,3 +946,155 @@ body.dvnm-welcome-visible { overflow:hidden; }
  .dvnm-panel, .dvnm-panel.is-speaking { bottom:calc(104px + 114px + 10px + env(safe-area-inset-bottom))!important; }
 }
 @media(prefers-reduced-motion:reduce) { #dvnm-bot-dock.is-open .dvnm-launcher .dvnm-rig-arm-right { animation:none!important; } }
+
+
+/* ================================================================
+   v28 FINAL: unified CSS DVNM Bot. One cohesive character, not sliced
+   image layers. Joints intentionally overlap to keep limbs connected.
+   ================================================================ */
+.dvnm-css-bot.dvnm-robot-art,
+.dvnm-css-bot.dvnm-hero-robot,
+.dvnm-css-bot.dvnm-launcher-robot {
+  position:relative!important; display:block!important; isolation:isolate!important;
+  overflow:visible!important; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; animation:none!important;
+  aspect-ratio:2/3!important; color:#effbff; pointer-events:none;
+  filter:drop-shadow(0 14px 13px rgba(24,36,80,.20));
+}
+.dvnm-css-bot.dvnm-hero-robot { width:min(72%,248px)!important; height:auto!important; max-width:78%!important; margin:0 auto 34px!important; }
+.dvnm-css-bot.dvnm-robot-art:not(.dvnm-hero-robot) { width:100%!important; height:100%!important; min-width:0!important; min-height:0!important; }
+.dvnm-css-bot.dvnm-launcher-robot { position:absolute!important; inset:0!important; width:100%!important; height:100%!important; max-width:none!important; margin:0!important; }
+.dvnm-css-bot .dvnm-css-bot-backglow { position:absolute; inset:12% 8% 2%; border-radius:48%; background:radial-gradient(ellipse,rgba(46,207,255,.22),rgba(107,83,242,.12) 44%,transparent 72%); filter:blur(9px); animation:dvnm-css-aura 4.7s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-orbit { position:absolute; left:9%; right:9%; top:27%; aspect-ratio:1; border:1px solid rgba(113,203,255,.31); border-radius:50%; transform:rotateX(68deg); }
+.dvnm-css-bot .dvnm-css-bot-orbit-b { left:17%; right:17%; top:37%; border-style:dashed; opacity:.6; transform:rotateX(70deg) rotate(30deg); }
+.dvnm-css-bot .dvnm-css-bot-skeleton { position:absolute; inset:2% 6% 1%; animation:dvnm-css-body-hover 4.8s ease-in-out infinite; transform-origin:50% 72%; }
+.dvnm-css-bot .dvnm-css-bot-head-root { position:absolute; z-index:7; left:27%; top:4%; width:46%; height:22%; transform-origin:50% 92%; animation:dvnm-css-head-look 7.4s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-antenna { position:absolute; z-index:0; width:4%; height:22%; left:71%; top:-15%; border-radius:100px; background:linear-gradient(90deg,#4c7db6,#b9faff 52%,#3d86be); box-shadow:0 0 5px #4cdffc; transform:rotate(9deg); }
+.dvnm-css-bot .dvnm-css-bot-antenna i { position:absolute; left:50%; top:-10%; width:240%; aspect-ratio:1; border-radius:50%; transform:translateX(-50%); background:radial-gradient(circle at 35% 25%,#fff 0 8%,#a4fbff 20%,#25c8fa 53%,#4b64ef 74%); box-shadow:0 0 0 2px rgba(120,227,255,.35),0 0 10px #36c8ff,0 0 18px rgba(60,98,255,.65); animation:dvnm-css-antenna 2.4s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-helmet { position:absolute; inset:0; overflow:visible; border:2px solid #b8d6f6; border-radius:43% 43% 35% 35% / 35% 35% 31% 31%; background:linear-gradient(115deg,#f7fdff 0%,#dcecff 20%,#fefeff 40%,#8bb9e9 73%,#e5f9ff 100%); box-shadow:inset 0 3px 2px #fff, inset -6px -8px 10px rgba(40,79,157,.24),0 3px 0 #557eb1,0 0 0 3px rgba(89,189,255,.19),0 0 22px rgba(70,197,255,.24); }
+.dvnm-css-bot .dvnm-css-bot-helmet::before { content:""; position:absolute; left:13%; right:13%; top:3%; height:13%; border-radius:50%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.88),transparent); filter:blur(1px); }
+.dvnm-css-bot .dvnm-css-bot-helmet-glint { position:absolute; top:12%; left:12%; width:23%; height:29%; transform:rotate(22deg); border-radius:50%; background:linear-gradient(120deg,rgba(255,255,255,.7),rgba(255,255,255,0)); filter:blur(1px); }
+.dvnm-css-bot .dvnm-css-bot-ear { position:absolute; z-index:-1; top:31%; width:14%; height:41%; border:2px solid #c8efff; border-radius:35%; background:linear-gradient(90deg,#35558c,#8ceeff 42%,#3769bd); box-shadow:0 0 9px rgba(50,211,255,.42); }
+.dvnm-css-bot .dvnm-css-bot-ear-left { left:-9%; transform:rotate(-7deg); }
+.dvnm-css-bot .dvnm-css-bot-ear-right { right:-9%; transform:rotate(7deg); }
+.dvnm-css-bot .dvnm-css-bot-ear::after { content:""; position:absolute; inset:23% 28%; border-radius:50%; background:#102348; box-shadow:inset 0 0 0 1px #82f5ff,0 0 5px #2edbff; }
+.dvnm-css-bot .dvnm-css-bot-visor { position:absolute; inset:17% 9% 14%; overflow:hidden; border:1px solid rgba(116,229,255,.85); border-radius:31% / 35%; background:radial-gradient(ellipse at 50% 0%,#203f70 0,#0c1d3c 38%,#08142b 100%); box-shadow:inset 0 3px 6px rgba(184,248,255,.13),inset 0 -6px 12px rgba(0,0,0,.65),0 0 8px rgba(50,203,255,.26); }
+.dvnm-css-bot .dvnm-css-bot-visor::before { content:""; position:absolute; inset:0 0 auto; height:23%; background:linear-gradient(90deg,transparent,rgba(152,241,255,.28),transparent); }
+.dvnm-css-bot .dvnm-css-bot-eye { position:absolute; top:30%; width:19%; height:35%; border:1px solid #6ceeff; border-radius:50%; background:radial-gradient(ellipse at 35% 26%,#fff 0 7%,#cbffff 12%,#6cf3ff 27%,#21baff 51%,#1260bc 73%,#0a224c 100%); box-shadow:0 0 0 2px rgba(75,218,255,.17),inset 0 0 3px rgba(255,255,255,.95),0 0 8px #28caff,0 0 15px rgba(36,177,255,.54); overflow:hidden; animation:dvnm-css-eye-glow 3.2s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-eye-left { left:19%; }
+.dvnm-css-bot .dvnm-css-bot-eye-right { right:19%; animation-delay:-.3s; }
+.dvnm-css-bot .dvnm-css-bot-pupil { position:absolute; left:28%; top:21%; width:47%; height:62%; border-radius:50%; background:radial-gradient(circle at 34% 24%,#133051,#02091b 73%); box-shadow:0 0 0 1px rgba(161,249,255,.65); }
+.dvnm-css-bot .dvnm-css-bot-pupil b { position:absolute; left:23%; top:17%; width:23%; height:23%; border-radius:50%; background:#fff; box-shadow:0 0 5px #fff,0 0 8px #6ef4ff; }
+.dvnm-css-bot .dvnm-css-bot-eyelid { position:absolute; z-index:4; inset:-2px -1px 0; border-radius:50% 50% 35% 35%; background:linear-gradient(180deg,#dceeff,#91c8ee 72%,#577ba8); transform:scaleY(0); transform-origin:50% 0; animation:dvnm-css-blink 5.2s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-eye-right .dvnm-css-bot-eyelid { animation-delay:-.15s; }
+.dvnm-css-bot .dvnm-css-bot-mouth { position:absolute; left:50%; bottom:16%; width:28%; height:7%; display:block; overflow:hidden; transform:translateX(-50%); border:1.5px solid #6beeff; border-radius:40% 40% 52% 52%; background:#030b1b; box-shadow:0 0 5px rgba(56,211,255,.8),inset 0 0 3px rgba(0,0,0,.7); }
+.dvnm-css-bot .dvnm-css-bot-mouth i { position:absolute; left:18%; right:18%; top:42%; height:2px; border-radius:99px; background:#8ffaff; box-shadow:0 0 4px #4ee7ff; }
+.dvnm-css-bot .dvnm-css-bot-neck { position:absolute; z-index:2; top:23%; left:42%; width:16%; height:9%; border:1px solid #9bc5f2; border-radius:0 0 30% 30%; background:linear-gradient(90deg,#37588a,#d8f7ff 36%,#668fce 74%,#193c70); }
+.dvnm-css-bot .dvnm-css-bot-neck i { position:absolute; top:20%; bottom:20%; left:38%; width:24%; border-radius:99px; background:linear-gradient(#8ef9ff,#398ce7); box-shadow:0 0 5px #42d9ff; }
+.dvnm-css-bot .dvnm-css-bot-torso { position:absolute; z-index:4; left:25%; top:28%; width:50%; height:35%; overflow:visible; border:2px solid #b8d6f6; border-radius:26% 26% 24% 24% / 17% 17% 20% 20%; background:linear-gradient(105deg,#f7fbff 0%,#cce2f8 16%,#fff 34%,#9ebee8 62%,#ecfbff 85%,#7faae2 100%); box-shadow:inset 0 3px 2px #fff,inset -6px -7px 11px rgba(29,67,146,.25),0 4px 0 #4a6fa6; }
+.dvnm-css-bot .dvnm-css-bot-torso::before { content:""; position:absolute; top:-2%; left:17%; right:17%; height:14%; border-radius:0 0 45% 45%; background:linear-gradient(90deg,#547db2,#d9fbff 30%,#759de0 70%,#325891); }
+.dvnm-css-bot .dvnm-css-bot-torso-light { position:absolute; top:11%; left:10%; width:7%; height:53%; border-radius:9px; background:linear-gradient(#7cf5ff,#2f7de7); box-shadow:0 0 7px rgba(42,219,255,.5); }
+.dvnm-css-bot .dvnm-css-bot-collar { position:absolute; top:-4%; left:30%; width:40%; height:11%; border:1px solid #b5f4ff; border-radius:0 0 42% 42%; background:linear-gradient(90deg,#183869,#8ef5ff,#243b76); }
+.dvnm-css-bot .dvnm-css-bot-chest { position:absolute; left:23%; top:27%; width:57%; height:43%; display:grid; place-items:center; overflow:visible; border:2px solid #5dcef8; border-radius:25% 25% 31% 31%; background:linear-gradient(145deg,#172b59,#081a3c 63%,#182b58); box-shadow:inset 0 2px 4px rgba(211,255,255,.25),0 0 0 2px rgba(53,166,255,.21),0 0 12px rgba(32,180,255,.25); }
+.dvnm-css-bot .dvnm-css-bot-chest-aura { position:absolute; z-index:-1; inset:-40%; border-radius:50%; opacity:.55; background:radial-gradient(ellipse,rgba(92,255,255,.95),rgba(41,173,255,.48) 34%,rgba(93,71,255,.22) 57%,transparent 74%); filter:blur(7px); animation:dvnm-css-chest-pulse 2.2s ease-in-out infinite alternate; }
+.dvnm-css-bot .dvnm-css-bot-chest-mark { position:relative; display:grid; place-items:center; width:84%; height:44%; border:1px solid rgba(132,248,255,.8); border-radius:7px; color:#c5ffff; background:linear-gradient(100deg,#164fc0,#1fbada 48%,#2753c6); font:1000 clamp(7px,1.3vw,12px)/1 system-ui,sans-serif; letter-spacing:.06em; text-shadow:0 0 4px #8ffaff,0 0 10px #49cbff; box-shadow:inset 0 0 5px rgba(255,255,255,.24),0 0 11px rgba(49,219,255,.62); }
+.dvnm-css-bot .dvnm-css-bot-chest-mark::after { content:""; position:absolute; left:12%; right:12%; bottom:-5px; height:2px; border-radius:99px; background:#6cfbff; box-shadow:0 0 6px #43e4ff; }
+.dvnm-css-bot .dvnm-css-bot-chest i { position:absolute; bottom:7%; width:20%; height:2px; border-radius:99px; background:#7deeff; box-shadow:0 0 4px #5ae8ff; }
+.dvnm-css-bot .dvnm-css-bot-vents { position:absolute; bottom:7%; left:38%; width:24%; display:flex; justify-content:space-between; }
+.dvnm-css-bot .dvnm-css-bot-vents i { width:17%; height:3px; border-radius:99px; background:#315d9b; box-shadow:inset 0 1px 1px rgba(0,0,0,.35); }
+.dvnm-css-bot .dvnm-css-bot-waist { position:absolute; left:23%; right:23%; bottom:-8%; height:17%; border:1px solid #b9efff; border-radius:30%; background:linear-gradient(90deg,#355d99,#f1ffff 27%,#8aaee5 65%,#244d8b); }
+.dvnm-css-bot .dvnm-css-bot-hip { position:absolute; z-index:3; top:60%; left:31%; width:38%; height:8%; border:2px solid #a7c8ec; border-radius:25% 25% 40% 40%; background:linear-gradient(100deg,#345b94,#f1ffff 35%,#9bb9e7 72%,#2e518d); box-shadow:inset 0 2px 2px #fff,0 3px 0 #3a5f99; }
+.dvnm-css-bot .dvnm-css-bot-hip i { position:absolute; left:15%; right:15%; top:32%; height:20%; border-radius:99px; background:linear-gradient(90deg,#6ff7ff,#3377df); box-shadow:0 0 5px #2ddaff; }
+.dvnm-css-bot .dvnm-css-bot-hip b { position:absolute; inset:0; background:linear-gradient(90deg,transparent 47%,rgba(17,44,87,.55) 49% 51%,transparent 53%); }
+.dvnm-css-bot .dvnm-css-bot-arm { position:absolute; z-index:5; top:30%; width:22%; height:35%; transform-origin:82% 9%; }
+.dvnm-css-bot .dvnm-css-bot-arm-left { left:7%; transform:rotate(3deg); animation:dvnm-css-arm-left-idle 5.4s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-arm-right { right:7%; transform-origin:18% 9%; transform:rotate(-3deg); animation:dvnm-css-arm-right-idle 5.2s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-upper-arm { position:absolute; left:33%; top:0; width:48%; height:52%; border:1px solid #b3d6f4; border-radius:42% 43% 31% 31%; background:linear-gradient(100deg,#345b93,#effdff 31%,#a9c7ec 66%,#4775b2); box-shadow:inset 0 2px 2px #fff,0 2px 0 #345888; transform:rotate(-8deg); transform-origin:50% 10%; }
+.dvnm-css-bot .dvnm-css-bot-upper-arm::before { content:""; position:absolute; inset:12% 20% 14%; border-radius:35%; background:linear-gradient(90deg,rgba(49,103,178,.2),rgba(255,255,255,.72),rgba(42,90,159,.22)); }
+.dvnm-css-bot .dvnm-css-bot-upper-arm i { position:absolute; left:43%; top:20%; width:4px; height:32%; border-radius:99px; background:#43e5ff; box-shadow:0 0 5px #28cfff; }
+.dvnm-css-bot .dvnm-css-bot-elbow { position:absolute; z-index:2; top:43%; left:31%; width:53%; height:18%; border:1px solid #83dafa; border-radius:45%; background:linear-gradient(100deg,#18345e,#8fe9ff,#335a99); box-shadow:inset 0 1px 2px #d4ffff,0 0 5px rgba(45,194,255,.25); }
+.dvnm-css-bot .dvnm-css-bot-forearm { position:absolute; top:51%; left:25%; width:55%; height:38%; border:1px solid #b2d7f2; border-radius:34% 32% 39% 40%; background:linear-gradient(100deg,#345b93,#f7ffff 31%,#9dbbe6 67%,#3a65a3); box-shadow:inset 0 2px 2px #fff,0 2px 0 #345888; transform:rotate(5deg); transform-origin:50% 5%; }
+.dvnm-css-bot .dvnm-css-bot-forearm i { position:absolute; left:19%; top:17%; width:4px; height:44%; border-radius:99px; background:#45e8ff; box-shadow:0 0 5px #37d9ff; }
+.dvnm-css-bot .dvnm-css-bot-wrist { position:absolute; z-index:2; bottom:-3%; left:24%; width:53%; height:19%; border:1px solid #87e9ff; border-radius:35%; background:linear-gradient(90deg,#1d3970,#75e5ff,#244a8f); }
+.dvnm-css-bot .dvnm-css-bot-hand { position:absolute; left:8%; top:82%; width:73%; height:24%; border:1px solid #a8d8f4; border-radius:42% 43% 48% 42%; background:linear-gradient(130deg,#faffff,#b8d4f1 69%,#688bc1); box-shadow:inset 0 1px 2px #fff,0 2px 0 #355b90; }
+.dvnm-css-bot .dvnm-css-bot-hand::before { content:""; position:absolute; right:-15%; top:18%; width:31%; height:45%; border-radius:70% 50% 45% 50%; border:1px solid #acdfff; background:linear-gradient(90deg,#c8e8fa,#fff); transform:rotate(21deg); }
+.dvnm-css-bot .dvnm-css-bot-hand i,.dvnm-css-bot .dvnm-css-bot-hand b,.dvnm-css-bot .dvnm-css-bot-hand em { position:absolute; bottom:-17%; width:18%; height:33%; border-radius:0 0 55% 55%; border:1px solid #a0c8ed; background:linear-gradient(90deg,#c4e5f8,#fff); }
+.dvnm-css-bot .dvnm-css-bot-hand i { left:24%; }.dvnm-css-bot .dvnm-css-bot-hand b { left:43%; }.dvnm-css-bot .dvnm-css-bot-hand em { left:62%; }
+.dvnm-css-bot .dvnm-css-bot-arm-right .dvnm-css-bot-upper-arm { left:19%; transform:rotate(8deg); }
+.dvnm-css-bot .dvnm-css-bot-arm-right .dvnm-css-bot-elbow { left:16%; }
+.dvnm-css-bot .dvnm-css-bot-arm-right .dvnm-css-bot-forearm { left:22%; transform:rotate(-5deg); }
+.dvnm-css-bot .dvnm-css-bot-arm-right .dvnm-css-bot-wrist { left:auto; right:24%; }
+.dvnm-css-bot .dvnm-css-bot-arm-right .dvnm-css-bot-hand { left:auto; right:8%; transform:rotate(-5deg); }
+.dvnm-css-bot .dvnm-css-bot-leg { position:absolute; z-index:2; top:65%; width:22%; height:31%; transform-origin:50% 7%; }
+.dvnm-css-bot .dvnm-css-bot-leg-left { left:27%; animation:dvnm-css-leg-left-idle 4.8s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-leg-right { right:27%; animation:dvnm-css-leg-right-idle 4.8s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-bot-thigh { position:absolute; left:10%; top:0; width:80%; height:48%; border:1px solid #b7d6f2; border-radius:34% 34% 29% 29%; background:linear-gradient(100deg,#3d639b,#f8ffff 32%,#a3c1e8 71%,#456fa9); box-shadow:inset 0 2px 2px #fff,0 2px 0 #345887; }
+.dvnm-css-bot .dvnm-css-bot-thigh::after { content:""; position:absolute; left:44%; top:17%; width:5px; height:55%; border-radius:99px; background:#55eaff; box-shadow:0 0 5px #2ccfff; }
+.dvnm-css-bot .dvnm-css-bot-knee { position:absolute; z-index:3; top:41%; left:11%; width:78%; height:20%; border:1px solid #8adfff; border-radius:38%; background:radial-gradient(ellipse at 34% 22%,#f6ffff,#86b7e6 50%,#244c89 100%); box-shadow:inset 0 1px 2px #fff,0 0 5px rgba(51,203,255,.2); }
+.dvnm-css-bot .dvnm-css-bot-knee::after { content:""; position:absolute; left:35%; top:26%; width:30%; height:42%; border-radius:50%; background:#183c70; box-shadow:inset 0 0 0 1px #5eeaff; }
+.dvnm-css-bot .dvnm-css-bot-shin { position:absolute; z-index:2; left:18%; top:52%; width:65%; height:39%; border:1px solid #afcfee; border-radius:22% 22% 30% 30%; background:linear-gradient(100deg,#3b6299,#effcff 34%,#8fb3e2 71%,#365f98); box-shadow:inset 0 2px 2px #fff,0 2px 0 #315584; }
+.dvnm-css-bot .dvnm-css-bot-shin::before { content:""; position:absolute; left:39%; top:13%; width:21%; height:63%; border-radius:99px; background:linear-gradient(#8cfaff,#2479dc); box-shadow:0 0 6px rgba(40,208,255,.58); }
+.dvnm-css-bot .dvnm-css-bot-ankle { position:absolute; z-index:3; left:29%; top:83%; width:43%; height:10%; border-radius:25%; background:linear-gradient(90deg,#15365f,#8de8ff,#345b96); }
+.dvnm-css-bot .dvnm-css-bot-foot { position:absolute; z-index:4; left:-7%; top:87%; width:114%; height:15%; border:1px solid #b5ddf7; border-radius:30% 30% 34% 34%; background:linear-gradient(100deg,#375f96,#f6ffff 36%,#92b5e2 76%,#285188); box-shadow:inset 0 2px 2px #fff,0 3px 0 #224575; }
+.dvnm-css-bot .dvnm-css-bot-foot i { position:absolute; left:23%; right:18%; bottom:15%; height:15%; border-radius:99px; background:#46dffb; box-shadow:0 0 5px #38cfff; }
+.dvnm-css-bot .dvnm-css-bot-stars { position:absolute; inset:0; pointer-events:none; }
+.dvnm-css-bot .dvnm-css-star { position:absolute; color:#7b75fc; font-size:clamp(10px,1.8vw,17px); line-height:1; text-shadow:0 0 8px rgba(56,218,255,.85); animation:dvnm-css-star-float 3.4s ease-in-out infinite; }
+.dvnm-css-bot .dvnm-css-star-a { top:35%; left:0; animation-delay:-.9s; }
+.dvnm-css-bot .dvnm-css-star-b { right:0; top:53%; color:#51e6f3; animation-delay:-2s; }
+.dvnm-css-bot .dvnm-css-star-c { right:8%; top:20%; color:#ffbde4; animation-delay:-1.5s; }
+.dvnm-css-bot .dvnm-css-star-d { top:68%; left:0; color:#b9b2ff; animation-delay:-.3s; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-head-root { animation:dvnm-css-head-speak 1.3s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-mouth { height:15%; border-radius:45%; background:linear-gradient(180deg,#031126,#133d6c); box-shadow:0 0 7px #3fe4ff,inset 0 0 4px #51eaff; animation:dvnm-css-mouth-talk .22s ease-in-out infinite alternate; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-mouth i { left:22%; right:22%; top:35%; height:30%; border-radius:50%; background:#7dfaff; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-chest-aura { opacity:1; animation:dvnm-css-chest-speak .32s ease-in-out infinite alternate; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-chest-mark { color:#fff; background:linear-gradient(100deg,#1471ee,#29d8ed 48%,#4773ff); box-shadow:0 0 9px #31e6ff,0 0 20px rgba(46,193,255,.8),inset 0 0 7px rgba(255,255,255,.6); }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-arm-left { animation:dvnm-css-arm-left-teach 1.9s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-arm-right { animation:dvnm-css-arm-right-teach 1.65s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-leg-left { animation:dvnm-css-leg-left-walk 1.4s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-leg-right { animation:dvnm-css-leg-right-walk 1.4s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-bot-skeleton { animation:dvnm-css-body-talk .72s ease-in-out infinite; }
+.dvnm-css-bot.is-speaking .dvnm-css-star { color:#65f4ff; text-shadow:0 0 11px #48dfff,0 0 20px #7e78ff; }
+@keyframes dvnm-css-body-hover { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1.2%)} }
+@keyframes dvnm-css-body-talk { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-.7%)} }
+@keyframes dvnm-css-head-look { 0%,100%{transform:rotate(0)} 24%{transform:rotate(-2.8deg)} 44%{transform:rotate(.7deg)} 68%{transform:rotate(2.2deg)} 84%{transform:rotate(-.8deg)} }
+@keyframes dvnm-css-head-speak { 0%,100%{transform:rotate(0) translateY(0)} 27%{transform:rotate(2.3deg) translateY(1%)} 53%{transform:rotate(-1.6deg) translateY(-.8%)} 78%{transform:rotate(1.1deg)} }
+@keyframes dvnm-css-antenna { 0%,100%{filter:brightness(1);transform:translateX(-50%) scale(1)} 50%{filter:brightness(1.35);transform:translateX(-50%) scale(1.1)} }
+@keyframes dvnm-css-eye-glow { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.12)} }
+@keyframes dvnm-css-blink { 0%,91%,94%,100%{transform:scaleY(0)} 92.2%,93.2%{transform:scaleY(1)} }
+@keyframes dvnm-css-mouth-talk { from{transform:translateX(-50%) scaleY(.55)} to{transform:translateX(-50%) scaleY(1.15)} }
+@keyframes dvnm-css-chest-pulse { from{opacity:.42;filter:blur(6px) saturate(1)} to{opacity:.78;filter:blur(9px) saturate(1.4)} }
+@keyframes dvnm-css-chest-speak { from{opacity:.7;filter:blur(7px) saturate(1.3)} to{opacity:1;filter:blur(10px) saturate(1.8)} }
+@keyframes dvnm-css-arm-left-idle { 0%,100%{transform:rotate(3deg)} 50%{transform:rotate(-1deg)} }
+@keyframes dvnm-css-arm-right-idle { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(1deg)} }
+@keyframes dvnm-css-arm-left-teach { 0%,100%{transform:rotate(3deg)} 30%{transform:rotate(-5deg)} 58%{transform:rotate(1deg)} 78%{transform:rotate(-2deg)} }
+@keyframes dvnm-css-arm-right-teach { 0%,100%{transform:rotate(-3deg)} 28%{transform:rotate(-10deg)} 54%{transform:rotate(4deg)} 77%{transform:rotate(-5deg)} }
+@keyframes dvnm-css-leg-left-idle { 0%,100%{transform:rotate(-.6deg)} 50%{transform:rotate(1deg)} }
+@keyframes dvnm-css-leg-right-idle { 0%,100%{transform:rotate(.6deg)} 50%{transform:rotate(-1deg)} }
+@keyframes dvnm-css-leg-left-walk { 0%,100%{transform:rotate(-3deg) translateY(0)} 50%{transform:rotate(5deg) translateY(-2%)} }
+@keyframes dvnm-css-leg-right-walk { 0%,100%{transform:rotate(3deg) translateY(-2%)} 50%{transform:rotate(-5deg) translateY(0)} }
+@keyframes dvnm-css-star-float { 0%,100%{transform:translateY(2px) rotate(-6deg) scale(.88);opacity:.5} 50%{transform:translateY(-8px) rotate(8deg) scale(1.13);opacity:1} }
+@keyframes dvnm-css-aura { 0%,100%{opacity:.55;transform:scale(.96)} 50%{opacity:1;transform:scale(1.04)} }
+.dvnm-stage:has(.dvnm-css-bot) { background:radial-gradient(ellipse at 50% 82%,rgba(32,198,231,.18),transparent 36%),radial-gradient(circle at 50% 32%,rgba(129,102,255,.21),transparent 49%),linear-gradient(145deg,var(--surface-solid),var(--tint)); }
+.dvnm-stage .dvnm-css-bot-orbit { border-color:rgba(122,124,255,.25); }
+.dvnm-panel-intro .dvnm-robot-mini-frame { overflow:visible!important; }
+.dvnm-panel-intro .dvnm-robot-mini-frame .dvnm-css-bot { width:100%!important; height:100%!important; }
+.dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-css-bot { filter:drop-shadow(0 0 10px rgba(61,213,255,.2)); }
+.dvnm-css-bot.dvnm-launcher-robot .dvnm-css-bot-stars { display:block; }
+.dvnm-launcher { background:transparent!important; border:0!important; box-shadow:none!important; padding:0!important; min-height:0!important; }
+.dvnm-launcher:hover { background:transparent!important; box-shadow:none!important; filter:drop-shadow(0 9px 14px rgba(34,130,220,.28)); }
+.dvnm-launcher:focus-visible { outline:3px solid #45dfff!important; outline-offset:2px; border-radius:28px!important; }
+.dvnm-launcher .dvnm-launcher-label { position:absolute!important; width:1px!important; height:1px!important; overflow:hidden!important; clip-path:inset(50%)!important; white-space:nowrap!important; }
+#dvnm-bot-dock .dvnm-launcher { width:88px!important; height:132px!important; }
+#dvnm-bot-dock .dvnm-panel { width:min(390px,calc(100vw - 24px))!important; max-width:calc(100vw - 24px)!important; max-height:min(76dvh,690px)!important; right:0!important; bottom:calc(136px + env(safe-area-inset-bottom))!important; overflow:auto!important; overscroll-behavior:contain; }
+#dvnm-bot-dock .dvnm-panel[hidden] { display:none!important; }
+@media(max-width:600px) {
+ .dvnm-css-bot.dvnm-hero-robot { width:min(69%,220px)!important; max-width:74%!important; margin-bottom:18px!important; }
+ #dvnm-bot-dock { width:auto!important; right:max(8px,env(safe-area-inset-right))!important; bottom:calc(10px + env(safe-area-inset-bottom))!important; }
+ #dvnm-bot-dock .dvnm-launcher { width:70px!important; height:105px!important; }
+ #dvnm-bot-dock .dvnm-panel { right:0!important; bottom:calc(110px + env(safe-area-inset-bottom))!important; width:min(390px,calc(100vw - 16px))!important; max-width:calc(100vw - 16px)!important; max-height:min(74dvh,620px)!important; }
+ .dvnm-css-bot .dvnm-css-bot-chest-mark { font-size:8px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .dvnm-css-bot *, .dvnm-css-bot::before, .dvnm-css-bot::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+ .dvnm-css-bot .dvnm-css-bot-eyelid { transform:scaleY(0)!important; }
+}

@@ -2,6 +2,15 @@
 
 > Useful technology, built for real needs.
 
+## v28 — Final CSS bot and Demo Studio lock-down (21 October 2026)
+- The visitor guide is rebuilt as one CSS-drawn humanoid character with connected head, torso, arms, hands, legs and feet; it no longer depends on sliced robot artwork.
+- Circular cyan lens eyes blink naturally without tear-like eye streaks. The head turns gently, the mouth opens while speech is active, the DVNM chest mark glows, and subtle arm/leg gestures create a lightweight teaching motion.
+- The assistant remains speech-on-demand and keeps keyboard, mobile and reduced-motion behavior. CSS motion is illustrative, not a physics-based or true 3D simulation.
+- Light mode uses layered pastel colour; dark mode uses a brighter midnight-violet palette with more readable raised panels. The seven original locally stored SVG illustrations have gentle perspective, glow and floating motion.
+- The seven demo cards appear together only in the Demo Studio directory; each individual demonstration page has its own focused content and its own hero illustration.
+- All 71 HTML pages, local references, anchors, sitemap targets, CSS delimiters, JavaScript syntax and SVG XML are checked before packaging. Live desktop/mobile and Cloudflare deployment checks remain a post-deployment step.
+
+
 Davonium Technologies creates practical digital products and modern website experiences. This repository contains the existing multi-page company site, shared CSS/JavaScript, a public documentation library, installable PWA support, and the DVNM Bot + Demo Studio additions.
 
 ## v24 — Standalone DVNM Bot artwork (21 October 2026)
@@ -125,3 +134,7 @@ Our team refined the DVNM Bot face with open illuminated eyes, natural blink int
 ## Certificate preview and shared demo theme v23
 
 Our team now presents the DVNM Demo Studio showcase certificate directly on the certificate page, with a dedicated single-page PDF download and a separate QR directory PDF. The same page includes print/save controls and a mobile-friendly embedded directory preview. All sample sites use shared light/dark preferences and include a transparent, fixed DVNM Bot launcher without a card-shaped background. Speaking state adds a brighter chest glow, while speech remains controlled by the visitor and can be cancelled at any time.
+
+## v28 final visual update
+
+DVNM Bot is now a cohesive CSS-built character with connected arms, hands, legs and head joints. It uses CSS gradients and perspective rather than segmented source-art images. The seven sample demo pages each feature their own illustration; the full seven-card directory is shown only at `/demos/`. The voice remains browser-native, and the animated mouth responds to active speech rather than phoneme-level lip synchronization.

@@ -1,3 +1,14 @@
+# Release v28 — Final CSS DVNM Bot and Demo Studio polish
+- Rebuilt DVNM Bot as a single connected CSS character; removed the sliced image-layer rig.
+- Added joined head/torso/arm/hand/hip/leg geometry, natural lens blinking, mild head turns, teacher-style gestures and connected alternating leg motion.
+- Mouth animation and chest-logo glow respond to the existing browser speech state; the browser still supplies the voice.
+- Improved the light palette and layered midnight-violet dark palette across the corporate site and sample demos.
+- Added the corresponding illustrated visual to each of the seven individual sample demo pages and subtle perspective/float motion.
+- Removed the seven-card navigator from individual demo pages; all seven cards remain on the dedicated Demo Studio index only.
+- Bumped script/style/service-worker cache identifiers to v28 and removed obsolete segmented robot assets from the package.
+- Final pass adds more pronounced perspective hover, soft illustration halos, a cleaned theme cache reference, and fixes duplicate theme-toggle title attributes.
+- Motion honours prefers-reduced-motion.
+
 # Release v27 — CSS Bot Motion and Illustrated Demo Studio
 
 - Added a CSS-jointed rig using the existing DVNM Bot art: gentle head turns/nods, alternating arm gestures, subtle leg-step illusion, glowing chest and floating star accents.

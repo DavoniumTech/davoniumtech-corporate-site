@@ -335,13 +335,24 @@
   const botBase = botBaseMeta ? botBaseMeta.content : '.';
   const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
   const botUrl = (path) => new URL(path, botRoot).href;
-  // The face overlays animate the eyes and mouth on top of the branded 3D artwork.
-  // Mouth motion follows active speech; it is an expressive visual cue, not phoneme-perfect lip-sync.
-  const robotFaceMarkup = () => `<span class="dvnm-robot-faceplate" aria-hidden="true"></span><span class="dvnm-robot-eye dvnm-robot-eye-left" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-eye dvnm-robot-eye-right" aria-hidden="true"><span class="dvnm-robot-eye-lid"></span></span><span class="dvnm-robot-mouth" aria-hidden="true"></span>`;
-  const robotAsset = (part) => botUrl(`assets/images/dvnm-bot-rig-${part}.webp?v=27`);
-  const robotRigLayers = () => `<img class="dvnm-robot-art-image dvnm-robot-rig-layer dvnm-rig-body" src="${robotAsset('body')}" alt="" width="768" height="1152" decoding="async"><img class="dvnm-robot-rig-layer dvnm-rig-leg-left" src="${robotAsset('leg-left')}" alt="" width="768" height="1152" decoding="async"><img class="dvnm-robot-rig-layer dvnm-rig-leg-right" src="${robotAsset('leg-right')}" alt="" width="768" height="1152" decoding="async"><img class="dvnm-robot-rig-layer dvnm-rig-arm-left" src="${robotAsset('arm-left')}" alt="" width="768" height="1152" decoding="async"><img class="dvnm-robot-rig-layer dvnm-rig-arm-right" src="${robotAsset('arm-right')}" alt="" width="768" height="1152" decoding="async"><div class="dvnm-robot-head-joint"><img class="dvnm-robot-rig-layer dvnm-rig-head" src="${robotAsset('head')}" alt="" width="768" height="1152" decoding="async">${robotFaceMarkup()}</div><span class="dvnm-robot-chest-aura" aria-hidden="true"></span><span class="dvnm-robot-light-ring" aria-hidden="true"></span><span class="dvnm-robot-star dvnm-robot-star-a" aria-hidden="true">✦</span><span class="dvnm-robot-star dvnm-robot-star-b" aria-hidden="true">✧</span><span class="dvnm-robot-star dvnm-robot-star-c" aria-hidden="true">✦</span>`;
-  const robotMarkup = (extra = '') => `<div class="dvnm-robot-art ${extra}" aria-hidden="true">${robotRigLayers()}</div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=27');
+  // v28: unified CSS-built DVNM Bot. The head, arms and legs are connected by
+  // nested joints, so they move as one character without detached image slices.
+  const cssBotInner = () => `<div class="dvnm-css-bot-backglow" aria-hidden="true"></div>
+    <div class="dvnm-css-bot-orbit dvnm-css-bot-orbit-a" aria-hidden="true"></div>
+    <div class="dvnm-css-bot-orbit dvnm-css-bot-orbit-b" aria-hidden="true"></div>
+    <div class="dvnm-css-bot-skeleton">
+      <div class="dvnm-css-bot-leg dvnm-css-bot-leg-left" aria-hidden="true"><span class="dvnm-css-bot-thigh"></span><span class="dvnm-css-bot-knee"></span><span class="dvnm-css-bot-shin"></span><span class="dvnm-css-bot-ankle"></span><span class="dvnm-css-bot-foot"><i></i></span></div>
+      <div class="dvnm-css-bot-leg dvnm-css-bot-leg-right" aria-hidden="true"><span class="dvnm-css-bot-thigh"></span><span class="dvnm-css-bot-knee"></span><span class="dvnm-css-bot-shin"></span><span class="dvnm-css-bot-ankle"></span><span class="dvnm-css-bot-foot"><i></i></span></div>
+      <div class="dvnm-css-bot-hip" aria-hidden="true"><i></i><b></b></div>
+      <div class="dvnm-css-bot-arm dvnm-css-bot-arm-left" aria-hidden="true"><span class="dvnm-css-bot-upper-arm"><i></i></span><span class="dvnm-css-bot-elbow"></span><span class="dvnm-css-bot-forearm"><i></i><span class="dvnm-css-bot-wrist"></span><span class="dvnm-css-bot-hand"><i></i><b></b><em></em></span></span></div>
+      <div class="dvnm-css-bot-arm dvnm-css-bot-arm-right" aria-hidden="true"><span class="dvnm-css-bot-upper-arm"><i></i></span><span class="dvnm-css-bot-elbow"></span><span class="dvnm-css-bot-forearm"><i></i><span class="dvnm-css-bot-wrist"></span><span class="dvnm-css-bot-hand"><i></i><b></b><em></em></span></span></div>
+      <div class="dvnm-css-bot-torso" aria-hidden="true"><span class="dvnm-css-bot-collar"></span><span class="dvnm-css-bot-torso-light"></span><div class="dvnm-css-bot-chest"><span class="dvnm-css-bot-chest-aura"></span><span class="dvnm-css-bot-chest-mark">DVNM</span><i></i></div><div class="dvnm-css-bot-vents"><i></i><i></i><i></i></div><span class="dvnm-css-bot-waist"></span></div>
+      <div class="dvnm-css-bot-neck" aria-hidden="true"><i></i></div>
+      <div class="dvnm-css-bot-head-root" aria-hidden="true"><span class="dvnm-css-bot-antenna"><i></i></span><span class="dvnm-css-bot-ear dvnm-css-bot-ear-left"></span><span class="dvnm-css-bot-ear dvnm-css-bot-ear-right"></span><div class="dvnm-css-bot-helmet"><span class="dvnm-css-bot-helmet-glint"></span><div class="dvnm-css-bot-visor"><span class="dvnm-css-bot-eye dvnm-css-bot-eye-left"><i class="dvnm-css-bot-pupil"><b></b></i><em class="dvnm-css-bot-eyelid"></em></span><span class="dvnm-css-bot-eye dvnm-css-bot-eye-right"><i class="dvnm-css-bot-pupil"><b></b></i><em class="dvnm-css-bot-eyelid"></em></span><span class="dvnm-css-bot-mouth"><i></i></span></div></div></div>
+    </div>
+    <div class="dvnm-css-bot-stars" aria-hidden="true"><span class="dvnm-css-star dvnm-css-star-a">✦</span><span class="dvnm-css-star dvnm-css-star-b">✧</span><span class="dvnm-css-star dvnm-css-star-c">✦</span><span class="dvnm-css-star dvnm-css-star-d">·</span></div>`;
+  const robotMarkup = (extra = '') => `<div class="dvnm-robot-art dvnm-css-bot ${extra}" aria-hidden="true">${cssBotInner()}</div>`;
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=28');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
