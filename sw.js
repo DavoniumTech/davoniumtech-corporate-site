@@ -1,12 +1,12 @@
-/* Davonium Technologies PWA service worker — v21 route loop repair, 3D robot and offline fallback. */
-const CACHE_NAME = 'davonium-site-v21-route-robot-20261021';
+/* Davonium Technologies PWA service worker — v23 certificate preview, cross-demo themes, and transparent floating DVNM Bot. */
+const CACHE_NAME = 'davonium-site-v23-certificate-theme-transparent-bot-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-  routeUrl("assets/images/dvnm-bot-3d.webp?v=21"),
-  routeUrl("assets/css/dvnm-bot.css?v=21"),
+  routeUrl("assets/images/dvnm-bot-3d.webp?v=23"),
+  routeUrl("assets/css/dvnm-bot.css?v=23"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -31,7 +31,8 @@ const CORE = [
   routeUrl("demos/portfolio"),
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=21"),
+  routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
+  routeUrl("assets/css/dvnm-bot.css?v=23"),
   routeUrl("demos/demos.css"),
   routeUrl("demos/demos.js"),
   routeUrl("assets/images/davonium-website-qr.png"),

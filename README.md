@@ -110,3 +110,12 @@ See [`docs/guides/dvnm-bot-interaction-checklist.html`](docs/guides/dvnm-bot-int
 Internal links now point to actual static HTML files, the sitemap/canonical paths match files in the repository, and `_redirects` preserves older extensionless URLs on Cloudflare Workers Static Assets. The service worker uses a new cache version and an accessible offline fallback rather than returning a generic network error for failed page navigation.
 
 After pushing, confirm that Cloudflare publishes the new deployment. The source repository contains `demos/business.html`, but a GitHub file existing does not prove that the live Worker has deployed it. See `ROUTE-RELIABILITY-REPAIR-v20.md`.
+
+## DVNM Bot expression refinement v22
+
+Our team refined the DVNM Bot face with open illuminated eyes, natural blink intervals, and a mouth that opens and closes while spoken output is active. The same expression rig is used on the homepage preview, welcome experience, and visitor guide. Visual speech motion follows speech activity approximately, while reduced-motion preferences and the Stop/Cancel Speech control remain in place.
+
+
+## Certificate preview and shared demo theme v23
+
+Our team now presents the DVNM Demo Studio showcase certificate directly on the certificate page, with a dedicated single-page PDF download and a separate QR directory PDF. The same page includes print/save controls and a mobile-friendly embedded directory preview. All sample sites use shared light/dark preferences and include a transparent, fixed DVNM Bot launcher without a card-shaped background. Speaking state adds a brighter chest glow, while speech remains controlled by the visitor and can be cancelled at any time.

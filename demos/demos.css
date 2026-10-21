@@ -115,3 +115,95 @@
 .dvnm-sample-notice strong { display:block; margin-bottom:2px; }
 .dvnm-sample-notice .dvnm-sample-mark { flex:0 0 32px; display:grid; place-items:center; width:32px; height:32px; border-radius:10px; color:#fff; background:linear-gradient(145deg,#7355eb,#2fc9d9); box-shadow:0 0 16px rgba(89,193,237,.25); }
 @media(max-width:680px) { .dvnm-sample-notice { margin:10px 14px 0; padding:12px; font-size:.82rem; } }
+
+
+/* v23: the shared light/dark theme is applied to every DVNM sample page. */
+:root[data-theme="dark"] .demo-page {
+  --demo-ink:#eff3ff; --demo-muted:#b8c5df; --demo-line:rgba(201,216,255,.17);
+  --demo-paper:#111a2c; --demo-accent:#aaa0ff; --demo-glow:#222342;
+  background:#080d19; color:var(--demo-ink);
+}
+:root[data-theme="dark"] .demo-page .demo-hero { background:radial-gradient(ellipse at 82% 10%,rgba(54,205,230,.12),transparent 36%),linear-gradient(140deg,#0b1325,#151630 60%,#0a2435); }
+:root[data-theme="dark"] .demo-page .demo-section.soft,
+:root[data-theme="dark"] .demo-page .community-soft { background:linear-gradient(140deg,#11182b,#181b36); }
+:root[data-theme="dark"] .demo-page .demo-hero-art { border-color:rgba(124,166,255,.22); background:radial-gradient(circle at 70% 20%,rgba(90,224,221,.12),transparent 38%),linear-gradient(140deg,#182343,#101527); }
+:root[data-theme="dark"] .demo-page .demo-panel,
+:root[data-theme="dark"] .demo-page .demo-card,
+:root[data-theme="dark"] .demo-page .tech-product,
+:root[data-theme="dark"] .demo-page .community-event,
+:root[data-theme="dark"] .demo-page .demo-cart-summary { color:var(--demo-ink); border-color:var(--demo-line); background:#111a2c; box-shadow:0 14px 38px rgba(0,0,0,.2); }
+:root[data-theme="dark"] .demo-page .demo-panel .demo-chip,
+:root[data-theme="dark"] .demo-page .demo-pill { color:#d2cdff; background:#29254a; }
+:root[data-theme="dark"] .demo-page .demo-filterbar button { color:var(--demo-ink); border-color:var(--demo-line); background:#111a2c; }
+:root[data-theme="dark"] .demo-page .demo-filterbar button[aria-pressed="true"] { color:#fff; background:#6550cf; border-color:#8676f7; }
+:root[data-theme="dark"] .demo-page .demo-disclaimer,
+:root[data-theme="dark"] .demo-page .dvnm-sample-notice { color:#e4e7ff; border-color:rgba(149,133,255,.3); background:linear-gradient(110deg,rgba(117,94,232,.14),rgba(42,202,222,.08)); }
+:root[data-theme="dark"] .demo-page .demo-cart-summary { border-color:rgba(135,170,255,.24); }
+:root[data-theme="dark"] .demo-page .demo-cart-count { color:#fff; }
+:root[data-theme="dark"] .demo-page .community-sign { border-color:rgba(215,235,255,.2); background:rgba(14,25,39,.9); }
+:root[data-theme="dark"] .demo-page .community-sign b,
+:root[data-theme="dark"] .demo-page .community-sign span,
+:root[data-theme="dark"] .demo-page .community-sign small { color:#eff4ff; }
+:root[data-theme="dark"] .demo-page .community-event h3 { color:#eef5ff; }
+:root[data-theme="dark"] .demo-page .community-event p,
+:root[data-theme="dark"] .demo-page .event-meta,
+:root[data-theme="dark"] .demo-page .event-date span { color:#b7c8de; }
+:root[data-theme="dark"] .demo-page .community-event { border-color:rgba(198,228,204,.18); }
+:root[data-theme="dark"] .demo-page .tech-contact { background:radial-gradient(circle at 90% 5%,rgba(48,204,215,.12),transparent 28%),#111a2c; }
+:root[data-theme="dark"] .demo-page .tech-product>a { color:#a8dfff; }
+:root[data-theme="dark"] .demo-page .demo-accordion { border-color:var(--demo-line); }
+:root[data-theme="dark"] .demo-page .demo-foot { color:#aebbd6; }
+:root[data-theme="dark"] .demo-page .dvnm-demo-qr { background:linear-gradient(130deg,rgba(104,71,232,.12),rgba(53,200,222,.07)); border-color:var(--demo-line); }
+:root[data-theme="dark"] .demo-page .dvnm-certificate-banner { border-color:var(--demo-line); background:linear-gradient(125deg,rgba(104,71,232,.18),rgba(53,200,222,.09)); }
+:root[data-theme="dark"] .demo-page .dvnm-demo-qr-card { background:#fff; border-color:#e5e4ed; }
+:root[data-theme="dark"] .demo-page .dvnm-demo-qr-card strong { color:#282044; }
+:root[data-theme="dark"] .demo-page .demo-hero p { color:#c0cce4; }
+:root[data-theme="dark"] .demo-page .demo-card h3,
+:root[data-theme="dark"] .demo-page .tech-product h3 { color:#eff3ff; }
+:root[data-theme="dark"] .demo-page .demo-card p,
+:root[data-theme="dark"] .demo-page .tech-product p { color:#b8c5df; }
+:root[data-theme="dark"] .demo-page .dvnm-certificate-preview { background:#0d1730; border-color:rgba(114,221,255,.38); }
+:root[data-theme="dark"] .demo-page .dvnm-certificate-sheet { color:#13203d; }
+
+/* A certificate visitors can see before downloading or printing. */
+.dvnm-certificate-page { padding:clamp(24px,5vw,60px) 0 70px; }
+.dvnm-certificate-top-actions { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 26px; }
+.dvnm-certificate-preview { padding:clamp(10px,2.4vw,24px); border:1px solid var(--line); border-radius:24px; background:linear-gradient(130deg,rgba(69,203,229,.08),rgba(104,71,232,.12)); box-shadow:var(--shadow); }
+.dvnm-certificate-sheet { position:relative; width:min(100%,980px); margin:0 auto; padding:clamp(22px,5vw,55px); overflow:hidden; color:#18284a; background:linear-gradient(135deg,#fff 0%,#f5f9ff 52%,#f8f4ff 100%); border:7px double #8ca4cf; outline:1px solid rgba(93,121,180,.35); outline-offset:-14px; box-shadow:0 18px 48px rgba(15,29,65,.18); }
+.dvnm-certificate-sheet::before,.dvnm-certificate-sheet::after { content:""; position:absolute; width:210px; height:210px; border:1px solid rgba(88,141,225,.22); border-radius:50%; pointer-events:none; }
+.dvnm-certificate-sheet::before { right:-95px; top:-108px; box-shadow:0 0 0 16px rgba(93,182,240,.04),0 0 0 34px rgba(93,182,240,.035); }
+.dvnm-certificate-sheet::after { left:-130px; bottom:-140px; box-shadow:0 0 0 17px rgba(104,71,232,.04),0 0 0 34px rgba(104,71,232,.035); }
+.dvnm-certificate-brand { display:flex; align-items:center; justify-content:center; gap:12px; text-align:left; }
+.dvnm-certificate-brand img { width:52px; height:52px; object-fit:contain; }
+.dvnm-certificate-brand strong,.dvnm-certificate-brand span { display:block; }
+.dvnm-certificate-brand strong { color:#18284a; font-size:clamp(.95rem,2.2vw,1.2rem); letter-spacing:.08em; }
+.dvnm-certificate-brand span { margin-top:3px; color:#596c91; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; }
+.dvnm-certificate-kicker { margin:clamp(22px,4vw,38px) 0 8px; text-align:center; color:#4a5cc1; font-size:.72rem; font-weight:950; letter-spacing:.24em; text-transform:uppercase; }
+.dvnm-certificate-title { margin:0; text-align:center; color:#112b5e; font-family:Georgia,'Times New Roman',serif; font-size:clamp(2rem,6.5vw,4.7rem); line-height:1.03; letter-spacing:-.045em; }
+.dvnm-certificate-subtitle { max-width:60ch; margin:16px auto 0; color:#536481; text-align:center; font-size:clamp(.91rem,2vw,1.05rem); line-height:1.7; }
+.dvnm-certificate-rule { width:112px; height:4px; margin:22px auto; border-radius:4px; background:linear-gradient(90deg,#27bde4,#6d51e7,#edbd64); }
+.dvnm-certificate-columns { display:grid; grid-template-columns:minmax(0,1fr) 150px; gap:24px; align-items:center; margin-top:24px; }
+.dvnm-certificate-samples { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin:0; padding:0; list-style:none; }
+.dvnm-certificate-samples li { display:flex; gap:8px; align-items:center; padding:10px 11px; border:1px solid #dbe4f4; border-radius:10px; color:#1c345f; background:rgba(255,255,255,.78); font-size:.82rem; font-weight:800; }
+.dvnm-certificate-samples li span { display:grid; flex:0 0 24px; place-items:center; width:24px; height:24px; border-radius:7px; color:#fff; background:linear-gradient(135deg,#2c97e8,#6a52d9); font-size:.68rem; }
+.dvnm-certificate-qr { width:100%; max-width:150px; padding:9px; border:1px solid #dbe4f4; border-radius:13px; background:#fff; }
+.dvnm-certificate-qr img { display:block; width:100%; height:auto; image-rendering:pixelated; }
+.dvnm-certificate-qr small { display:block; margin-top:7px; color:#354a73; text-align:center; font-size:.62rem; font-weight:900; line-height:1.4; }
+.dvnm-certificate-signature { display:flex; flex-wrap:wrap; gap:12px 28px; justify-content:space-between; align-items:end; margin-top:28px; padding-top:18px; border-top:1px solid #cfdaed; }
+.dvnm-certificate-signature strong,.dvnm-certificate-signature small { display:block; }
+.dvnm-certificate-signature strong { color:#233b69; font-family:Georgia,'Times New Roman',serif; font-size:1.1rem; }
+.dvnm-certificate-signature small { margin-top:3px; color:#60718f; font-size:.7rem; }
+.dvnm-certificate-ref { color:#586a8b; font-size:.72rem; font-weight:850; text-align:right; }
+.dvnm-certificate-disclaimer { max-width:90ch; margin:18px auto 0; color:#6b7690; text-align:center; font-size:.7rem; line-height:1.55; }
+.dvnm-pdf-preview { margin-top:34px; padding:18px; border:1px solid var(--line); border-radius:20px; background:var(--surface); }
+.dvnm-pdf-preview h2 { margin:0 0 8px; font-size:1.2rem; }
+.dvnm-pdf-frame { display:block; width:100%; height:min(78vh,860px); min-height:460px; border:1px solid var(--line); border-radius:12px; background:#fff; }
+.dvnm-pdf-fallback { margin:10px 0 0; color:var(--muted); font-size:.86rem; line-height:1.6; }
+@media(max-width:650px) { .dvnm-certificate-columns { grid-template-columns:minmax(0,1fr); } .dvnm-certificate-qr { width:128px; justify-self:center; } .dvnm-certificate-samples { grid-template-columns:minmax(0,1fr); } .dvnm-certificate-ref { text-align:left; } .dvnm-certificate-sheet { padding:24px 18px; outline-offset:-9px; } .dvnm-pdf-frame { min-height:360px; height:65vh; } }
+@media print {
+ body.demo-page>*:not(main),body.demo-page #main>.pagehero,.dvnm-certificate-top-actions,.dvnm-pdf-preview,.dvnm-bot-dock,.dvnm-demo-qr,.demo-foot { display:none!important; }
+ body.demo-page,.dvnm-certificate-page { background:#fff!important; color:#111!important; padding:0!important; }
+ .dvnm-certificate-preview { padding:0!important; border:0!important; box-shadow:none!important; }
+ .dvnm-certificate-sheet { width:100%; max-width:none; border:7px double #8ca4cf; box-shadow:none; break-inside:avoid; }
+ @page { size:A4 landscape; margin:9mm; }
+}

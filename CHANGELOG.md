@@ -1,3 +1,24 @@
+# Release v23 — Certificate preview, shared demo theme, and transparent DVNM Bot launcher
+
+- We corrected the v22 deployment guard: it now checks the actual `@keyframes dvnm-natural-blink` definition instead of incorrectly requiring a `.dvnm-natural-blink` class.
+- We redesigned the DVNM floating launch control as one transparent robot silhouette without a rectangular or pill-shaped container. It remains keyboard accessible and fixed above the bottom safe area.
+- We added a stronger speaking-state chest aura so the existing DVNM chest mark glows more prominently while the robot speaks.
+- We made the same light/dark theme tokens apply across all seven sample sites, including hard-coded demo cards, products, events, panels, filters and QR sections.
+- We added a polished in-page certificate preview, a separate one-page showcase certificate PDF, and a distinct eight-page directory PDF with all seven QR codes. The certificate page includes print/save and direct download controls.
+- We regenerated the homepage and demo QR codes to point to canonical share URLs.
+- We expanded the showcase guide and bot documentation.
+
+Certificate status: this is a non-official portfolio showcase record, not an accreditation, qualification, licence, audit, or personal skills certificate.
+
+# Release v22 — DVNM Bot expression refinement
+
+- Refined the existing 3D DVNM Bot so its face has clearly open illuminated eyes with gentle blink intervals and a distinct mouth animation that opens and closes while the browser speech engine is active.
+- Kept the confident full-body stance, leg details, glowing DVNM chest mark, responsive placement, and existing speech/cancel controls.
+- Applied the same face rig to the homepage preview, first-visit welcome, and floating assistant panel so the expression stays consistent across the site.
+- Added a short documentation section explaining visual speech cues, reduced-motion behaviour, and the fact that mouth motion follows speech activity rather than exact phonemes.
+- Updated bot asset versions and the service-worker cache so browsers can load the revised expression code.
+- Preserved existing page layouts, route policy, seven sample demonstrations, QR codes, certificate PDF, product content, and documentation library.
+
 # Release v21 — Final route and DVNM Bot reliability repair
 
 - Removed the opposing extensionless-to-`.html` redirect rules that caused `ERR_TOO_MANY_REDIRECTS` under Cloudflare `auto-trailing-slash` handling.

@@ -9,7 +9,7 @@
     "homepage, Demo Studio, and per-demo printable QR codes using canonical paths",
     "printable non-official showcase certificate and QR directory PDF",
     "extensionless canonical URL routing with no active conflicting _redirects rules",
-    "versioned v21 service worker, responsive mobile layout, theme transitions, and improved footer",
+    "versioned v22 service worker",
     "expanded documentation for route reliability, DVNM Bot, samples, mobile and SEO"
   ],
   "demo_pages": [
@@ -31,21 +31,23 @@
   "html_pages": 71,
   "static_validation": {
     "html_pages": 71,
-    "local_references_checked": 2936,
-    "local_link_and_anchor_errors": 0,
+    "local_references_checked": 2937,
+    "link_and_anchor_errors": 0,
     "sitemap_url_count": 66,
     "sitemap_targets": "PASS",
     "javascript_syntax": "PASS",
     "css_brace_balance": "PASS",
-    "redirect_rules": 0,
+    "active_redirect_rules": 0,
     "qr_destinations": "PASS",
-    "ready2go_host_links_in_html": 0,
-    "robot_asset_bytes": 69820,
-    "manual_visual_test": "Still required on live desktop and mobile; browser test automation was unavailable in this environment."
+    "one_page_certificate_bytes": 195065,
+    "demo_dark_theme": "PASS",
+    "deployment_guard": "checks @keyframes dvnm-natural-blink, not a nonexistent class",
+    "live_visual_test": "Still required after Cloudflare deployment; this environment did not complete a live browser screenshot run."
   },
   "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
   "updated_at": "2026-10-21",
   "release_notes": [
+    "DVNM Bot v22 adds responsive open-eye overlays with natural blinking, subtle gaze motion, and a mouth animation that opens/closes while speech is active; updated the homepage, welcome panel, assistant panel, bot guide, and service-worker cache version.",
     "Static route compatibility repair: explicit .html links, legacy clean-URL redirects, and service-worker offline recovery for failed navigation.",
     "Demo Studio expanded to seven original sample website demonstrations, including Davonium technology and community/event experiences.",
     "Website QR code moved immediately below the homepage hero.",
@@ -66,7 +68,7 @@
     "docs/guides/dvnm-welcome-and-voice.html",
     "docs/guides/dvnm-sample-website-planning.html"
   ],
-  "release": "v21-final-route-robot-reliability",
+  "release": "v23-certificate-theme-transparent-bot",
   "demo_names": [
     "DVNM Biz",
     "DVNM Growth",
