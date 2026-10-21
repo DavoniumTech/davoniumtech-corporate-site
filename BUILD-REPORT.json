@@ -39,5 +39,61 @@
     },
     "visual_browser_smoke_test": "Not completed: headless Chromium could not start reliably in this environment; verify on desktop and mobile after deployment."
   },
-  "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately."
+  "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
+  "updated_at": "2026-10-21",
+  "release_notes": [
+    "Demo Studio expanded to seven original concepts, including Davonium technology and community/event experiences.",
+    "Website QR code moved immediately below the homepage hero.",
+    "DVNM Bot speech cancellation/start flow revised for more reliable mobile browser speech and default-voice fallback.",
+    "Robot visual styling upgraded with glowing optical lenses, chest core, antenna beacon, and hologram floor.",
+    "Responsive CSS hardening added for phone, tablet, laptop, landscape and short-height layouts.",
+    "New mobile-first quality and speech/accessibility guides added; sitemap and service-worker cache updated."
+  ],
+  "demo_count": 7,
+  "new_demo_pages": [
+    "demos/technology.html",
+    "demos/community.html"
+  ],
+  "new_guides": [
+    "docs/guides/mobile-first-quality.html",
+    "docs/guides/speech-and-accessibility.html"
+  ],
+  "release": "DVNM Nigeria Demo, QR, Voice and Showcase PDF",
+  "demo_names": [
+    "DVNM Biz",
+    "DVNM Growth",
+    "DVNM Market",
+    "DVNM Creative",
+    "DVNM Skills",
+    "DVNM Digital",
+    "DVNM Connect"
+  ],
+  "per_demo_qr_assets": [
+    "assets/images/qr-dvnm-biz.png",
+    "assets/images/qr-dvnm-growth.png",
+    "assets/images/qr-dvnm-market.png",
+    "assets/images/qr-dvnm-creative.png",
+    "assets/images/qr-dvnm-skills.png",
+    "assets/images/qr-dvnm-digital.png",
+    "assets/images/qr-dvnm-connect.png"
+  ],
+  "docs_added": [
+    "docs/guides/dvnm-demo-studio-qr-certificate.html"
+  ],
+  "certificate_pdf": "docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf",
+  "notes": [
+    "Prototype showcase record is explicitly non-official and non-accredited.",
+    "Browser-native speech is device-dependent; text remains available.",
+    "All sample forms, RSVP actions, and shop interactions are demo-only."
+  ],
+  "site_qr_assets": [
+    "assets/images/qr-dvnm-biz.png",
+    "assets/images/qr-dvnm-growth.png",
+    "assets/images/qr-dvnm-market.png",
+    "assets/images/qr-dvnm-creative.png",
+    "assets/images/qr-dvnm-skills.png",
+    "assets/images/qr-dvnm-digital.png",
+    "assets/images/qr-dvnm-connect.png",
+    "assets/images/qr-dvnm-demo-studio.png"
+  ]
 }

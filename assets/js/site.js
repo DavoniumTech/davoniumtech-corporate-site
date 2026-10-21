@@ -350,7 +350,7 @@
       company: { text: 'Davonium Technologies builds digital products and practical websites, with a focus on clear journeys, thoughtful engineering, and useful documentation.', link: 'about', label: 'Learn about the company →' },
       products: { text: 'Explore the product family: Marvel Chat is in active development, Davonium Nexus is being developed for client project handoffs, and Ready2Go Learning remains under development with no public launch link on this website.', link: 'products', label: 'Explore product status →' },
       services: { text: 'We work on responsive websites, landing pages, progressive web app experiences, technical SEO foundations, documentation, interface refinement, and launch support.', link: 'services', label: 'Explore our services →' },
-      demos: { text: 'The Demo Studio contains five fictional website concepts: a local business site, a marketing landing page, an online shop prototype, a creative portfolio, and a learning product page.', link: 'demos/', label: 'Open the Demo Studio →' },
+      demos: { text: 'The Demo Studio contains seven original website concepts: local business, marketing, shop, creative portfolio, learning, a Davonium-branded technology company, and a community events hub.', link: 'demos/', label: 'Open the Demo Studio →' },
       docs: { text: 'Our documentation covers company information, product status, web engineering, accessibility, security basics, performance, SEO, privacy, and support.', link: 'docs/', label: 'Browse documentation →' },
       contact: { text: 'Tell our team about your audience, goals, budget range, and what you need the first release to do. Please do not include passwords or private keys.', link: 'contact', label: 'Contact Davonium →' }
     };
@@ -358,7 +358,7 @@
     let selectedVoice = null;
     const speakingCharacters = () => $$('.dvnm-character', dock);
     const setSpeaking = (active) => document.querySelectorAll('.dvnm-character').forEach(character => character.classList.toggle('is-speaking', active));
-    const stopVoice = (message = 'Voice stopped.') => {
+    let stopVoice = (message = 'Voice stopped.') => {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       setSpeaking(false); if (statusText) statusText.textContent = message;
       if (speakBtn) speakBtn.disabled = false;
@@ -377,25 +377,135 @@
       $$('[data-dvnm-topic]', dock).forEach(item => item.setAttribute('aria-pressed', String(item === button)));
       stopVoice('Answer selected. Press “Hear this answer” to listen.');
     }));
-    speakBtn.addEventListener('click', () => {
-      if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
-        statusText.textContent = 'This browser does not support speech output here. You can still read the answer and open the link.'; return;
-      }
-      stopVoice('Preparing voice…');
-      const utterance = new SpeechSynthesisUtterance(selectedAnswer);
-      utterance.rate = 0.96; utterance.pitch = 1.08; utterance.volume = 1;
+    let speechRun = 0;
+    let voiceStartTimer = 0;
+    let voiceWatchdog = 0;
+    let intentionallyStopped = false;
+    const speechEngine = () => ('speechSynthesis' in window ? window.speechSynthesis : null);
+    const chooseVoice = () => {
       try {
-        const voices = window.speechSynthesis.getVoices();
-        selectedVoice = voices.find(voice => /^en-NG$/i.test(voice.lang)) || voices.find(voice => /^en-/i.test(voice.lang)) || voices[0] || null;
-        if (selectedVoice) utterance.voice = selectedVoice;
-      } catch (_) {}
-      utterance.onstart = () => { setSpeaking(true); statusText.textContent = `DVNM Bot is speaking${selectedVoice ? ` with ${selectedVoice.name}` : ''}. Mouth animation follows speech activity approximately.`; speakBtn.disabled = true; };
-      utterance.onboundary = () => { setSpeaking(false); requestAnimationFrame(() => setSpeaking(true)); };
-      utterance.onend = () => { setSpeaking(false); speakBtn.disabled = false; statusText.textContent = 'That’s the answer. Choose another question or follow the link above.'; };
-      utterance.onerror = () => { setSpeaking(false); speakBtn.disabled = false; statusText.textContent = 'Speech was interrupted or is unavailable. The written answer and links still work.'; };
-      window.speechSynthesis.speak(utterance);
+        const voices = speechEngine()?.getVoices?.() || [];
+        if (!voices.length) return null;
+        // Prefer a Nigerian English voice when the operating system actually offers one.
+        // If not, use a reliable local English voice before falling back to the device default.
+        const english = voices.filter(voice => /^en(?:-|$)/i.test(voice.lang || ''));
+        const ng = english.find(voice => /^en-NG$/i.test(voice.lang || ''));
+        if (ng) return ng;
+        const localEnglish = english.filter(voice => voice.localService);
+        const pool = localEnglish.length ? localEnglish : english.length ? english : voices;
+        return pool.find(voice => /^en-GB$/i.test(voice.lang || ''))
+          || pool.find(voice => /^en-US$/i.test(voice.lang || ''))
+          || pool[0] || null;
+      } catch (_) { return null; }
+    };
+    const clearSpeechTimers = () => {
+      if (voiceStartTimer) window.clearTimeout(voiceStartTimer);
+      if (voiceWatchdog) window.clearTimeout(voiceWatchdog);
+      voiceStartTimer = 0; voiceWatchdog = 0;
+    };
+    const stopSpeechOnly = () => {
+      speechRun += 1;
+      intentionallyStopped = true;
+      clearSpeechTimers();
+      const engine = speechEngine();
+      if (engine && (engine.speaking || engine.pending)) {
+        try { engine.cancel(); } catch (_) {}
+      }
+      setSpeaking(false);
+      if (speakBtn) speakBtn.disabled = false;
+    };
+    stopVoice = (message = 'Voice stopped.') => {
+      stopSpeechOnly();
+      if (statusText) statusText.textContent = message;
+    };
+    const makeUtterance = (text, token, useSelectedVoice) => {
+      const engine = speechEngine();
+      if (!engine || !('SpeechSynthesisUtterance' in window)) {
+        statusText.textContent = 'Spoken output is not supported by this browser. The written answer and link are ready to use.';
+        speakBtn.disabled = false; return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voice = useSelectedVoice ? chooseVoice() : null;
+      selectedVoice = voice;
+      if (voice) utterance.voice = voice;
+      utterance.lang = voice?.lang || 'en-NG';
+      utterance.rate = 1.02;
+      utterance.pitch = 0.98;
+      utterance.volume = 0.76;
+      let started = false;
+      utterance.onstart = () => {
+        if (token !== speechRun) return;
+        started = true; clearSpeechTimers();
+        speakBtn.disabled = true;
+        setSpeaking(true);
+        statusText.textContent = `DVNM Bot is speaking${voice ? ` with ${voice.name}` : ' using your device’s default voice'}.`;
+      };
+      utterance.onboundary = () => { if (token === speechRun) setSpeaking(true); };
+      utterance.onend = () => {
+        if (token !== speechRun) return;
+        clearSpeechTimers(); setSpeaking(false); speakBtn.disabled = false;
+        statusText.textContent = 'That’s the answer. Choose another question or follow the link above.';
+      };
+      utterance.onerror = (event) => {
+        if (token !== speechRun) return;
+        clearSpeechTimers(); setSpeaking(false); speakBtn.disabled = false;
+        const reason = String(event?.error || '').toLowerCase();
+        if (intentionallyStopped || reason === 'canceled' || reason === 'interrupted') {
+          statusText.textContent = 'Voice stopped. Your written answer and link are still ready.';
+          return;
+        }
+        // If a named voice fails, make one attempt with the platform default voice.
+        if (useSelectedVoice && voice) {
+          statusText.textContent = 'Trying your device’s default voice…';
+          speakBtn.disabled = true;
+          voiceStartTimer = window.setTimeout(() => {
+            if (token !== speechRun) return;
+            try { makeUtterance(text, token, false); }
+            catch (_) { statusText.textContent = 'Voice is unavailable on this device right now. The written answer and link still work.'; }
+          }, 120);
+          return;
+        }
+        statusText.textContent = 'The device did not start speech. Check media volume and voice settings, then tap Hear this answer again. The written answer and link still work.';
+      };
+      // Only restart the engine when an older utterance is actually active. Cancelling an
+      // idle engine immediately before speak() can trigger mobile-browser interruption errors.
+      try {
+        engine.resume?.();
+        engine.speak(utterance);
+        voiceWatchdog = window.setTimeout(() => {
+          if (token === speechRun && !started && !engine.speaking) {
+            speakBtn.disabled = false;
+            statusText.textContent = 'Voice is taking longer than expected. Tap Hear this answer to retry; the written answer is ready now.';
+          }
+        }, 4200);
+      } catch (_) {
+        clearSpeechTimers(); speakBtn.disabled = false; setSpeaking(false);
+        statusText.textContent = 'The device did not start speech. Try again after checking device voice settings; the written answer and link still work.';
+      }
+    };
+    speakBtn.addEventListener('click', () => {
+      const engine = speechEngine();
+      if (!engine || !('SpeechSynthesisUtterance' in window)) {
+        statusText.textContent = 'Spoken output is not supported by this browser. The written answer and link are ready to use.'; return;
+      }
+      if (speakBtn.disabled) return;
+      clearSpeechTimers();
+      const token = ++speechRun;
+      intentionallyStopped = false;
+      speakBtn.disabled = true;
+      statusText.textContent = 'Starting voice…';
+      // Only cancel when a real prior utterance is queued or speaking. If it is busy,
+      // allow the engine a short breath before starting the fresh utterance.
+      if (engine.speaking || engine.pending) {
+        try { engine.cancel(); } catch (_) {}
+        voiceStartTimer = window.setTimeout(() => {
+          if (token === speechRun) makeUtterance(selectedAnswer, token, true);
+        }, 90);
+      } else {
+        makeUtterance(selectedAnswer, token, true);
+      }
     });
-    stopBtn.addEventListener('click', () => stopVoice());
+    stopBtn.addEventListener('click', () => stopVoice('Voice stopped.'));
   }
 
   // The large home-page welcome uses the same character; speaking still requires a click.

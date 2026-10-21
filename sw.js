@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker — reliable root routing and progressive cache. */
-const CACHE_NAME = 'davonium-site-v12-dvnm-bot-demo-studio-20261021';
+const CACHE_NAME = 'davonium-site-v14-dvnm-nigeria-qr-certificate-20261021';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -13,10 +13,24 @@ const CORE = [
   routeUrl('support'),
   routeUrl('docs/'),
   routeUrl('demos/'),
+  routeUrl('docs/guides/dvnm-demo-studio-qr-certificate'),
+  routeUrl('demos/certificate.html'),
+  routeUrl('demos/technology.html'),
+  routeUrl('demos/community.html'),
+  routeUrl('docs/guides/mobile-first-quality'),
+  routeUrl('docs/guides/speech-and-accessibility'),
   routeUrl('assets/css/dvnm-bot.css'),
   routeUrl('demos/demos.css'),
   routeUrl('demos/demos.js'),
   routeUrl('assets/images/davonium-website-qr.png'),
+  routeUrl('assets/images/qr-dvnm-demo-studio.png'),
+  routeUrl('assets/images/qr-dvnm-connect.png'),
+  routeUrl('assets/images/qr-dvnm-digital.png'),
+  routeUrl('assets/images/qr-dvnm-skills.png'),
+  routeUrl('assets/images/qr-dvnm-creative.png'),
+  routeUrl('assets/images/qr-dvnm-market.png'),
+  routeUrl('assets/images/qr-dvnm-growth.png'),
+  routeUrl('assets/images/qr-dvnm-biz.png'),
   routeUrl('assets/css/styles.css'),
   routeUrl('assets/js/site.js'),
   routeUrl('manifest.webmanifest'),

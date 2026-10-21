@@ -1,0 +1,69 @@
+DAVONIUM TECHNOLOGIES - FINAL DVNM DEMO / QR / VOICE RELEASE
+Windows CMD instructions
+
+1. Download the ZIP into your Downloads folder. Confirm this exact filename:
+   Davonium-DVNM-Nigeria-Demos-Voice-Certificate-20261021.zip
+
+2. Extract it to a known folder using PowerShell from CMD:
+
+set "ZIP=%USERPROFILE%\Downloads\Davonium-DVNM-Nigeria-Demos-Voice-Certificate-20261021.zip"
+set "OUT=%USERPROFILE%\Downloads\dvnm-final-extracted"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%OUT%' -Force"
+
+3. Verify the expected source file exists BEFORE copying:
+
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\index.html"
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\demos\certificate.html"
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\docs\media\Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"
+
+If any command says File Not Found, STOP and check the extracted folder with:
+  dir /s /b "%USERPROFILE%\Downloads\dvnm-final-extracted\index.html"
+Use the exact folder returned by that command as ROBOCOPY's source.
+
+4. Enter your existing repository and ensure you have no unfinished work:
+
+cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
+git status
+git fetch origin
+git switch main
+git pull --ff-only origin main
+
+5. Create and push a backup branch (the old backup may already exist; if Git says it exists, skip these two commands):
+
+git branch backup-before-dvnm-nigeria-demo-20261021
+git push origin backup-before-dvnm-nigeria-demo-20261021
+
+6. Copy the new files. /XD .git protects your local repository metadata. DO NOT add /MIR.
+
+robocopy "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git /R:2 /W:2
+
+ROBOCOPY exit codes 0-7 are normally success/non-fatal; 8 or higher means copy failure.
+If Robocopy reports ERROR 3, do not commit. Find the real source path with the DIR command in step 3.
+
+7. Prove files changed and review what will be committed:
+
+git status --short
+git add -A
+git diff --cached --check
+git diff --cached --stat
+
+The last command must list changed/new files including demos/certificate.html, the QR images,
+the documentation guide, and the PDF. If it shows nothing, STOP. Do not make an empty commit.
+
+8. Commit and push the update:
+
+git commit -m "Refine DVNM demos for Nigeria and add QR showcase certificate"
+git push origin main
+
+9. Open GitHub and verify the new commit exists. Then inspect the hosting/deployment workflow and
+open https://www.davoniumtech.com/demos/ from a phone and a laptop. The static site is not live until
+your configured hosting provider finishes its deploy.
+
+IMPORTANT
+- This release contains seven DVNM-branded demo prototypes relevant to Nigerian SMEs, makers,
+  creators, learners, workers, and community skills events.
+- Every demo has a unique downloadable QR code. The PDF includes the directory code and each demo code.
+- The PDF is a non-official portfolio showcase record; it is NOT an accredited qualification or official credential.
+- Demo forms, shop cart, and RSVP are illustrative and do not process real data or payments.
+- DVNM Bot uses browser-native speech. Actual spoken output depends on the browser, OS, installed voices,
+  and device audio settings. Written answers and links remain available if speech is unavailable.

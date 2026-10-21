@@ -41,3 +41,70 @@
 @media(max-width:850px) { .demo-hero-grid { grid-template-columns:1fr; } .demo-hero-art { min-height:250px; } .demo-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .demo-hero h1 { font-size:clamp(2.55rem,12vw,4rem); } .demo-cards { grid-template-columns:1fr; } .demo-cart-summary { align-items:flex-start; flex-direction:column; } .demo-hero-art { border-radius:23px; padding:18px; } }
 @media(prefers-reduced-motion:reduce) { .demo-blob { animation:none; } .demo-card { transition:none; } }
+
+
+/* Original sixth concept: Davonium-branded technology showcase. */
+.tech-hero { background:radial-gradient(circle at 83% 22%,rgba(41,207,224,.19),transparent 29%),linear-gradient(140deg,#fefeff,#eeeaff 58%,#ddfaff); }
+.tech-orbit-card { position:relative; isolation:isolate; overflow:hidden; width:100%; min-height:360px; padding:28px; border:1px solid rgba(111,89,211,.2); border-radius:30px; background:linear-gradient(150deg,#17142f,#2d2860 62%,#135064); color:#fff; text-align:center; box-shadow:0 24px 65px rgba(42,29,104,.2); }
+.tech-orbit-card::before,.tech-orbit-card::after { content:""; position:absolute; z-index:-1; width:290px; height:290px; left:50%; top:44%; transform:translate(-50%,-50%); border:1px solid rgba(122,220,255,.25); border-radius:50%; }
+.tech-orbit-card::after { width:235px; height:235px; border-style:dashed; animation:tech-orbit-spin 28s linear infinite; }
+.tech-orbit { display:grid; place-items:center; position:relative; width:152px; height:152px; margin:12px auto 20px; border:1px solid rgba(157,242,255,.7); border-radius:50%; background:radial-gradient(circle,#5e50df 0,#302966 55%,#19172e 73%); box-shadow:0 0 0 10px rgba(103,83,236,.12),0 0 48px rgba(50,216,238,.27),inset 0 0 28px rgba(114,211,255,.22); }
+.tech-orbit span { font-size:4.4rem; font-weight:950; letter-spacing:-.1em; text-shadow:0 0 25px rgba(102,232,255,.7); }
+.tech-orbit i,.tech-orbit b { position:absolute; width:14px; height:14px; border:3px solid #fff; border-radius:50%; background:#39d9e7; box-shadow:0 0 18px #39d9e7; }
+.tech-orbit i { top:12px; right:19px; } .tech-orbit b { bottom:14px; left:15px; width:9px; height:9px; }
+.tech-kicker { color:#99efff; font-size:.7rem; font-weight:900; letter-spacing:.19em; }
+.tech-orbit-card h2 { margin:8px 0; font-size:clamp(1.8rem,4vw,2.7rem); letter-spacing:-.06em; }
+.tech-orbit-card p { max-width:34ch; margin-inline:auto; color:rgba(255,255,255,.74); font-size:.88rem; }
+.tech-mini-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; max-width:360px; margin:20px auto 0; }
+.tech-mini-stats div { padding:10px 6px; border:1px solid rgba(255,255,255,.12); border-radius:13px; background:rgba(255,255,255,.055); }
+.tech-mini-stats strong,.tech-mini-stats small { display:block; } .tech-mini-stats strong { color:#a2f3ff; } .tech-mini-stats small { margin-top:3px; color:rgba(255,255,255,.68); font-size:.67rem; }
+.tech-product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:26px; }
+.tech-product { min-width:0; padding:23px; border:1px solid var(--demo-line); border-radius:22px; background:#fff; box-shadow:0 12px 34px rgba(38,26,92,.06); }
+.tech-product-mark { display:grid; place-items:center; width:52px; height:52px; margin-bottom:16px; border-radius:17px; color:#fff; font-size:1.1rem; font-weight:950; box-shadow:0 9px 25px rgba(46,35,116,.17); }
+.mark-purple { background:linear-gradient(135deg,#7554ed,#3a268e); } .mark-cyan { background:linear-gradient(135deg,#19bfc9,#2765c8); } .mark-gold { background:linear-gradient(135deg,#e0a238,#c66c26); }
+.tech-product h3 { margin:12px 0 7px; font-size:1.18rem; } .tech-product p { color:var(--demo-muted); font-size:.88rem; line-height:1.75; } .tech-product>a { display:inline-flex; margin-top:8px; color:#5d43d1; font-size:.84rem; font-weight:900; }
+.tech-band { background:linear-gradient(135deg,#211a49,#312b66 58%,#0c596c); color:white; }
+.tech-band .demo-muted { color:rgba(255,255,255,.75); } .tech-band h2 { max-width:13ch; } .tech-two-col { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:clamp(24px,5vw,60px); align-items:center; }
+.tech-feature-list { display:grid; gap:10px; } .tech-feature-list p { display:flex; align-items:center; gap:13px; margin:0; padding:15px; border:1px solid rgba(255,255,255,.13); border-radius:16px; background:rgba(255,255,255,.055); } .tech-feature-list b { color:#8feefa; font-size:.8rem; } .tech-feature-list span { font-size:.9rem; }
+.tech-contact { padding:clamp(23px,5vw,45px); background:radial-gradient(circle at 90% 5%,rgba(48,204,215,.16),transparent 28%),#fff; }
+/* Original seventh concept: community and events. */
+.community-hero { background:linear-gradient(145deg,#fbfff8,#f0f8e7 54%,#e4f7ef); }
+.community-gradient { color:#23755c; }
+.community-hero-art { position:relative; min-height:350px; overflow:hidden; border:1px solid #d8e8ce; border-radius:30px; background:linear-gradient(180deg,#e9f8ff 0%,#c2e8ef 44%,#9bcda5 45%,#5eae83 100%); }
+.community-sun { position:absolute; top:34px; right:47px; width:70px; height:70px; border-radius:50%; background:#ffd77c; box-shadow:0 0 0 13px rgba(255,215,124,.18),0 0 50px rgba(255,215,124,.5); }
+.community-land { position:absolute; left:-12%; right:-12%; height:190px; border-radius:50% 50% 0 0; } .land-back { bottom:39px; background:#77bb8e; transform:rotate(-7deg); } .land-front { bottom:-56px; background:#398b68; transform:rotate(7deg); }
+.community-sign { position:absolute; z-index:2; top:70px; left:9%; width:min(76%,270px); padding:19px; border:1px solid rgba(255,255,255,.85); border-radius:20px; background:rgba(255,255,255,.9); box-shadow:0 18px 44px rgba(34,102,73,.16); transform:rotate(-2deg); }
+.community-sign span,.community-sign b,.community-sign small { display:block; } .community-sign span { color:#26765b; font-size:.7rem; font-weight:950; letter-spacing:.2em; } .community-sign b { margin:12px 0; color:#1d493b; font-size:clamp(1.4rem,3vw,2rem); line-height:1.04; letter-spacing:-.06em; } .community-sign small { color:#648574; font-size:.62rem; font-weight:800; letter-spacing:.08em; }
+.community-flower { position:absolute; z-index:3; color:#ffecaa; text-shadow:0 3px 8px rgba(35,90,65,.24); font-size:2.2rem; } .community-flower.f1 { right:15%; bottom:63px; } .community-flower.f2 { right:35%; bottom:32px; font-size:1.6rem; }
+.community-events-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:25px; }
+.community-event { min-width:0; padding:22px; border:1px solid #deead7; border-radius:22px; background:#fff; box-shadow:0 12px 28px rgba(35,90,65,.05); }
+.event-date { display:flex; align-items:center; gap:10px; margin-bottom:17px; } .event-date b { display:grid; place-items:center; width:48px; height:48px; border-radius:14px; color:#fff; background:#2c8060; font-size:1.25rem; } .event-date span { color:#59816c; font-size:.68rem; font-weight:900; letter-spacing:.09em; }
+.community-event h3 { margin:12px 0 8px; color:#233d32; font-size:1.13rem; letter-spacing:-.03em; } .community-event p { color:#667a6e; font-size:.88rem; line-height:1.7; } .event-meta { margin:17px 0; padding-top:14px; border-top:1px solid #e8f0e4; color:#627769; font-size:.76rem; line-height:1.9; } .community-event .btn { width:100%; min-height:46px; white-space:normal; }
+.community-soft { background:#eef7e9; } .community-help-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:28px; align-items:center; }
+@keyframes tech-orbit-spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+@media(max-width:850px) { .tech-product-grid,.community-events-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .tech-two-col,.community-help-grid { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:600px) { .tech-orbit-card { min-height:330px; padding:22px 15px; border-radius:24px; } .tech-product-grid,.community-events-grid { grid-template-columns:minmax(0,1fr); } .community-hero-art { min-height:305px; border-radius:24px; } .community-sign { left:7%; width:82%; } .tech-mini-stats { gap:6px; } .tech-mini-stats small { font-size:.61rem; } .tech-product,.community-event { padding:20px; } }
+@media(prefers-reduced-motion:reduce) { .tech-orbit-card::after { animation:none; } }
+
+
+/* DVNM-owned Nigerian demo family, QR sharing, and certificate presentation. */
+.dvnm-demo-qr { padding:clamp(24px,4vw,48px) 0; background:linear-gradient(130deg,rgba(104,71,232,.07),rgba(53,200,222,.08)); border-block:1px solid var(--line); }
+.dvnm-demo-qr-inner { display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,240px); gap:clamp(20px,4vw,40px); align-items:center; }
+.dvnm-demo-qr h2 { margin:8px 0 10px; font-size:clamp(1.35rem,3vw,2.1rem); line-height:1.12; letter-spacing:-.04em; }
+.dvnm-demo-qr p { max-width:65ch; color:var(--muted); line-height:1.7; }
+.dvnm-demo-qr-card { width:min(100%,230px); justify-self:center; display:grid; gap:10px; justify-items:center; padding:15px; background:#fff; border:1px solid #e5e4ed; border-radius:22px; box-shadow:0 12px 34px rgba(28,21,70,.10); text-align:center; }
+.dvnm-demo-qr-card img { display:block; width:100%; height:auto; aspect-ratio:1; image-rendering:pixelated; }
+.dvnm-demo-qr-card strong { color:#282044; font-size:.82rem; }
+.dvnm-demo-qr-card a { font-size:.8rem; font-weight:800; overflow-wrap:anywhere; color:#5a3ad8; }
+.dvnm-certificate-banner { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:22px; align-items:center; margin:30px 0 10px; padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:26px; background:linear-gradient(125deg,rgba(104,71,232,.09),rgba(53,200,222,.08)); }
+.dvnm-certificate-banner h2 { margin:6px 0 8px; }
+.dvnm-certificate-banner p { max-width:64ch; color:var(--muted); line-height:1.7; }
+.dvnm-certificate-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.dvnm-certificate-actions .btn { white-space:normal; text-align:center; }
+@media(max-width:650px) {
+ .dvnm-demo-qr-inner,.dvnm-certificate-banner { grid-template-columns:minmax(0,1fr); }
+ .dvnm-demo-qr-copy { text-align:left; }
+ .dvnm-demo-qr-card { width:min(100%,220px); }
+ .dvnm-certificate-actions { display:grid; grid-template-columns:minmax(0,1fr); }
+ .dvnm-certificate-actions .btn { width:100%; }
+}

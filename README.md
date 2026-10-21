@@ -57,3 +57,32 @@ See `DEPLOY-WINDOWS-CMD.txt` for the careful Windows CMD update workflow and `do
 ## Contact
 Email: support@davoniumtech.com
 WhatsApp: https://wa.me/2348032076924
+
+
+## October 2026 mobile, voice, and Demo Studio refinement
+
+- Demo Studio now includes seven original concepts: local business, marketing, online shop, creative portfolio, learning product, a Davonium-branded technology showcase, and a fictional community/events hub.
+- The homepage QR code is surfaced immediately after the hero and links to the company homepage; the PNG remains available for print use.
+- DVNM Bot speech startup avoids cancelling an idle browser speech engine, prefers available English voices, tries the platform default once after a named-voice failure, and preserves written answers on interruption.
+- Robot motion and lighting have been enhanced with a brighter faceplate, lens glow, chest core, hologram floor, and safe reduced-motion handling.
+- Device-fit overrides address narrow phone widths, landscape screens, touch targets, scroll overflow, and short-height assistant panels.
+- Added mobile-first quality and speech/accessibility guides.
+
+The speech engine still depends on browser and operating-system support; web code cannot guarantee audio on every device. Demo forms and sample RSVPs do not send or store information.
+
+
+## 21 October 2026 — DVNM Nigeria demo and QR showcase release
+
+- Renamed the seven prototype sites to the Davonium-owned DVNM family: DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect.
+- Reworked sample content for Nigerian small businesses, independent workers, product makers, creators, job seekers, learners, and community skills sessions.
+- Added a unique QR PNG and an on-page QR sharing section to each demo; added a directory QR code.
+- Added a printable, non-official concept showcase record PDF and a page that clearly describes its limitations.
+- Reduced native speech volume and tuned rate/pitch; prioritised Nigerian English if the device provides it and retained written answer/link fallbacks.
+- Added detailed company-voice documentation on demo scope, QR safety, mobile tests, SEO foundations, privacy boundaries, and certificate limitations.
+
+Browser-native voice remains dependent on the operating system and browser. A device that lacks speech synthesis, a usable voice pack, or audio output may not speak; written answers stay available. All demo forms, carts, and event RSVP controls remain non-production demonstrations.
+
+
+### Seven DVNM-branded demonstration websites
+
+Our Demo Studio contains DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect. The concept copy is framed around Nigerian small businesses, workers, makers, creatives, learners, technology services, and community skills sessions. Every concept page has its own QR code; the directory has a separate QR code. The printable concept showcase PDF is intentionally non-official and not an accredited certificate.

@@ -19,6 +19,11 @@
     if (total) total.textContent = `₦${cartTotal.toLocaleString('en-NG')}`;
     if (message) message.textContent = `${button.dataset.product || 'Sample item'} added to this temporary demo bag.`;
   }));
+
+  $$('[data-community-rsvp]').forEach(button => button.addEventListener('click', () => {
+    const message = $('#community-rsvp-message');
+    if (message) message.textContent = `Demo RSVP selected for “${button.dataset.communityRsvp}”. No registration was sent or stored. Contact Davonium to plan a real event sign-up flow.`;
+  }));
   const filterButtons = $$('[data-filter]');
   filterButtons.forEach(button => button.addEventListener('click', () => {
     const category = button.dataset.filter;

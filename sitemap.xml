@@ -51,4 +51,15 @@
   <url><loc>https://www.davoniumtech.com/demos/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://www.davoniumtech.com/docs/guides/dvnm-bot</loc><changefreq>monthly</changefreq><priority>0.65</priority></url>
   <url><loc>https://www.davoniumtech.com/docs/guides/website-demo-studio</loc><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/technology.html</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/community.html</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/mobile-first-quality</loc><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/speech-and-accessibility</loc><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/certificate.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/docs/guides/dvnm-demo-studio-qr-certificate</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/business.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/marketing.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/shop.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/portfolio.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davoniumtech.com/demos/learning.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

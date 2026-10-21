@@ -1,92 +1,69 @@
-DAVONIUM TECHNOLOGIES — DVNM BOT + DEMO STUDIO RELEASE
-Updated: 21 October 2026
+DAVONIUM TECHNOLOGIES - FINAL DVNM DEMO / QR / VOICE RELEASE
+Windows CMD instructions
 
-IMPORTANT: This package modifies the provided corporate-site source and does not push anything to GitHub automatically. Review it locally first. Deploy from the existing repository connected to Cloudflare so the configured production route remains unchanged.
+1. Download the ZIP into your Downloads folder. Confirm this exact filename:
+   Davonium-DVNM-Nigeria-Demos-Voice-Certificate-20261021.zip
 
-1) BACK UP AND PREPARE
+2. Extract it to a known folder using PowerShell from CMD:
 
-Open Windows CMD. Adjust the Downloads path if you saved this ZIP elsewhere:
+set "ZIP=%USERPROFILE%\Downloads\Davonium-DVNM-Nigeria-Demos-Voice-Certificate-20261021.zip"
+set "OUT=%USERPROFILE%\Downloads\dvnm-final-extracted"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%OUT%' -Force"
 
-cd /d "%USERPROFILE%\Downloads"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -LiteralPath '%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021.zip' -DestinationPath '%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021' -Force"
+3. Verify the expected source file exists BEFORE copying:
 
-The extracted folder contains the website root. Confirm index.html exists:
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\index.html"
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\demos\certificate.html"
+dir "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main\docs\media\Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"
 
-dir "%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021\davoniumtech-corporate-site-main\index.html"
+If any command says File Not Found, STOP and check the extracted folder with:
+  dir /s /b "%USERPROFILE%\Downloads\dvnm-final-extracted\index.html"
+Use the exact folder returned by that command as ROBOCOPY's source.
 
-Open your EXISTING local repository folder (do not make a new repo):
+4. Enter your existing repository and ensure you have no unfinished work:
 
 cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
-git remote -v
 git status
 git fetch origin
 git switch main
 git pull --ff-only origin main
 
-Confirm origin is https://github.com/DavoniumTech/davoniumtech-corporate-site.git. If `git status` shows local changes that you need, stop and back them up before copying.
+5. Create and push a backup branch (the old backup may already exist; if Git says it exists, skip these two commands):
 
-2) MAKE A BACKUP BRANCH FIRST
+git branch backup-before-dvnm-nigeria-demo-20261021
+git push origin backup-before-dvnm-nigeria-demo-20261021
 
-Use a unique name if this branch already exists:
+6. Copy the new files. /XD .git protects your local repository metadata. DO NOT add /MIR.
 
-git branch backup-before-dvnm-bot-demo-studio-20261021
-git push origin backup-before-dvnm-bot-demo-studio-20261021
+robocopy "%USERPROFILE%\Downloads\dvnm-final-extracted\davoniumtech-corporate-site-main" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git /R:2 /W:2
 
-3) COPY THE UPDATED WEBSITE SAFELY
+ROBOCOPY exit codes 0-7 are normally success/non-fatal; 8 or higher means copy failure.
+If Robocopy reports ERROR 3, do not commit. Find the real source path with the DIR command in step 3.
 
-Replace the source-folder path below if you extracted somewhere else. The destination must be your existing repository folder. `/E` copies new and updated files but does not delete unrelated files; do NOT use `/MIR`.
+7. Prove files changed and review what will be committed:
 
-robocopy "%USERPROFILE%\Downloads\davoniumtech-corporate-site-DVNM-Bot-Demo-Studio-20261021\davoniumtech-corporate-site-main" "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy" /E /XD .git
-
-echo Robocopy exit code: %ERRORLEVEL%
-
-Robocopy exit codes 0–7 usually indicate a successful copy; 8 or higher indicates a failure. Check the target folder before continuing. If the extracted folder name differs, use `dir` to locate the actual index.html and adapt the path.
-
-4) REVIEW BEFORE COMMITTING
-
-cd /d "%USERPROFILE%\Downloads\davoniumtech-corporate-site-deploy"
-git status
-git diff --stat
-git diff -- index.html products.html work.html robots.txt sitemap.xml sw.js
-
-Check that:
-- the homepage and each core page still open;
-- `demos/` contains index.html, business.html, marketing.html, shop.html, portfolio.html, learning.html, demos.css, and demos.js;
-- the QR image is `assets\images\davonium-website-qr.png`;
-- the Ready2Go live URL is no longer linked from Home, Products, or Our Work;
-- `assets\js\site.js` remains the site's shared script and Firebase/other unrelated systems have not been introduced into this static site.
-
-5) STAGE, REVIEW, COMMIT, AND PUSH
-
-git add .
-git diff --cached --stat
+git status --short
+git add -A
 git diff --cached --check
+git diff --cached --stat
 
-Review the staged diff. If it is correct:
+The last command must list changed/new files including demos/certificate.html, the QR images,
+the documentation guide, and the PDF. If it shows nothing, STOP. Do not make an empty commit.
 
-git commit -m "Add DVNM Bot and website demo studio"
+8. Commit and push the update:
+
+git commit -m "Refine DVNM demos for Nigeria and add QR showcase certificate"
 git push origin main
 
-6) VERIFY THE HOSTED RELEASE
+9. Open GitHub and verify the new commit exists. Then inspect the hosting/deployment workflow and
+open https://www.davoniumtech.com/demos/ from a phone and a laptop. The static site is not live until
+your configured hosting provider finishes its deploy.
 
-Open the existing Cloudflare Pages/Workers deployment dashboard and confirm that the new Git commit has deployed. Check these paths in the browser:
-- https://www.davoniumtech.com/
-- https://www.davoniumtech.com/demos/
-- https://www.davoniumtech.com/demos/business.html
-- https://www.davoniumtech.com/demos/marketing.html
-- https://www.davoniumtech.com/demos/shop.html
-- https://www.davoniumtech.com/demos/portfolio.html
-- https://www.davoniumtech.com/demos/learning.html
-- https://www.davoniumtech.com/docs/guides/dvnm-bot
-- https://www.davoniumtech.com/docs/guides/website-demo-studio
-- https://www.davoniumtech.com/assets/images/davonium-website-qr.png
-
-Test on a phone and a laptop. Check theme toggle, navigation menu, demo buttons/forms, cart sample, reduced-motion mode, QR scanning, and browser speech. Speech requires user activation and supported browser voices.
-
-7) IMPORTANT — READY2GO ACCESS RESTRICTION
-
-This repository controls the corporate website, not necessarily the separate `ready2go.davoniumtech.com` host. The updated corporate pages remove its direct links, but users may still reach the separate host if it is independently deployed and public. To actually block access, add a Cloudflare Access gate/redirect or disable/restrict the Ready2Go deployment and test the subdomain separately. `robots.txt` and hidden links are not security controls. Do not announce the app is inaccessible until the subdomain itself has been tested.
-
-8) SEO CHECK
-
-After deployment, inspect `https://www.davoniumtech.com/sitemap.xml` and submit it in Google Search Console/Bing Webmaster Tools if those properties are configured. Crawling and indexing timing is not guaranteed. Individual demo pages intentionally use `noindex`; the Demo Studio index remains publicly discoverable.
+IMPORTANT
+- This release contains seven DVNM-branded demo prototypes relevant to Nigerian SMEs, makers,
+  creators, learners, workers, and community skills events.
+- Every demo has a unique downloadable QR code. The PDF includes the directory code and each demo code.
+- The PDF is a non-official portfolio showcase record; it is NOT an accredited qualification or official credential.
+- Demo forms, shop cart, and RSVP are illustrative and do not process real data or payments.
+- DVNM Bot uses browser-native speech. Actual spoken output depends on the browser, OS, installed voices,
+  and device audio settings. Written answers and links remain available if speech is unavailable.
