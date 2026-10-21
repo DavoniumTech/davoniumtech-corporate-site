@@ -5,6 +5,27 @@
   $$('[data-demo-scroll]').forEach(button => button.addEventListener('click', () => {
     const target = $(button.dataset.demoScroll); if (target) target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   }));
+  // v27 seven-demo explorer: any demo page can jump straight to the other six.
+  const demoCatalog = [
+    { slug: 'business', title: 'DVNM Biz', kind: 'Business', art: 'dvnm-biz.svg' },
+    { slug: 'marketing', title: 'DVNM Growth', kind: 'Marketing', art: 'dvnm-growth.svg' },
+    { slug: 'shop', title: 'DVNM Market', kind: 'Commerce', art: 'dvnm-market.svg' },
+    { slug: 'portfolio', title: 'DVNM Creative', kind: 'Portfolio', art: 'dvnm-creative.svg' },
+    { slug: 'learning', title: 'DVNM Skills', kind: 'Learning', art: 'dvnm-skills.svg' },
+    { slug: 'technology', title: 'DVNM Digital', kind: 'Technology', art: 'dvnm-digital.svg' },
+    { slug: 'community', title: 'DVNM Connect', kind: 'Community', art: 'dvnm-connect.svg' }
+  ];
+  const pageSlug = location.pathname.split('/').filter(Boolean).pop()?.replace(/\.html?$/i, '') || '';
+  if (demoCatalog.some(item => item.slug === pageSlug)) {
+    const explorer = document.createElement('section');
+    explorer.className = 'demo-explorer';
+    explorer.setAttribute('aria-labelledby', 'demo-explorer-title');
+    explorer.innerHTML = `<div class="demo-explorer-heading"><div><span class="demo-eyebrow">Demo Studio navigator</span><h2 id="demo-explorer-title">Explore all seven experiences.</h2><p>Move between sample websites without returning to the directory each time.</p></div><a class="demo-explorer-all" href="./">All seven demos <span aria-hidden="true">↗</span></a></div><div class="demo-explorer-track" aria-label="All seven website demonstrations">${demoCatalog.map(item => `<a class="demo-explorer-card${item.slug === pageSlug ? ' is-current' : ''}" href="${item.slug}" ${item.slug === pageSlug ? 'aria-current="page"' : ''}><img src="../assets/images/demo-art/${item.art}" width="720" height="400" alt="" loading="lazy" decoding="async"><span class="demo-explorer-kind">${item.kind}</span><strong>${item.title}</strong><span class="demo-explorer-open">${item.slug === pageSlug ? 'You are here' : 'Explore sample'} <span aria-hidden="true">→</span></span></a>`).join('')}</div>`;
+    const hero = $('main .demo-hero');
+    if (hero) hero.insertAdjacentElement('afterend', explorer);
+    else $('main')?.insertAdjacentElement('afterbegin', explorer);
+  }
+
   // All forms are demos: never submit or collect personal details.
   $$('[data-demo-form]').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault(); const note = $('[data-demo-message]', form) || $('[data-demo-message]');

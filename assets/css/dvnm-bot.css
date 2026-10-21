@@ -884,3 +884,65 @@ body.dvnm-welcome-visible { overflow:hidden; }
     max-height: min(70dvh,640px) !important;
   }
 }
+
+
+/* v27: CSS-jointed motion rig built from the existing DVNM Bot artwork. */
+.dvnm-robot-rig-layer { filter:none!important; position:absolute!important; inset:0!important; display:block!important; width:100%!important; height:100%!important; max-width:none!important; object-fit:fill!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; pointer-events:none!important; }
+.dvnm-robot-art .dvnm-robot-rig-layer, .dvnm-hero-robot .dvnm-robot-rig-layer { transform-style:preserve-3d; will-change:transform; }
+.dvnm-robot-rig-layer.dvnm-rig-body { z-index:1; }
+.dvnm-rig-leg-left { z-index:2; transform-origin:47% 46%; animation:dvnm-leg-left-idle 5.2s ease-in-out infinite; }
+.dvnm-rig-leg-right { z-index:2; transform-origin:53% 46%; animation:dvnm-leg-right-idle 5.2s ease-in-out infinite; }
+.dvnm-rig-arm-left { z-index:3; transform-origin:31% 29%; animation:dvnm-arm-left-idle 4.7s ease-in-out infinite; }
+.dvnm-rig-arm-right { z-index:3; transform-origin:63.5% 29%; animation:dvnm-arm-right-idle 4.9s ease-in-out infinite; }
+.dvnm-robot-head-joint { position:absolute; z-index:4; inset:0; width:100%; height:100%; transform-origin:50.5% 24%; animation:dvnm-head-look 7.8s ease-in-out infinite; pointer-events:none; }
+.dvnm-robot-head-joint .dvnm-rig-head { z-index:1; }
+.dvnm-robot-head-joint .dvnm-robot-faceplate { z-index:4; }
+.dvnm-robot-head-joint .dvnm-robot-eye { z-index:5; }
+.dvnm-robot-head-joint .dvnm-robot-mouth { z-index:6; }
+.dvnm-robot-chest-aura { z-index:5!important; animation:dvnm-chest-idle 3.6s ease-in-out infinite alternate; }
+.dvnm-robot-light-ring { z-index:0!important; }
+.dvnm-robot-star { position:absolute; z-index:0; display:block; color:#8b80ff; font-size:clamp(10px,2vw,20px); line-height:1; text-shadow:0 0 9px rgba(100,210,255,.7); pointer-events:none; animation:dvnm-star-float 3.6s ease-in-out infinite; }
+.dvnm-robot-star-a { left:-7%; top:37%; animation-delay:-.8s; }
+.dvnm-robot-star-b { right:-7%; top:56%; color:#41d4e6; font-size:clamp(9px,1.6vw,17px); animation-delay:-2s; }
+.dvnm-robot-star-c { right:4%; top:21%; color:#ffb8df; font-size:clamp(8px,1.4vw,15px); animation-delay:-1.4s; }
+@keyframes dvnm-head-look { 0%,100% { transform:rotate(0deg) translateY(0); } 23% { transform:rotate(-2deg) translateY(0); } 43% { transform:rotate(1deg) translateY(-1px); } 68% { transform:rotate(2deg) translateY(1px); } 82% { transform:rotate(-.8deg); } }
+@keyframes dvnm-head-speech { 0%,100% { transform:rotate(0) translateY(0); } 28% { transform:rotate(2.4deg) translateY(1px); } 54% { transform:rotate(-1.5deg) translateY(-1px); } 77% { transform:rotate(1deg); } }
+@keyframes dvnm-arm-left-idle { 0%,100% { transform:rotate(0) translateY(0); } 28% { transform:rotate(-1.6deg) translateY(-1px); } 66% { transform:rotate(1.4deg); } }
+@keyframes dvnm-arm-right-idle { 0%,100% { transform:rotate(0) translateY(0); } 36% { transform:rotate(1.4deg) translateY(-1px); } 72% { transform:rotate(-1.6deg); } }
+@keyframes dvnm-arm-left-teach { 0%,100% { transform:rotate(0) translateY(0); } 22% { transform:rotate(-4deg) translateY(-2px); } 47% { transform:rotate(4deg) translateY(1px); } 73% { transform:rotate(-2deg); } }
+@keyframes dvnm-arm-right-teach { 0%,100% { transform:rotate(0) translateY(0); } 25% { transform:rotate(4deg) translateY(-2px); } 51% { transform:rotate(-3deg) translateY(1px); } 78% { transform:rotate(2deg); } }
+@keyframes dvnm-leg-left-idle { 0%,100% { transform:rotate(0) translateY(0); } 24% { transform:rotate(-1.1deg) translateY(-1px); } 52% { transform:rotate(1.4deg) translateY(1px); } 76% { transform:rotate(-.6deg); } }
+@keyframes dvnm-leg-right-idle { 0%,100% { transform:rotate(0) translateY(0); } 24% { transform:rotate(1.3deg) translateY(1px); } 52% { transform:rotate(-1.3deg) translateY(-1px); } 76% { transform:rotate(.5deg); } }
+@keyframes dvnm-leg-left-step { 0%,100% { transform:rotate(0) translateY(0); } 25% { transform:rotate(-2.8deg) translateY(-2px); } 50% { transform:rotate(2deg) translateY(2px); } 75% { transform:rotate(-1deg) translateY(0); } }
+@keyframes dvnm-leg-right-step { 0%,100% { transform:rotate(0) translateY(0); } 25% { transform:rotate(2.4deg) translateY(2px); } 50% { transform:rotate(-2.4deg) translateY(-2px); } 75% { transform:rotate(1deg) translateY(0); } }
+@keyframes dvnm-chest-idle { from { opacity:.24; filter:blur(7px) saturate(1.05); } to { opacity:.52; filter:blur(8px) saturate(1.32); } }
+@keyframes dvnm-star-float { 0%,100% { transform:translate3d(0,3px,0) rotate(-7deg) scale(.9); opacity:.48; } 50% { transform:translate3d(2px,-9px,0) rotate(9deg) scale(1.15); opacity:1; } }
+.dvnm-robot-art.is-speaking .dvnm-robot-head-joint, .dvnm-hero-robot.is-speaking .dvnm-robot-head-joint { animation:dvnm-head-speech 1.35s ease-in-out infinite; }
+.dvnm-robot-art.is-speaking .dvnm-rig-arm-left, .dvnm-hero-robot.is-speaking .dvnm-rig-arm-left { animation:dvnm-arm-left-teach 1.8s ease-in-out infinite; }
+.dvnm-robot-art.is-speaking .dvnm-rig-arm-right, .dvnm-hero-robot.is-speaking .dvnm-rig-arm-right { animation:dvnm-arm-right-teach 1.9s ease-in-out infinite; }
+.dvnm-robot-art.is-speaking .dvnm-rig-leg-left, .dvnm-hero-robot.is-speaking .dvnm-rig-leg-left { animation:dvnm-leg-left-step 1.9s ease-in-out infinite; }
+.dvnm-robot-art.is-speaking .dvnm-rig-leg-right, .dvnm-hero-robot.is-speaking .dvnm-rig-leg-right { animation:dvnm-leg-right-step 1.9s ease-in-out infinite; }
+.dvnm-robot-art.is-speaking .dvnm-robot-chest-aura, .dvnm-hero-robot.is-speaking .dvnm-robot-chest-aura { opacity:1!important; filter:blur(8px) saturate(1.6)!important; animation:dvnm-speaking-chest .34s ease-in-out infinite alternate!important; }
+.dvnm-robot-art.is-speaking .dvnm-robot-star, .dvnm-hero-robot.is-speaking .dvnm-robot-star { color:#55efff; text-shadow:0 0 10px rgba(83,239,255,.9),0 0 22px rgba(100,102,255,.6); }
+.dvnm-hero-robot.dvnm-css-rig { display:block; }
+.dvnm-hero-robot.dvnm-css-rig > .dvnm-rig-body { position:absolute!important; inset:0!important; }
+@media(max-width:700px) { .dvnm-robot-star-a { left:-3%; } .dvnm-robot-star-b { right:-3%; } }
+@media(prefers-reduced-motion:reduce) {
+ .dvnm-robot-head-joint,.dvnm-rig-arm-left,.dvnm-rig-arm-right,.dvnm-rig-leg-left,.dvnm-rig-leg-right,.dvnm-robot-star,.dvnm-robot-chest-aura { animation:none!important; }
+ .dvnm-robot-head-joint { transform:none!important; }
+}
+
+/* v27 interaction polish: proportionate full-height launch character and a greeting gesture. */
+.dvnm-launcher { width:88px!important; height:132px!important; }
+.dvnm-panel, .dvnm-panel.is-speaking { bottom:calc(108px + 132px + 12px + env(safe-area-inset-bottom))!important; }
+.dvnm-launcher .dvnm-launcher-robot { display:block; position:absolute!important; inset:0!important; width:100%!important; height:100%!important; aspect-ratio:2/3; }
+@keyframes dvnm-arm-greet { 0%,100% { transform:rotate(0deg) translateY(0); } 22% { transform:rotate(-4deg) translateY(-2px); } 44% { transform:rotate(7deg) translateY(1px); } 66% { transform:rotate(-4deg) translateY(-1px); } 82% { transform:rotate(3deg); } }
+#dvnm-bot-dock.is-open .dvnm-launcher .dvnm-rig-arm-right { animation:dvnm-arm-greet 2.25s ease-in-out infinite; }
+:root[data-theme="dark"] .dvnm-panel { background:linear-gradient(145deg,#35405e,#2b3552 70%,#293b50)!important; border-color:rgba(196,193,255,.38)!important; }
+:root[data-theme="dark"] .dvnm-panel .dvnm-question { background:rgba(255,255,255,.075); color:#f5f5ff; border-color:rgba(214,219,255,.2); }
+:root[data-theme="dark"] .dvnm-panel .dvnm-question[aria-pressed="true"] { background:linear-gradient(120deg,#6856d4,#208da9); color:#fff; }
+@media(max-width:700px) {
+ .dvnm-launcher { width:76px!important; height:114px!important; }
+ .dvnm-panel, .dvnm-panel.is-speaking { bottom:calc(104px + 114px + 10px + env(safe-area-inset-bottom))!important; }
+}
+@media(prefers-reduced-motion:reduce) { #dvnm-bot-dock.is-open .dvnm-launcher .dvnm-rig-arm-right { animation:none!important; } }

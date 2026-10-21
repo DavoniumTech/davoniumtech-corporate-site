@@ -292,3 +292,48 @@
 :root[data-theme="dark"] .demo-page :is(input,select,textarea) {
   color:#f6f3ff !important; background:#292f4b !important; border-color:rgba(202,204,255,.26) !important;
 }
+
+
+/* v27: illustration-led demo cards, a reusable all-demo navigator, and gentle ambient motion. */
+.demo-page .demo-hero { isolation:isolate; }
+.demo-page .demo-hero::after { content:"✦　 ·　✧"; position:absolute; z-index:0; top:12%; right:8%; color:rgba(111,91,219,.28); font-size:clamp(1.1rem,3vw,2.4rem); letter-spacing:.6em; pointer-events:none; animation:demo-float-glyphs 8s ease-in-out infinite; }
+.demo-page .demo-hero-grid { position:relative; z-index:1; }
+.demo-card-illustrated { position:relative; overflow:hidden; }
+.demo-card-art { display:grid; place-items:center; overflow:hidden; margin:0 0 18px; border:1px solid rgba(115,99,218,.12); border-radius:16px; aspect-ratio:16/9; background:linear-gradient(135deg,#f1eeff,#e0fbf8); }
+.demo-card-art img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .42s cubic-bezier(.2,.8,.2,1),filter .42s ease; }
+.demo-card-illustrated:hover .demo-card-art img,.demo-card-illustrated:focus-within .demo-card-art img { transform:scale(1.055) translateY(-2px); filter:saturate(1.08); }
+.demo-card-art:focus-visible { outline:3px solid #38cbe4; outline-offset:3px; }
+.demo-card-illustrated .demo-icon { box-shadow:0 6px 15px rgba(86,67,183,.12); }
+.demo-explorer { padding:28px 0 34px; border-bottom:1px solid var(--demo-line); background:linear-gradient(120deg,rgba(114,91,226,.055),rgba(41,197,203,.045)); }
+.demo-explorer > .demo-explorer-inner, .demo-explorer-heading { width:min(1160px,calc(100% - 36px)); margin:0 auto; }
+.demo-explorer-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-bottom:17px; }
+.demo-explorer-heading h2 { margin:7px 0 4px; font-size:clamp(1.35rem,2.6vw,2rem); letter-spacing:-.045em; }
+.demo-explorer-heading p { margin:0; color:var(--demo-muted); font-size:.9rem; line-height:1.6; }
+.demo-explorer-all { display:inline-flex; align-items:center; gap:8px; flex:0 0 auto; padding:10px 13px; border:1px solid var(--demo-line); border-radius:999px; color:var(--demo-ink); background:var(--demo-paper); text-decoration:none; font-size:.8rem; font-weight:850; box-shadow:0 5px 14px rgba(62,51,140,.06); }
+.demo-explorer-track { display:grid; grid-auto-columns:minmax(164px,1fr); grid-auto-flow:column; gap:12px; width:min(1160px,calc(100% - 36px)); margin:0 auto; padding:2px 1px 12px; overflow-x:auto; overscroll-behavior-inline:contain; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:#a89aea transparent; }
+.demo-explorer-card { display:flex; flex-direction:column; min-width:0; overflow:hidden; padding:9px; border:1px solid var(--demo-line); border-radius:17px; color:var(--demo-ink); background:var(--demo-paper); text-decoration:none; box-shadow:0 8px 18px rgba(62,51,140,.055); scroll-snap-align:start; transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease; }
+.demo-explorer-card:hover,.demo-explorer-card:focus-visible { transform:translateY(-3px); border-color:rgba(115,95,231,.6); box-shadow:0 15px 28px rgba(74,59,167,.13); }
+.demo-explorer-card.is-current { border-color:#8270ed; box-shadow:0 0 0 2px rgba(130,112,237,.14),0 12px 24px rgba(74,59,167,.08); }
+.demo-explorer-card img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:11px; background:#eae9ff; }
+.demo-explorer-kind { margin:10px 2px 3px; color:var(--demo-accent); font-size:.68rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+.demo-explorer-card strong { margin:0 2px; font-size:.94rem; }
+.demo-explorer-open { display:flex; align-items:center; justify-content:space-between; gap:6px; margin:9px 2px 2px; color:var(--demo-muted); font-size:.74rem; }
+.demo-explorer-card.is-current .demo-explorer-open { color:var(--demo-accent); font-weight:850; }
+@keyframes demo-float-glyphs { 0%,100% { transform:translateY(0) rotate(-4deg); opacity:.56; } 50% { transform:translateY(-9px) rotate(5deg); opacity:1; } }
+@media(max-width:650px) {
+ .demo-explorer-heading { align-items:flex-start; flex-direction:column; }
+ .demo-explorer-all { align-self:flex-start; }
+ .demo-explorer-track { grid-auto-columns:minmax(150px,44vw); }
+ .demo-card-art { margin-bottom:15px; }
+ .demo-card-illustrated { padding:15px; }
+}
+:root[data-theme="dark"] .demo-page { --demo-ink:#f3f4ff; --demo-muted:#c2cce4; --demo-line:rgba(203,214,255,.2); --demo-paper:#222b48; --demo-accent:#b5aaff; --demo-glow:#303654; background:#171d35; color:var(--demo-ink); }
+:root[data-theme="dark"] .demo-page .demo-hero { background:radial-gradient(ellipse at 82% 8%,rgba(57,218,222,.16),transparent 36%),radial-gradient(ellipse at 4% 100%,rgba(139,109,255,.15),transparent 38%),linear-gradient(140deg,#1b2440,#252344 58%,#173546); }
+:root[data-theme="dark"] .demo-page .demo-section { background:#1b223d; }
+:root[data-theme="dark"] .demo-page .demo-section.soft,:root[data-theme="dark"] .demo-page .community-soft { background:linear-gradient(135deg,#202947,#2b2c50); }
+:root[data-theme="dark"] .demo-page .demo-card,:root[data-theme="dark"] .demo-page .demo-panel,:root[data-theme="dark"] .demo-page .demo-explorer-card { background:linear-gradient(145deg,#28314f,#212a45); border-color:rgba(204,216,255,.2); box-shadow:0 12px 28px rgba(6,10,26,.16); }
+:root[data-theme="dark"] .demo-page .demo-card p,:root[data-theme="dark"] .demo-page .demo-explorer-heading p,:root[data-theme="dark"] .demo-page .demo-explorer-open { color:#c5cee6; }
+:root[data-theme="dark"] .demo-page .demo-card-art,:root[data-theme="dark"] .demo-page .demo-explorer-card img { border-color:rgba(194,190,255,.24); }
+:root[data-theme="dark"] .demo-page .demo-explorer { background:linear-gradient(120deg,rgba(112,94,226,.13),rgba(41,197,203,.08)); }
+:root[data-theme="dark"] .demo-page .demo-explorer-all { color:#f4f2ff; background:#2b3555; }
+@media(prefers-reduced-motion:reduce) { .demo-page .demo-hero::after,.demo-card-art img,.demo-card-illustrated:hover .demo-card-art img,.demo-explorer-card,.demo-explorer-all { animation:none!important; transition:none!important; transform:none!important; } }

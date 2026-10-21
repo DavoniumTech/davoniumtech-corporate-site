@@ -1,239 +1,36 @@
 {
-  "built_at": "2026-10-21",
-  "source": "user-uploaded davoniumtech-corporate-site-main ZIP",
-  "features": [
-    "DVNM Bot existing full-body 3D illustration with transparent-background cutout and frameless launcher",
-    "Responsive speaking state retains animated eyes, mouth cue, and brighter chest aura",
-    "Speech-only mode while talking with explicit Cancel Speech control",
-    "Single logical DVNM Voice option with device-native fallback",
-    "Seven DVNM-branded sample demonstrations for global audiences",
-    "Homepage, Demo Studio, and per-demo printable QR codes using canonical paths",
-    "Printable non-official showcase certificate and QR directory PDF",
-    "Extensionless canonical URL routing with no active conflicting _redirects rules",
-    "Versioned v24 service worker/cache for the transparent robot cutout",
-    "Expanded documentation for route reliability, DVNM Bot, samples, mobile and SEO"
+  "release": "v27-css-jointed-bot-and-illustrated-demo-studio",
+  "updated_at": "2026-10-21",
+  "source_baseline": "Davonium-DVNM-Bot-Assistant-Dark-v26-20261021.zip",
+  "scope": [
+    "Existing DVNM bot art split into transparent CSS-rig layers",
+    "CSS head movement, speaking nods, arm gestures, alternating subtle step motion",
+    "Floating sparkles around robot",
+    "New original SVG cartoon illustrations for all seven sample demo sites",
+    "Cross-demo navigator added to each demo-detail page",
+    "Lighter midnight-violet dark theme in Demo Studio",
+    "Service-worker and static asset cache version bumped to v27"
   ],
-  "demo_pages": [
-    "demos/index.html",
-    "demos/business.html",
-    "demos/marketing.html",
-    "demos/shop.html",
-    "demos/portfolio.html",
-    "demos/learning.html",
-    "demos/technology.html",
-    "demos/community.html",
-    "demos/certificate.html"
-  ],
-  "direct_ready2go_hosts_in_html": [],
-  "qr_size": [
-    492,
-    492
-  ],
-  "html_pages": 71,
+  "image_generation": "No new raster image generated; robot parts are alpha-masked derivatives of the existing supplied webp artwork and demo illustrations are hand-authored SVG.",
+  "manual_visual_test": "Required on live desktop and mobile after deploy; not completed in this environment.",
+  "asset_summary": {
+    "bot_rig_webp_layers": 6,
+    "demo_cartoon_svg_illustrations": 7,
+    "demo_detail_gallery": "All seven demos are directly accessible from a horizontally scrollable navigator."
+  },
   "static_validation": {
     "html_pages": 71,
-    "local_references_checked": 3434,
-    "link_and_anchor_errors": 0,
+    "local_references_checked": 2867,
+    "broken_local_targets": 0,
+    "anchor_errors": 0,
+    "duplicate_ids": 0,
     "sitemap_url_count": 66,
-    "sitemap_targets": "PASS",
-    "javascript_syntax": "PASS",
-    "css_brace_balance": "PASS",
-    "active_redirect_rules": 0,
-    "qr_destinations": "PASS",
-    "one_page_certificate_bytes": 195065,
-    "demo_dark_theme": "PASS",
-    "deployment_guard": "v24 CMD verifies source files, exact Git origin, main branch, clean worktree, fast-forward history, backup branch, required v24 references, and git diff --check; no force push or mirror-delete.",
-    "live_visual_test": "Still required after Cloudflare deployment; browser screenshot automation did not complete in this environment.",
-    "cutout_alpha": "PASS (RGBA, alpha extrema 0–255)",
-    "v23_asset_queries_remaining": 0,
-    "local_visual_smoke_test": "Asset alpha inspected on checkerboard; local Chromium screenshot attempt timed out. Verify final rendering after Cloudflare deploy on desktop/mobile.",
-    "dvnm_bot_panel": "CSS rules corrected: fixed viewport width and pointer-enabled panel controls",
-    "theme": "PASS: lighter midnight-violet dark palette tokens updated",
-    "robot_face": "PASS: visor overlay and circular lens-eye animation markup present",
-    "demo_dark_theme_v26": "PASS (static selector/asset marker validation; live visual test still required)",
-    "local_link_and_anchor_errors": 0
-  },
-  "deployment_note": "Removing public corporate-site links does not restrict direct access to a separately hosted Ready2Go subdomain; apply host-level Cloudflare/deployment access control separately.",
-  "updated_at": "2026-10-21",
-  "release_notes": [
-    "Refined DVNM Bot faceplate coverage and circular lens alignment to hide the source illustration’s crescent eye artwork.",
-    "Moved the existing DVNM chest aura to the chest insignia and increased its speaking-state intensity.",
-    "Kept the floating assistant panel fixed to the viewport and independent of the launcher width; added mobile-safe touch/scroll behavior and a high stacking level.",
-    "Extended a brighter luminous midnight palette to every demo page surface, forms, product cards, sample events, filters and footers.",
-    "Updated bot CSS/cutout versions and service-worker cache marker to v26.",
-    "Existing art is retained; original outward-arm pose is unchanged. No generated or replacement robot art was used.",
-    "DVNM Bot assistant panel width fixed independently of its narrow floating launcher, with viewport-safe positioning and pointer-enabled controls.",
-    "Added a glass visor overlay and normal circular lens-eye animation to mask the original curved eye marks.",
-    "Enhanced the speaking chest aura and enabled visual speech state on the floating robot.",
-    "Refined the dark theme into an illuminated midnight-violet palette with clearer panels and gentler transitions.",
-    "v24 replaces the hand-built CSS floating robot with the existing full-body DVNM art as a transparent cutout; the launcher and homepage/welcome/assistant robot wrappers no longer show an image-frame rectangle.",
-    "DVNM Bot v22 adds responsive open-eye overlays with natural blinking, subtle gaze motion, and a mouth animation that opens/closes while speech is active; updated the homepage, welcome panel, assistant panel, bot guide, and service-worker cache version.",
-    "Static route compatibility repair: explicit .html links, legacy clean-URL redirects, and service-worker offline recovery for failed navigation.",
-    "Demo Studio expanded to seven original sample website demonstrations, including Davonium technology and community/event experiences.",
-    "Website QR code moved immediately below the homepage hero.",
-    "DVNM Bot speech cancellation/start flow revised for more reliable mobile browser speech and default-voice fallback.",
-    "Robot visual styling upgraded with glowing optical lenses, chest core, antenna beacon, and hologram floor.",
-    "Responsive CSS hardening added for phone, tablet, laptop, landscape and short-height layouts.",
-    "New mobile-first quality and speech/accessibility guides added; sitemap and service-worker cache updated.",
-    "DVNM Bot now speaks line-by-line in shorter browser utterances with default-voice fallback to improve resilience on mobile speech engines."
-  ],
-  "demo_count": 7,
-  "new_demo_pages": [
-    "demos/technology.html",
-    "demos/community.html"
-  ],
-  "new_guides": [
-    "docs/guides/mobile-first-quality.html",
-    "docs/guides/speech-and-accessibility.html",
-    "docs/guides/dvnm-welcome-and-voice.html",
-    "docs/guides/dvnm-sample-website-planning.html"
-  ],
-  "release": "v26-bot-panel-interaction-luminous-dark-theme",
-  "demo_names": [
-    "DVNM Biz",
-    "DVNM Growth",
-    "DVNM Market",
-    "DVNM Creative",
-    "DVNM Skills",
-    "DVNM Digital",
-    "DVNM Connect"
-  ],
-  "per_demo_qr_assets": [
-    "assets/images/qr-dvnm-biz.png",
-    "assets/images/qr-dvnm-growth.png",
-    "assets/images/qr-dvnm-market.png",
-    "assets/images/qr-dvnm-creative.png",
-    "assets/images/qr-dvnm-skills.png",
-    "assets/images/qr-dvnm-digital.png",
-    "assets/images/qr-dvnm-connect.png"
-  ],
-  "docs_added": [
-    "docs/guides/dvnm-demo-studio-qr-certificate.html"
-  ],
-  "certificate_pdf": "docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf",
-  "notes": [
-    "Sample website demonstration showcase record is explicitly non-official and non-accredited.",
-    "All sample forms, RSVP actions, and shop interactions are demo-only.",
-    "Browser-native speech is device-dependent; text remains available, and the speech queue uses short line-sized utterances with a default-device voice fallback."
-  ],
-  "site_qr_assets": [
-    "assets/images/qr-dvnm-biz.png",
-    "assets/images/qr-dvnm-growth.png",
-    "assets/images/qr-dvnm-market.png",
-    "assets/images/qr-dvnm-creative.png",
-    "assets/images/qr-dvnm-skills.png",
-    "assets/images/qr-dvnm-digital.png",
-    "assets/images/qr-dvnm-connect.png",
-    "assets/images/qr-dvnm-demo-studio.png"
-  ],
-  "demos": 7,
-  "welcomeBanner": true,
-  "visitorNameStorage": "page-session-memory-only; not sent to server",
-  "voiceControls": [
-    "installed device voice selection in welcome and bot panel",
-    "15% default speech volume",
-    "0.86 default speaking rate",
-    "sentence-sized speech utterance queue for mobile resilience",
-    "fallback to device default voice if the selected voice fails",
-    "visitor-initiated speech only",
-    "written-answer fallback remains available"
-  ],
-  "documentationAdded": [
-    "docs/guides/dvnm-welcome-and-voice.html",
-    "docs/guides/dvnm-sample-website-planning.html",
-    "docs/guides/dvnm-bot-interaction-checklist.html"
-  ],
-  "samplePresentation": "Davonium-created sample website demonstrations; not claimed client deployments.",
-  "demo_audit": {
-    "business": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "marketing": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "shop": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "portfolio": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "learning": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "technology": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    },
-    "community": {
-      "exists": true,
-      "sample_notice": true,
-      "qr": true,
-      "faq": true,
-      "front_end_label": false
-    }
-  },
-  "v19_ui_repair": {
-    "reason": "Previous release placed JavaScript content in assets/css/dvnm-bot.css. This caused the DVNM Bot welcome and panel to render without their CSS styles.",
-    "stylesheet_bytes": 41848,
-    "stylesheet_sha256": "06cc4a7d379950eee943bb92d4b025c515057fa746b20ddb3eb02eef99af5ce8",
-    "cache_bust": "?v=19",
-    "service_worker_cache": "davonium-site-v19-dvnm-css-repair-20261021",
-    "checks": {
-      "css_file_is_not_javascript": true,
-      "welcome_overlay_selector_present": true,
-      "welcome_card_selector_present": true,
-      "floating_panel_selector_present": true,
-      "css_braces_balanced": true,
-      "home_css_link_versioned": true,
-      "service_worker_cache_bumped": true,
-      "all_passed": true
-    }
-  },
-  "route_reliability": {
-    "internal_links_rewritten_to_existing_html": 1431,
-    "absolute_urls_aligned_to_existing_html": 244,
-    "redirects_file": "_redirects",
-    "service_worker_cache": "davonium-site-v20-route-recovery-20261021",
-    "never_returns_response_error": true,
-    "all_seven_sample_demos_preserved": true,
-    "local_reference_count": 2827,
-    "local_reference_errors": 0,
-    "broken_anchor_errors": 0,
-    "duplicate_id_pages": 0,
-    "redirect_rules": 133,
-    "redirect_validation": "PASS — all local file destinations exist and sources are unique",
-    "sitemap_urls": 65,
-    "sitemap_invalid_urls": 0,
-    "worker_navigation_failure_strategy": "cached page, then cached offline page, then accessible HTTP 503 offline document; no generic network error response",
-    "deployment_verification": "Cloudflare deployment must be checked after the Git push; GitHub Actions page has no configured workflow run visible",
-    "broken_anchors": 0,
-    "invalid_jsonld_scripts": 0,
-    "missing_css_assets": 0,
-    "local_http_pages_checked": 70,
-    "local_http_non200": 0
-  },
-  "robot_asset_bytes": 81172
+    "sitemap_errors": 0,
+    "javascript_files_checked": 3,
+    "css_files_checked": 3,
+    "css_brace_errors": 0,
+    "svg_files_checked": 10,
+    "svg_xml_errors": 0,
+    "manual_visual_test": "Required on live desktop and mobile after deployment; a headless browser screenshot could not be completed in this environment."
+  }
 }
