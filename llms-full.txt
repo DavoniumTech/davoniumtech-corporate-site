@@ -59,3 +59,5 @@ We keep public product status and guide links aligned. Search submission and cra
 - Seven original DVNM sample website demonstrations for businesses, makers, creators, learners, and workers worldwide: https://www.davoniumtech.com/demos/
 - DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
+
+DVNM Bot motion, voice and accessibility: https://www.davoniumtech.com/docs/guides/dvnm-bot-motion-voice-accessibility

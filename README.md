@@ -1,3 +1,14 @@
+## v32 — full-body DVNM Bot, midnight glass and mobile-first polish (22 October 2026)
+
+- Uses the supplied transparent full-body DVNM illustration for the homepage, assistant launcher, panel and welcome experience, preserving the visible arms, hands, legs and glowing chest mark.
+- Adds a separately masked head layer for a subtle turn/nod; the face blinks, responds to available speech word boundaries, and the chest aura brightens while the device voice speaks.
+- Makes browser/device voice selection usable, remembers the local choice, and keeps audio opt-in rather than speaking automatically.
+- Restores the older site's dark midnight palette with lower-blur, translucent blue-violet glass surfaces; adds visibly differentiated soft white, mint, cool gray, beige, violet, indigo and rose sections in light and dark modes.
+- Keeps the floating DVNM launcher above the lower WhatsApp action, with safe-area-aware positioning, narrow-screen widths, and a V32 service-worker cache name.
+- Adds a focused public guide for bot animation, speech, accessibility, appearance and known limitations. The supplied image rig is 2D, not a full 3D skeletal walking model; lip motion is speech-timed rather than guaranteed phoneme-perfect.
+- Static checks confirm 72 HTML pages, valid sitemap XML, no broken local href/src file targets, and valid JavaScript syntax. Manual browser/cloud deployment checks remain post-deployment.
+- Use `DEPLOY-V32-WINDOWS.cmd` for a safety-backed copy, full-site export and optional safe GitHub push.
+
 ## v31 — midnight glass, luminous palette and speech-timed DVNM Bot (22 October 2026)
 
 - Restores the older Davonium midnight-blue base with brighter violet, cyan and green light.

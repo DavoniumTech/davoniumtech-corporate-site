@@ -1,11 +1,11 @@
-/* Davonium Technologies PWA service worker — v31 midnight-glass palette, speech-timed DVNM Bot animation, and refined responsive surfaces. */
-const CACHE_NAME = 'davonium-site-v31-midnight-glass-robot-20261022';
+/* Davonium Technologies PWA service worker — v32 full-body DVNM art, responsive voice controls, click-aware head movement, and clear midnight glass themes. */
+const CACHE_NAME = 'davonium-site-v32-fullbody-voice-glass-20261022';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-      routeUrl("assets/css/dvnm-bot.css?v=31"),
+      routeUrl("assets/css/dvnm-bot.css?v=32"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -22,6 +22,7 @@ const CORE = [
   routeUrl("docs/guides/mobile-first-quality"),
   routeUrl("docs/guides/speech-and-accessibility"),
   routeUrl("docs/guides/dvnm-welcome-and-voice"),
+  routeUrl("docs/guides/dvnm-bot-motion-voice-accessibility"),
   routeUrl("docs/guides/dvnm-sample-website-planning"),
   routeUrl("docs/guides/dvnm-bot-interaction-checklist"),
   routeUrl("demos/business"),
@@ -31,10 +32,10 @@ const CORE = [
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=31"),
-  routeUrl("demos/demos.css?v=30"),
-  routeUrl("demos/demos.js?v=30"),
-  routeUrl("assets/js/site.js?v=31"),
+  routeUrl("assets/css/dvnm-bot.css?v=32"),
+  routeUrl("demos/demos.css?v=32"),
+  routeUrl("demos/demos.js?v=32"),
+  routeUrl("assets/js/site.js?v=32"),
   routeUrl("assets/images/demo-art/dvnm-biz.svg"),
   routeUrl("assets/images/demo-art/dvnm-growth.svg"),
   routeUrl("assets/images/demo-art/dvnm-market.svg"),
@@ -51,10 +52,13 @@ const CORE = [
   routeUrl("assets/images/qr-dvnm-market.png"),
   routeUrl("assets/images/qr-dvnm-growth.png"),
   routeUrl("assets/images/qr-dvnm-biz.png"),
-  routeUrl("assets/css/release-polish-v30.css?v=30"),
+  routeUrl("assets/css/release-polish-v30.css?v=32"),
   routeUrl("assets/css/release-polish-v31.css?v=31"),
-  routeUrl("assets/css/styles.css?v=30"),
-  routeUrl("assets/js/site.js?v=31"),
+  routeUrl("assets/css/release-polish-v32.css?v=32"),
+  routeUrl("assets/images/dvnm-bot-body-v32.webp?v=32"),
+  routeUrl("assets/images/dvnm-bot-head-v32.webp?v=32"),
+  routeUrl("assets/css/styles.css?v=32"),
+  routeUrl("assets/js/site.js?v=32"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/icons/favicon-32.png"),
   routeUrl("assets/icons/icon-192-rounded.png"),

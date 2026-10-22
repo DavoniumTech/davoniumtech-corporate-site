@@ -29,3 +29,14 @@
 - Honours `prefers-reduced-motion`; service-worker cache version is v27.
 
 These sample websites are demonstrations, not claims of completed customer engagements.
+
+
+## V32 — Full-body DVNM Bot and final visual polish (22 October 2026)
+
+- Promoted the supplied transparent full-body DVNM robot illustration to the active assistant and homepage preview. The artwork visibly includes its arms, hands, legs and glowing chest wordmark.
+- Added a separate masked head image with subtle idle turns and speech nods, a custom cyan face display, tap-aware gaze reaction, and chest glow pulsing during speech.
+- Enabled the native device speech-voice selector where supported and persisted the user's choice; speech remains opt-in.
+- Restored the earlier midnight palette while reducing card blur and making translucent glass surfaces more legible. Added visibly distinct pale white, mint, gray, beige, violet, indigo and rose section tones.
+- Constrained the mobile assistant and its panel so the robot launcher sits above the WhatsApp button, with separate touch targets and safe-area padding.
+- Added the DVNM Bot motion/voice/accessibility guide and updated the PWA cache name for V32.
+- The robot remains a lightweight image rig rather than a full 3D model; arms and legs do not independently perform a physically simulated walk cycle.
