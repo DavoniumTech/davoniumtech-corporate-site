@@ -25,7 +25,7 @@
     const systemValue = systemTheme();
     document.documentElement.dataset.theme = value;
     const themeColor = $('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#171a2d' : '#6847e8');
+    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#070a1d' : '#f7f9ff');
     if (theme) {
       const other = value === 'dark' ? 'light' : 'dark';
       theme.textContent = value === 'dark' ? '☀' : '☾';
@@ -352,7 +352,7 @@
     </div>
     <div class="dvnm-css-bot-stars" aria-hidden="true"><span class="dvnm-css-star dvnm-css-star-a">✦</span><span class="dvnm-css-star dvnm-css-star-b">✧</span><span class="dvnm-css-star dvnm-css-star-c">✦</span><span class="dvnm-css-star dvnm-css-star-d">·</span></div>`;
   const robotMarkup = (extra = '') => `<div class="dvnm-robot-art dvnm-css-bot ${extra}" aria-hidden="true">${cssBotInner()}</div>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=30');
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=31');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -470,8 +470,19 @@
     let selectedVoice = null;
     let selectedVoiceKey = 'auto';
     let availableVoices = [];
+    const mouthPulseTimers = new WeakMap();
     const setSpeaking = (active) => {
       document.querySelectorAll('.dvnm-character, .dvnm-robot-art, .dvnm-hero-robot, .dvnm-launcher').forEach(character => character.classList.toggle('is-speaking', active));
+      $$('.dvnm-css-bot').forEach(robot => {
+        robot.classList.toggle('is-speaking', active);
+        if (!active) {
+          robot.classList.remove('has-speech-boundaries', 'is-mouth-pulsing');
+          const timer = mouthPulseTimers.get(robot);
+          if (timer) window.clearTimeout(timer);
+          mouthPulseTimers.delete(robot);
+          robot.style.removeProperty('--dvnm-mouth-aperture');
+        }
+      });
       if (panel) panel.classList.toggle('is-speaking', active);
       const welcomeOverlay = $('#dvnm-welcome-overlay');
       if (welcomeOverlay) welcomeOverlay.classList.toggle('is-speaking', active);
@@ -479,6 +490,25 @@
       if (stopBtn) stopBtn.textContent = active ? '■ Cancel speech' : '■ Stop voice';
       const welcomeStopButton = $('#dvnm-welcome-stop');
       if (welcomeStopButton) welcomeStopButton.textContent = active ? '■ Cancel speech' : '■ Stop voice';
+    };
+    // SpeechSynthesis exposes word-boundary events in many browsers, but not all.
+    // Where available, pulse the mouth for each spoken word; CSS supplies a fast
+    // continuous fallback on engines that do not expose boundary timing.
+    const pulseRobotMouth = (event) => {
+      const charLength = Math.max(1, Math.min(18, Number(event?.charLength) || 4));
+      const aperture = Math.max(7, Math.min(17, 6 + charLength * .62));
+      const duration = Math.max(74, Math.min(230, 48 + charLength * 17));
+      $$('.dvnm-css-bot.is-speaking').forEach(robot => {
+        robot.classList.add('has-speech-boundaries', 'is-mouth-pulsing');
+        robot.style.setProperty('--dvnm-mouth-aperture', `${aperture}%`);
+        const previousTimer = mouthPulseTimers.get(robot);
+        if (previousTimer) window.clearTimeout(previousTimer);
+        const timer = window.setTimeout(() => {
+          robot.classList.remove('is-mouth-pulsing');
+          mouthPulseTimers.delete(robot);
+        }, duration);
+        mouthPulseTimers.set(robot, timer);
+      });
     };
     const speechEngine = () => ('speechSynthesis' in window ? window.speechSynthesis : null);
     const setVoiceStatus = (message) => {
@@ -625,7 +655,14 @@
           setVoiceStatus('The device voice stopped responding. Tap Hear this answer to retry; the full written answer and link remain available.');
         }, Math.max(12000, Math.min(45000, text.length * 190 + 6500)));
       };
-      utterance.onboundary = () => { if (token === speechRun) setSpeaking(true); };
+      utterance.onboundary = (event) => {
+        if (token !== speechRun) return;
+        setSpeaking(true);
+        const boundaryName = String(event?.name || '').toLowerCase();
+        // Use actual word boundaries where exposed. Sentence-only/unknown timing
+        // events keep the rapid CSS fallback active instead of freezing the mouth.
+        if (boundaryName === 'word' || (!boundaryName && Number(event?.charLength) > 0)) pulseRobotMouth(event);
+      };
       utterance.onend = () => {
         if (token !== speechRun) return;
         clearSpeechTimers();

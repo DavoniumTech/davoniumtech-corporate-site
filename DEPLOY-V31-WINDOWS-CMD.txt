@@ -1,0 +1,16 @@
+DAVONIUM TECHNOLOGIES — V31 ONE-COMMAND WINDOWS DEPLOYMENT
+=========================================================
+
+1. Download this ZIP into your normal Downloads folder. Do not extract it manually.
+2. Open Windows CMD.
+3. Paste the entire PowerShell command below into CMD and press Enter.
+
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; $download=Join-Path $env:USERPROFILE 'Downloads'; $zip=Get-ChildItem -LiteralPath $download -File -Filter 'davoniumtech-corporate-site-v31*.zip' | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if(-not $zip){throw 'ZIP not found. Download this release into your Downloads folder first.'}; $stamp=Get-Date -Format 'yyyyMMdd-HHmmss'; $root=Join-Path $env:USERPROFILE ('DavoniumTech-v31-' + $stamp); $project=Join-Path $root 'davoniumtech-corporate-site-v31'; $repo=Join-Path $env:USERPROFILE ('DavoniumTech-v31-push-' + $stamp); Write-Host 'STEP 1: Extracting ZIP...'; New-Item -ItemType Directory -Path $root -Force | Out-Null; Expand-Archive -LiteralPath $zip.FullName -DestinationPath $root -Force; if(-not (Test-Path (Join-Path $project 'index.html'))){throw 'Expected site files were not found in the ZIP.'}; Write-Host 'STEP 2: Cloning GitHub...'; & git clone 'https://github.com/DavoniumTech/davoniumtech-corporate-site.git' $repo; if($LASTEXITCODE -ne 0){throw 'Git clone failed. Check internet access and GitHub permissions.'}; Write-Host 'STEP 3: Copying site files...'; & robocopy $project $repo /E /XD .git; if($LASTEXITCODE -ge 8){throw ('File copy failed; Robocopy exit code: ' + $LASTEXITCODE)}; Write-Host 'STEP 4: Preparing commit...'; & git -C $repo add -A; if($LASTEXITCODE -ne 0){throw 'Git add failed.'}; & git -C $repo diff --cached --quiet; $diffCode=$LASTEXITCODE; if($diffCode -eq 1){& git -C $repo commit -m 'Restore midnight glass theme and improve DVNM Bot speech animation'; if($LASTEXITCODE -ne 0){throw 'Commit failed. Check the Git message above.'}; & git -C $repo push origin HEAD; if($LASTEXITCODE -ne 0){throw 'Push failed. Resolve the GitHub authentication or push error above.'}; Write-Host 'SUCCESS: V31 changes pushed to GitHub.'} elseif($diffCode -eq 0){Write-Host 'No changes to commit. Check git status to confirm.'} else {throw 'Could not check staged changes.'}; Write-Host ('Extracted website: ' + $project); Write-Host ('Git working folder: ' + $repo)"
+
+NOTES
+-----
+- The command performs extraction, cloning, copying, commit and push without manual file extraction.
+- Keep CMD open until the final message appears. Authenticate with GitHub if prompted.
+- The command does not force-push or overwrite an existing local folder; it creates new timestamped working folders.
+- Pushing to GitHub does not itself prove the live domain has redeployed. That depends on the repository's hosting integration.
+- If Git reports an identity error on commit, configure your Git user.name and user.email, then rerun the commit/push from the printed working folder.

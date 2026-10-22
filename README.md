@@ -1,3 +1,12 @@
+## v31 — midnight glass, luminous palette and speech-timed DVNM Bot (22 October 2026)
+
+- Restores the older Davonium midnight-blue base with brighter violet, cyan and green light.
+- Adds more translucent glass surfaces and a soft glow field in light and dark modes; the light-mode rhythm remains white, mint, lilac, sand and mist grey.
+- Refines the CSS-built robot: the `DVNM` chest lettering stays fixed, reactor light gets brighter during speech, and word-boundary events drive short mouth pulses where supported. Other browsers use a rapid CSS animation fallback.
+- Updates the page assets, manifest theme colour and service-worker cache version.
+- See `V31-VISUAL-VOICE-REPAIR.md` for the scope and validation notes.
+- See `DEPLOY-V31-WINDOWS-CMD.txt` for the one-command CMD deployment workflow (download the ZIP, then let CMD extract and push it).
+
 ## v30 — visual, header, and DVNM speech repair (22 October 2026)
 - Restored the sticky glass header; fixed the late CSS rule that had reset it to relative positioning.
 - Added restrained white, mint, lilac, sand, and mist-gray section tones with a transparent, readable dark theme.
