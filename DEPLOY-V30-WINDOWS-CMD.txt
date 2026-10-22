@@ -1,0 +1,39 @@
+DAVONIUM TECHNOLOGIES — V30 CORPORATE WEBSITE UPDATE
+====================================================
+
+This ZIP is a complete static-site project. It does not need npm, a framework, or a build command.
+The production repository is:
+https://github.com/DavoniumTech/davoniumtech-corporate-site.git
+The repository's current default branch is main. The commands below clone it first so your existing local folder is not overwritten.
+
+STEP 1 — EXTRACT THE ZIP
+------------------------
+Extract the ZIP to C:\DavoniumTech-v30\
+After extraction, the project folder should be:
+C:\DavoniumTech-v30\davoniumtech-corporate-site-v30\
+
+STEP 2 — OPEN WINDOWS CMD AND RUN THESE COMMANDS
+------------------------------------------------
+cd /d C:\
+git clone https://github.com/DavoniumTech/davoniumtech-corporate-site.git DavoniumTech-v30-push
+robocopy "C:\DavoniumTech-v30\davoniumtech-corporate-site-v30" "C:\DavoniumTech-v30-push" /E /XD .git
+cd /d C:\DavoniumTech-v30-push
+git status
+git add -A
+git commit -m "Polish corporate site theme, sticky header and DVNM Bot"
+git push origin HEAD
+
+IMPORTANT NOTES
+---------------
+- Keep the CMD window open until the push finishes.
+- Robocopy uses `/E` so it copies/overwrites the release files without deleting any files already in the cloned repository. Exit codes 0–7 normally indicate the copy completed; inspect the output for actual copy errors.
+- If Git says there is nothing to commit, check `git status`. Do not make an empty commit.
+- If Git asks you to authenticate, complete GitHub's sign-in flow in the browser.
+- Do not run `git push --force` for this update.
+- The commit only updates GitHub. Your live website changes when your existing hosting/deployment integration publishes the pushed branch.
+
+LOCAL TESTING (OPTIONAL)
+------------------------
+From C:\DavoniumTech-v30\davoniumtech-corporate-site-v30, you can run:
+python -m http.server 5500
+Then open http://localhost:5500 in your browser. Press Ctrl+C in CMD to stop the local server.

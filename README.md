@@ -1,3 +1,11 @@
+## v30 — visual, header, and DVNM speech repair (22 October 2026)
+- Restored the sticky glass header; fixed the late CSS rule that had reset it to relative positioning.
+- Added restrained white, mint, lilac, sand, and mist-gray section tones with a transparent, readable dark theme.
+- Unified the homepage preview and assistant around the CSS-built DVNM Bot: neutral lens eyes, connected body styling, soft idle motion, and a brighter multicolour DVNM chest reactor only while speech is active.
+- Reduced oversized/overactive robot movement, hid decorative stars, and tightened floating assistant placement for small phone viewports.
+- Increased the default browser voice volume from 15% to 72% and added a post-start speech watchdog for mobile engines that stall before `onend`.
+- Bumped static asset cache versions and updated the service-worker cache so deployed devices can pick up the visual and voice repairs.
+
 # Davonium Technologies — corporate website
 
 > Useful technology, built for real needs.

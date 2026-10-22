@@ -1,11 +1,11 @@
 /* Davonium Technologies PWA service worker — v27 CSS robot joints, floating stars, illustrated demo gallery, luminous night theme. */
-const CACHE_NAME = 'davonium-site-v29-final-20261021-210655';
+const CACHE_NAME = 'davonium-site-v30-visual-voice-20261022';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-      routeUrl("assets/css/dvnm-bot.css?v=28"),
+      routeUrl("assets/css/dvnm-bot.css?v=30"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -31,10 +31,10 @@ const CORE = [
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=28"),
-  routeUrl("demos/demos.css?v=28"),
-  routeUrl("demos/demos.js?v=28"),
-  routeUrl("assets/js/site.js?v=28"),
+  routeUrl("assets/css/dvnm-bot.css?v=30"),
+  routeUrl("demos/demos.css?v=30"),
+  routeUrl("demos/demos.js?v=30"),
+  routeUrl("assets/js/site.js?v=30"),
   routeUrl("assets/images/demo-art/dvnm-biz.svg"),
   routeUrl("assets/images/demo-art/dvnm-growth.svg"),
   routeUrl("assets/images/demo-art/dvnm-market.svg"),
@@ -51,8 +51,9 @@ const CORE = [
   routeUrl("assets/images/qr-dvnm-market.png"),
   routeUrl("assets/images/qr-dvnm-growth.png"),
   routeUrl("assets/images/qr-dvnm-biz.png"),
-  routeUrl("assets/css/styles.css?v=28"),
-  routeUrl("assets/js/site.js?v=28"),
+  routeUrl("assets/css/release-polish-v30.css?v=30"),
+  routeUrl("assets/css/styles.css?v=30"),
+  routeUrl("assets/js/site.js?v=30"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/icons/favicon-32.png"),
   routeUrl("assets/icons/icon-192-rounded.png"),

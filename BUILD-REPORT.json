@@ -1,15 +1,15 @@
 {
-  "release": "v28-final-css-bot-demo-studio-lockdown",
-  "updated_at": "2026-10-21",
+  "release": "v30-visual-voice-and-sticky-header-repair",
+  "updated_at": "2026-10-22",
   "source_baseline": "Davonium-DVNM-Bot-Animations-Demo-Studio-v27-20261021.zip",
   "scope": [
-    "Rebuilt DVNM Bot as a unified CSS-drawn character with connected joints; removed segmented WebP rig from page rendering.",
-    "Added non-tear circular illuminated eyes and eyelids, head turns, speaking mouth, chest aura, arm gesture and leg-step illusions.",
-    "Strengthened responsive robot launcher and panel sizing and preserved keyboard access/reduced-motion behavior.",
-    "Refreshed light/dark color tokens, background gradients, card depth and visual contrast.",
-    "Added a unique locally stored illustrative SVG hero to each of the seven demo detail pages.",
-    "Removed the shared seven-demo card navigator from detail pages; all seven cards remain on Demo Studio index only.",
-    "Bumped CSS/JS and service-worker cache versions to v28."
+    "Restored the sticky transparent header by overriding the conflicting late relative-position rule.",
+    "Added a soft alternating white, mint, lilac, sand, and mist-grey section palette in light and dark themes.",
+    "Changed the homepage preview to use the connected CSS robot with neutral open lens eyes instead of the smiling cut-out background layer.",
+    "Reduced robot idle and speaking motion; chest DVNM branding glows more visibly in multicolour while speech is active.",
+    "Raised browser speech volume default from 15% to 72% and added a post-start watchdog/fallback for stalled mobile speech engines.",
+    "Adjusted floating bot and panel sizing, glass surfaces, and safe-area placement for small phones.",
+    "Bumped asset query versions and service-worker cache to v30."
   ],
   "image_generation": "No new raster image generated; robot parts are alpha-masked derivatives of the existing supplied webp artwork and demo illustrations are hand-authored SVG.",
   "manual_visual_test": "Not completed: browser screenshot automation was blocked in this environment; verify desktop/mobile after deployment.",
@@ -18,11 +18,11 @@
     "demo_hero_illustrations": 7,
     "demo_directory_cards": 7,
     "demo_detail_card_navigator": "Removed from detail pages; index only",
-    "service_worker": "v28 cache name and stylesheet/query references"
+    "service_worker": "v30 cache name and stylesheet/query references; release polish CSS precached"
   },
   "static_validation": {
     "html_pages": 71,
-    "local_references_checked": 2868,
+    "local_references_checked": 2939,
     "broken_local_targets": 0,
     "anchor_errors": 0,
     "duplicate_ids": 0,
@@ -31,7 +31,7 @@
     "sitemap_errors": 0,
     "javascript_files_checked": 3,
     "javascript_syntax_errors": 0,
-    "css_files_checked": 3,
+    "css_files_checked": 4,
     "css_brace_errors": 0,
     "svg_files_checked": 10,
     "svg_xml_errors": 0,
@@ -41,28 +41,31 @@
       "circular_eyes_without_tears": true,
       "reduced_motion_bot": true,
       "demo_detail_no_shared_navigator": true,
-      "service_worker_v28": true,
-      "css_cache_v28": true,
       "each_demo_has_one_unique_hero_illustration": true,
       "demo_index_has_seven_illustrated_cards": true,
       "no_old_sliced_bot_refs": true,
-      "css_theme_v28": true,
-      "demo_theme_v28": true
+      "demo_theme_v28": true,
+      "sticky_header_repair_v30": true,
+      "pastel_section_rhythm_v30": true,
+      "css_robot_stage_visible_v30": true,
+      "smiling_stage_cutout_hidden_v30": true,
+      "speech_volume_default_72_percent": true,
+      "mobile_speech_stall_recovery": true,
+      "service_worker_v30": true,
+      "release_polish_css_precached": true,
+      "css_cache_v30": true,
+      "css_theme_v30": true,
+      "demo_theme_v30": true
     },
-    "manual_visual_test": "Not completed: browser screenshot automation did not finish in this environment; verify desktop/mobile after deployment.",
+    "manual_visual_test": "Not completed: headless browser screenshot automation timed out in this environment. Static checks passed; verify the deployed site on desktop and small Android before considering the release fully visually tested.",
     "css_syntax_errors": 0
   },
   "robot": {
-    "implementation": "pure CSS layered humanoid; all joints belong to one connected character",
-    "speech_animation": "mouth and chest glow react to browser speech state",
-    "motions": [
-      "gentle head turns",
-      "slow blink",
-      "small teaching gestures",
-      "alternating connected leg swing",
-      "hovering stars"
-    ],
-    "note": "Not true 3D rendering; CSS perspective, gradients, shadows and articulated DOM joints simulate depth. Speech mouth movement follows speech activity, not phoneme-perfect lip sync."
+    "implementation": "CSS-built connected robot using the existing DOM renderer; the homepage no longer relies on the smiling cut-out layer for the visible character.",
+    "appearance": "Silver/blue connected body parts, neutral illuminated lens eyes, compact rectangular mouth, and visible DVNM chest plate.",
+    "idle_motion": "Low-amplitude body float, subtle head movement, soft eye-lens glow, and eyelid blink.",
+    "speech_animation": "Mouth movement, restrained arm gestures, and a brighter multicolour DVNM chest-reactor glow are tied to browser speech state. The relationship is approximate rather than phoneme-perfect lip sync.",
+    "honesty_note": "The implementation is CSS/DOM artwork, not a true 3D model. Desktop/mobile visual review must still be performed after publishing."
   },
   "demo_pages": [
     "DVNM Biz",
@@ -74,19 +77,18 @@
     "DVNM Connect"
   ],
   "demo_page_behavior": "The seven illustrated cards appear on demos/index.html only; each detail page is a focused demonstration with one unique hero SVG.",
-  "theme_update": "Airy layered pastel light palette; brighter midnight-violet dark palette with stronger surface contrast; animated illustration halos and perspective hover; prefers-reduced-motion honored.",
+  "theme_update": "v30 uses a restrained pastel section rhythm (white, mint, lilac, sand, mist grey), translucent cards and a deeper transparent dark theme. Reduced-motion preferences remain respected.",
   "bot": {
-    "implementation": "Unified CSS-drawn robot with connected joint geometry; current visible renderer does not use split robot image layers.",
-    "appearance": "Silver and blue dimensional gradients, circular cyan eye lenses without tear streaks, faceplate, antenna, hands, integrated leg sections, and glowing DVNM chest badge.",
-    "speech_animation": "Mouth opening and chest glow follow the active browser speech state approximately; this is not phoneme-perfect lip sync.",
-    "motions": [
-      "gentle head turns and nods",
-      "slow circular-eye blink",
-      "mouth opening during speech",
-      "teaching gestures with connected arms",
-      "small alternating step illusion with connected legs",
-      "floating stars and chest glow"
+    "implementation": "Unified CSS-built robot with connected joint geometry. Homepage no longer layers the smiling cut-out image over the CSS robot.",
+    "appearance": "Neutral open cyan lens eyes, compact straight mouth, silver/blue body, antenna and readable DVNM chest plate.",
+    "idle_motion": [
+      "subtle whole-body float",
+      "small head movement",
+      "soft eye illumination",
+      "eyelid blink"
     ],
-    "honesty_note": "CSS perspective, gradients and shadows simulate depth; this is not a true 3D model. A live visual browser test remains to be done."
+    "speech_animation": "Speaking state activates the mouth, gentle arm gestures and a brighter multicolour glow around the DVNM chest badge.",
+    "voice": "Browser/device Speech Synthesis, default output volume 72%, smaller text chunks, default-voice retry and stall recovery.",
+    "honesty_note": "Voice availability and voice quality still depend on the visitor device/browser. CSS movement approximates speech activity and is not phoneme-perfect lip sync; deployment needs live visual/device testing."
   }
 }

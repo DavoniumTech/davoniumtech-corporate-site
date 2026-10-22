@@ -1,3 +1,13 @@
+# Changelog
+
+## v30 — visual, sticky-header and DVNM speech repair (2026-10-22)
+- Fixed the late CSS override that had stopped the corporate header sticking to the top of the viewport.
+- Added a gentle white / mint / lilac / sand / mist-grey section rhythm, with translucent dark-mode surfaces.
+- Switched the homepage bot stage back to the connected CSS-built robot with neutral lens eyes instead of the smiling background cut-out.
+- Calmed idle/speaking gestures and made the DVNM chest plate glow with a restrained multicolour effect while speech is active.
+- Increased the initial speech volume to 72% and added recovery when a device speech engine starts but stalls before completing a chunk.
+- Tuned the floating assistant and response panel for compact mobile viewports and refreshed service-worker cache versions.
+
 # Release v28 — Final CSS DVNM Bot and Demo Studio polish
 - Rebuilt DVNM Bot as a single connected CSS character; removed the sliced image-layer rig.
 - Added joined head/torso/arm/hand/hip/leg geometry, natural lens blinking, mild head turns, teacher-style gestures and connected alternating leg motion.
