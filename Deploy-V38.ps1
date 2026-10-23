@@ -13,7 +13,7 @@ try {
   $Source = (Get-Item -LiteralPath $Source).FullName.TrimEnd([char[]]@([char]92, [char]47))
 } catch {
   Write-Host ('Source path validation failed: ' + $_.Exception.Message) -ForegroundColor Red
-  Write-Host 'The website has not been copied or pushed. Keep this extracted folder and use the corrected V35 deployment command.' -ForegroundColor Yellow
+  Write-Host 'The website has not been copied or pushed. Keep this extracted folder and use the corrected V38 deployment command.' -ForegroundColor Yellow
   exit 2
 }
 $Downloads = Join-Path $env:USERPROFILE 'Downloads'
@@ -31,13 +31,13 @@ function Run-Robocopy([string]$From, [string]$To, [string[]]$ExtraArgs) {
   if ($LASTEXITCODE -ge 8) { throw ('Robocopy failed with exit code ' + $LASTEXITCODE + '.') }
 }
 Write-Host '============================================================' -ForegroundColor Cyan
-Write-Host ' DAVONIUM TECHNOLOGIES V35 - COMPLETE SITE DEPLOYMENT' -ForegroundColor Cyan
+Write-Host ' DAVONIUM TECHNOLOGIES V38 - COMPLETE SITE DEPLOYMENT' -ForegroundColor Cyan
 Write-Host '============================================================' -ForegroundColor Cyan
 Write-Host ('Source: ' + $Source)
 Write-Host ('Repository: ' + $Repo)
-$required = @('index.html','assets/css/release-polish-v35.css','demos/demos.js','sw.js','DEPLOY-V35-WINDOWS.cmd')
+$required = @('index.html','assets/css/release-polish-v38.css','demos/demos.js','sw.js','DEPLOY-V38-WINDOWS.cmd')
 foreach ($item in $required) {
-  if (!(Test-Path -LiteralPath (Join-Path $Source $item) -PathType Leaf)) { throw ('Required V35 file is missing: ' + $item + '. Extract the complete V35 ZIP and run its CMD from the extracted root folder.') }
+  if (!(Test-Path -LiteralPath (Join-Path $Source $item) -PathType Leaf)) { throw ('Required V38 file is missing: ' + $item + '. Extract the complete V38 ZIP and run its CMD from the extracted root folder.') }
 }
 $htmlCount = @(Get-ChildItem -LiteralPath $Source -Filter '*.html' -File -Recurse).Count
 if ($htmlCount -lt 70) { throw ('Unexpectedly low HTML page count (' + $htmlCount + '). The complete source was not copied or extracted.') }
@@ -64,15 +64,15 @@ try {
   Invoke-GitChecked @('fetch','origin','main')
   Invoke-GitChecked @('pull','--ff-only','origin','main')
   $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-  $backup = Join-Path $Downloads ('davonium-v35-safety-backup-' + $stamp)
-  $branchName = 'backup-before-dvnm-v35-' + $stamp
+  $backup = Join-Path $Downloads ('davonium-v38-safety-backup-' + $stamp)
+  $branchName = 'backup-before-dvnm-v38-' + $stamp
   Write-Host '[3/8] Making a full local backup (excluding .git)...'
   New-Item -ItemType Directory -Path $backup -Force | Out-Null
   Run-Robocopy $Repo $backup @('/XD',(Join-Path $Repo '.git'))
   Write-Host '[4/8] Pushing a remote backup branch...'
   Invoke-GitChecked @('branch',$branchName)
   Invoke-GitChecked @('push','origin',$branchName)
-  Write-Host '[5/8] Copying the complete V35 website without mirror-deleting files...'
+  Write-Host '[5/8] Copying the complete V38 website without mirror-deleting files...'
   Run-Robocopy $Source $Repo @('/XD',(Join-Path $Source '.git'))
   $obsoleteHelpers = @(
     'DEPLOY-DVNM-FINAL-RELEASE-CMD.txt','DEPLOY-DVNM-WELCOME-VOICE-CMD.txt',
@@ -80,6 +80,9 @@ try {
     'DEPLOY-V31-WINDOWS-CMD.txt','DEPLOY-V32-WINDOWS.cmd','Deploy-V32.ps1',
     'README-V32-DEPLOY.txt','DEPLOY-V33-WINDOWS.cmd','Deploy-V33.ps1','README-V33-DEPLOY.txt',
     'DEPLOY-V34-WINDOWS.cmd','Deploy-V34.ps1','README-V34-DEPLOY.txt',
+    'DEPLOY-V35-WINDOWS.cmd','Deploy-V35.ps1','README-V35-DEPLOY.txt',
+    'DEPLOY-V36-WINDOWS.cmd','Deploy-V36.ps1','README-V36-DEPLOY.txt',
+    'DEPLOY-V37-WINDOWS.cmd','Deploy-V37.ps1','README-V37-DEPLOY.txt',
     'DEPLOY-WINDOWS-CMD.txt'
   )
   $removedHelpers = @()
@@ -88,12 +91,24 @@ try {
     if (Test-Path -LiteralPath $helperPath -PathType Leaf) { Remove-Item -LiteralPath $helperPath -Force; $removedHelpers += $helper }
   }
   if ($removedHelpers.Count -gt 0) { Write-Host ('Removed superseded deployment helpers: ' + ($removedHelpers -join ', ')) }
+  $obsoleteAssets = @(
+    'assets/css/release-polish-v30.css','assets/css/release-polish-v31.css','assets/css/release-polish-v32.css',
+    'assets/css/release-polish-v33.css','assets/css/release-polish-v34.css','assets/css/release-polish-v35.css','assets/css/release-polish-v36.css','assets/css/release-polish-v37.css',
+    'assets/images/dvnm-bot-body-v36.svg','assets/images/dvnm-bot-head-v36.svg',
+    'assets/images/dvnm-bot-body-v37.svg','assets/images/dvnm-bot-head-v37.svg'
+  )
+  $removedAssets = @()
+  foreach ($asset in $obsoleteAssets) {
+    $assetPath = Join-Path $Repo $asset
+    if (Test-Path -LiteralPath $assetPath -PathType Leaf) { Remove-Item -LiteralPath $assetPath -Force; $removedAssets += $asset }
+  }
+  if ($removedAssets.Count -gt 0) { Write-Host ('Removed consolidated obsolete assets: ' + ($removedAssets -join ', ')) }
   Write-Host '[6/8] Checking the release...'
   Invoke-GitChecked @('add','-A')
   $staged = @(& git diff --cached --name-only)
   if ($LASTEXITCODE -ne 0) { throw 'Could not inspect staged files. Local and remote backups are retained.' }
   if ($staged.Count -eq 0) {
-    Write-Host 'The repository already matches V35; no new commit was needed.' -ForegroundColor Green
+    Write-Host 'The repository already matches V38; no new commit was needed.' -ForegroundColor Green
     return
   }
   Write-Host ('Files staged: ' + $staged.Count)
@@ -102,10 +117,10 @@ try {
     Write-Host 'Whitespace check reported warnings. Review before continuing:' -ForegroundColor Yellow
     $check | Select-Object -First 12 | ForEach-Object { Write-Host $_ }
   } else { Write-Host 'Whitespace check passed.' -ForegroundColor Green }
-  $choice = Read-Host 'Ready to commit and push V35 to GitHub main. Type Y to continue'
+  $choice = Read-Host 'Ready to commit and push V38 to GitHub main. Type Y to continue'
   if ($choice -notmatch '^(?i:y|yes)$') { throw 'Push cancelled. The backup is retained and staged changes remain local.' }
   Write-Host '[7/8] Committing and pushing without force...'
-  Invoke-GitChecked @('commit','-m','Release DVNM V35 fast intro, cache updates and corrected deployment')
+  Invoke-GitChecked @('commit','-m','Release DVNM V38 robot-first UI, ink-navy theme and mobile refinement')
   try { Invoke-GitChecked @('push','origin','main') }
   catch {
     Write-Host 'The commit exists locally but push did not complete. Do not create another commit.' -ForegroundColor Yellow
@@ -120,7 +135,7 @@ try {
   Write-Host ('Local : ' + $localCommit)
   Write-Host ('GitHub: ' + $remoteCommit)
   if ($localCommit -ne $remoteCommit) { throw 'Commit verification differs. Do not recommit; inspect GitHub main and retry only the push if needed.' }
-  Write-Host 'SUCCESS: V35 commit is verified on GitHub main.' -ForegroundColor Green
+  Write-Host 'SUCCESS: V38 commit is verified on GitHub main.' -ForegroundColor Green
   Write-Host ('Safety backup: ' + $backup)
   Write-Host ('Remote backup branch: ' + $branchName)
   Write-Host 'Next: check Cloudflare deployment. HTML revalidates and the updated service worker replaces the previous cache; then refresh with Ctrl+F5.'

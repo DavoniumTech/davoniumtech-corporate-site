@@ -1,11 +1,11 @@
-/* Davonium Technologies PWA service worker — V35 fast-update cache and versioned assets. */
-const CACHE_NAME = 'davonium-site-v35-fast-intro-crisp-surfaces-20261023';
+/* Davonium Technologies PWA service worker — V38 crisp indigo theme, mobile-first controls, corrected transparent robot and speech response. */
+const CACHE_NAME = 'davonium-site-v38-robot-first-mobile-indigo-20261023';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-      routeUrl("assets/css/dvnm-bot.css?v=32"),
+      routeUrl("assets/css/dvnm-bot.css?v=38"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -33,10 +33,9 @@ const CORE = [
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
-  routeUrl("assets/css/dvnm-bot.css?v=32"),
-  routeUrl("demos/demos.css?v=33"),
-  routeUrl("demos/demos.js?v=33"),
-  routeUrl("assets/js/site.js?v=35"),
+  routeUrl("demos/demos.css?v=38"),
+  routeUrl("demos/demos.js?v=38"),
+  routeUrl("assets/js/site.js?v=38"),
   routeUrl("assets/images/demo-art/dvnm-biz.svg"),
   routeUrl("assets/images/demo-art/dvnm-growth.svg"),
   routeUrl("assets/images/demo-art/dvnm-market.svg"),
@@ -53,18 +52,12 @@ const CORE = [
   routeUrl("assets/images/qr-dvnm-market.png"),
   routeUrl("assets/images/qr-dvnm-growth.png"),
   routeUrl("assets/images/qr-dvnm-biz.png"),
-  routeUrl("assets/css/release-polish-v30.css?v=32"),
-  routeUrl("assets/css/release-polish-v31.css?v=31"),
-  routeUrl("assets/css/release-polish-v32.css?v=32"),
-  routeUrl("assets/css/release-polish-v33.css?v=33"),
-  routeUrl("assets/css/release-polish-v34.css?v=34"),
-  routeUrl("assets/css/release-polish-v35.css?v=35"),
+  routeUrl("assets/css/release-polish-v38.css?v=38"),
   routeUrl("assets/images/design-concepts/global-solutions-and-seven-demos.webp"),
   routeUrl("assets/images/design-concepts/dvnm-bot-mobile-interaction.webp"),
-  routeUrl("assets/images/dvnm-bot-body-v32.webp?v=32"),
-  routeUrl("assets/images/dvnm-bot-head-v32.webp?v=32"),
+  routeUrl("assets/images/dvnm-bot-body-v38.svg?v=38"),
+  routeUrl("assets/images/dvnm-bot-head-v38.svg?v=38"),
   routeUrl("assets/css/styles.css?v=32"),
-  routeUrl("assets/js/site.js?v=35"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/icons/favicon-32.png"),
   routeUrl("assets/icons/icon-192-rounded.png"),

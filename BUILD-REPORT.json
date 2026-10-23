@@ -1,72 +1,55 @@
 {
-  "release": "V35",
+  "release": "V38",
   "release_date": "2026-10-23",
-  "source_baseline": "Davonium Technologies V32 full website source",
-  "summary": "Fixes V34 Windows deployment argument handling, shortens the homepage introduction, prioritizes below-fold assets correctly, removes residual robot/panel haze, and versions the CSS/service-worker cache.",
+  "source_baseline": "Davonium Technologies V37 full website source",
+  "summary": "Robot-first welcome, hand-authored transparent SVG mascot, clearer robot speech animation, responsive bot card and calls to action, clean indigo/light themes, and cache/scroll stability refinements.",
   "scope": [
-    "Preserves existing corporate pages, products, services, contact routes, QR sections, documentation, legal pages, theme controls, and PWA source.",
-    "Broadens positioning to websites, web applications, Android/mobile apps, software systems, and digital products for a global audience.",
-    "Uses one shared V33 stylesheet for higher-contrast surfaces and restrained section backgrounds in both themes.",
-    "Adds distinct page identities and light/dark palettes for DVNM Biz, Growth, Market, Creative, Skills, Digital, and Connect.",
-    "Adds Previous / All 7 demos / Next navigation to all seven demo detail pages.",
-    "Refines the supplied robot artwork overlays: normally open cyan eyes with periodic blink, gentle head movement, no CSS cast/floor shadow, and a compact speaking panel.",
-    "Adds a global digital engineering guide, includes it in sitemap and service-worker cache, and version-tags site.js across all pages.",
-    "Keeps one current Windows deploy command and PowerShell script with backup, fast-forward-only sync, user confirmation before push, non-force push, and remote commit verification.",
-    "Adds two optimized concept images to a responsive, clearly labelled gallery on the Our Work page; they are concept references, not live-site screenshots.",
-    "Closes DVNM Bot on pointer/tap outside the panel or launcher and tightens speaking-panel dimensions for mobile screens."
+    "Preserves the corporate site pages, product/service/contact routes, QR sections, legal pages, documentation, PWA manifest and current navigation.",
+    "Global positioning covers websites, web apps, Android/mobile apps, software systems and digital products for people and organisations worldwide.",
+    "First-visit welcome visually shows only the robot and close control. Clicking or keyboard-activating the robot starts the complete intro speech; the full written introduction and topic answers stay in site source.",
+    "Hand-authored transparent SVG mascot uses relaxed arms, dark face screen, visible black pupils and highlights, no CSS/floor shadow, and mouth/head/chest movement while speech is active.",
+    "Deep indigo-blue dark theme and clean light surfaces use subtle star glows without foggy backdrop blur.",
+    "Larger mobile CTAs, legible bot controls, outside tap/click dismissal, responsive assistant panel, and separation from WhatsApp floater.",
+    "Seven demo brands keep distinct accent palettes and previous/all/next navigation.",
+    "Consolidated versioned stylesheet reduces cumulative CSS requests; cache is rotated so updated HTML and service worker can replace old release assets.",
+    "Windows deployment CMD and PowerShell script include source-path normalization, official repository/branch checks, clean-tree check, fast-forward-only pull, local and remote backups, confirmation before push, non-force push, and GitHub main commit verification."
   ],
   "static_validation": {
+    "release": "V38",
     "html_pages": 73,
-    "same_site_local_references_checked": 3756,
+    "same_site_local_references_checked": 3134,
     "missing_local_targets": 0,
     "anchor_errors": 0,
     "duplicate_html_ids": 0,
+    "html_reference_errors": 0,
     "sitemap_urls": 68,
     "sitemap_xml_errors": 0,
     "javascript_files_checked": 3,
     "javascript_syntax_errors": 0,
-    "css_files_checked": 8,
+    "css_files_checked": 4,
     "css_parser_errors": 0,
-    "svg_files_checked": 10,
+    "css_url_references_checked": 6,
+    "svg_files_checked": 12,
     "svg_xml_errors": 0,
-    "all_pages_reference_v34_css": true,
-    "all_seven_demos_have_previous_all_next_navigation": true
+    "all_pages_reference_v38_css": true,
+    "all_seven_demos_have_previous_all_next_navigation": true,
+    "service_worker_cache_rotated": true,
+    "transparent_robot_svg_precached": true,
+    "deployment_helper_static_check_passed": true,
+    "demo_navigation": {
+      "business.html": true,
+      "marketing.html": true,
+      "shop.html": true,
+      "portfolio.html": true,
+      "learning.html": true,
+      "technology.html": true,
+      "community.html": true
+    }
   },
-  "manual_visual_test": "Not completed in a real browser/device. Verify mobile at 320px, tablet, laptop, desktop, outside-click dismissal, theme switch, seven demo routes, and PWA update behavior after deploying.",
-  "robot": {
-    "artwork": "Existing supplied V32 transparent body/head artwork retained; separate head layer and CSS face/mouth/chest overlays.",
-    "improvements": "CSS drop shadows removed from robot layers, aura/floor glow hidden, open cyan eyes blink periodically, gentle head motion while speaking, compact speaking overlay.",
-    "limitations": "This remains a lightweight 2D image rig. The head is a separate layer; arms and legs remain baked into the supplied image and do not independently pose. The arm pose is not redrawn in this release. Mouth movement follows browser speech activity where available and is not guaranteed phoneme-perfect. Voice quality depends on the browser/device."
-  },
-  "demo_pages": [
-    "DVNM Biz",
-    "DVNM Growth",
-    "DVNM Market",
-    "DVNM Creative",
-    "DVNM Skills",
-    "DVNM Digital",
-    "DVNM Connect"
-  ],
-  "demo_limitations": "Forms, sample community actions, and catalogue/cart are illustrative and do not submit real data or process payments.",
-  "deploy_files": [
-    "DEPLOY-V35-WINDOWS.cmd",
-    "Deploy-V35.ps1",
-    "README-V35-DEPLOY.txt"
-  ],
-  "deployment_scope_limit": "The deploy helper updates the official static website repository; it does not configure DNS, Cloudflare bindings, Firebase, APIs, or product backends.",
-  "bot_panel": {
-    "outside_tap": "Closes immediately on pointerdown outside panel/launcher. Interactions inside the panel remain active.",
-    "mobile": "Viewport-aware width and height caps, scrollable normal panel, compact speaking panel."
-  },
-  "concept_gallery": [
-    "assets/images/design-concepts/global-solutions-and-seven-demos.webp",
-    "assets/images/design-concepts/dvnm-bot-mobile-interaction.webp"
-  ],
-  "performance": {
-    "homepage_intro": "Shortened to a concise global value proposition.",
-    "below_fold_assets": "QR image and full-size bot body/head are lazy-loaded and low priority.",
-    "cache": "Versioned CSS/JS and unique concept images use long-lived caches; HTML and sw.js revalidate/no-store; service-worker cache name rotated.",
-    "live_performance_test": "Not measured against the live deployment in this environment."
-  },
-  "deployment_path_fix": "CMD no longer passes a quoted %~dp0 path ending in a backslash; PS1 normalizes source path strings."
+  "visual_validation": {
+    "live_domain_fetch": "Not available from this environment; request returned Cache miss.",
+    "physical_mobile_browser_test": "Not performed.",
+    "browser_test_in_tool_environment": "Blocked by environment policy.",
+    "notes": "Static validation passed. After deployment, manually check the published site on a narrow phone and confirm Cloudflare has completed the release."
+  }
 }

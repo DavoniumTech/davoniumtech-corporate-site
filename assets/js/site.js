@@ -25,7 +25,7 @@
     const systemValue = systemTheme();
     document.documentElement.dataset.theme = value;
     const themeColor = $('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#070a1d' : '#f7f9ff');
+    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#07172f' : '#f6f9ff');
     if (theme) {
       const other = value === 'dark' ? 'light' : 'dark';
       theme.textContent = value === 'dark' ? '☀' : '☾';
@@ -339,9 +339,9 @@
   const referenceBotMarkup = (extra = '') => `<div class="dvnm-robot-art dvnm-reference-bot ${extra}" aria-hidden="true">
     <span class="dvnm-reference-aura" aria-hidden="true"></span>
     <span class="dvnm-reference-head-support" aria-hidden="true"></span>
-    <img class="dvnm-reference-bot-body" src="${botUrl('assets/images/dvnm-bot-body-v32.webp?v=32')}" alt="" width="768" height="1152" decoding="async" draggable="false">
+    <img class="dvnm-reference-bot-body" src="${botUrl('assets/images/dvnm-bot-body-v38.svg?v=38')}" alt="" width="768" height="1152" decoding="async" draggable="false">
     <div class="dvnm-reference-head-joint" aria-hidden="true">
-      <img class="dvnm-reference-bot-head" src="${botUrl('assets/images/dvnm-bot-head-v32.webp?v=32')}" alt="" width="768" height="1152" decoding="async" draggable="false">
+      <img class="dvnm-reference-bot-head" src="${botUrl('assets/images/dvnm-bot-head-v38.svg?v=38')}" alt="" width="768" height="1152" decoding="async" draggable="false">
       <span class="dvnm-reference-face-display">
         <i class="dvnm-reference-eye dvnm-reference-eye-left"><b></b></i>
         <i class="dvnm-reference-eye dvnm-reference-eye-right"><b></b></i>
@@ -352,7 +352,7 @@
     <span class="dvnm-reference-floor-glow" aria-hidden="true"></span>
   </div>`;
   const robotMarkup = (extra = '') => referenceBotMarkup(extra);
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=32');
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=38');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -809,7 +809,7 @@
     });
     const closeWelcome = (openAssistant = false) => {
       welcome.hidden = true; document.body.classList.remove('dvnm-welcome-visible');
-      try { sessionStorage.setItem('dvnmWelcomeSeen_20261021_v22', '1'); } catch (_) {}
+      try { sessionStorage.setItem('dvnmWelcomeSeen_20261023_v38', '1'); } catch (_) {}
       stopVoice('Welcome closed. You can continue exploring the website.');
       if (openAssistant) {
         visitorName = String(nameField.value || '').trim().slice(0, 40);
@@ -828,6 +828,23 @@
       startSpeaking(welcomeIntroText());
     });
     $('#dvnm-welcome-stop', welcome).addEventListener('click', () => stopVoice('Voice stopped. You can keep reading or continue to the website.'));
+    const welcomeRobot = $('.dvnm-welcome-robot', welcome);
+    if (welcomeRobot) {
+      welcomeRobot.setAttribute('role', 'button');
+      welcomeRobot.setAttribute('tabindex', '0');
+      welcomeRobot.setAttribute('aria-label', 'Tap DVNM Bot to hear the introduction');
+      welcomeRobot.addEventListener('click', () => {
+        setVoiceStatus('Playing the introduction you requested. Use Stop voice to end it.');
+        startSpeaking(welcomeIntroText());
+      });
+      welcomeRobot.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          setVoiceStatus('Playing the introduction you requested. Use Stop voice to end it.');
+          startSpeaking(welcomeIntroText());
+        }
+      });
+    }
     welcome.addEventListener('keydown', event => {
       if (event.key === 'Escape') { closeWelcome(false); $('#dvnm-welcome-skip', welcome).focus(); }
       if (event.key === 'Tab') {
@@ -839,11 +856,11 @@
       }
     });
     let welcomeWasSeen = false;
-    try { welcomeWasSeen = sessionStorage.getItem('dvnmWelcomeSeen_20261021_v22') === '1'; } catch (_) {}
+    try { welcomeWasSeen = sessionStorage.getItem('dvnmWelcomeSeen_20261023_v38') === '1'; } catch (_) {}
     if (!welcomeWasSeen) window.setTimeout(() => {
       if (welcomeWasSeen || !welcome.isConnected) return;
       welcome.hidden = false; document.body.classList.add('dvnm-welcome-visible');
-      $('#dvnm-welcome-continue', welcome).focus({ preventScroll: true });
+      const welcomeRobot = $('.dvnm-welcome-robot', welcome); if (welcomeRobot) welcomeRobot.focus({ preventScroll: true });
     }, 100);
   }
 

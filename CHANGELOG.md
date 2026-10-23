@@ -1,3 +1,11 @@
+# V37 — October 23, 2026
+
+- Consolidated cumulative release CSS into a single versioned V37 stylesheet for fewer render-blocking CSS requests.
+- Replaced the previous arm-pose/opaque robot layers with lightweight transparent SVG layers integrated into the page, assistant, and welcome overlay. Arms rest at the sides; face shows dark pupils and a mouth animation that uses transform (not a height override that could block animation).
+- Restored speech nod and chest glow while keeping the figure stable during scrolling; removed fixed background attachment across sections.
+- Refined bright/ink-indigo themes, star accents, hero hierarchy, CTA touch sizing, mobile bot panel dimensions and font sizing.
+- Updated cache version and deployment script with repo backups, confirmation, non-force push, remote commit verification.
+
 ## V35 — deployment path repair, compact intro and faster cache strategy (2026-10-23)
 - Fixed the Windows `Resolve-Path` failure: the CMD no longer passes a quoted `%~dp0` path ending with a backslash; the PowerShell launcher also normalizes source paths defensively.
 - Shortened the homepage introduction and made the first CTA lead to the seven-demo studio.
@@ -65,3 +73,29 @@ These sample websites are demonstrations, not claims of completed customer engag
 - Constrained the mobile assistant and its panel so the robot launcher sits above the WhatsApp button, with separate touch targets and safe-area padding.
 - Added the DVNM Bot motion/voice/accessibility guide and updated the PWA cache name for V32.
 - The robot remains a lightweight image rig rather than a full 3D model; arms and legs do not independently perform a physically simulated walk cycle.
+
+
+## V36 — mobile-first UI and robot animation polish (2026-10-23)
+
+- Promoted the existing DVNM layered robot art into the first viewport and shortened the lead sentence.
+- Replaced the hazy charcoal dark theme with deep ink-navy and clear, opaque panel surfaces.
+- Added low-intensity light points and section glints without heavy blur or scroll-shaking floats.
+- Improved the face overlay with cyan iris lenses, visible black pupils, regular blinking, and a higher-contrast mouth opening/closing while the voice is active.
+- Changed the first-visit welcome to a robot-first interface with “Hear introduction” and “Explore website” controls; speech remains user-initiated.
+- Refined assistant card sizing/type and enlarged primary touch controls for mobile, retaining topic answers, speech controls, outside-tap close, and Escape close.
+- Applied seven per-demo accent palettes for both theme modes; rotated the PWA cache and asset version references.
+- Fixed deployment release files so CMD calls `Deploy-V36.ps1` without a path argument.
+
+### V36 follow-up QA corrections
+- Replaced damaged raster robot layers with lightweight transparent SVG layers authored in the site source; arms rest at the sides and no floor shadow is drawn.
+- Aligned visible dark pupils and speech mouth overlays; removed an `!important` mouth-height cascade conflict that could suppress the mouth keyframes.
+- Changed the star field from fixed to scroll-attached background to reduce mobile scroll repaint/jank.
+- Applied separate brand accents to homepage demo preview cards as well as each demo page.
+
+
+# V38 — October 23, 2026
+
+- Robot-first welcome overlay hides the text wall while retaining the full introduction script for click-to-speak and preserving all topic responses.
+- New transparent SVG mascot layers with relaxed arms, black pupils, no shadow or backdrop, and more visible mouth/chest/head speech activity.
+- Improved small-screen assistant readability, dismissal positioning, button size, and stable scrolling by avoiding fixed backgrounds.
+- Versioned all core CSS/JS/robot paths and rotated the service-worker cache.
