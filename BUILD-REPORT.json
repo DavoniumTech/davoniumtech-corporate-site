@@ -1,103 +1,42 @@
 {
-  "release": "v32-reference-fullbody-bot-midnight-glass-responsive-voice",
-  "updated_at": "2026-10-22",
-  "source_baseline": "davoniumtech-corporate-site-v31 (2).zip",
+  "release": "V35",
+  "release_date": "2026-10-23",
+  "source_baseline": "Davonium Technologies V32 full website source",
+  "summary": "Fixes V34 Windows deployment argument handling, shortens the homepage introduction, prioritizes below-fold assets correctly, removes residual robot/panel haze, and versions the CSS/service-worker cache.",
   "scope": [
-    "Uses the current full website source and preserves its existing routes, products, sample websites, documentation, legal pages and PWA behaviour.",
-    "Uses the supplied full-body transparent DVNM art with hands, arms, legs and the luminous chest wordmark; adds a separate head layer for subtle head turning and nodding.",
-    "Adds a cyan face display with speech-boundary mouth pulses when browser events are available and a CSS fallback otherwise.",
-    "Enables voice selection when the browser exposes speech voices and persists the chosen voice; speaking remains explicitly user initiated.",
-    "Restores the earlier site midnight palette with readable transparent glass surfaces, and a seven-step pale mint/gray/beige/violet/indigo/rose section rhythm.",
-    "Keeps the floating robot above WhatsApp on narrow screens and constrains panel widths and heights for safe-area-aware mobile layouts.",
-    "Adds a maintained documentation guide on bot motion, voice, theme, accessibility, and device limitations."
+    "Preserves existing corporate pages, products, services, contact routes, QR sections, documentation, legal pages, theme controls, and PWA source.",
+    "Broadens positioning to websites, web applications, Android/mobile apps, software systems, and digital products for a global audience.",
+    "Uses one shared V33 stylesheet for higher-contrast surfaces and restrained section backgrounds in both themes.",
+    "Adds distinct page identities and light/dark palettes for DVNM Biz, Growth, Market, Creative, Skills, Digital, and Connect.",
+    "Adds Previous / All 7 demos / Next navigation to all seven demo detail pages.",
+    "Refines the supplied robot artwork overlays: normally open cyan eyes with periodic blink, gentle head movement, no CSS cast/floor shadow, and a compact speaking panel.",
+    "Adds a global digital engineering guide, includes it in sitemap and service-worker cache, and version-tags site.js across all pages.",
+    "Keeps one current Windows deploy command and PowerShell script with backup, fast-forward-only sync, user confirmation before push, non-force push, and remote commit verification.",
+    "Adds two optimized concept images to a responsive, clearly labelled gallery on the Our Work page; they are concept references, not live-site screenshots.",
+    "Closes DVNM Bot on pointer/tap outside the panel or launcher and tightens speaking-panel dimensions for mobile screens."
   ],
-  "image_generation": "No new raster image generated; robot parts are alpha-masked derivatives of the existing supplied webp artwork and demo illustrations are hand-authored SVG.",
-  "manual_visual_test": "Not completed: browser navigation to local files/localhost is blocked by this execution environment. Review visually on actual phone/tablet/desktop after deployment.",
-  "asset_summary": {
-    "robot_art": "Supplied transparent full-body DVNM cutout, alpha-masked body/head layers, face overlay, and speech-reactive chest aura",
-    "demo_hero_illustrations": 7,
-    "demo_directory_cards": 7,
-    "demo_detail_card_navigator": "Removed from detail pages; index only",
-    "service_worker": "v32 cache name with V32 CSS and body/head layers pre-cached"
-  },
   "static_validation": {
-    "html_pages": 72,
-    "local_references_checked": 3113,
-    "broken_local_targets": 0,
+    "html_pages": 73,
+    "same_site_local_references_checked": 3756,
+    "missing_local_targets": 0,
     "anchor_errors": 0,
-    "duplicate_ids": 0,
-    "duplicate_html_attributes": 0,
-    "sitemap_url_count": 67,
-    "sitemap_errors": 0,
+    "duplicate_html_ids": 0,
+    "sitemap_urls": 68,
+    "sitemap_xml_errors": 0,
     "javascript_files_checked": 3,
     "javascript_syntax_errors": 0,
-    "css_files_checked": 6,
-    "css_brace_errors": 0,
+    "css_files_checked": 8,
+    "css_parser_errors": 0,
     "svg_files_checked": 10,
     "svg_xml_errors": 0,
-    "feature_checks": {
-      "css_bot_renderer": false,
-      "speech_class_toggle": true,
-      "circular_eyes_without_tears": true,
-      "reduced_motion_bot": true,
-      "demo_detail_no_shared_navigator": true,
-      "each_demo_has_one_unique_hero_illustration": true,
-      "demo_index_has_seven_illustrated_cards": true,
-      "no_old_sliced_bot_refs": true,
-      "demo_theme_v28": true,
-      "sticky_header_repair_v30": true,
-      "pastel_section_rhythm_v30": true,
-      "css_robot_stage_visible_v30": true,
-      "smiling_stage_cutout_hidden_v30": true,
-      "speech_volume_default_72_percent": true,
-      "mobile_speech_stall_recovery": true,
-      "service_worker_v30": true,
-      "release_polish_css_precached": true,
-      "css_cache_v30": true,
-      "css_theme_v30": true,
-      "demo_theme_v30": true,
-      "midnight_palette_v31": true,
-      "translucent_glass_surfaces_v31": true,
-      "speech_word_boundary_mouth_pulses_v31": true,
-      "fixed_dvnm_chest_mark_v31": true,
-      "responsive_small_phone_overrides_v31": true,
-      "service_worker_v31": true,
-      "release_polish_css_precached_v31": true,
-      "fullbody_reference_rig_v32": true,
-      "browser_voice_picker_v32": true,
-      "speech_word_boundary_mouth_pulses_v32": true,
-      "speech_reactive_dvnm_chest_glow_v32": true,
-      "midnight_translucent_glass_v32": true,
-      "multi_colour_soft_sections_v32": true,
-      "mobile_robot_above_whatsapp_v32": true,
-      "service_worker_v32": true,
-      "release_polish_css_precached_v32": true
-    },
-    "manual_visual_test": "Not completed: browser navigation to local files/localhost is blocked by this execution environment. Review visually on actual phone/tablet/desktop after deployment.",
-    "css_syntax_errors": 0,
-    "v32_full_body_layers": true,
-    "v32_voice_picker_enabled": true,
-    "v32_midnight_translucent_cards": true,
-    "v32_seven_section_tones": true,
-    "v32_mobile_robot_above_whatsapp": true,
-    "v32_docs_added": true,
-    "html_page_count": 72,
-    "fullbody_bot_assets_exist": true,
-    "v32_css_referenced_by_html": true
+    "all_pages_reference_v34_css": true,
+    "all_seven_demos_have_previous_all_next_navigation": true
   },
+  "manual_visual_test": "Not completed in a real browser/device. Verify mobile at 320px, tablet, laptop, desktop, outside-click dismissal, theme switch, seven demo routes, and PWA update behavior after deploying.",
   "robot": {
-    "implementation": "Layered full-body supplied artwork with separately masked head; CSS face overlay; speech and click response controlled by existing site JavaScript.",
-    "appearance": "Silver-blue full-body robot with visible arms, hands, legs and DVNM chest; original image provides the character surface.",
-    "movement": [
-      "subtle body float",
-      "small head rotation and nod",
-      "page-click gaze response",
-      "speech-timed mouth movement",
-      "pulsing chest glow during speech",
-      "gentle walking-like body bob while speaking"
-    ],
-    "speech": "Browser/device SpeechSynthesis; user may choose an available device voice. Default Recommended DVNM Voice selects an appropriate English voice where available. Word boundary callbacks drive mouth pulses; CSS fallback used when they are missing.",
-    "limitations": "This is a lightweight 2D image rig, not a true 3D physics model. The head has a separate layer; arms and legs remain in the supplied full-body layer and do not perform independent skeletal walking. Speech animation is word-timed, not phoneme-perfect. Browser voice quality is device-dependent."
+    "artwork": "Existing supplied V32 transparent body/head artwork retained; separate head layer and CSS face/mouth/chest overlays.",
+    "improvements": "CSS drop shadows removed from robot layers, aura/floor glow hidden, open cyan eyes blink periodically, gentle head motion while speaking, compact speaking overlay.",
+    "limitations": "This remains a lightweight 2D image rig. The head is a separate layer; arms and legs remain baked into the supplied image and do not independently pose. The arm pose is not redrawn in this release. Mouth movement follows browser speech activity where available and is not guaranteed phoneme-perfect. Voice quality depends on the browser/device."
   },
   "demo_pages": [
     "DVNM Biz",
@@ -108,19 +47,26 @@
     "DVNM Digital",
     "DVNM Connect"
   ],
-  "demo_page_behavior": "The seven illustrated cards appear on demos/index.html only; each detail page is a focused demonstration with one unique hero SVG.",
-  "theme_update": "v31 restores the older Davonium midnight base with violet/cyan/green glows and more translucent glass surfaces. The light theme retains a soft white/mint/lilac/sand/mist-grey rhythm; reduced-motion preferences remain respected.",
-  "bot": {
-    "implementation": "Unified CSS-built robot with connected joint geometry. Homepage no longer layers the smiling cut-out image over the CSS robot.",
-    "appearance": "Neutral open cyan lens eyes, compact straight mouth, silver/blue body, antenna and readable DVNM chest plate.",
-    "idle_motion": [
-      "subtle whole-body float",
-      "small head movement",
-      "soft eye illumination",
-      "eyelid blink"
-    ],
-    "speech_animation": "Speaking state activates the mouth, gentle arm gestures and a brighter multicolour glow around the DVNM chest badge.",
-    "voice": "Browser/device Speech Synthesis, default output volume 72%, smaller text chunks, default-voice retry and stall recovery.",
-    "honesty_note": "Voice availability and voice quality still depend on the visitor device/browser. CSS movement approximates speech activity and is not phoneme-perfect lip sync; deployment needs live visual/device testing."
-  }
+  "demo_limitations": "Forms, sample community actions, and catalogue/cart are illustrative and do not submit real data or process payments.",
+  "deploy_files": [
+    "DEPLOY-V35-WINDOWS.cmd",
+    "Deploy-V35.ps1",
+    "README-V35-DEPLOY.txt"
+  ],
+  "deployment_scope_limit": "The deploy helper updates the official static website repository; it does not configure DNS, Cloudflare bindings, Firebase, APIs, or product backends.",
+  "bot_panel": {
+    "outside_tap": "Closes immediately on pointerdown outside panel/launcher. Interactions inside the panel remain active.",
+    "mobile": "Viewport-aware width and height caps, scrollable normal panel, compact speaking panel."
+  },
+  "concept_gallery": [
+    "assets/images/design-concepts/global-solutions-and-seven-demos.webp",
+    "assets/images/design-concepts/dvnm-bot-mobile-interaction.webp"
+  ],
+  "performance": {
+    "homepage_intro": "Shortened to a concise global value proposition.",
+    "below_fold_assets": "QR image and full-size bot body/head are lazy-loaded and low priority.",
+    "cache": "Versioned CSS/JS and unique concept images use long-lived caches; HTML and sw.js revalidate/no-store; service-worker cache name rotated.",
+    "live_performance_test": "Not measured against the live deployment in this environment."
+  },
+  "deployment_path_fix": "CMD no longer passes a quoted %~dp0 path ending in a backslash; PS1 normalizes source path strings."
 }

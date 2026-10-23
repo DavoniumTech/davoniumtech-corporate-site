@@ -393,7 +393,7 @@
         'Please contact us for project questions instead of assuming an unreleased feature is live.'
       ]), link: 'products', label: 'Explore our products and status →' },
       services: { text: topicText([
-        'We plan and build responsive websites for organisations, small businesses, and growing teams.',
+        'We plan and build digital experiences for individuals, startups, established companies, enterprises, institutions, and teams.',
         'A project can include a clear homepage, service pages, contact journeys, and useful calls to action.',
         'We can design campaign landing pages that explain an offer and guide visitors to the next step.',
         'We also plan catalogue and shop experiences, while payment processing is scoped separately.',
@@ -406,8 +406,8 @@
       ]), link: 'services', label: 'Explore our services →' },
       demos: { text: topicText([
         'Our Demo Studio presents seven Davonium-branded sample website demonstrations.',
-        'DVNM Biz explores a service website for a small business or professional service in any market.',
-        'DVNM Growth shows a marketing page for a product, campaign, or small business.',
+        'DVNM Biz explores a business and service website that can be adapted for organisations of any size and in any market.',
+        'DVNM Growth shows a marketing page for a product, campaign, organisation, or service in any market.',
         'DVNM Market demonstrates product discovery and a sample retail catalogue.',
         'DVNM Creative presents a portfolio for independent creators and technical professionals.',
         'DVNM Skills explores learning and practical skills-development content.',
@@ -571,16 +571,16 @@
         // and better offline resilience. Voice names are only hints, not a guarantee of accent.
         const local = pool.filter(voice => voice.localService);
         const softer = voice => /samantha|ava|aria|jenny|sonia|serena|zira|victoria|susan|karen|hazel|emma|joanna|libby|tessa|moira|fiona/i.test(voice.name || '');
-        const nigerian = voice => /^en-NG$/i.test(voice.lang || '');
+        const regionalEnglish = voice => /^en-NG$/i.test(voice.lang || '');
         const british = voice => /^en-GB/i.test(voice.lang || '');
         const american = voice => /^en-US/i.test(voice.lang || '');
         return local.find(softer)
-          || local.find(nigerian)
+          || local.find(regionalEnglish)
           || local.find(british)
           || local.find(american)
           || local[0]
           || pool.find(softer)
-          || pool.find(nigerian)
+          || pool.find(regionalEnglish)
           || pool.find(british)
           || pool[0]
           || null;
@@ -614,6 +614,14 @@
       }
     };
     launcher.addEventListener('click', () => showPanel(panel.hidden));
+    // V34: close the assistant whenever the visitor taps/clicks outside its visible panel or launcher.
+    // Capture-phase pointerdown dismisses the panel immediately while allowing the clicked page control to work.
+    document.addEventListener('pointerdown', event => {
+      if (panel.hidden) return;
+      const target = event.target;
+      if (panel.contains(target) || launcher.contains(target)) return;
+      showPanel(false);
+    }, true);
     closeBot.addEventListener('click', () => { showPanel(false); launcher.focus(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) { showPanel(false); launcher.focus(); } });
     $$('[data-dvnm-topic]', dock).forEach(button => button.addEventListener('click', () => {
@@ -856,7 +864,7 @@
     const basePath = baseMeta ? baseMeta.content : '.';
     const swUrl = new URL(`${basePath}/sw.js`, location.href);
     const swScope = new URL(`${basePath}/`, location.href).pathname;
-    window.addEventListener('load', () => navigator.serviceWorker.register(swUrl.href, { scope: swScope }).catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register(swUrl.href, { scope: swScope, updateViaCache: 'none' }).catch(() => {}));
   }
 })();
 

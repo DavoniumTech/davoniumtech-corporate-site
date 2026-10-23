@@ -1,3 +1,20 @@
+## V34 — concept gallery and DVNM Bot tap-away close (23 October 2026)
+
+- Added two previously shared, optimized WebP concept images to the Our Work page. They are explicitly labelled as visual concepts rather than screenshots of the live website.
+- Added immediate pointer/tap-outside dismissal to the DVNM Bot panel while preserving taps within the panel and on its launcher.
+- Constrained the speaking panel on narrow screens and added a V34 stylesheet and service-worker cache revision.
+- Use `DEPLOY-V34-WINDOWS.cmd` as the one current deployment command. It retains local/remote backups, fast-forward-only sync, explicit confirmation, non-force push and GitHub commit verification.
+- The supplied image concepts are integrated as website assets. The underlying robot character artwork has not been redrawn by this code-only release.
+
+## v33 — global product positioning, crisp themes, and seven distinct demos (23 October 2026)
+
+- Clarifies that Davonium Technologies builds websites, web applications, Android/mobile applications, software systems, and digital products for individuals, startups, established companies, enterprises, institutions, and teams worldwide.
+- Replaces the foggy layered section/card treatment with clear solid color rhythms, readable surfaces, and reduced backdrop blur for faster and sharper rendering.
+- Gives the seven detail demos their own theme identity in both light and dark modes, and adds clear Previous / All demos / Next navigation to each demo page for mobile orientation.
+- Refines the supplied DVNM artwork overlay so the display eyes are normally open with occasional blinking, removes cast and floor shadows, and prevents the voice panel from enlarging the robot over the answer. The original robot art remains in use; its baked-in arm pose is not a separate rigged limb.
+- Adds a practical global digital engineering guide, broadens the service description, and uses neutral sample pricing in the market demo.
+- Adds `DEPLOY-V33-WINDOWS.cmd` and `Deploy-V33.ps1` for safety-backed backup, fast-forward-only sync, non-force push, and remote commit verification.
+
 ## v32 — full-body DVNM Bot, midnight glass and mobile-first polish (22 October 2026)
 
 - Uses the supplied transparent full-body DVNM illustration for the homepage, assistant launcher, panel and welcome experience, preserving the visible arms, hands, legs and glowing chest mark.
@@ -7,7 +24,7 @@
 - Keeps the floating DVNM launcher above the lower WhatsApp action, with safe-area-aware positioning, narrow-screen widths, and a V32 service-worker cache name.
 - Adds a focused public guide for bot animation, speech, accessibility, appearance and known limitations. The supplied image rig is 2D, not a full 3D skeletal walking model; lip motion is speech-timed rather than guaranteed phoneme-perfect.
 - Static checks confirm 72 HTML pages, valid sitemap XML, no broken local href/src file targets, and valid JavaScript syntax. Manual browser/cloud deployment checks remain post-deployment.
-- Use `DEPLOY-V32-WINDOWS.cmd` for a safety-backed copy, full-site export and optional safe GitHub push.
+- This historical V32 release is superseded. For a new deployment, use only `DEPLOY-V34-WINDOWS.cmd` at the top of this README.
 
 ## v31 — midnight glass, luminous palette and speech-timed DVNM Bot (22 October 2026)
 
@@ -16,7 +33,7 @@
 - Refines the CSS-built robot: the `DVNM` chest lettering stays fixed, reactor light gets brighter during speech, and word-boundary events drive short mouth pulses where supported. Other browsers use a rapid CSS animation fallback.
 - Updates the page assets, manifest theme colour and service-worker cache version.
 - See `V31-VISUAL-VOICE-REPAIR.md` for the scope and validation notes.
-- See `DEPLOY-V31-WINDOWS-CMD.txt` for the one-command CMD deployment workflow (download the ZIP, then let CMD extract and push it).
+- V31 deployment instructions have been superseded by the current V34 workflow shown above.
 
 ## v30 — visual, header, and DVNM speech repair (22 October 2026)
 - Restored the sticky glass header; fixed the late CSS rule that had reset it to relative positioning.
@@ -116,13 +133,13 @@ WhatsApp: https://wa.me/2348032076924
 The speech engine still depends on browser and operating-system support; web code cannot guarantee audio on every device. Demo forms and sample RSVPs do not send or store information.
 
 
-## 21 October 2026 — DVNM Nigeria demo and QR showcase release
+## 21 October 2026 — DVNM demo and QR showcase release
 
 - Renamed the seven sample website demonstrations to the Davonium-owned DVNM family: DVNM Biz, DVNM Growth, DVNM Market, DVNM Creative, DVNM Skills, DVNM Digital, and DVNM Connect.
-- Reworked sample content for small businesses and organisations worldwide, independent workers, product makers, creators, job seekers, learners, and community skills sessions.
+- Reworked sample content for organisations of every size worldwide, independent professionals, product makers, creators, job seekers, learners, and community initiatives.
 - Added a unique QR PNG and an on-page QR sharing section to each demo; added a directory QR code.
 - Added a printable, non-official sample demonstration showcase record PDF and a page that clearly describes its limitations.
-- Reduced native speech volume and tuned rate/pitch; prioritised Nigerian English if the device provides it and retained written answer/link fallbacks.
+- Reduced native speech volume and tuned rate/pitch; prioritised an appropriate English voice when the device provides it and retained written answer/link fallbacks.
 - Added detailed company-voice documentation on demo scope, QR safety, mobile tests, SEO foundations, privacy boundaries, and certificate limitations.
 
 Browser-native voice remains dependent on the operating system and browser. A device that lacks speech synthesis, a usable voice pack, or audio output may not speak; written answers stay available. All demo forms, carts, and event RSVP controls remain non-production demonstrations.

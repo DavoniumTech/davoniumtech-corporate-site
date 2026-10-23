@@ -87,7 +87,7 @@
 @media(prefers-reduced-motion:reduce) { .tech-orbit-card::after { animation:none; } }
 
 
-/* DVNM-owned Nigerian demo family, QR sharing, and certificate presentation. */
+/* DVNM-owned demonstration family, QR sharing, and certificate presentation. */
 .dvnm-demo-qr { padding:clamp(24px,4vw,48px) 0; background:linear-gradient(130deg,rgba(104,71,232,.07),rgba(53,200,222,.08)); border-block:1px solid var(--line); }
 .dvnm-demo-qr-inner { display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,240px); gap:clamp(20px,4vw,40px); align-items:center; }
 .dvnm-demo-qr h2 { margin:8px 0 10px; font-size:clamp(1.35rem,3vw,2.1rem); line-height:1.12; letter-spacing:-.04em; }

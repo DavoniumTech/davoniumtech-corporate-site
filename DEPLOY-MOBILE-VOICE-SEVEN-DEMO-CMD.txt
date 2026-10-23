@@ -1,5 +1,0 @@
-DAVONIUM TECHNOLOGIES — ARCHIVED DEPLOYMENT NOTE
-
-This file belongs to an earlier release and must not be used to deploy the current site.
-For the current release, use the bundled root-level script: Davonium-DVNM-Final-Route-Robot-v21-DEPLOY.cmd
-The current script checks route policy, backs up the existing main branch, validates the source, stages changes, and stops if checks fail.

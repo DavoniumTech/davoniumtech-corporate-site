@@ -1,0 +1,37 @@
+/* Davonium Technologies V34 — integrate prior concept artwork and fix tap-outside dismissal/mobile bot sizing. */
+.v34-design-showcase { padding-block: clamp(34px, 5vw, 70px)!important; }
+.v34-design-showcase > .wrap > h2 { max-width: 24ch; margin-block: 10px 12px; text-wrap: balance; }
+.v34-design-showcase > .wrap > .lead { max-width: 76ch; }
+.v34-concept-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(14px,2.4vw,26px); margin-top:24px; align-items:stretch; }
+.v34-concept-card { min-width:0; overflow:hidden; border:1px solid var(--v33-line); border-radius:20px; background:var(--v33-card-raised); box-shadow:var(--v33-shadow); }
+.v34-concept-image { display:block; overflow:hidden; background:#07132b; aspect-ratio:16/9; }
+.v34-concept-image img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; transition:transform .24s ease; }
+@media(hover:hover) { .v34-concept-image:hover img { transform:scale(1.025); } }
+.v34-concept-copy { padding:clamp(14px,2vw,22px); }
+.v34-concept-tag { display:inline-flex; padding:5px 9px; border-radius:999px; color:var(--v33-accent); background:color-mix(in srgb,var(--v33-accent) 10%,transparent); font-size:.72rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+.v34-concept-copy h3 { margin:10px 0 6px; font-size:clamp(1rem,1.65vw,1.25rem); line-height:1.25; }
+.v34-concept-copy p { margin:0 0 12px; color:var(--v33-muted); line-height:1.65; }
+.v34-concept-copy .more { display:inline-flex; align-items:center; min-height:40px; font-weight:750; }
+.v34-concept-note { margin-top:18px; color:var(--v33-muted); font-size:.88rem; line-height:1.6; }
+/* Opaque surfaces only: no blurred overlays or broad shadow/fog layers around the bot. */
+#dvnm-bot-dock .dvnm-panel { width:min(360px,calc(100vw - 18px))!important; max-width:calc(100vw - 18px)!important; max-height:min(68dvh,620px)!important; height:auto!important; overflow-x:hidden!important; overflow-y:auto!important; overscroll-behavior:contain!important; background:var(--v33-card-raised,#fff)!important; backdrop-filter:none!important; -webkit-backdrop-filter:none!important; box-shadow:0 14px 34px rgba(0,0,0,.14)!important; }
+#dvnm-bot-dock .dvnm-panel[hidden] { display:none!important; }
+#dvnm-bot-dock .dvnm-panel.is-speaking { width:min(340px,calc(100vw - 18px))!important; max-height:min(34dvh,260px)!important; min-height:0!important; height:auto!important; overflow:hidden!important; }
+#dvnm-bot-dock .dvnm-panel.is-speaking .dvnm-panel-intro { min-height:0!important; padding:10px 12px 5px!important; gap:10px!important; }
+#dvnm-bot-dock .dvnm-panel.is-speaking .dvnm-panel-intro p { margin:0!important; font-size:.92rem!important; line-height:1.4!important; }
+#dvnm-bot-dock .dvnm-panel.is-speaking .dvnm-panel-actions { padding:4px 10px 10px!important; }
+#dvnm-bot-dock .dvnm-panel.is-speaking #dvnm-bot-stop { min-height:42px!important; }
+#dvnm-bot-dock .dvnm-panel .dvnm-robot-mini-frame { filter:none!important; box-shadow:none!important; }
+@media(max-width:700px) {
+  .v34-concept-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+  .v34-concept-copy { padding:15px; }
+  #dvnm-bot-dock { right:max(8px,env(safe-area-inset-right))!important; width:auto!important; max-width:calc(100vw - 16px)!important; }
+  #dvnm-bot-dock .dvnm-panel { right:0!important; bottom:calc(110px + env(safe-area-inset-bottom))!important; width:min(360px,calc(100vw - 16px))!important; max-width:calc(100vw - 16px)!important; max-height:min(68dvh,570px)!important; border-radius:18px!important; }
+  #dvnm-bot-dock .dvnm-panel.is-speaking { bottom:calc(110px + env(safe-area-inset-bottom))!important; width:min(330px,calc(100vw - 16px))!important; max-width:calc(100vw - 16px)!important; max-height:min(34dvh,230px)!important; }
+}
+@media(max-width:360px) {
+  #dvnm-bot-dock .dvnm-panel { width:calc(100vw - 12px)!important; max-width:calc(100vw - 12px)!important; right:-2px!important; }
+  #dvnm-bot-dock .dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-robot-mini-frame { width:54px!important; height:82px!important; flex-basis:54px!important; max-width:54px!important; }
+  #dvnm-bot-dock .dvnm-panel.is-speaking .dvnm-panel-intro .dvnm-reference-bot { width:54px!important; height:82px!important; }
+}
+@media(prefers-reduced-motion:reduce) { .v34-concept-image img { transition:none!important; } }

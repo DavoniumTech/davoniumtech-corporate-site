@@ -1,4 +1,4 @@
-﻿# Davonium Technologies V32 — full website release
+# Davonium Technologies V32 — full website release
 
 This package is a complete static website source archive, not a patch. It is based on the uploaded V31 project and keeps the existing website sections, seven demo pages, documentation, legal pages, icons, QR codes, product pages, PWA manifest, service worker, and offline page.
 
@@ -16,8 +16,3 @@ This is a lightweight 2D website character, not an independently simulated 3D mo
 
 ## After deployment
 Test 320px, 360px and 390px phones, tablet and desktop. Check the theme toggle, seven demo routes, mobile menu, bot launcher, speech, head response, chest glow, WhatsApp click, and install/offline behaviour. A service-worker cache may need one refresh/reopen before V32 assets appear.
-
-
-## Deployment script reliability fix
-
-The Windows launcher now passes the source directory as `%~dp0.` to avoid the trailing-backslash/quoted-argument issue. The PowerShell deployment script resolves the source using `Get-Item` and normalizes invisible branch-output characters before validating `main`. It retains the existing no-force-push and backup checks.

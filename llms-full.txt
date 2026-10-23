@@ -39,7 +39,7 @@ Davonium Technologies builds software, applications, digital products, websites,
 - Reporting a security concern: How to tell us about a possible vulnerability or exposure without putting your own information or other users at risk. https://www.davoniumtech.com/docs/guides/security-reporting
 - How we help people find our public information: Our approach to clear page names, reliable links, canonical URLs, sitemap coverage, and search reporting. https://www.davoniumtech.com/docs/guides/seo-discovery
 - Service scope and project boundaries: How we define what a website or digital delivery includes, what remains outside the work, and how changes are agreed. https://www.davoniumtech.com/docs/guides/service-scope
-- Services guide: How we help small businesses establish a clearer web presence and how we define work before it begins. https://www.davoniumtech.com/docs/guides/services-guide
+- Services guide: How we plan and deliver websites, software, web applications, mobile applications, and other digital experiences for a global audience. https://www.davoniumtech.com/docs/guides/services-guide
 - Choosing the right digital experience: How we decide which capabilities a digital product needs, based on user tasks, data, reliability, and support. https://www.davoniumtech.com/docs/guides/static-vs-dynamic
 - Support escalation and prioritisation: How we understand the impact of a reported issue and decide what needs attention first. https://www.davoniumtech.com/docs/guides/support-escalation
 - Customer support guide: How to contact us with a clear question or reproducible issue while keeping account and personal information safe. https://www.davoniumtech.com/docs/guides/support-guide

@@ -6,20 +6,34 @@
   Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data:; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000
 
+# HTML/extensionless routes revalidate; the more specific static-asset rules below assign longer caching.
+/*
+  Cache-Control: no-cache, must-revalidate
+
+/
+  Cache-Control: no-cache, must-revalidate
+
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+# Versioned asset URLs use ?v=N; increase that version whenever changing the file.
 /assets/icons/*
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
+/assets/images/design-concepts/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /assets/images/*
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
 
 /assets/social/*
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
 
 /assets/css/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /assets/js/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /404.html
   X-Robots-Tag: noindex, follow
@@ -29,7 +43,6 @@
 
 /legal/*
   X-Robots-Tag: noindex, follow
-
 
 https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex

@@ -1,6 +1,6 @@
-﻿DAVONIUM TECHNOLOGIES V32 — RELEASE QA REPORT
+DAVONIUM TECHNOLOGIES V32 — RELEASE QA REPORT
 Date: 22 October 2026
-Package: complete website source, not a patch ZIP; deployment launcher source/path validation corrected
+Package: complete website source, not a patch ZIP
 
 SOURCE / SCOPE
 - Based on the uploaded davoniumtech-corporate-site-v31 source archive.
@@ -35,11 +35,3 @@ KNOWN LIMITATIONS / TESTING
 - Mouth motion follows browser speech word-boundary timing when available, with CSS fallback. It cannot be guaranteed to match every phoneme on every device.
 - Voice selection/naturalness depends on what the browser/OS exposes.
 - Live visual browser QA was not possible in this execution environment because Chromium navigation to local/localhost test pages returned ERR_BLOCKED_BY_ADMINISTRATOR. Test 320px, 360px, 390px, tablet and desktop after deployment, including the WhatsApp and robot launch controls.
-
-
-DEPLOYMENT SCRIPT FIXES (V32 final packaging)
-- Windows .cmd passes the source as "%~dp0." (final dot avoids backslash-before-quote path errors).
-- PowerShell source validation uses Test-Path/Get-Item instead of Resolve-Path on the raw quoted argument.
-- Git branch output normalization removes whitespace, BOM/zero-width, and ANSI terminal control sequences before checking main.
-- No force-push, git reset, or git clean is used. Source copy excludes .git and does not mirror-delete.
-- Static script review completed; actual Windows execution still requires the user's computer and GitHub credentials.

@@ -1,4 +1,29 @@
+## V35 — deployment path repair, compact intro and faster cache strategy (2026-10-23)
+- Fixed the Windows `Resolve-Path` failure: the CMD no longer passes a quoted `%~dp0` path ending with a backslash; the PowerShell launcher also normalizes source paths defensively.
+- Shortened the homepage introduction and made the first CTA lead to the seven-demo studio.
+- Deferred the below-the-fold QR and full-size bot artwork instead of requesting them at high priority during initial page load.
+- Removed remaining CSS drop-shadow/aura and backdrop blur from the primary robot display and bot panel surfaces.
+- Added a new cache-busted V35 stylesheet and changed the service-worker cache name so existing installations can replace V34 assets on update.
+- Configured long-lived caching for versioned CSS/JS and unique design-concept images while HTML and `sw.js` revalidate/no-store, so visitors can receive releases without waiting for a long HTML cache.
+- Kept the existing seven demo pages and their distinct themes/navigation; retained the two already-shared concept images in the Our Work gallery.
+
+## V34 — concept image integration and bot tap-away dismissal (2026-10-23)
+- Integrated two previously shared website/robot concept images as optimized WebP assets in a responsive gallery on the Our Work page. Both are labelled as design concepts, not screenshots of the current live site.
+- Added immediate tap/click-outside dismissal to DVNM Bot while preserving interactions inside the panel and launcher; Escape and the close button still work.
+- Capped the speaking-panel height and tightened its controls on mobile, including narrow screens down to 320px.
+- Added a V34 cache-busting stylesheet and updated the PWA cache name to prevent old behavior from being retained offline.
+- Added the single current Windows deployment workflow: `DEPLOY-V34-WINDOWS.cmd` and `Deploy-V34.ps1`.
+- The existing DVNM robot artwork itself was not redrawn in this code-only integration; the gallery presents the supplied concept artwork separately.
+
 # Changelog
+
+## V33 — clear UI, global service scope, and distinct demo experiences (2026-10-23)
+- Replaces fog-like gradients and broad blur with clearer section colors, crisp card surfaces, and lower-cost rendering.
+- Broadens corporate positioning to websites, web apps, Android/mobile apps, and software for individuals and organisations of all sizes worldwide.
+- Adds seven distinct light/dark demo palettes plus persistent previous/next/all-demo navigation.
+- Re-aligns the DVNM face overlay for normally open cyan eyes and blinking, removes body/floor shadows, and keeps the speaking panel compact.
+- Adds global digital engineering documentation and neutral sample pricing.
+
 
 ## v30 — visual, sticky-header and DVNM speech repair (2026-10-22)
 - Fixed the late CSS override that had stopped the corporate header sticking to the top of the viewport.

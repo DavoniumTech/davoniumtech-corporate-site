@@ -1,0 +1,22 @@
+DAVONIUM TECHNOLOGIES — V34 STATIC QA REPORT
+Date: 2026-10-23
+
+Changes in this package
+- Two previously supplied concept images are included as optimized WebP files and shown in the Our Work concept gallery.
+- The bot closes on pointer/tap outside the assistant or launcher.
+- The speaking panel has stricter height/width limits for mobile screens.
+- The deployment workflow is DEPLOY-V34-WINDOWS.cmd + Deploy-V34.ps1.
+
+Static validation performed in the build environment
+- HTML pages: 73
+- Same-site local references checked: 3756; missing targets: 0
+- Fragment anchor errors: 0
+- Duplicate HTML IDs: 0
+- Sitemap XML URLs: 68; XML errors: 0
+- JavaScript syntax: 3 checked; errors: 0
+- CSS: 8 stylesheets parsed; parser errors: 0
+- SVG files: 10 parsed; XML errors: 0
+- Every HTML page references the V34 override stylesheet: True
+- All seven demo detail pages retain previous / all demos / next navigation: True
+
+The duplicate-attribute heuristic in the lightweight scanner can flag query-string text in URLs as if it were an attribute. This is not counted as a validated duplicate-attribute result. Browser-based visual testing on real devices was not completed in this environment; verify the deployment at 320px mobile width, tablet, laptop and desktop before publishing broadly.

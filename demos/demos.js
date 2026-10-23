@@ -19,7 +19,7 @@
     cartCount += 1; cartTotal += Number(button.dataset.price || 0);
     const count = $('#demo-cart-count'), total = $('#demo-cart-total'), message = $('#demo-cart-message');
     if (count) count.textContent = String(cartCount);
-    if (total) total.textContent = `₦${cartTotal.toLocaleString('en-NG')}`;
+    if (total) total.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(cartTotal);
     if (message) message.textContent = `${button.dataset.product || 'Sample item'} added to this temporary demo bag.`;
   }));
 
