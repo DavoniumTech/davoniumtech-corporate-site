@@ -99,3 +99,14 @@ These sample websites are demonstrations, not claims of completed customer engag
 - New transparent SVG mascot layers with relaxed arms, black pupils, no shadow or backdrop, and more visible mouth/chest/head speech activity.
 - Improved small-screen assistant readability, dismissal positioning, button size, and stable scrolling by avoiding fixed backgrounds.
 - Versioned all core CSS/JS/robot paths and rotated the service-worker cache.
+
+
+## V39 — 25 October 2026
+
+- Reworked homepage hero into a cinematic cobalt/indigo global digital-solutions layout using a lightweight feathered WebP scene cropped from the supplied concept artwork and a locally drawn city/network SVG.
+- Moved the seven distinctly coloured demo cards directly under the hero and added keyboard/touch-friendly horizontal navigation using each demo’s original preview illustration.
+- Refined the robot’s black pupils, speaking mouth, head movement and speech-reactive chest light; removed the floor shadow and blurred aura.
+- Restyled small-screen navigation, primary CTAs and the DVNM Bot dialog. Kept the written answers and user-triggered speech behaviour.
+- Updated service-worker cache version and stopped pre-caching large concept mockups.
+
+- Fixed an invalid `!important` override in the robot eyelid keyframes so natural blinking can render; retained reduced-motion support.
