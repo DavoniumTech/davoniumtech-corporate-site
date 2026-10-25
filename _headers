@@ -50,3 +50,6 @@ https://:version.:subdomain.workers.dev/*
 /sw.js
   Cache-Control: no-cache, no-store, must-revalidate
   Service-Worker-Allowed: /
+
+/demos/certificates/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800

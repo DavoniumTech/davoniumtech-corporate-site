@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="350" viewBox="175 20 420 350" fill="none">
+ <defs>
+  <linearGradient id="headMetal" x1="267" y1="62" x2="508" y2="294" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset=".24" stop-color="#DFEDFF"/><stop offset=".48" stop-color="#FFFFFF"/><stop offset=".72" stop-color="#9BB9DF"/><stop offset=".88" stop-color="#F8FCFF"/><stop offset="1" stop-color="#6C91C0"/></linearGradient>
+  <linearGradient id="ear" x1="235" y1="140" x2="292" y2="245" gradientUnits="userSpaceOnUse"><stop stop-color="#72F3FF"/><stop offset=".2" stop-color="#0C5CA3"/><stop offset=".55" stop-color="#071936"/><stop offset=".8" stop-color="#2368AF"/><stop offset="1" stop-color="#E4FAFF"/></linearGradient>
+  <linearGradient id="screen" x1="296" y1="126" x2="502" y2="267" gradientUnits="userSpaceOnUse"><stop stop-color="#07182F"/><stop offset=".48" stop-color="#020814"/><stop offset="1" stop-color="#0A2342"/></linearGradient>
+  <linearGradient id="antenna" x1="516" y1="48" x2="549" y2="110" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset=".5" stop-color="#4DEBFF"/><stop offset="1" stop-color="#0D5CB3"/></linearGradient>
+ </defs>
+ <g stroke-linecap="round" stroke-linejoin="round">
+  <!-- short antenna with a crisp cyan tip -->
+  <path d="M512 116L530 77L542 60" stroke="url(#antenna)" stroke-width="13"/><path d="M513 116L530 77" stroke="#C7FBFF" stroke-width="4"/>
+  <circle cx="545" cy="55" r="15" fill="#0C5FAE" stroke="#A8FAFF" stroke-width="5"/><circle cx="541" cy="50" r="5" fill="#FFFFFF"/>
+  <!-- side ear pods and comfortable, symmetrical headset -->
+  <path d="M275 131C250 136 235 159 235 192V219C235 246 251 265 277 264L297 245V151Z" fill="url(#ear)" stroke="#4F9BD3" stroke-width="7"/>
+  <path d="M493 151L513 131C539 136 554 159 554 192V219C554 246 538 265 512 264L492 245Z" fill="url(#ear)" stroke="#4F9BD3" stroke-width="7"/>
+  <rect x="245" y="171" width="37" height="66" rx="17" fill="#0B2C5B" stroke="#42DFFA" stroke-width="5"/><rect x="507" y="171" width="37" height="66" rx="17" fill="#0B2C5B" stroke="#42DFFA" stroke-width="5"/>
+  <rect x="254" y="184" width="18" height="42" rx="9" fill="#18BCEB"/><rect x="517" y="184" width="18" height="42" rx="9" fill="#18BCEB"/>
+  <!-- head shell -->
+  <path d="M298 91C322 63 354 49 393 49C432 49 464 63 488 91L512 128L524 176L515 222C504 259 472 286 435 300L408 316H378L351 300C314 286 282 259 271 222L262 176L274 128Z" fill="url(#headMetal)" stroke="#5B8EC3" stroke-width="9"/>
+  <path d="M305 103C329 79 359 68 393 68C427 68 457 79 481 103" stroke="#FFFFFF" stroke-width="8"/>
+  <path d="M286 135L278 175L286 218C295 245 318 265 344 278" stroke="#80DFF8" stroke-width="6"/>
+  <path d="M500 135L508 175L500 218C491 245 468 265 442 278" stroke="#80DFF8" stroke-width="6"/>
+  <!-- dark face glass; HTML overlay draws the eyes/pupils and mouth with live speech animation -->
+  <path d="M306 120C328 109 359 103 393 103C427 103 458 109 480 120L493 160L488 211C475 237 443 255 408 263H378C343 255 311 237 298 211L293 160Z" fill="url(#screen)" stroke="#0C3B70" stroke-width="7"/>
+  <path d="M315 131C338 122 364 117 393 117C422 117 448 122 471 131" stroke="#71F5FF" stroke-opacity=".56" stroke-width="4"/>
+  <path d="M305 212C319 237 346 252 378 260M481 212C467 237 440 252 408 260" stroke="#22D7F3" stroke-opacity=".62" stroke-width="4"/>
+  <!-- layered neck connector, behind the screen and below the shell -->
+  <path d="M345 282L356 307L384 325L412 307L423 282" fill="#082143" stroke="#497DB0" stroke-width="6"/>
+  <path d="M359 293L367 309L384 318L401 309L409 293" stroke="#1EE6F6" stroke-width="5"/>
+ </g>
+</svg>
