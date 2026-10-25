@@ -1,3 +1,15 @@
+# Changelog
+
+## V43 — Three.js DVNM Bot and deployment safety (2026-10-26)
+
+- Replaced homepage and secondary bot artwork hosts with a procedural, articulated Three.js character rendered on demand.
+- Added eye blink, independent head tracking/tilt, articulated limbs, chest-core light, antenna, idle sway, arm gestures, floating scene details, and mouth movement while browser speech is active.
+- Added on-demand import, low-power rendering settings, reduced-motion behavior, off-screen pause, a WebGL/CDN fallback, and responsive canvas styles.
+- Stopped showing the welcome overlay automatically; the website no longer opens with a blocking bot panel.
+- Consolidated primary demo messaging to DVNM Biz, DVNM Market, DVNM Creative, DVNM Skills, and DVNM Digital. Older URLs remain for compatibility, not as primary offerings.
+- Replaced the inconsistent previous deployment launcher with matched `DEPLOY-DAVONIUM-V43.cmd` and `Deploy-Davonium-V43.ps1`, including backups, secret checks, explicit approval, a non-force push, and GitHub SHA verification.
+- Included local-only `directory.md` and exclusion rules for that map, secrets, and deployment scripts.
+
 # V41 — 25 October 2026 · deployment hotfix
 
 The V40 site content and visual design are preserved. V41 fixes Git whitespace validation so CRLF text files are handled correctly and generated PDF certificates do not get falsely treated as source text. See `V41-DEPLOYMENT-HOTFIX-NOTES.md`.

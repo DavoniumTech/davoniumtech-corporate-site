@@ -24,7 +24,7 @@ Preferred public domain: https://www.davoniumtech.com/
 We publish public guides about our products, accessibility, installation, offline availability, privacy, security, support, and search discovery. Product status describes current development stage and does not imply that all intended features are generally available.
 
 ## Demo Studio
-- Seven original DVNM sample website demonstrations for businesses, makers, creators, learners, and workers worldwide: https://www.davoniumtech.com/demos/
+- Five core DVNM sample website demonstrations: DVNM Biz (business), DVNM Market (commerce), DVNM Creative (portfolio), DVNM Skills (learning), and DVNM Digital (technology). Older Growth and Connect routes redirect into the core experiences; the seven-route QR directory is historical: https://www.davoniumtech.com/demos/
 - DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
 

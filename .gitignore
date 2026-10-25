@@ -1,0 +1,52 @@
+# Private local project map — keep out of GitHub and public hosting
+directory.md
+DIRECTORY.md
+
+# Secrets and local environment files
+.env
+.env.*
+*.env
+!.env.example
+.npmrc
+.pypirc
+.netrc
+.git-credentials
+.dev.vars
+.dev.vars.*
+*.token
+*.secret
+*.tfstate
+*.tfstate.*
+.aws/
+.ssh/
+auth.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+id_rsa*
+id_ed25519*
+secrets/
+private/
+credentials.json
+service-account*.json
+firebase-adminsdk*.json
+wrangler.local.jsonc
+.wrangler/
+
+# Local/editor/system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+
+# Local release tooling — never publish deploy scripts as website assets
+Deploy-Davonium-V43.ps1
+DEPLOY-DAVONIUM-V43.cmd
+PUBLISH-ONE-COMMAND.txt

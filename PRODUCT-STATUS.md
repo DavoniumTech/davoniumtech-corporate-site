@@ -17,4 +17,4 @@ We update public product pages and guides when a verified release changes these 
 ## Release visibility update — 21 October 2026
 
 - Ready2Go Learning stays under development. The corporate site does not expose a direct public application link in Home, Products, or Our Work. This is not equivalent to server-side access control on its separate host.
-- DVNM Bot and seven DVNM-branded Demo Studio concepts are included in the corporate-site release.
+- DVNM Bot and five primary DVNM Demo Studio experiences are included in the corporate-site release; the previous seven-route QR/certificate set is retained as a historical archive.

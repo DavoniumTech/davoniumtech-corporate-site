@@ -1,29 +1,42 @@
-# Davonium Technologies Website - V41 Deployment Hotfix
+# Davonium Technologies — V43 Website Release
 
-Complete static website source for [www.davoniumtech.com](https://www.davoniumtech.com/). This package retains the company site, products, services, documentation, PWA files, and all seven independent DVNM sample website experiences.
+This is the full static-site source package for the Davonium Technologies corporate website. It retains the existing pages, branded icons, product/service descriptions, documentation, legal pages, progressive-web-app assets, and sample demo pages while replacing the main DVNM Bot character with an articulated Three.js character.
 
-## V40 visual and usability release (site content preserved in V41)
+## What changed in V43
 
-- One consolidated V40 design-system stylesheet, loaded after the functional page styles.
-- Explicit light and deep multi-tone dark palettes with readable foregrounds, colourful section tints, restrained glowing star points, and a transparent city-grid hero scene.
-- Responsive navigation and touch-friendly actions down to 320px wide screens.
-- Robot uses transparent SVG body/head layers in a relaxed arms-down pose, a dark face display with visible pupils, eye blink, mouth motion while speech is active, head nod, and chest glow. The floating shortcut is a compact avatar; opening it gives the topic/voice card.
-- Seven independent demo themes: DVNM Biz, Growth, Market, Creative, Skills, Digital, and Connect. Each has navigation to previous/next and the complete directory.
-- Seven separate, downloadable showcase PDFs with a unique colour identity and QR route. They describe sample design demonstrations and explicitly do not claim accreditation or commissioned client work.
-- New service worker cache name `davonium-site-v40-contrast-colourful-mobile-20261025`; versioned CSS/JS URLs are updated, and HTML requests revalidate.
-- No external font library, animation library, or large JavaScript framework is required.
+- **Actual real-time 3D character:** DVNM Bot is built from articulated 3D meshes and materials in Three.js, not layered SVG art. Its idle movement, head/eye attention, blinking, chest core, antenna, subtle orbit elements, arm gesture, pointer tracking, and mouth movement during browser speech are animated in the renderer.
+- **Performance-first loading:** the small local renderer waits until a robot canvas is near the viewport before importing Three.js. It lowers antialiasing/pixel ratio on phones, pauses while hidden or off-screen, respects `prefers-reduced-motion`, and falls back to the existing artwork if WebGL or the CDN is unavailable. The main site remains readable without that optional effect.
+- **Five primary demos:** DVNM Biz, DVNM Market, DVNM Creative, DVNM Skills, and DVNM Digital. Growth/marketing patterns are folded into Biz; community/skills patterns are folded into Skills. Older routes remain available for backward compatibility but are not promoted as core demos.
+- **No automatic welcome takeover:** the initial page view is no longer interrupted by the large welcome overlay. The visitor opens the bot and requests speech when they choose.
+- **Separate theme palettes:** the existing theme toggle retains the written content and changes interface colors/visual surfaces. The robot's shell lighting also responds to the active theme.
+- **Deployment correction:** `Deploy-Davonium-V43.ps1` is the exact script invoked by `DEPLOY-DAVONIUM-V43.cmd`; both are included in the ZIP and excluded from the public commit. This fixes the previous V42 mismatch where a launcher could refer to a missing script.
+- `directory.md` is included for local navigation only and is excluded from the Git commit. Treat it as private local documentation; do not place credentials in it.
+- `CNAME` keeps the intended host `www.davoniumtech.com`.
 
-## Deploy on Windows
+## Publish from Windows
 
-1. Download the complete ZIP and extract it into a new folder.
-2. Double-click `DEPLOY-V41-WINDOWS.cmd`, or run it from Command Prompt. Keep `Deploy-V41.ps1` next to the CMD file.
-3. The script checks the site source, uses only the expected GitHub remote and `main` branch, reuses only a clean checkout (otherwise cloning to a new folder), creates local and remote backups, stages the whole site, and asks you to type `Y` before commit/push. It never force-pushes. Git whitespace validation treats CRLF line endings correctly and excludes generated PDF certificates from text whitespace checks; PDF presence is verified separately.
-4. Check the `SUCCESS: V41 commit is verified on GitHub main.` message, then check Cloudflare Pages/Workers deployment status. Refresh the published site using `Ctrl+F5`. A previously installed PWA may update after the new service worker activates.
+**Prerequisites:** Git for Windows, an account with push permission to `DavoniumTech/davoniumtech-corporate-site`, network access, and GitHub authentication set up through Git Credential Manager or an equivalent secure login. Do not place a token in a command or source file.
 
-## Sample website certificate PDFs
+### Simplest route
 
-Individual PDFs are located in `demos/certificates/`. Each demo page links to its own PDF. These documents confirm only the existence of an illustrative website demonstration; they are not professional qualifications, accreditation, client endorsements, or proof of commissioned deliveries.
+1. Extract the whole ZIP to a new folder.
+2. Double-click `DEPLOY-DAVONIUM-V43.cmd`.
+3. Read the checks. When you are ready, type exactly `PUSH` at the final prompt.
 
-## Quality checks
+The script creates a fresh clone in `%USERPROFILE%\Davonium-Website-Releases`, creates a local ZIP backup, excludes local-only and secret patterns, prepares a backup branch of the old `main`, stages a full mirror of this release, validates the staged paths, commits, pushes without force, and compares the resulting GitHub `main` SHA with the local release commit. It stops if any check fails.
 
-This package is checked for local HTML references and anchors, HTML IDs, script syntax, stylesheet parsing, SVG XML, sitemap validity, service-worker cache version, and deployment script references. A real-device interaction test and a live Cloudflare deployment check require the deployed site and device; static checks do not substitute for those.
+### Single command to extract and start deployment
+
+If you saved the ZIP in the standard Windows `Downloads` folder, open **PowerShell** and paste the one-liner from `PUBLISH-ONE-COMMAND.txt`. It extracts the ZIP into a new timestamped folder and launches the CMD deployment runner.
+
+## GitHub Pages and the custom domain
+
+The script pushes the source to the repository's `main` branch. It cannot switch GitHub Pages settings or configure DNS. In the repository, verify **Settings → Pages** is configured to publish from `main` and the repository root (`/(root)`), or use the existing Pages workflow if the repository is already configured that way. Then confirm the custom domain and DNS remain correct before relying on `www.davoniumtech.com`. If the repo is hosted on Cloudflare Pages instead, the git push triggers deployment only if that integration is configured.
+
+## Private file and secrets warning
+
+`directory.md` is local-only. GitHub Pages is public hosting; never commit anything that must be secret. `.gitignore` is not encryption, does not remove secrets from earlier Git history, and does not revoke exposed credentials. Rotate any key that was ever published. Browser JavaScript configuration values must be treated as public.
+
+## Validation and honest limitations
+
+Static release checks passed: both changed JavaScript files pass Node syntax checks; 73 HTML pages were parsed; 3,045 local URL references and 331 same-page anchor references resolved; duplicate HTML IDs were not found; five CSS files parsed without errors; and the sitemap/manifest validate. A headless Chromium screenshot attempt stalled in this environment, so the page has not received a confirmed browser visual pass here, and physical Android/iOS tests have not been run. The Three.js module is fetched from jsDelivr at runtime, so first-load 3D needs access to that CDN. Offline or restricted-network use falls back to the existing robot artwork. TTS is browser-provided; the bot does not ship a proprietary voice model or phoneme-perfect lip synchronisation. Live GitHub publishing and live Pages build success must be confirmed by running the deployment script with your authorized GitHub account.
