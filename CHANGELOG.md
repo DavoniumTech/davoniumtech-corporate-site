@@ -1,5 +1,13 @@
 # Changelog
 
+## V45 — 26 October 2026
+
+- Replaced the homepage's balloon-like full-body robot presentation with a procedurally modelled, articulated Three.js human presenter; retained transparent CGI art only as fallback.
+- Added an opt-in spoken application introduction, a short skippable letter-by-letter brand entry, and distinct light/dark 3D motion.
+- Reworked the floating guide to a head-only launcher with a compact, scrollable mobile panel and mutually exclusive Hear/Stop controls.
+- Added 3D scene identities for the five featured demos, scene controls for Creative and Skills, and rebuilt the local certificate page with downloadable/shareable PNG output.
+- Added documentation category filters, bumped service-worker cache to V45, and corrected legacy demo routes and the publishing workflow.
+
 ## V43 — Three.js DVNM Bot and deployment safety (2026-10-26)
 
 - Replaced homepage and secondary bot artwork hosts with a procedural, articulated Three.js character rendered on demand.

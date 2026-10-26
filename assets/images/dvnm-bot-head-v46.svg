@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">DVNM Bot head</title><desc id="desc">An angular white and silver robot helmet with a dark glass visor, cyan eyes and a friendly illuminated smile.</desc>
+<defs><linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".56" stop-color="#dce7f1"/><stop offset="1" stop-color="#91a8bd"/></linearGradient><linearGradient id="visor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#17354a"/><stop offset="1" stop-color="#061421"/></linearGradient><linearGradient id="eye" x1="0" x2="1"><stop stop-color="#67f8f1"/><stop offset="1" stop-color="#20a9e6"/></linearGradient><filter id="glow" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<ellipse cx="120" cy="220" rx="77" ry="8" fill="#25b9d8" opacity=".14"/>
+<g stroke="#7089a0" stroke-width="4" stroke-linejoin="round">
+<path d="M62 51 84 29h72l22 22 8 40-7 65-23 29H84l-23-29-7-65z" fill="url(#shell)"/>
+<path d="M59 71 42 83v40l18 7zM181 71l17 12v40l-18-7z" fill="#9eb3c7"/>
+<path d="m72 70 15-16h66l15 16-2 58-16 16H90l-16-16z" fill="url(#visor)" stroke="#54748e" stroke-width="4"/>
+<path d="M91 89h20v10H91zM129 89h20v10h-20z" fill="url(#eye)" stroke="none" filter="url(#glow)"/>
+<path d="M103 116q17 13 34 0" fill="none" stroke="#55e9f0" stroke-width="4.5" stroke-linecap="round"/>
+<path d="m81 144 15 16h48l15-16-5 23-15 11h-38l-15-11z" fill="#c3d3e3"/>
+<path d="M77 42h86l-12 12H89z" fill="#f5f9fc"/>
+<path d="M100 29h40l-8 10h-24z" fill="#8da5bc"/>
+<path d="m85 184 16 14h38l16-14" fill="none" stroke="#25bfd9" stroke-width="4"/>
+<path d="M93 206h54" fill="none" stroke="#527993" stroke-width="4" stroke-linecap="round"/>
+<path d="M42 91h17v23H42zM181 91h17v23h-17z" fill="#1f4058" stroke="#34cbdc" stroke-width="3"/>
+</g>
+<circle cx="52" cy="102" r="3.5" fill="#5cf0f4"/><circle cx="188" cy="102" r="3.5" fill="#5cf0f4"/>
+</svg>

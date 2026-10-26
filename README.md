@@ -1,54 +1,40 @@
-# Davonium Technologies — V44 Website Release
+# Davonium Technologies — V46 website release
 
-This is the full static-site source package for the Davonium Technologies corporate website. It retains the existing pages, branded icons, product/service descriptions, documentation, legal pages, progressive-web-app assets, and sample demo pages while replacing the main DVNM Bot character with an articulated Three.js character.
+This is a static website release for `DavoniumTech/davoniumtech-corporate-site`, intended for `www.davoniumtech.com`.
 
-## What changed in V44
+## What changed in V46
 
-- **Actual real-time 3D character:** DVNM Bot is built with Three.js r186 (0.186.1) from articulated 3D meshes and materials in Three.js, not layered SVG art. Its idle movement, head/eye attention, blinking, chest core, antenna, subtle orbit elements, arm gesture, pointer tracking, and mouth movement during browser speech are animated in the renderer.
-- **Performance-first loading:** the small local renderer waits until a robot canvas is near the viewport before importing Three.js. It lowers antialiasing/pixel ratio on phones, pauses while hidden or off-screen, respects `prefers-reduced-motion`, and falls back to the existing artwork if WebGL or the CDN is unavailable. The main site remains readable without that optional effect.
-- **Five primary demos:** DVNM Biz, DVNM Market, DVNM Creative, DVNM Skills, and DVNM Digital. Growth/marketing patterns are folded into Biz; community/skills patterns are folded into Skills. Older routes remain available for backward compatibility but are not promoted as core demos.
-- **Distinct scene behaviour by demo:** Biz gets a layered architectural skyline and orbiting rings; Market gets three floating product forms on podiums plus category filters; Creative gets a rotating torus-knot sculpture with Orbit/Focus/Prism state controls; Skills gets a connected 3D learning graph with Explore/Focus/Learning-path controls that also affect the lesson accordion; Digital gets a portal, faceted core, and floating technology skyline. Supporting pages get a lightweight themed 3D hero scene, while the homepage foreground is the DVNM Bot model.
-- **No automatic welcome takeover:** the initial page view is no longer interrupted by the large welcome overlay. The visitor opens the bot and requests speech when they choose.
-- **Separate theme palettes:** the existing theme toggle retains the written content and changes interface colors/visual surfaces. The robot's shell lighting also responds to the active theme.
-- **Deployment correction:** `Deploy-Davonium-V44.ps1` is the exact script invoked by `DEPLOY-DAVONIUM-V44.cmd`; both are included in the ZIP and excluded from the public commit. This fixes the previous V42 mismatch where a launcher could refer to a missing script.
-- `directory.md` is included for local navigation only and is excluded from the Git commit. Treat it as private local documentation; do not place credentials in it.
-- `CNAME` keeps the intended host `www.davoniumtech.com`.
+- Homepage, first-visit welcome, and Our Work share the same articulated, angular white-and-cyan DVNM Bot model rendered in real time by Three.js. The balloon-shaped head approach has been replaced by a hard-surface helmet, visor, separate illuminated eyes, jaw, side armour, chest core, articulated arms and legs.
+- The two old concept pictures were removed from the Our Work page and the release source. The welcome, homepage and Work page use the same live 3D character, with a vector fallback if WebGL or the Three.js CDN is unavailable.
+- The floating control is a compact head-only DVNM Bot launcher above WhatsApp. The assistant panel has one speech toggle; while speaking, it changes to “Stop speaking” instead of creating a second stop button.
+- The first visit has a skippable, session-scoped greeting and a letter-by-letter title. Audio never starts automatically; the visitor must activate speech.
+- Light and dark themes keep the same content but use distinct surfaces, motion directions, and character lighting. Dark mode uses crisp solid surfaces rather than a blurred/foggy overlay.
+- The welcome panel and floating assistant have bounded scrolling and small-screen layouts. The documentation hub and existing guide pages are retained with their stylesheet and navigation references.
+- The showcase certificate remains editable and supports download, print/Save as PDF, and native share where the browser supports it. It is clearly labelled as a non-official demo showcase, not a qualification or claim of client work.
+- The service-worker cache now includes the local 3D loader and CSS so the local renderer assets can be cached after a successful install. Three.js itself is still fetched from jsDelivr and falls back to vector art if unavailable.
 
-## Publish from Windows
+## Main files
 
-**Prerequisites:** Git for Windows, an account with push permission to `DavoniumTech/davoniumtech-corporate-site`, network access, and GitHub authentication set up through Git Credential Manager or an equivalent secure login. Do not place a token in a command or source file.
+- `index.html`: company homepage and shared 3D DVNM Bot host
+- `work.html`: Our Work page with the shared robot scene instead of the two concept pictures
+- `assets/js/site.js`: navigation, themes, accessible visitor guide, opt-in browser speech, and PWA behavior
+- `assets/js/dvnm-robot-3d.js`: lightweight, procedurally modelled Three.js character and animation loop
+- `assets/css/dvnm-robot-3d.css`: canvas and fallback styling
+- `assets/css/dvnm-final-v45.css`: responsive V46 theme, intro, and showcase refinements
+- `demos/`: demo experiences and shareable showcase certificate
+- `docs/`: public documentation and guide library
+- `sw.js`: versioned offline cache
+- `directory.md`: local-only project map. It is included in this ZIP for your own reference and excluded from the public commit.
+- `DEPLOY-DAVONIUM-V46.ps1`: guarded publisher. It is excluded from public website files.
 
-### Simplest route
+## Publish on Windows
 
-1. Download the website ZIP and the separate `PUBLISH-DAVONIUM-V44.cmd` launcher into the same folder.
-2. Double-click `PUBLISH-DAVONIUM-V44.cmd`; it extracts the ZIP and starts the included guarded publisher. You can also extract first and run the same launcher from the extracted release folder.
-3. Read the checks. When you are ready, type exactly `PUSH` at the final prompt.
+Save `Davonium-Technologies-V46-Final-Release.zip` in Downloads, open Windows PowerShell, then paste the single command supplied in this conversation. The command extracts to a new timestamped folder and invokes the included `DEPLOY-DAVONIUM-V46.ps1` script.
 
-The script creates a fresh clone in `%USERPROFILE%\Davonium-Website-Releases`, creates a local ZIP backup, excludes local-only and secret patterns, prepares a backup branch of the old `main`, stages a full mirror of this release, validates the staged paths, commits, pushes without force, and compares the resulting GitHub `main` SHA with the local release commit. It stops if any check fails.
+The publisher verifies the target repository, makes a clean clone of `main`, filters local-only maps and common credential files, checks staged paths and likely secret patterns, shows the staged summary, asks for the exact word `PUSH`, pushes a backup branch, then pushes without force and verifies the remote commit. It does not edit a separate local Git checkout. Git for Windows and authenticated push permission are required.
 
-### Single command to extract and start deployment
+## Privacy, security, and limitations
 
-If you saved the ZIP in the standard Windows `Downloads` folder, open **PowerShell** and paste the one-liner from `PUBLISH-ONE-COMMAND.txt`. It extracts the ZIP into a new timestamped folder and launches the CMD deployment runner.
+`directory.md` is local-only and is never copied into the public website commit. Removing a formerly published file cannot erase old Git history; if private information was ever committed publicly, rotate it and review repository history. Do not put API keys, passwords, service-account keys, or certificates into browser files.
 
-## GitHub Pages and the custom domain
-
-The script pushes the source to the repository's `main` branch. It cannot switch GitHub Pages settings or configure DNS. In the repository, verify **Settings → Pages** is configured to publish from `main` and the repository root (`/(root)`), or use the existing Pages workflow if the repository is already configured that way. Then confirm the custom domain and DNS remain correct before relying on `www.davoniumtech.com`. If the repo is hosted on Cloudflare Pages instead, the git push triggers deployment only if that integration is configured.
-
-## Private file and secrets warning
-
-`directory.md` is local-only. GitHub Pages is public hosting; never commit anything that must be secret. `.gitignore` is not encryption, does not remove secrets from earlier Git history, and does not revoke exposed credentials. Rotate any key that was ever published. Browser JavaScript configuration values must be treated as public.
-
-## Validation and honest limitations
-
-Static release checks passed: all six JavaScript files pass Node syntax checks; 73 HTML pages were parsed; 3,145 local route/asset references resolved; duplicate HTML IDs were not found; all six CSS files parsed without errors; 18 SVGs parsed as XML; and sitemap, JSON, and webmanifest files validate. A headless Chromium screenshot attempt stalled in this environment, so the page has not received a confirmed browser visual pass here, and physical Android/iOS tests have not been run. The Three.js module is fetched from jsDelivr at runtime, so first-load 3D needs access to that CDN. Offline or restricted-network use falls back to the existing robot artwork. TTS is browser-provided; the bot does not ship a proprietary voice model or phoneme-perfect lip synchronisation. Live GitHub publishing and live Pages build success must be confirmed by running the deployment script with your authorized GitHub account.
-
-
-## V44 immersive 3D refresh
-The V44 layer adds lazy-loaded page-specific Three.js experiences, a faceted DVNM Bot helmet, subtle type-on headlines, sound settings that respect browser autoplay restrictions, motion controls for Creative/Skills, and per-demo art direction. The deployment runner is `DEPLOY-DAVONIUM-V44.cmd`; it calls `Deploy-Davonium-V44.ps1` and excludes `directory.md` from public commits.
-
-
-## V44 repaired deployment workflow
-
-The repaired ZIP contains `Deploy-Davonium-V44.ps1`. Download the ZIP named `Davonium-Technologies-V44-REPAIRED-DEPLOY.zip` into your Windows Downloads folder, then run the one-line PowerShell command provided with the release. It extracts to a timestamped folder and runs the bundled script; no separate `.ps1` download is required.
-
-The deployment script targets `DavoniumTech/davoniumtech-corporate-site` on `main`, never force-pushes, prompts for the exact word `PUSH`, and excludes `directory.md`, deployment scripts, and common credential files. GitHub authentication and permission to push are required. The user must verify the hosting provider deploys the pushed commit.
+Static verification passed for HTML links/IDs, JavaScript syntax, CSS syntax, SVG XML, JSON, and XML. This environment does not provide Windows PowerShell, so native execution of the publisher could not be tested here; it has been written with Windows PowerShell 5.1-compatible syntax and checked for balanced delimiters and UTF-8 BOM/CRLF encoding. A headless-browser screenshot attempt stalled, and no physical Android/iOS/tablet test or GitHub push is claimed. Review the staged output and test the live site on your own devices after deployment.

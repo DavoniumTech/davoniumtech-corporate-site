@@ -55,3 +55,19 @@ Deploy-Davonium-V44.ps1
 DEPLOY-DAVONIUM-V44.cmd
 
 PUBLISH-DAVONIUM-V44.cmd
+
+# V45 local publisher — do not publish the deployment script
+Deploy-Davonium-V45.ps1
+DEPLOY-DAVONIUM-V45.cmd
+*.p8
+*.crt
+*.der
+id_rsa*
+id_ed25519*
+client_secret*.json
+aws-credentials*.json
+google-credentials*.json
+
+DEPLOY-DAVONIUM-V46.ps1
+DEPLOY-DAVONIUM-V45.ps1
+credentials/
