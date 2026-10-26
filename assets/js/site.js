@@ -336,9 +336,9 @@
   const botRoot = new URL(`${botBase.replace(/\/$/, '')}/`, location.href);
   const botUrl = (path) => new URL(path, botRoot).href;
   // DVNM Bot is rendered as an articulated Three.js character. The old SVG/webp assets stay only as a compatibility fallback.
-  const referenceBotMarkup = (extra = '') => `<div class="dvnm-robot-art dvnm-reference-bot dvnm-three-robot ${extra}" data-dvnm-robot-host aria-hidden="true"><img class="dvnm-three-fallback" src="${botUrl('assets/images/dvnm-bot-3d.webp')}" alt="" width="480" height="640" loading="lazy" decoding="async"><canvas class="dvnm-three-canvas" data-dvnm-robot data-robot-size="mini" aria-label="Animated three-dimensional DVNM Bot robot" role="img"></canvas><span class="dvnm-three-loading">Preparing 3D…</span></div>`;
+  const referenceBotMarkup = (extra = '') => `<div class="dvnm-robot-art dvnm-reference-bot dvnm-three-robot ${extra}" data-dvnm-robot-host aria-hidden="true"><img class="dvnm-three-fallback" src="${botUrl('assets/images/dvnm-bot-v44-fallback.svg')}" alt="" width="480" height="640" loading="lazy" decoding="async"><canvas class="dvnm-three-canvas" data-dvnm-robot data-robot-size="mini" aria-label="Animated three-dimensional DVNM Bot robot" role="img"></canvas><span class="dvnm-three-loading">Preparing 3D…</span></div>`;
   const robotMarkup = (extra = '') => referenceBotMarkup(extra);
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=43');
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=44');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -518,7 +518,7 @@
       if (liveVoices.length) availableVoices = liveVoices.slice();
       const voiceKey = (voice, index) => voice.voiceURI || `${voice.name}|${voice.lang}|${index}`;
       const englishRank = voice => /^en-NG$/i.test(voice.lang || '') ? 0 : /^en-GB/i.test(voice.lang || '') ? 1 : /^en-US/i.test(voice.lang || '') ? 2 : /^en/i.test(voice.lang || '') ? 3 : 4;
-      const sortedVoices = availableVoices.map((voice, index) => ({ voice, index, key: voiceKey(voice, index) }))
+      const sortedVoices = availableVoices.filter(voice => !/^en-IN(?:-|$)/i.test(voice.lang || '') && !/^hi(?:-|$)/i.test(voice.lang || '') && !/\b(indian|hindi)\b/i.test(voice.name || '')).map((voice, index) => ({ voice, index, key: voiceKey(voice, index) }))
         .sort((a, b) => englishRank(a.voice) - englishRank(b.voice) || Number(b.voice.localService) - Number(a.voice.localService) || a.voice.name.localeCompare(b.voice.name));
       [voiceSelect, $('#dvnm-welcome-voice')].filter(Boolean).forEach(target => {
         const preferred = selectedVoiceKey || target.value || 'auto';
@@ -548,29 +548,25 @@
       try {
         const voices = speechEngine()?.getVoices?.() || availableVoices;
         if (!voices.length) return null;
+        // A previously saved preference must not bypass the current language exclusions.
+        const isExcludedVoice = voice => /^en-IN(?:-|$)/i.test(voice.lang || '') || /^hi(?:-|$)/i.test(voice.lang || '') || /\b(indian|hindi)\b/i.test(voice.name || '');
         if (selectedVoiceKey !== 'auto') {
           const chosen = voices.find((voice, index) => (voice.voiceURI || `${voice.name}|${voice.lang}|${index}`) === selectedVoiceKey);
-          if (chosen) return chosen;
+          if (chosen && !isExcludedVoice(chosen)) return chosen;
+          selectedVoiceKey = 'auto';
+          safeStore.set('dvnm-voice-choice-v32', 'auto');
         }
-        const english = voices.filter(voice => /^en(?:-|$)/i.test(voice.lang || ''));
-        const pool = english.length ? english : voices;
-        // Prefer a smoother voice that is already installed on the device for faster start-up
-        // and better offline resilience. Voice names are only hints, not a guarantee of accent.
+        // Exclude Indian-accent English and Hindi voices for the default guide; prefer natural English voices first.
+        const eligible = voices.filter(voice => !isExcludedVoice(voice));
+        const english = eligible.filter(voice => /^en(?:-|$)/i.test(voice.lang || ''));
+        const pool = english.length ? english : eligible;
         const local = pool.filter(voice => voice.localService);
         const softer = voice => /samantha|ava|aria|jenny|sonia|serena|zira|victoria|susan|karen|hazel|emma|joanna|libby|tessa|moira|fiona/i.test(voice.name || '');
-        const regionalEnglish = voice => /^en-NG$/i.test(voice.lang || '');
         const british = voice => /^en-GB/i.test(voice.lang || '');
         const american = voice => /^en-US/i.test(voice.lang || '');
-        return local.find(softer)
-          || local.find(regionalEnglish)
-          || local.find(british)
-          || local.find(american)
-          || local[0]
-          || pool.find(softer)
-          || pool.find(regionalEnglish)
-          || pool.find(british)
-          || pool[0]
-          || null;
+        const nigerian = voice => /^en-NG/i.test(voice.lang || '');
+        return local.find(softer) || local.find(british) || local.find(american) || local.find(nigerian)
+          || pool.find(softer) || pool.find(british) || pool.find(american) || pool.find(nigerian) || local[0] || pool[0] || null;
       } catch (_) { return null; }
     };
     const clearSpeechTimers = () => {
@@ -861,12 +857,12 @@
 
   // Load only the small local loader now; Three.js itself is imported on demand when a robot canvas enters view.
   if (document.querySelector('[data-dvnm-robot]')) {
-    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=43`, location.href).href;
+    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=44`, location.href).href;
     if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === robotCssUrl)) {
       const robotCss = document.createElement('link'); robotCss.rel = 'stylesheet'; robotCss.href = robotCssUrl; document.head.appendChild(robotCss);
     }
     if (!document.querySelector('script[data-dvnm-3d-loader]')) {
-      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=43`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
+      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=44`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
     }
   }
 

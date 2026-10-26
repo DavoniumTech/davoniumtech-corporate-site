@@ -1,13 +1,16 @@
-/* Davonium Technologies PWA service worker — V43 five-core-demo release and lazy Three.js DVNM Bot. */
-const CACHE_NAME = 'davonium-site-v43-threejs-character-20261026';
+/* Davonium Technologies PWA service worker — V44 immersive 3D website and five distinct core demos. */
+const CACHE_NAME = 'davonium-site-v44-immersive-threejs-20261026';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline"),
-  routeUrl("assets/css/dvnm-bot.css?v=43"),
-  routeUrl("assets/css/dvnm-robot-3d.css?v=43"),
-  routeUrl("assets/js/dvnm-robot-3d.js?v=43"),
+  routeUrl("assets/css/dvnm-bot.css?v=44"),
+  routeUrl("assets/css/dvnm-robot-3d.css?v=44"),
+  routeUrl("assets/js/dvnm-robot-3d.js?v=44"),
+  routeUrl("assets/js/dvnm-world-v44.js?v=44"),
+  routeUrl("assets/images/dvnm-bot-v44-fallback.svg"),
+  routeUrl("assets/css/dvnm-immersive-v44.css?v=44"),
   routeUrl("install"),
   routeUrl("products"),
   routeUrl("about"),
@@ -35,10 +38,10 @@ const CORE = [
   routeUrl("demos/learning"),
   routeUrl("docs/media/Davonium-Demo-Studio-Concept-Certificate-and-QR-Directory.pdf"),
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
-  routeUrl("demos/demos.css?v=43"),
-  routeUrl("demos/demos.js?v=43"),
-  routeUrl("assets/js/site.js?v=43"),
-  routeUrl("assets/js/certificate-print.js?v=43"),
+  routeUrl("demos/demos.css?v=44"),
+  routeUrl("demos/demos.js?v=44"),
+  routeUrl("assets/js/site.js?v=44"),
+  routeUrl("assets/js/certificate-print.js?v=44"),
   routeUrl("assets/images/demo-art/dvnm-biz.svg"),
   routeUrl("assets/images/demo-art/dvnm-growth.svg"),
   routeUrl("assets/images/demo-art/dvnm-market.svg"),
@@ -55,7 +58,7 @@ const CORE = [
   routeUrl("assets/images/qr-dvnm-market.png"),
   routeUrl("assets/images/qr-dvnm-growth.png"),
   routeUrl("assets/images/qr-dvnm-biz.png"),
-  routeUrl("assets/css/site-refresh-v40.css?v=43"),
+  routeUrl("assets/css/site-refresh-v40.css?v=44"),
   routeUrl("assets/images/design-concepts/global-solutions-and-seven-demos.webp"),
   routeUrl("assets/images/design-concepts/dvnm-bot-mobile-interaction.webp"),
   routeUrl("assets/images/dvnm-bot-body-v40.svg?v=40"),
@@ -63,7 +66,7 @@ const CORE = [
   routeUrl("assets/images/dvnm-bot-head-avatar-v40.svg?v=40"),
   routeUrl("assets/images/dvnm-city-skyline-light-v40.svg"),
   routeUrl("assets/images/dvnm-city-skyline-dark-v40.svg"),
-  routeUrl("assets/css/styles.css?v=43"),
+  routeUrl("assets/css/styles.css?v=44"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/icons/favicon-32.png"),
   routeUrl("assets/icons/icon-192-rounded.png"),

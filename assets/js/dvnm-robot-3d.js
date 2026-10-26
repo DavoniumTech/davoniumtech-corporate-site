@@ -1,4 +1,4 @@
-/* Davonium Technologies V43 — articulated procedural 3D DVNM Bot.
+/* Davonium Technologies V44 — faceted hard-surface procedural 3D DVNM Bot.
  * Three.js and RoundedBoxGeometry are lazy-imported only when a canvas becomes visible.
  * No visitor data, external model files, or audio are transmitted by this renderer.
  */
@@ -7,7 +7,7 @@
   if (window.__dvnmThreeRobotLoader) return;
   window.__dvnmThreeRobotLoader = true;
 
-  const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+  const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js';
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const lowPower = Number(navigator.hardwareConcurrency || 4) <= 4 || /Android|iPhone|iPad/i.test(navigator.userAgent);
   const rendererState = new Map();
@@ -93,6 +93,18 @@
     haloRing.scale.set(.76,1.14,1); halo.add(haloRing);
     const haloRing2 = new THREE.Mesh(new THREE.TorusGeometry(1.37,.005,5,100),material(0x8973ff,.2,.4,{emissive:0x5c43d8,emissiveIntensity:.65}));
     haloRing2.scale.set(.68,1.05,1); haloRing2.rotation.z=.38; halo.add(haloRing2);
+    // Architectural depth layer: glassy orbital markers, fine 3D rings and floating precision forms.
+    const worldObjects=[];
+    const worldMatA=material(0x23d9e8,.68,.22,{transparent:true,opacity:.72,emissive:0x087eac,emissiveIntensity:.5});
+    const worldMatB=material(0x8e7bff,.58,.24,{transparent:true,opacity:.68,emissive:0x4f35c0,emissiveIntensity:.55,wireframe:true});
+    for(let i=0;i<(lowPower?5:9);i++){
+      const form=i%3===0?new THREE.IcosahedronGeometry(.11+(i%2)*.035,0):i%3===1?new THREE.BoxGeometry(.12,.12,.12):new THREE.TorusGeometry(.10,.009,5,20);
+      const obj=new THREE.Mesh(form,i%2?worldMatA:worldMatB); const a=i*2.399963;
+      obj.position.set(Math.cos(a)*(1.48+(i%3)*.14),.55+(i%5)*.47,Math.sin(a)*.48-.42);
+      obj.rotation.set(a*.3,a,a*.7); scene.add(obj); worldObjects.push({mesh:obj,phase:a,r:1.48+(i%3)*.14});
+    }
+    const worldArc=new THREE.Mesh(new THREE.TorusGeometry(1.65,.006,5,100),material(0x33c9e9,.25,.3,{emissive:0x176eab,emissiveIntensity:.65}));
+    worldArc.position.set(0,1.65,-.58); worldArc.rotation.set(.3,.42,.65); worldArc.scale.set(1.05,.72,1); scene.add(worldArc);
 
     // Feet, legs and hip assembly.
     const hip = add(robot,rounded(.64,.28,.4,.11,jointMat),0,1.1,0);
@@ -143,33 +155,47 @@
       add(forearmPivot,rounded(.095,.04,.11,.02,cyan),0,-.48,.125);
       arms.push({side,shoulder,forearmPivot,hand});
     }
-    // Head pivots separately for attention, eye contact, blinking and speech movement.
+    // Head pivots separately for attention, eye contact, blinking and speech. It is a faceted, hard-surface helmet—not a sphere.
     const head = new THREE.Group(); head.position.set(0,2.48,.005); robot.add(head);
-    add(head,sphere(0,0,0,.43,.375,.38,shell));
-    add(head,rounded(.65,.43,.12,.105,darkShell),0,-.015,.275);
-    add(head,rounded(.55,.33,.075,.085,black),0,-.014,.34);
-    // Face side plates and ear modules.
+    const helmetShape = new THREE.Shape();
+    helmetShape.moveTo(-.285,-.305); helmetShape.lineTo(.285,-.305);
+    helmetShape.lineTo(.382,-.205); helmetShape.lineTo(.392,.105);
+    helmetShape.lineTo(.274,.292); helmetShape.lineTo(-.274,.292);
+    helmetShape.lineTo(-.392,.105); helmetShape.lineTo(-.382,-.205); helmetShape.closePath();
+    const helmetGeo = new THREE.ExtrudeGeometry(helmetShape,{depth:.48,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.035,bevelThickness:.035,curveSegments:2});
+    helmetGeo.center();
+    const helmetShell = new THREE.Mesh(helmetGeo,shell); head.add(helmetShell);
+    // Raised brow, angular visor surround, and separate dark glass faceplate define a purposeful robotic silhouette.
+    add(head,rounded(.52,.105,.14,.035,darkShell),0,.222,.235);
+    add(head,rounded(.67,.365,.105,.065,darkShell),0,-.018,.263);
+    add(head,rounded(.575,.275,.065,.045,black),0,-.012,.322);
+    add(head,rounded(.47,.018,.025,.008,trimMat),0,.118,.362);
+    // Machined cheek guards, side sensors, and tapered ear armour.
     for (const side of [-1,1]) {
-      add(head,rounded(.13,.28,.17,.045,cyanDark),side*.405,-.015,.02);
-      add(head,sphere(side*.435,-.01,.075,.055,.105,.075,trimMat));
-      add(head,sphere(side*.45,-.01,.13,.022,.052,.022,accent));
+      const cheek=add(head,rounded(.115,.225,.14,.025,cyanDark),side*.344,-.055,.295);
+      cheek.rotation.z=side*-.09;
+      add(head,rounded(.075,.19,.12,.018,trimMat),side*.408,-.02,.025);
+      add(head,rounded(.042,.105,.048,.014,accent),side*.41,-.022,.087);
+      add(head,rounded(.12,.04,.09,.012,jointMat),side*.255,-.245,.265);
     }
     const eyes=[];
     for (const side of [-1,1]) {
-      add(head,sphere(side*.133,.045,.39,.079,.066,.027,cyanDark));
-      const eye = add(head,sphere(side*.133,.045,.414,.045,.045,.019,accent));
-      add(head,sphere(side*.133-.008,.051,.432,.014,.016,.008,material(0xffffff,.1,.18,{emissive:0x68f5ff,emissiveIntensity:1.2})));
+      add(head,rounded(.115,.095,.032,.022,cyanDark),side*.137,.035,.363);
+      const eye = add(head,rounded(.078,.057,.025,.018,accent),side*.137,.035,.385);
+      add(head,rounded(.027,.033,.012,.008,material(0xffffff,.1,.18,{emissive:0x68f5ff,emissiveIntensity:1.2})),side*.143,.041,.402);
       eyes.push(eye);
     }
-    add(head,rounded(.14,.022,.016,.008,trimMat),0,-.075,.413);
-    const mouthCavity = add(head,rounded(.16,.045,.024,.012,black),0,-.133,.414);
-    const mouthGlow = add(head,rounded(.1,.012,.01,.005,cyan),0,-.132,.43);
-    const jaw = add(head,rounded(.25,.08,.075,.025,shell),0,-.205,.34);
-    add(head,rounded(.22,.026,.03,.012,cyanDark),0,-.21,.385);
-    // Antenna, softly animated light and ring.
-    const antennaStem=cylinder(.018,.028,.17,trimMat,14); add(head,antennaStem,0,.405,.015);
-    const antennaHalo=new THREE.Mesh(new THREE.TorusGeometry(.07,.009,7,28),accent); antennaHalo.position.set(0,.49,.015); antennaHalo.scale.set(1,.66,1); head.add(antennaHalo);
-    const antennaTip=add(head,sphere(0,.51,.02,.038,.038,.038,accent));
+    add(head,rounded(.18,.016,.018,.006,trimMat),0,-.066,.389);
+    const mouthCavity = add(head,rounded(.17,.047,.026,.009,black),0,-.132,.386);
+    add(head,rounded(.19,.028,.055,.008,jointMat),0,-.207,.335);
+    const mouthGlow = add(head,rounded(.105,.012,.012,.004,cyan),0,-.132,.405);
+    const jaw = add(head,rounded(.31,.086,.14,.025,shell),0,-.245,.25);
+    add(head,rounded(.21,.022,.025,.006,cyanDark),0,-.252,.325);
+    // A low-profile sensor bar and paired light pipes replace the balloon-like antenna.
+    add(head,rounded(.31,.055,.13,.018,darkShell),0,.307,.035);
+    const antennaStem=cylinder(.012,.019,.095,trimMat,8); add(head,antennaStem,0,.362,.025);
+    const antennaHalo=new THREE.Mesh(new THREE.TorusGeometry(.047,.007,6,20),accent); antennaHalo.position.set(0,.41,.025); antennaHalo.scale.set(1,.55,1); head.add(antennaHalo);
+    const antennaTip=add(head,sphere(0,.412,.027,.023,.023,.023,accent));
 
     // Floating data motes use instanced, tiny geometry to keep draw calls low.
     const moteGeo = new THREE.SphereGeometry(.018,8,6);
@@ -182,7 +208,7 @@
     }
 
     const hostBox = host.getBoundingClientRect();
-    const state={canvas,host,renderer,scene,camera,robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,
+    const state={canvas,host,renderer,scene,camera,robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,worldObjects,worldArc,
       active:false,disposed:false,started:performance.now(),lastBlink:performance.now()+1300+Math.random()*1600,blinkEnd:0,pointerX:0,pointerY:0,theme:'dark',size:{w:Math.max(1,hostBox.width),h:Math.max(1,hostBox.height)}};
     rendererState.set(canvas,state);
 
@@ -226,7 +252,7 @@
   }
 
   function animateState(state, now) {
-    const {robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,canvas}=state;
+    const {robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,worldObjects,worldArc,canvas}=state;
     const t=(now-state.started)/1000;
     const speaking=state.speaking || state.host.classList.contains('is-speaking');
     const waving=now<(state.waveUntil||0);
@@ -262,6 +288,8 @@
     if(now>state.lastBlink+135) state.lastBlink=now+1800+Math.random()*2600;
     eyes.forEach(eye=>{eye.scale.y=blink?.006:1;});
     halo.rotation.z=reduceMotion?0:Math.sin(t*.15)*.08; haloRing2.rotation.z=.38+(reduceMotion?0:t*.08);
+    worldArc.rotation.y=.42+(reduceMotion?0:t*.055); worldArc.rotation.z=.65+(reduceMotion?0:t*.08);
+    worldObjects.forEach(({mesh,phase,r},i)=>{if(!reduceMotion){mesh.rotation.x+=.0015+(i%3)*.0007;mesh.rotation.y+=.002;mesh.position.y+=Math.sin(t*.6+phase)*.0008;}});
     motes.forEach(({mesh,phase,r})=>{
       if(reduceMotion) return;
       const a=phase+t*.13; mesh.position.x=Math.cos(a)*r; mesh.position.z=Math.sin(a)*.35-.35; mesh.position.y=.32+((phase*1.37+t*.11)%2.2);

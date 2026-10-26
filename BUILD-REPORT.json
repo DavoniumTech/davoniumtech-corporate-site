@@ -1,50 +1,77 @@
 {
-  "release": "Davonium Technologies V43 — procedural Three.js DVNM Bot and five core demo release",
+  "release": "Davonium Technologies V44 — immersive Three.js website and five distinct core demos",
   "date": "2026-10-26",
-  "source_folder": "release source derived from supplied V41 website ZIP and corrected V42 working tree",
+  "source_folder": "release source rebuilt from the user-provided V41 website package and corrected V43 baseline",
   "checks": {
     "html_pages": 73,
-    "local_url_references_checked": 2999,
-    "same_page_or_cross_page_anchor_references_checked": 329,
+    "local_url_references_checked": 3145,
+    "same_page_and_local_html_fragment_references_checked": 2,
     "missing_local_references": [],
+    "missing_html_fragments": [],
     "duplicate_html_ids": [],
-    "css_files_checked": 5,
+    "css_files_checked": 6,
     "css_parse_errors": [],
-    "javascript_files_checked": 5,
+    "javascript_files_checked": 6,
     "javascript_syntax_failures": 0,
+    "javascript_failures": [],
     "inline_javascript_blocks_checked": 2,
     "inline_javascript_blocks_total": 2,
     "inline_javascript_syntax_failures": 0,
-    "svg_files_checked": 17,
+    "svg_files_checked": 18,
     "svg_xml_failures": [],
     "xml_files_checked": 1,
     "xml_parse_failures": 0,
-    "json_manifest_and_reports_checked": 5,
+    "xml_failures": [],
+    "json_manifest_and_reports_checked": 6,
     "json_parse_failures": 0,
+    "json_failures": [],
     "missing_required_release_files": [],
     "directory_md_ignored_by_gitignore": true,
     "credential_or_key_files_found_in_source": [],
-    "retired_growth_connect_routes_in_sitemap": false,
     "custom_domain_cname": "www.davoniumtech.com",
     "headers_allow_threejs_cdn": true,
     "deployment_cmd_points_to_present_script": true,
     "five_demo_card_counts": {
-      "homepage_featured_cards": 5,
-      "demo_studio_cards": 5,
-      "five_core_demo_names_present": {
-        "DVNM Biz": true,
-        "DVNM Market": true,
-        "DVNM Creative": true,
-        "DVNM Skills": true,
-        "DVNM Digital": true
-      },
+      "featured_demo_pages": [
+        {
+          "name": "DVNM Biz",
+          "file": "demos/business.html",
+          "scene_kind": "biz",
+          "immersion_assets_present": true
+        },
+        {
+          "name": "DVNM Market",
+          "file": "demos/shop.html",
+          "scene_kind": "market",
+          "immersion_assets_present": true
+        },
+        {
+          "name": "DVNM Creative",
+          "file": "demos/portfolio.html",
+          "scene_kind": "creative",
+          "immersion_assets_present": true
+        },
+        {
+          "name": "DVNM Skills",
+          "file": "demos/learning.html",
+          "scene_kind": "skills",
+          "immersion_assets_present": true
+        },
+        {
+          "name": "DVNM Digital",
+          "file": "demos/technology.html",
+          "scene_kind": "digital",
+          "immersion_assets_present": true
+        }
+      ],
       "five_demos_exactly_on_homepage": true,
       "five_demos_exactly_in_demo_studio": true
     },
     "threejs_robot_feature_checks": {
       "Three.js module import": true,
       "real WebGL renderer": true,
-      "procedural geometry": true,
+      "faceted hard-surface helmet": true,
+      "articulated arms": true,
       "speech sync event": true,
       "reduced motion support": true,
       "pointer tracking": true,
@@ -52,12 +79,7 @@
     },
     "visual_browser_test": "Headless Chromium screenshot attempt stalled in the environment; not claimed as passed.",
     "physical_device_tests": "Not performed in this environment.",
-    "live_github_push": "Not performed; deployment script requires user-authorized GitHub access.",
-    "javascript_failures": [],
-    "inline_script_failures": [],
-    "xml_failures": [],
-    "json_failures": [],
-    "required_files": []
+    "live_github_push": "Not performed; deployment script requires user-authorized GitHub access."
   },
   "results": {
     "static_validation_pass": true,
@@ -68,14 +90,51 @@
       "DVNM Skills",
       "DVNM Digital"
     ],
-    "threejs_robot": "Procedurally modelled articulated Three.js meshes; animated idle, gaze tracking, blink, wave, and browser-speech-synced mouth/chest motion. Not a rigged external GLB model and not phoneme-accurate.",
-    "themes": "Existing shared content is retained while CSS variables change the page surfaces, colors, borders and emphasis across light/dark themes.",
-    "security": "directory.md is included locally in ZIP, excluded from published tree. It is not encrypted. No API tokens should be kept in public/browser code.",
-    "deployment": "The internal launcher invokes the matching PowerShell script, clones the intended repository, validates staged paths, creates an old-main backup branch, asks for typed PUSH, commits and uses a normal non-force push, then checks remote SHA. It cannot configure GitHub Pages settings/DNS.",
+    "demo_scene_validation": [
+      {
+        "name": "DVNM Biz",
+        "file": "demos/business.html",
+        "scene_kind": "biz",
+        "immersion_assets_present": true
+      },
+      {
+        "name": "DVNM Market",
+        "file": "demos/shop.html",
+        "scene_kind": "market",
+        "immersion_assets_present": true
+      },
+      {
+        "name": "DVNM Creative",
+        "file": "demos/portfolio.html",
+        "scene_kind": "creative",
+        "immersion_assets_present": true
+      },
+      {
+        "name": "DVNM Skills",
+        "file": "demos/learning.html",
+        "scene_kind": "skills",
+        "immersion_assets_present": true
+      },
+      {
+        "name": "DVNM Digital",
+        "file": "demos/technology.html",
+        "scene_kind": "digital",
+        "immersion_assets_present": true
+      }
+    ],
+    "threejs_robot": "Procedural, hard-surface faceted helmet and articulated Three.js r186 character with gaze, blink, gesture, and speech-activity mouth/chest animation. Not an externally rigged GLB asset; speech timing is not phoneme accurate.",
+    "page_3d": "Lazy page-specific Three.js hero scenes are defined for the five core demos and supporting company pages; homepage uses the robot scene and 3D orbital elements to avoid a second scene competing for WebGL resources.",
+    "themes": "Content remains unchanged while theme-aware CSS changes backgrounds, surfaces, accent colours and 3D lighting.",
+    "intro": "A skippable letter-by-letter glowing wordmark, typed-on main headline, and quiet synthesized chime. AudioContext waits for a real user gesture; no audio can be guaranteed before interaction due browser policies.",
+    "performance": "Three.js loads when the hero scene is near the viewport. Rendering pauses when hidden or out of view, lowers pixel ratio on small/low-power devices, respects reduced motion and provides static fallback artwork. CDN connectivity is required for WebGL scenes.",
+    "security": "directory.md remains in the local ZIP and is omitted from the public working tree/commit by deployment exclusions. Common credential files are excluded; this is a filename/path audit, not a guarantee that no secret-like string can appear in source.",
+    "deployment": "External launcher extracts release and starts the matching PowerShell publisher. Publisher targets DavoniumTech/davoniumtech-corporate-site main, backs up the source and old main, excludes directory.md and known credential patterns, stages/audits file paths, asks user to type PUSH, and uses non-force Git push then verifies remote main SHA. It does not set DNS or GitHub Pages settings.",
     "tests_not_done": [
-      "Headless screenshot stalled; no browser visual pass claimed.",
-      "No physical Android/iOS/tablet/desktop device sweep performed.",
-      "No GitHub push or production deployment performed from this environment."
+      "Visual headless Chromium capture was blocked/stalled in the provided environment; no verified automated screenshot was produced.",
+      "No real-device Android, iOS, tablet, desktop GPU or assistive-technology tests were performed.",
+      "Three.js is fetched lazily from jsDelivr; first-load 3D requires CDN network access. A static robot/art fallback is supplied.",
+      "Browser speech synthesis uses voices available on the visitor device; the code excludes Indian English/Hindi voices from automatic selection but available voices differ by OS. No speech begins without a visitor action.",
+      "The deployment script has not been executed against GitHub from this session; the user must authenticate and approve the explicit PUSH prompt. GitHub Pages/Cloudflare Pages settings and DNS are not changed by the script."
     ]
   }
 }

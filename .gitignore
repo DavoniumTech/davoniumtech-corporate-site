@@ -50,3 +50,8 @@ npm-debug.log*
 Deploy-Davonium-V43.ps1
 DEPLOY-DAVONIUM-V43.cmd
 PUBLISH-ONE-COMMAND.txt
+
+Deploy-Davonium-V44.ps1
+DEPLOY-DAVONIUM-V44.cmd
+
+PUBLISH-DAVONIUM-V44.cmd
