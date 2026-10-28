@@ -99,6 +99,133 @@
     host.prepend(canvas);
     return canvas;
   }
+  // Real 2D canvas fallback for WebGL construction/CDN failure and Save-Data devices.
+  // It remains decorative and pass-through; page text, controls and contact links stay in normal HTML.
+  const canvasFallbacks = new WeakMap();
+  const activeCanvasFallbacks = new Set();
+  function removeCanvasFallback(host) {
+    const record = canvasFallbacks.get(host);
+    if (record) record.cleanup();
+  }
+  function installCanvasFallback(host, staticMode = (saveData || reduced)) {
+    if (!host) return null;
+    const prior = canvasFallbacks.get(host);
+    if (prior) return prior.canvas;
+    const oldPosition = host.style.position;
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    const canvas = document.createElement('canvas');
+    canvas.className = 'dvnm-v45-canvas-fallback';
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', 'Lightweight interactive 2D illustration fallback. The page information and actions remain available as regular text and controls.');
+    canvas.dataset.fallbackReason = staticMode ? 'reduced-or-save-data' : 'webgl-unavailable';
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0;';
+    host.prepend(canvas);
+    const context = canvas.getContext('2d', { alpha: true, desynchronized: true });
+    if (!context) { canvas.remove(); if (!oldPosition) host.style.removeProperty('position'); else host.style.position = oldPosition; return null; }
+    const reducedFallbackMotion = Boolean(staticMode);
+    const points = Array.from({ length: 13 }, (_, i) => ({
+      angle: i * 2.399963229728653,
+      radius: 0.18 + ((i * 7) % 11) / 15,
+      phase: i * 1.71,
+      speed: 0.14 + (i % 5) * 0.025
+    }));
+    const record = { host, canvas, context, points, raf: 0, observer: null, resizeObserver: null, visible: true, width: 0, height: 0, dpr: 1, pointerX: 0, pointerY: 0, gradient: null, themeObserver: null, cleanup: null };
+    const active = () => !reducedFallbackMotion && record.visible && !document.hidden;
+    const draw = (now = 0) => {
+      const ctx = context, width = record.width, height = record.height;
+      if (width < 8 || height < 8) return;
+      ctx.clearRect(0, 0, width, height);
+      const dark = root.dataset.theme === 'dark';
+      const accent = dark ? 'rgba(62,220,243,.78)' : 'rgba(26,155,184,.52)';
+      const faint = dark ? 'rgba(101,190,229,.16)' : 'rgba(68,122,175,.13)';
+      const cx = width * (0.5 + record.pointerX * 0.025);
+      const cy = height * (0.5 + record.pointerY * 0.025);
+      const time = reducedFallbackMotion ? 0 : now * 0.00016;
+      if (record.gradient) { ctx.fillStyle = record.gradient; ctx.fillRect(0, 0, width, height); }
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.strokeStyle = faint; ctx.lineWidth = 1;
+      for (let r = 0; r < 3; r++) {
+        ctx.beginPath(); ctx.ellipse(0, 0, Math.min(width, height) * (0.18 + r * 0.105), Math.min(width, height) * (0.095 + r * 0.054), (r - 1) * 0.24 + time * (r % 2 ? -0.08 : 0.06), 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.beginPath();
+      for (let i = 0; i < points.length; i++) {
+        const point = points[i];
+        const angle = point.angle + time * point.speed;
+        const radius = Math.min(width, height) * point.radius * 0.41;
+        const x = Math.cos(angle) * radius, y = Math.sin(angle * 0.83 + point.phase) * radius * 0.64;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath(); ctx.strokeStyle = faint; ctx.stroke();
+      for (let i = 0; i < points.length; i++) {
+        const point = points[i];
+        const angle = point.angle + time * point.speed;
+        const radius = Math.min(width, height) * point.radius * 0.41;
+        const x = Math.cos(angle) * radius, y = Math.sin(angle * 0.83 + point.phase) * radius * 0.64;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(x, y); ctx.strokeStyle = faint; ctx.stroke();
+        ctx.beginPath(); ctx.arc(x, y, i % 4 === 0 ? 2.5 : 1.5, 0, Math.PI * 2); ctx.fillStyle = i % 4 === 0 ? accent : faint; ctx.fill();
+      }
+      const hub = Math.max(3, Math.min(width, height) * 0.012);
+      ctx.beginPath(); ctx.arc(0, 0, hub * 2.3, 0, Math.PI * 2); ctx.strokeStyle = accent; ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, hub, 0, Math.PI * 2); ctx.fillStyle = accent; ctx.fill();
+      ctx.restore();
+      if (active()) record.raf = requestAnimationFrame(draw);
+      else record.raf = 0;
+    };
+    const resize = () => {
+      const rect = host.getBoundingClientRect();
+      if (rect.width < 8 || rect.height < 8) return;
+      record.width = rect.width; record.height = rect.height;
+      record.dpr = Math.min(window.devicePixelRatio || 1, saveData || reduced ? 1 : (matchMedia('(max-width: 760px)').matches ? 1.15 : 1.4));
+      canvas.width = Math.max(1, Math.round(rect.width * record.dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * record.dpr));
+      context.setTransform(record.dpr, 0, 0, record.dpr, 0, 0);
+      const dark = root.dataset.theme === 'dark';
+      record.gradient = context.createRadialGradient(rect.width * .5, rect.height * .48, 2, rect.width * .5, rect.height * .5, Math.max(rect.width, rect.height) * .58);
+      record.gradient.addColorStop(0, dark ? 'rgba(35,104,139,.12)' : 'rgba(73,174,202,.10)');
+      record.gradient.addColorStop(1, 'rgba(0,0,0,0)');
+      if (record.raf) cancelAnimationFrame(record.raf);
+      record.raf = 0; draw(0);
+    };
+    const pointer = event => {
+      if (event.pointerType === 'touch' || reducedFallbackMotion) return;
+      const rect = host.getBoundingClientRect();
+      record.pointerX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / Math.max(1, rect.width) - .5) * 2));
+      record.pointerY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / Math.max(1, rect.height) - .5) * 2));
+    };
+    const onVisibility = () => { if (document.hidden) { if (record.raf) cancelAnimationFrame(record.raf); record.raf = 0; } else if (active() && !record.raf) record.raf = requestAnimationFrame(draw); };
+    host.addEventListener('pointermove', pointer, { passive: true });
+    document.addEventListener('visibilitychange', onVisibility);
+    if ('ResizeObserver' in window) { record.resizeObserver = new ResizeObserver(resize); record.resizeObserver.observe(host); }
+    else window.addEventListener('resize', resize, { passive: true });
+    if ('IntersectionObserver' in window) {
+      record.observer = new IntersectionObserver(entries => {
+        record.visible = entries.some(entry => entry.isIntersecting);
+        if (record.visible && active() && !record.raf) record.raf = requestAnimationFrame(draw);
+        else if (!record.visible && record.raf) { cancelAnimationFrame(record.raf); record.raf = 0; }
+      }, { rootMargin: '100px' });
+      record.observer.observe(host);
+    }
+    record.themeObserver = new MutationObserver(resize);
+    record.themeObserver.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    record.cleanup = () => {
+      if (record.raf) cancelAnimationFrame(record.raf);
+      host.removeEventListener('pointermove', pointer);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('resize', resize);
+      record.resizeObserver?.disconnect(); record.observer?.disconnect(); record.themeObserver?.disconnect();
+      canvas.remove();
+      canvasFallbacks.delete(host); activeCanvasFallbacks.delete(record);
+      if (!oldPosition) host.style.removeProperty('position'); else host.style.position = oldPosition;
+    };
+    canvasFallbacks.set(host, record); activeCanvasFallbacks.add(record);
+    resize();
+    return canvas;
+  }
+  window.addEventListener('pagehide', event => {
+    if (event.persisted) return;
+    for (const record of [...activeCanvasFallbacks]) record.cleanup();
+  });
   const sceneHost = getSceneHost();
   const sceneCanvas = makeSceneMarkup(sceneHost);
   // V48 controls can be used before or after the async Three.js import finishes.
@@ -190,8 +317,9 @@
       if (state.quality === 'battery') state.applyPixelRatio(Math.min(1, window.devicePixelRatio || 1));
       else if (state.quality === 'high') state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, state.maxPixelRatio));
       else state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, low ? 1 : 1.4));
+      state.updateParticleQuality?.(state.quality);
     };
-    state.setReducedEffects = (enabled) => { state.reducedEffects = Boolean(enabled); if (state.reducedEffects) { state.pX *= .25; state.pY *= .25; } };
+    state.setReducedEffects = (enabled) => { state.reducedEffects = Boolean(enabled); if (state.reducedEffects) { state.pX *= .25; state.pY *= .25; } state.updateParticleEffects?.(state.reducedEffects); };
     state.setCameraPreset = (preset = 'orbit') => {
       state.cameraPreset = ['orbit', 'cinematic', 'reset'].includes(preset) ? preset : 'orbit';
       if (state.cameraPreset === 'cinematic') { state.cameraTarget.set(.55, .28, 6.4); state.cameraAim.set(.08, 0, 0); }
@@ -219,6 +347,7 @@
       rings[0].material.color.setHex(next.ring); rings[1].material.color.setHex(next.colors[1]); particles.material.color.setHex(next.colors[0]); ground.material.color.setHex(next.colors[1]);
       ambient.intensity = root.dataset.theme === 'dark' ? 1.25 : 1.45; key.intensity = root.dataset.theme === 'dark' ? 2.1 : 1.6; rim.color.setHex(next.colors[0]);
       host.dataset.v45Theme = root.dataset.theme || 'light';
+      state.updateParticleTheme?.(next.colors[0]);
       if (reduced && state.start) state.start();
     };
     const pointer = (event) => {
@@ -232,9 +361,11 @@
     host.addEventListener('pointerleave', leavePointer, { passive: true });
     const onScroll = () => { const rect = host.getBoundingClientRect(); state.scroll = Math.max(-1, Math.min(1, (window.innerHeight * .6 - rect.top) / Math.max(1, window.innerHeight + rect.height))); };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-    state.cleanup = () => { host.removeEventListener('pointermove', pointer); host.removeEventListener('pointerleave', leavePointer); window.removeEventListener('scroll', onScroll); };
-    canvas.addEventListener('webglcontextlost', (event) => { event.preventDefault(); host.classList.remove('has-v45-webgl'); state.pause(); }, false);
-    canvas.addEventListener('webglcontextrestored', () => { state.resize(); state.theme(); state.start(); }, false);
+    const onVisibilityChange = () => { if (document.hidden) state.pause(); else if (state.visible) state.start(); };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    state.cleanup = () => { host.removeEventListener('pointermove', pointer); host.removeEventListener('pointerleave', leavePointer); window.removeEventListener('scroll', onScroll); document.removeEventListener('visibilitychange', onVisibilityChange); if (!('ResizeObserver' in window)) window.removeEventListener('resize', resize); };
+    canvas.addEventListener('webglcontextlost', (event) => { event.preventDefault(); host.classList.remove('has-v45-webgl'); state.pause(); installCanvasFallback(host); }, false);
+    canvas.addEventListener('webglcontextrestored', () => { removeCanvasFallback(host); state.resize(); state.theme(); state.start(); }, false);
     state.theme(); resize();
     if ('ResizeObserver' in window) { state.observer = new ResizeObserver(resize); state.observer.observe(host); } else window.addEventListener('resize', resize, { passive: true });
     state.draw = (now) => {
@@ -287,12 +418,13 @@
         else mesh.scale.setScalar((.78 + (index % 4) * .14) * hoverScale);
       });
       particles.rotation.y = activeMotion ? t * (darkMode ? .027 : -.014) : 0; particles.rotation.z = state.pX * .025;
+      state.updateParticleField?.(activeMotion ? t : 0, state.pX, state.pY, activeMotion);
       renderer.render(scene, camera);
       if (state.visible && !document.hidden && !reduced) state.raf = requestAnimationFrame(state.draw);
     };
     state.start = () => { if (state.stopped || state.raf) return; state.raf = requestAnimationFrame(state.draw); };
     state.pause = () => { if (state.raf) cancelAnimationFrame(state.raf); state.raf = 0; };
-    state.dispose = () => { state.stopped = true; state.pause(); state.cleanup(); if (state.observer) state.observer.disconnect(); renderer.dispose(); scene.traverse(obj => { if (obj.geometry) obj.geometry.dispose(); if (obj.material) (Array.isArray(obj.material) ? obj.material : [obj.material]).forEach(mat => mat.dispose()); }); };
+    state.dispose = () => { if (state.stopped) return; state.stopped = true; state.pause(); state.cleanup(); state.cleanupTheme?.(); state.observer?.disconnect(); state.observerVisibility?.disconnect(); state.disposeParticleField?.(); renderer.renderLists?.dispose?.(); renderer.dispose(); scene.traverse(obj => { if (obj.geometry) obj.geometry.dispose(); if (obj.material) (Array.isArray(obj.material) ? obj.material : [obj.material]).forEach(mat => mat.dispose()); }); window.dispatchEvent(new CustomEvent('davonium:scene-disposed', { detail: { source: 'page-scene' } })); };
     return state;
   }
   if (sceneCanvas && sceneHost) {
@@ -302,7 +434,7 @@
       getThree().then(THREE => {
         if (!sceneCanvas.isConnected || !sceneHost.isConnected) return;
         const state = initScene(THREE, sceneCanvas, sceneHost);
-        if (!state) return;
+        if (!state) { installCanvasFallback(sceneHost); return; }
         sceneHost.classList.add('has-v45-webgl');
         sceneRecords.push(state);
         window.dispatchEvent(new CustomEvent('davonium:scene-ready', { detail: { source: 'page-scene', kind: state.kind } }));
@@ -310,11 +442,10 @@
         if (io) { io.observe(sceneHost); state.observerVisibility = io; } else state.start();
         const themeObserver = new MutationObserver(() => state.theme()); themeObserver.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
         state.cleanupTheme = () => themeObserver.disconnect();
-        document.addEventListener('visibilitychange', () => { if (document.hidden) state.pause(); else if (state.visible) state.start(); });
         state.start();
-      }).catch(() => { if (sceneHost) sceneHost.dataset.v45SceneFallback = 'true'; if (sceneCanvas) sceneCanvas.remove(); });
+      }).catch(() => { if (sceneHost) sceneHost.dataset.v45SceneFallback = 'true'; if (sceneCanvas) sceneCanvas.remove(); installCanvasFallback(sceneHost); });
     } else {
-      sceneHost.dataset.v45SceneFallback = 'true'; sceneCanvas.remove();
+      sceneHost.dataset.v45SceneFallback = 'true'; sceneCanvas.remove(); installCanvasFallback(sceneHost, true);
     }
   }
 
@@ -408,5 +539,5 @@
   window.setTimeout(() => floatObserver.disconnect(), 6000);
 
   // Keep scene theme sync and clear up renderers if the page is discarded.
-  window.addEventListener('pagehide', () => sceneRecords.forEach(s => { s.pause(); if (s.cleanupTheme) s.cleanupTheme(); }), { once: true });
+  window.addEventListener('pagehide', event => sceneRecords.forEach(s => { s.pause(); if (s.cleanupTheme) s.cleanupTheme(); if (!event.persisted) s.dispose?.(); }), { once: true });
 })();

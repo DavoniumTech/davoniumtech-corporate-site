@@ -4,6 +4,8 @@ import { sceneManager } from './SceneManager.js';
 import { renderEngine } from './RenderEngine.js';
 import { inputController } from './InputController.js';
 import { audioManager } from './AudioManager.js';
+import { particleEngine } from './ParticleEngine.js';
+import { coreEngine } from './CoreEngine.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -140,7 +142,9 @@ function buildDeck() {
 
   const note = make('p', 'dvnm-immersive-note', 'GPU memory is an estimate from canvas buffers and renderer resource counts; browsers do not expose exact VRAM usage. Audio is optional and starts only after you enable it.');
   panel.append(headingRow, status, metrics, qualityLabel, cameraGroup, toggles, footer, note);
-  root.append(launcher, panel);
+  // Keep the launcher at the viewport edge; the panel opens upward above it.
+  // This avoids covering the site's bottom-corner WhatsApp action when expanded.
+  root.append(panel, launcher);
   document.body.appendChild(root);
   updateAudioControls();
   return root;
@@ -194,6 +198,14 @@ function handleSceneChange({ scenes, ready }) {
 
 function boot() {
   if (!sceneManager.hasSceneCandidate()) return;
+  coreEngine.register('events', eventBus);
+  coreEngine.register('assets', assetLoader);
+  coreEngine.register('scenes', sceneManager);
+  coreEngine.register('renderer', renderEngine);
+  coreEngine.register('input', inputController);
+  coreEngine.register('audio', audioManager);
+  coreEngine.register('particles', particleEngine);
+  coreEngine.start();
   buildDeck();
   inputController.start();
   sceneManager.onChange(handleSceneChange);
@@ -210,10 +222,10 @@ function boot() {
   window.addEventListener('pagehide', event => {
     if (event.persisted) return; // Keep controls alive if the browser restores this page from its back-forward cache.
     if (refreshHandle) window.clearInterval(refreshHandle);
-    audioManager.dispose(); inputController.stop(); sceneManager.stop();
+    audioManager.dispose(); inputController.stop(); sceneManager.stop(); particleEngine.dispose(); coreEngine.stop('pagehide');
   }, { once: true });
   // assetLoader is available to real model/texture requests; no artificial loading percentage is displayed.
-  window.DavoniumImmersive = Object.freeze({ events: eventBus, loader: assetLoader, scenes: sceneManager, renderer: renderEngine, audio: audioManager });
+  window.DavoniumImmersive = Object.freeze({ core: coreEngine, events: eventBus, loader: assetLoader, scenes: sceneManager, renderer: renderEngine, audio: audioManager, particles: particleEngine });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

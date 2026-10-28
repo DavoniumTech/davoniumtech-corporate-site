@@ -1,3 +1,10 @@
+## V50 — 2026-10-29 — GLSL instancing, spatial audio, and lifecycle refinements
+
+- Added a lifecycle/service registry, bounded Three.js math pools, a small GLSL shader pipeline, and lazy instanced particles with adaptive and battery profiles.
+- Added optional Web Audio PannerNode positioning with stereo fallback and real loader progress support for Three.js-style loaders.
+- Hardened scene disposal and the mobile control-deck panel position; updated the V50 cache version.
+- Added section coverage and QA records; no production push/deploy or physical-device certification is claimed.
+
 # Changelog
 
 ## V49 — 29 October 2026

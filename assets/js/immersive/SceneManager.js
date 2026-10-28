@@ -6,6 +6,9 @@ class SceneManager {
     this._started = false;
     this._lastSignature = '';
     this._unsubscribers = [];
+    this._canvasIds = new WeakMap();
+    this._nextCanvasId = 0;
+    this._onVisibilityChange = () => this.refresh('visibility');
     this._handleExternalReady = event => this.refresh(event?.detail?.source || 'renderer');
   }
 
@@ -15,7 +18,7 @@ class SceneManager {
     window.addEventListener('davonium:scene-ready', this._handleExternalReady);
     window.addEventListener('davonium:robot-ready', this._handleExternalReady);
     window.addEventListener('davonium:scene-disposed', this._handleExternalReady);
-    document.addEventListener('visibilitychange', () => this.refresh('visibility'));
+    document.addEventListener('visibilitychange', this._onVisibilityChange);
     this.refresh('initial');
   }
 
@@ -31,7 +34,11 @@ class SceneManager {
 
   refresh(source = 'refresh') {
     const scenes = this.getScenes();
-    const signature = scenes.map(scene => `${scene.kind || 'robot'}:${scene.canvas?.dataset?.v45Scene || scene.canvas?.dataset?.robotSize || 'scene'}`).join('|');
+    const signature = scenes.map(scene => {
+      const canvas = scene.canvas;
+      if (canvas && !this._canvasIds.has(canvas)) this._canvasIds.set(canvas, ++this._nextCanvasId);
+      return `${this._canvasIds.get(canvas) || 0}:${scene.kind || 'robot'}:${canvas?.dataset?.v45Scene || canvas?.dataset?.robotSize || 'scene'}:${scene.stopped ? 0 : 1}`;
+    }).join('|');
     if (signature !== this._lastSignature || source === 'initial') {
       this._lastSignature = signature;
       eventBus.emit('scene:change', { scenes, source, ready: scenes.length > 0 });
@@ -43,6 +50,7 @@ class SceneManager {
     window.removeEventListener('davonium:scene-ready', this._handleExternalReady);
     window.removeEventListener('davonium:robot-ready', this._handleExternalReady);
     window.removeEventListener('davonium:scene-disposed', this._handleExternalReady);
+    document.removeEventListener('visibilitychange', this._onVisibilityChange);
     this._started = false;
   }
 }

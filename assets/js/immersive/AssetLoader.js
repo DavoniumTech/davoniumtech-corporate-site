@@ -38,6 +38,29 @@ class AssetLoader {
     }
   }
 
+  loadWith(loader, url, options = {}) {
+    if (!loader || typeof loader.load !== 'function') return Promise.reject(new TypeError('A Three.js-style loader with load() is required.'));
+    return this.track(options.name || String(url), report => new Promise((resolve, reject) => {
+      let request = null;
+      let settled = false;
+      const fail = error => { if (settled) return; settled = true; reject(error instanceof Error ? error : new Error('Asset load failed.')); };
+      if (options.signal?.aborted) { fail(new DOMException('Asset load was aborted.', 'AbortError')); return; }
+      const abort = () => {
+        try { request?.abort?.(); } catch (_) {}
+        fail(new DOMException('Asset load was aborted.', 'AbortError'));
+      };
+      options.signal?.addEventListener('abort', abort, { once: true });
+      try {
+        request = loader.load(
+          url,
+          value => { if (settled) return; settled = true; options.signal?.removeEventListener('abort', abort); resolve(typeof options.transform === 'function' ? options.transform(value) : value); },
+          event => report({ loaded: Number(event?.loaded) || 0, total: Number(event?.total) > 0 ? Number(event.total) : undefined }),
+          error => { options.signal?.removeEventListener('abort', abort); fail(error || new Error('Asset load failed.')); }
+        );
+      } catch (error) { options.signal?.removeEventListener('abort', abort); fail(error); }
+    }), { totalBytes: options.totalBytes });
+  }
+
   async fetchArrayBuffer(url, options = {}) {
     return this.track(options.name || url, async report => {
       const response = await fetch(url, { signal: options.signal, cache: options.cache || 'default' });

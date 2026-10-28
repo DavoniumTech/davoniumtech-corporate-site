@@ -9,6 +9,7 @@ class AudioManager {
     this.master = null;
     this.filter = null;
     this.panner = null;
+    this.spatialMode = 'none';
     this.oscillators = [];
     this._suspendToken = 0;
   }
@@ -23,12 +24,25 @@ class AudioManager {
     const master = context.createGain();
     const filter = context.createBiquadFilter();
     filter.type = 'lowpass'; filter.frequency.value = 220; filter.Q.value = .45;
-    const panner = typeof context.createStereoPanner === 'function' ? context.createStereoPanner() : null;
+    let panner = null;
+    if (typeof context.createPanner === 'function') {
+      panner = context.createPanner();
+      panner.panningModel = 'HRTF';
+      panner.distanceModel = 'inverse';
+      panner.refDistance = 1;
+      panner.maxDistance = 12;
+      panner.rolloffFactor = .7;
+      this.spatialMode = '3d';
+    } else if (typeof context.createStereoPanner === 'function') {
+      panner = context.createStereoPanner();
+      this.spatialMode = 'stereo';
+    }
     master.gain.value = 0;
     if (panner) { filter.connect(panner); panner.connect(master); }
     else filter.connect(master);
     master.connect(context.destination);
     this.context = context; this.master = master; this.filter = filter; this.panner = panner;
+    this._setPannerPosition(0, 0, -2, .01);
     return true;
   }
 
@@ -62,20 +76,38 @@ class AudioManager {
     return this.enabled;
   }
 
+  _setPannerPosition(x, y, z, smoothing = .14) {
+    if (!this.panner || !this.context) return;
+    const p = this.panner;
+    const now = this.context.currentTime;
+    if (p.positionX && p.positionY && p.positionZ) {
+      p.positionX.setTargetAtTime(x, now, smoothing);
+      p.positionY.setTargetAtTime(y, now, smoothing);
+      p.positionZ.setTargetAtTime(z, now, smoothing);
+    } else if (typeof p.setPosition === 'function') {
+      p.setPosition(x, y, z);
+    } else if (p.pan) {
+      p.pan.setTargetAtTime(Math.max(-1, Math.min(1, x / 2.5)), now, smoothing);
+    }
+  }
+
   setSpatial(enabled) {
     this.spatial = Boolean(enabled && this.panner);
-    if (this.panner && this.context) {
-      const x = this.spatial ? .22 : 0;
-      this.panner.pan.setTargetAtTime(x, this.context.currentTime, .12);
-    }
-    eventBus.emit('audio:state', { enabled: this.enabled, spatial: this.spatial });
+    if (this.spatial) this._setPannerPosition(.25, .15, -2.5, .12);
+    else this._setPannerPosition(0, 0, -2, .12);
+    eventBus.emit('audio:state', { enabled: this.enabled, spatial: this.spatial, spatialMode: this.spatialMode });
     return this.spatial;
   }
 
   updatePointer(x, normalisedDepth = 0) {
     if (!this.context || !this.enabled) return;
-    if (this.spatial && this.panner) this.panner.pan.setTargetAtTime(Math.max(-1, Math.min(1, x)), this.context.currentTime, .14);
-    this._updateDepthFilter(normalisedDepth);
+    const horizontal = Math.max(-1, Math.min(1, Number(x) || 0));
+    const depth = Math.max(0, Math.min(1, Number(normalisedDepth) || 0));
+    if (this.spatial && this.panner) {
+      if (this.spatialMode === '3d') this._setPannerPosition(horizontal * 2.4, (depth - .5) * 1.15, -1.7 - depth * 2.5, .14);
+      else if (this.panner.pan) this.panner.pan.setTargetAtTime(horizontal, this.context.currentTime, .14);
+    }
+    this._updateDepthFilter(depth);
   }
 
   _updateDepthFilter(depth) {
@@ -107,6 +139,7 @@ class AudioManager {
     this.oscillators.length = 0;
     if (this.context) this.context.close().catch(() => {});
     this.context = this.master = this.filter = this.panner = null;
+    this.spatialMode = 'none';
     this.enabled = false; this.spatial = false;
   }
 }
