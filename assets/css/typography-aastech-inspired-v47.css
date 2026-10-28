@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/* V47 typography alignment: clean, confident sans-serif inspired by A&S Tech's readable agency presentation.
+   Exact font-family metadata was not exposed by the reference's text-only public extraction; Inter is used as a close, consistent match. */
+:root { --dvnm-font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+html, body, body p, body li, body label, body input, body textarea, body select, body button,
+button, input, textarea, select, summary, .btn, .brand, .links, .nav, .card, .lead, .crumb,
+.demo-page, .demo-page p, .demo-page li, .demo-page button, .demo-page input,
+.docs-grid, .doc-card, .dvnm-v45-prelude, .dvnm-presenter-copy, .dvnm-presenter-speech,
+.dvnm-bot-panel, .dvnm-bot-dock, .dvnm-certificate-form, .dvnm-certificate-sheet,
+.dvnm-certificate-sheet * {
+  font-family: var(--dvnm-font-sans) !important;
+}
+h1, h2, h3, h4, h5, h6, .hero h1, .pagehero h1, .demo-hero h1,
+.section-title, .dvnm-certificate-title, .dvnm-certificate-signature strong {
+  font-family: var(--dvnm-font-sans) !important;
+  font-weight: 750;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+body { font-kerning: normal; font-feature-settings: "kern" 1, "liga" 1; }
+.hero h1, .pagehero h1, .demo-hero h1 { letter-spacing: -0.055em; }
+body p, body li { text-wrap: pretty; }
+button, a, input, textarea, select, summary { -webkit-tap-highlight-color: transparent; }
+pre, code, kbd, samp, .dvnm-cert-serial { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace !important; }
+/* Keep the certificate's typographic hierarchy sans-serif to match the referenced brand family. */
+.dvnm-certificate-sheet { font-family: var(--dvnm-font-sans) !important; }
+.dvnm-certificate-title { font-family: var(--dvnm-font-sans) !important; }
+@media (max-width: 520px) {
+  .hero h1, .pagehero h1, .demo-hero h1 { letter-spacing: -0.04em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

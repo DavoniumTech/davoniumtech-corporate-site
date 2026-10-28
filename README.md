@@ -38,3 +38,8 @@ The publisher verifies the target repository, makes a clean clone of `main`, fil
 `directory.md` is local-only and is never copied into the public website commit. Removing a formerly published file cannot erase old Git history; if private information was ever committed publicly, rotate it and review repository history. Do not put API keys, passwords, service-account keys, or certificates into browser files.
 
 Static verification passed for HTML links/IDs, JavaScript syntax, CSS syntax, SVG XML, JSON, and XML. This environment does not provide Windows PowerShell, so native execution of the publisher could not be tested here; it has been written with Windows PowerShell 5.1-compatible syntax and checked for balanced delimiters and UTF-8 BOM/CRLF encoding. A headless-browser screenshot attempt stalled, and no physical Android/iOS/tablet test or GitHub push is claimed. Review the staged output and test the live site on your own devices after deployment.
+
+
+## V47 note
+
+V47 loads an Inter-based sans-serif typography layer across the site. The local `LOCAL-DELIVERABLES/` folder contains a reusable business proposal and is excluded from both Git deployment copying and Cloudflare static assets. The A&S Tech CSS font-family was not directly exposed by the accessible page extraction; Inter was selected as a close visual match, not asserted as the exact source font.

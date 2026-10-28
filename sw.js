@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker — V46 shared 3D DVNM Bot, compact guide, docs and shareable showcase certificate. */
-const CACHE_NAME = 'davonium-site-v46-final-20261026';
+const CACHE_NAME = 'davonium-site-v47-aastech-typography-20261028';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -7,6 +7,7 @@ const CORE = [
 
   routeUrl(""),
   routeUrl("offline"),
+  routeUrl("assets/css/typography-aastech-inspired-v47.css?v=47"),
   routeUrl("assets/css/dvnm-bot.css?v=46"),
   routeUrl("assets/js/dvnm-final-v45.js?v=46"),
   routeUrl("assets/css/dvnm-final-v45.css?v=46"),
