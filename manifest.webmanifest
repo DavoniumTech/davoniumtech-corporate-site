@@ -12,8 +12,8 @@
     "browser"
   ],
   "orientation": "any",
-  "background_color": "#f7f9ff",
-  "theme_color": "#070a1d",
+  "background_color": "#f5f7fb",
+  "theme_color": "#080c13",
   "icons": [
     {
       "src": "./assets/icons/icon-192-rounded.png",

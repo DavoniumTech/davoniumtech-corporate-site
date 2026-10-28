@@ -1,23 +1,15 @@
-/* DAVONIUM TECHNOLOGIES V46 — typed storytelling, shared DVNM Bot scene and resilient guide UI. */
+/* DAVONIUM TECHNOLOGIES V48 — shared DVNM Bot scene, typed storytelling and resilient guide UI. */
 (() => {
   'use strict';
-  if (window.__davoniumV46) return;
-  window.__davoniumV46 = true;
+  if (window.__davoniumV48 || window.__davoniumV46) return;
+  window.__davoniumV48 = true; window.__davoniumV46 = true;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = Boolean((navigator.connection && navigator.connection.saveData) || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 2));
   const mobile = matchMedia('(max-width: 760px)').matches;
   const root = document.documentElement;
-  const safeSession = {
-    get(key) { try { return sessionStorage.getItem(key); } catch (_) { return null; } },
-    set(key, val) { try { sessionStorage.setItem(key, val); } catch (_) {} }
-  };
-
-  // Keep a useful CSS fallback visible if WebGL or the external Three.js module is unavailable.
-  const sceneColors = () => root.dataset.theme === 'dark'
-    ? [0x49ddeb, 0x8b83ff, 0xf0b58c, 0x4ac3b2]
-    : [0x4960dc, 0x159eb8, 0xf1a461, 0x9e87ef];
+  // Keep the CSS fallback visible if WebGL or the external Three.js module is unavailable.
   const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js';
   let threePromise = null;
   const getThree = () => threePromise || (threePromise = import(THREE_URL));
@@ -78,102 +70,16 @@
       heading.classList.add('dvnm-v45-type-target');
     });
   }
-  // First-visit brand reveal: short, skippable and never blocks content if sessionStorage is unavailable.
-  let soundOn = true;
-  let audioContext = null;
-  let soundReady = false;
-  function cue() {
-    if (!soundOn || !audioContext || audioContext.state !== 'running') return;
-    [[523, 0], [659, .075]].forEach(([freq, delay]) => {
-      try {
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        const t = audioContext.currentTime + delay;
-        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, t);
-        gain.gain.setValueAtTime(.0001, t); gain.gain.exponentialRampToValueAtTime(.008, t + .012); gain.gain.exponentialRampToValueAtTime(.0001, t + .10);
-        osc.connect(gain); gain.connect(audioContext.destination); osc.start(t); osc.stop(t + .12);
-      } catch (_) {}
-    });
-  }
-  function activateSound() {
-    if (soundReady) return;
-    soundReady = true;
-    try {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (Ctx) { audioContext = new Ctx(); audioContext.resume().then(cue).catch(() => {}); }
-    } catch (_) {}
-  }
-  let entryShown = false;
-  function entryReveal() {
-    if (kind !== 'home' || reduced || safeSession.get('dvnm-v46-entry') || !document.body) return;
-    entryShown = true;
-    safeSession.set('dvnm-v46-entry', '1');
-    const veil = document.createElement('div');
-    veil.className = 'dvnm-v45-prelude';
-    veil.setAttribute('role', 'presentation');
-    veil.innerHTML = '<div class="dvnm-v45-prelude-mark" aria-label="Davonium Technologies"><span class="dvnm-v45-mark-first"></span><span class="dvnm-v45-mark-second">TECHNOLOGIES</span></div><p>Useful technology, built with care.</p><div class="dvnm-v45-prelude-progress"><i></i></div><button type="button" class="dvnm-v45-skip">Skip intro</button>';
-    const first = $('.dvnm-v45-mark-first', veil);
-    const brand = 'DAVONIUM';
-    [...brand].forEach((char, i) => {
-      const span = document.createElement('span'); span.textContent = char; span.style.setProperty('--v45-delay', `${i * 42}ms`); span.setAttribute('aria-hidden', 'true'); first.appendChild(span);
-    });
-    document.body.appendChild(veil);
-    const remove = () => { if (!veil.isConnected) return; veil.classList.add('is-leaving'); setTimeout(() => veil.remove(), 260); };
-    $('.dvnm-v45-skip', veil).addEventListener('click', () => { activateSound(); remove(); });
-    veil.addEventListener('pointerdown', (event) => { if (!event.target.closest('button')) { activateSound(); remove(); } });
-    window.setTimeout(remove, 2050);
-  }
-  entryReveal();
-  if (entryShown) window.setTimeout(typeHeadline, 2180); else typeHeadline();
-  document.addEventListener('pointerdown', activateSound, { once: true, passive: true });
-  document.addEventListener('keydown', activateSound, { once: true });
-
-  // A browser-native, opt-in spoken introduction for the rendered human presenter. Never autoplays.
-  const presenterStage = $('[data-dvnm-presenter-stage]');
-  const introText = 'Hello, welcome to Davonium Technologies. We build useful websites, applications, software systems, and digital products. You can explore our five demo experiences, read our documentation, or start a project with our team. Let us show you what is possible.';
-  const introButton = $('[data-dvnm-presenter-speak]');
-  const introStatus = $('[data-dvnm-presenter-status]');
-  function chooseVoice(voices) {
-    const allowed = voices.filter(v => !/^en-IN(?:-|$)/i.test(v.lang || '') && !/^hi(?:-|$)/i.test(v.lang || '') && !/\b(indian|hindi)\b/i.test(v.name || ''));
-    const rank = (v) => /^en-NG/i.test(v.lang || '') ? 0 : /^en-GB/i.test(v.lang || '') ? 1 : /^en-US/i.test(v.lang || '') ? 2 : /^en/i.test(v.lang || '') ? 3 : 4;
-    return allowed.sort((a, b) => rank(a) - rank(b) || Number(b.localService) - Number(a.localService))[0] || null;
-  }
-  if (introButton) introButton.addEventListener('click', () => {
-    const speech = window.speechSynthesis;
-    if (!speech || typeof SpeechSynthesisUtterance === 'undefined') {
-      if (introStatus) introStatus.textContent = 'Speech is not available in this browser. The written introduction remains available.';
-      return;
-    }
-    if (introButton.dataset.v45Stop === 'yes') {
-      speech.cancel();
-      if (presenterStage) presenterStage.classList.remove('is-speaking');
-      if (introStatus) introStatus.textContent = 'Introduction stopped. The written introduction remains available.';
-      introButton.textContent = '▶ Hear introduction';
-      introButton.setAttribute('aria-pressed', 'false');
-      introButton.dataset.v45Stop = 'no';
-      return;
-    }
-    speech.cancel();
-    const utterance = new SpeechSynthesisUtterance(introText);
-    const voices = speech.getVoices ? speech.getVoices() : [];
-    const voice = chooseVoice(voices);
-    if (voice) utterance.voice = voice;
-    utterance.lang = voice?.lang || 'en-GB'; utterance.rate = .91; utterance.pitch = 1.0; utterance.volume = .9;
-    if (presenterStage) presenterStage.classList.add('is-speaking');
-    if (introStatus) introStatus.textContent = 'Your guide is speaking. Use Stop to interrupt or continue exploring below.';
-    introButton.textContent = '■ Stop introduction';
-    let ended = false;
-    introButton.dataset.v45Stop = 'yes';
-    introButton.setAttribute('aria-pressed', 'true');
-    const finish = () => { if (ended) return; ended = true; if (presenterStage) presenterStage.classList.remove('is-speaking'); introButton.textContent = '▶ Hear introduction'; introButton.dataset.v45Stop = 'no'; introButton.setAttribute('aria-pressed', 'false'); };
-    utterance.onend = finish; utterance.onerror = finish;
-    try { speech.speak(utterance); } catch (_) { finish(); if (introStatus) introStatus.textContent = 'Speech could not start; the written introduction remains available.'; }
-  });
+  // V48: site.js owns the single short welcome experience. Avoid stacking a second full-screen intro.
+  // The wordmark/title reveal remains active; sound is never initialized merely by a generic page tap.
+  typeHeadline();
 
   // Scene hosts: real WebGL geometry for the home and every page family, with graceful static CSS fallback.
   function getSceneHost() {
-    if ($('[data-dvnm-robot-host]') && kind === 'home') return null;
-    if (presenterStage) return presenterStage;
+    // The DVNM Robot renderer already owns home/work/welcome/assistant stages.
+    // Keep documentation, legal, offline and install guides fast and readable without a full WebGL canvas.
+    if ($('[data-dvnm-robot-host]:not(.dvnm-v46-welcome-robot)')) return null;
+    if (kind === 'docs' || /\/(?:legal|offline|install)(?:\.html|\/|$)/i.test(location.pathname)) return null;
     const demoArt = $('.demo-hero-art');
     if (demoArt) return demoArt;
     const techArt = $('.tech-orbit-card');
@@ -183,7 +89,7 @@
   }
   function makeSceneMarkup(host) {
     if (!host || $('.dvnm-v45-scene-canvas', host)) return $('.dvnm-v45-scene-canvas', host);
-    host.classList.add(presenterStage && host === presenterStage ? 'dvnm-v45-presenter-host' : 'dvnm-v45-page-scene-host');
+    host.classList.add('dvnm-v45-page-scene-host');
     const canvas = document.createElement('canvas');
     canvas.className = 'dvnm-v45-scene-canvas';
     canvas.setAttribute('aria-hidden', 'true'); canvas.setAttribute('role', 'presentation');
@@ -193,6 +99,23 @@
   }
   const sceneHost = getSceneHost();
   const sceneCanvas = makeSceneMarkup(sceneHost);
+  // V48 controls can be used before or after the async Three.js import finishes.
+  // Translate each demo's visible mode into a real scene-controller mode, not just CSS ornament.
+  const sceneModeMap = {
+    strategy: 'orbit', delivery: 'focus', launch: 'prism',
+    catalogue: 'orbit', product: 'focus', compare: 'prism',
+    web: 'orbit', brand: 'prism', explore: 'orbit', learn: 'orbit', practice: 'focus', progress: 'path',
+    websites: 'orbit', apps: 'focus', systems: 'path'
+  };
+  if (sceneHost) {
+    sceneHost.addEventListener('dvnm:scene-mode', (event) => {
+      const requested = String(event.detail?.mode || 'default');
+      const actual = sceneModeMap[requested] || requested;
+      sceneHost.dataset.v45Motion = actual;
+      const record = sceneRecords.find((item) => item.host === sceneHost);
+      if (record) record.mode = actual;
+    });
+  }
   function palette() {
     const dark = root.dataset.theme === 'dark';
     const themes = {
@@ -207,117 +130,6 @@
     const item = themes[kind] || themes.digital;
     return { colors: dark ? item.dark : item.light, low: dark ? 0x0a1521 : 0xf3f6ff, ring: dark ? item.ringD : item.ringL, light: dark ? 0x8dbbff : 0xffd1a1 };
   }
-  function makeHumanPresenter(THREE) {
-    const group = new THREE.Group();
-    group.scale.setScalar(1.12);
-    group.position.set(0, -.035, .42);
-    const skin = new THREE.MeshStandardMaterial({ color: 0xb97854, roughness: .72, metalness: 0.0 });
-    const skinLight = new THREE.MeshStandardMaterial({ color: 0xc98a65, roughness: .68, metalness: 0.0 });
-    const hair = new THREE.MeshStandardMaterial({ color: 0x211b1a, roughness: .84, metalness: 0.0 });
-    const jacket = new THREE.MeshStandardMaterial({ color: 0x334b60, roughness: .57, metalness: .15 });
-    const jacketLight = new THREE.MeshStandardMaterial({ color: 0x637d91, roughness: .55, metalness: .18 });
-    const trousers = new THREE.MeshStandardMaterial({ color: 0x263342, roughness: .67, metalness: .08 });
-    const shirt = new THREE.MeshStandardMaterial({ color: 0xf2f6f8, roughness: .6, metalness: .02 });
-    const shoeMat = new THREE.MeshStandardMaterial({ color: 0x101d2b, roughness: .55, metalness: .12 });
-    const cyan = new THREE.MeshStandardMaterial({ color: 0x43d9e8, emissive: 0x168ba6, emissiveIntensity: .28, roughness: .3, metalness: .22 });
-    const eyeWhite = new THREE.MeshStandardMaterial({ color: 0xfff8ed, roughness: .35 });
-    const pupilMat = new THREE.MeshStandardMaterial({ color: 0x281e1a, roughness: .3 });
-    const mouthMat = new THREE.MeshStandardMaterial({ color: 0x542a25, roughness: .75 });
-    const teethMat = new THREE.MeshStandardMaterial({ color: 0xfff4e4, roughness: .32 });
-    const addMesh = (parent, geometry, material, position, scale) => {
-      const object = new THREE.Mesh(geometry, material);
-      object.position.set(position[0], position[1], position[2]);
-      if (scale) object.scale.set(scale[0], scale[1], scale[2]);
-      parent.add(object);
-      return object;
-    };
-    const limb = (parent, start, end, radiusStart, radiusEnd, material) => {
-      const a = new THREE.Vector3(start[0], start[1], start[2]);
-      const b = new THREE.Vector3(end[0], end[1], end[2]);
-      const direction = new THREE.Vector3().subVectors(b, a);
-      const length = direction.length();
-      const object = new THREE.Mesh(new THREE.CylinderGeometry(radiusEnd, radiusStart, length, 12, 1), material);
-      object.position.copy(a).add(b).multiplyScalar(.5);
-      object.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
-      parent.add(object);
-      return object;
-    };
-
-    // Shoes and tapered trouser legs.
-    [-1, 1].forEach(side => {
-      addMesh(group, new THREE.CapsuleGeometry(.125, .58, 5, 10), trousers, [side * .17, -.79, 0], [1, 1, 1]);
-      const shoe = addMesh(group, new THREE.CapsuleGeometry(.095, .22, 4, 8), shoeMat, [side * .17, -1.36, .10], [.94, .76, 1.32]);
-      shoe.rotation.z = Math.PI / 2;
-      addMesh(group, new THREE.BoxGeometry(.19, .025, .21), jacketLight, [side * .17, -1.23, .09], [1, .42, 1]);
-    });
-
-    // Jacket torso, shirt front and lapels.
-    const torso = addMesh(group, new THREE.CapsuleGeometry(.315, .64, 7, 14), jacket, [0, .38, 0], [1.16, 1.0, .82]);
-    const shoulders = addMesh(group, new THREE.SphereGeometry(.35, 16, 12), jacket, [0, .78, 0], [1.16, .57, .82]);
-    addMesh(group, new THREE.CapsuleGeometry(.118, .60, 5, 10), shirt, [0, .41, .236], [.94, 1.0, .34]);
-    const leftLapelShape = new THREE.Shape();
-    leftLapelShape.moveTo(-.22, .79); leftLapelShape.lineTo(-.035, .70); leftLapelShape.lineTo(-.115, .29); leftLapelShape.lineTo(-.285, .62); leftLapelShape.closePath();
-    const rightLapelShape = new THREE.Shape();
-    rightLapelShape.moveTo(.22, .79); rightLapelShape.lineTo(.035, .70); rightLapelShape.lineTo(.115, .29); rightLapelShape.lineTo(.285, .62); rightLapelShape.closePath();
-    addMesh(group, new THREE.ShapeGeometry(leftLapelShape), jacketLight, [0, 0, .278]);
-    addMesh(group, new THREE.ShapeGeometry(rightLapelShape), jacketLight, [0, 0, .278]);
-    addMesh(group, new THREE.BoxGeometry(.045, .35, .018), cyan, [0, .46, .286], [1, 1, 1]);
-    addMesh(group, new THREE.SphereGeometry(.028, 8, 8), cyan, [.09, .43, .285], [1, 1, .5]);
-    addMesh(group, new THREE.SphereGeometry(.022, 8, 8), jacketLight, [.12, .28, .274], [1, 1, .5]);
-
-    // Neck and an oval, tapered head with individually modelled eyes, brows, nose, ears and jaw.
-    addMesh(group, new THREE.CylinderGeometry(.082, .10, .23, 14), skin, [0, 1.0, .015]);
-    const head = new THREE.Group(); head.position.set(0, 1.075, .02); group.add(head);
-    const headPoints = [
-      new THREE.Vector2(0, 0), new THREE.Vector2(.13, .008), new THREE.Vector2(.19, .035),
-      new THREE.Vector2(.235, .105), new THREE.Vector2(.255, .19), new THREE.Vector2(.258, .275),
-      new THREE.Vector2(.236, .355), new THREE.Vector2(.185, .425), new THREE.Vector2(.09, .465), new THREE.Vector2(0, .47)
-    ];
-    addMesh(head, new THREE.LatheGeometry(headPoints, 28), skin, [0, 0, 0]);
-    [-1, 1].forEach(side => {
-      addMesh(head, new THREE.SphereGeometry(.065, 12, 10), skinLight, [side * .25, .21, -.008], [.66, .84, .5]);
-      addMesh(head, new THREE.SphereGeometry(.052, 12, 10), eyeWhite, [side * .091, .255, .216], [1, .82, .56]);
-      addMesh(head, new THREE.SphereGeometry(.027, 12, 10), pupilMat, [side * .087, .255, .242], [.86, .88, .7]);
-      addMesh(head, new THREE.SphereGeometry(.009, 8, 8), eyeWhite, [side * .087 - .006, .264, .258], [1, 1, .6]);
-      const brow = addMesh(head, new THREE.CapsuleGeometry(.014, .078, 3, 6), hair, [side * .092, .315, .218], [1.0, .88, .6]);
-      brow.rotation.z = side * -.11;
-      const sideHair = addMesh(head, new THREE.SphereGeometry(.075, 10, 8), hair, [side * .22, .335, .018], [.65, 1.0, .75]);
-    });
-    addMesh(head, new THREE.SphereGeometry(.049, 12, 10), skinLight, [0, .18, .254], [.66, 1.12, .62]);
-    const mouth = addMesh(head, new THREE.SphereGeometry(.052, 12, 10), mouthMat, [0, .105, .239], [.98, .18, .38]);
-    const teeth = addMesh(head, new THREE.SphereGeometry(.029, 10, 8), teethMat, [0, .112, .252], [.70, .25, .35]);
-    teeth.visible = false;
-    const hairCap = addMesh(head, new THREE.SphereGeometry(.27, 18, 12), hair, [0, .425, -.015], [1.0, .39, .88]);
-    addMesh(head, new THREE.SphereGeometry(.13, 12, 8), hair, [-.12, .39, .17], [1.0, .55, .7]);
-    addMesh(head, new THREE.SphereGeometry(.09, 12, 8), hair, [.09, .405, .17], [1.05, .38, .62]);
-
-    // Arms are separate articulated groups; the hands are open in a welcoming, explanatory pose.
-    const armLeft = new THREE.Group(); armLeft.position.set(-.32, .77, .015); group.add(armLeft);
-    limb(armLeft, [0, 0, 0], [-.31, -.20, .02], .12, .095, jacket);
-    addMesh(armLeft, new THREE.SphereGeometry(.105, 10, 10), jacket, [-.31, -.20, .02], [1, 1, 1]);
-    limb(armLeft, [-.31, -.20, .02], [-.48, .025, .09], .088, .066, jacketLight);
-    addMesh(armLeft, new THREE.SphereGeometry(.075, 12, 10), skin, [-.50, .055, .105], [1.0, 1.15, .75]);
-    [-1, 0, 1].forEach((i) => {
-      const finger = addMesh(armLeft, new THREE.CapsuleGeometry(.022, .075, 3, 6), skin, [-.535 + i * .035, .125 + (i === 0 ? .01 : 0), .11], [.9, 1.0, .8]);
-      finger.rotation.z = -.20 + i * .14;
-    });
-    const armRight = new THREE.Group(); armRight.position.set(.32, .77, .015); group.add(armRight);
-    limb(armRight, [0, 0, 0], [.30, -.23, .02], .12, .095, jacket);
-    addMesh(armRight, new THREE.SphereGeometry(.105, 10, 10), jacket, [.30, -.23, .02], [1, 1, 1]);
-    limb(armRight, [.30, -.23, .02], [.49, .02, .10], .088, .065, jacketLight);
-    addMesh(armRight, new THREE.SphereGeometry(.076, 12, 10), skin, [.51, .055, .11], [1.0, 1.08, .78]);
-    [-1, 0, 1].forEach((i) => {
-      const finger = addMesh(armRight, new THREE.CapsuleGeometry(.022, .085, 3, 6), skin, [.54 + i * .037, .128 + (i === 0 ? .015 : 0), .115], [.9, 1, .8]);
-      finger.rotation.z = .18 - i * .12;
-    });
-    // Small illuminated floor disc anchors the character instead of making him float like a balloon.
-    const platform = new THREE.Group(); platform.position.set(0, -1.47, .12); group.add(platform);
-    addMesh(platform, new THREE.CylinderGeometry(.70, .76, .065, 40), new THREE.MeshStandardMaterial({ color: 0x243a50, metalness: .45, roughness: .38 }), [0, 0, 0]);
-    addMesh(platform, new THREE.TorusGeometry(.66, .012, 6, 54), cyan, [0, .04, 0]);
-    addMesh(platform, new THREE.CylinderGeometry(.55, .58, .014, 40), new THREE.MeshStandardMaterial({ color: 0x82c6d6, roughness: .6, transparent: true, opacity: .24 }), [0, .039, 0]);
-    return { group, head, torso, shoulders, armLeft, armRight, mouth, teeth, platform };
-  }
-
   function initScene(THREE, canvas, host) {
     const low = mobile || saveData || Number(navigator.hardwareConcurrency || 8) <= 4;
     let renderer;
@@ -363,9 +175,7 @@
     particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particles = new THREE.Points(particlesGeo, new THREE.PointsMaterial({ color: p.colors[0], size: low ? .025 : .032, transparent: true, opacity: .62, depthWrite: false })); scene.add(particles);
     const ground = new THREE.Mesh(new THREE.CircleGeometry(2.1, 48), new THREE.MeshBasicMaterial({ color: p.colors[1], transparent: true, opacity: .07, depthWrite: false })); ground.scale.set(1.1, .62, 1); ground.position.set(0, -1.48, -1.1); scene.add(ground);
-    const human = kind === 'home' && host.matches('[data-dvnm-presenter-stage]') ? makeHumanPresenter(THREE) : null;
-    if (human) scene.add(human.group);
-    const state = { THREE, canvas, host, kind, renderer, scene, camera, world, rings, objects, particles, materials: matList, ambient, key, rim, ground, human, low, pX: 0, pY: 0, scroll: 0, started: performance.now(), raf: 0, visible: true, stopped: false, mode: host.dataset.v45Motion || 'default' };
+    const state = { THREE, canvas, host, kind, renderer, scene, camera, world, rings, objects, particles, materials: matList, ambient, key, rim, ground, low, pX: 0, pY: 0, scroll: 0, started: performance.now(), raf: 0, visible: true, stopped: false, mode: host.dataset.v45Motion || ({ strategy: 'orbit', delivery: 'focus', launch: 'prism', catalogue: 'orbit', product: 'focus', compare: 'prism', web: 'orbit', brand: 'prism', explore: 'orbit', learn: 'orbit', practice: 'focus', progress: 'path', websites: 'orbit', apps: 'focus', systems: 'path' }[host.dataset.sceneMode] || 'default') };
     const resize = () => {
       if (state.stopped) return;
       const rect = canvas.getBoundingClientRect(); if (rect.width < 4 || rect.height < 4) return;
@@ -388,7 +198,7 @@
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
     state.cleanup = () => { host.removeEventListener('pointermove', pointer); window.removeEventListener('scroll', onScroll); };
     canvas.addEventListener('webglcontextlost', (event) => { event.preventDefault(); host.classList.remove('has-v45-webgl'); state.pause(); }, false);
-    canvas.addEventListener('webglcontextrestored', () => { if (human) host.classList.add('has-v45-webgl'); state.resize(); state.theme(); state.start(); }, false);
+    canvas.addEventListener('webglcontextrestored', () => { state.resize(); state.theme(); state.start(); }, false);
     state.theme(); resize();
     if ('ResizeObserver' in window) { state.observer = new ResizeObserver(resize); state.observer.observe(host); } else window.addEventListener('resize', resize, { passive: true });
     state.draw = (now) => {
@@ -403,7 +213,7 @@
       world.rotation.x = state.pY * -.09 + (activeMotion ? Math.sin(t * (darkMode ? .23 : .13)) * (darkMode ? .035 : .018) : 0);
       world.position.y = state.scroll * .1 + (activeMotion ? Math.sin(t * (darkMode ? .75 : .43)) * (darkMode ? .045 : .026) : 0);
       rings[0].rotation.z = .2 + (activeMotion ? t * (darkMode ? .062 : -.028) : 0); rings[1].rotation.y = .64 + (activeMotion ? t * (darkMode ? -.052 : .031) : 0);
-      objects.forEach(({ mesh, a, radius, index, baseY }) => {
+      objects.forEach(({ mesh, a, radius, index, baseX, baseY, baseZ }) => {
         const slow = state.low ? .5 : 1;
         if (activeMotion && !focus) { mesh.rotation.x += .0016 * slow; mesh.rotation.y += .0022 * slow; }
         mesh.position.x = focus ? baseX * .32 : state.mode === 'path' ? Math.cos(a + (activeMotion ? t * (darkMode ? -.095 : .055) : 0)) * radius : baseX;
@@ -413,18 +223,6 @@
         else mesh.scale.setScalar(.78 + (index % 4) * .14);
       });
       particles.rotation.y = activeMotion ? t * (darkMode ? .027 : -.014) : 0; particles.rotation.z = state.pX * .025;
-      if (state.human) {
-        const speaking = state.host.classList.contains('is-speaking');
-        const breath = activeMotion ? Math.sin(t * .72) : 0;
-        state.human.group.position.y = -.035 + breath * .018;
-        state.human.head.rotation.y = state.pX * .14 + (activeMotion ? Math.sin(t * .38) * .035 : 0);
-        state.human.head.rotation.x = state.pY * .07 + (activeMotion ? Math.sin(t * .31) * .012 : 0);
-        state.human.torso.scale.set(1.16, 1 + breath * .006, .82);
-        state.human.armLeft.rotation.z = .035 + (activeMotion ? Math.sin(t * (speaking ? 3.8 : .68)) * (speaking ? .10 : .02) : 0);
-        state.human.armRight.rotation.z = -.045 + (activeMotion ? Math.sin(t * (speaking ? 4.5 : .82)) * (speaking ? .13 : .028) : 0);
-        state.human.mouth.scale.y = speaking ? (.22 + Math.abs(Math.sin(t * 10.8)) * .48) : .18;
-        state.human.teeth.visible = speaking && Math.sin(t * 10.8) > .15;
-      }
       renderer.render(scene, camera);
       if (state.visible && !document.hidden && !reduced) state.raf = requestAnimationFrame(state.draw);
     };
@@ -442,7 +240,6 @@
         const state = initScene(THREE, sceneCanvas, sceneHost);
         if (!state) return;
         sceneHost.classList.add('has-v45-webgl');
-        if (state.human && presenterStage) presenterStage.setAttribute('data-v45-human-model', 'ready');
         sceneRecords.push(state);
         const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => { state.visible = entry.isIntersecting; if (state.visible) state.start(); else state.pause(); }), { rootMargin: '120px' }) : null;
         if (io) { io.observe(sceneHost); state.observerVisibility = io; } else state.start();
@@ -477,7 +274,7 @@
     });
     art.appendChild(bar);
   }
-  installSceneControls();
+  // V48 provides one unified scene-control bar across all five demos; the legacy V45 bar is intentionally not injected.
 
   // High-quality but restrained scroll reveals; no section is hidden unless an observer can reveal it.
   if (!reduced && 'IntersectionObserver' in window) {

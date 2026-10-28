@@ -72,5 +72,6 @@ DEPLOY-DAVONIUM-V46.ps1
 DEPLOY-DAVONIUM-V45.ps1
 credentials/
 
-# Private local proposal deliverables: do not publish with website source
 LOCAL-DELIVERABLES/
+DEPLOY-DAVONIUM-V48.ps1
+*.zip
