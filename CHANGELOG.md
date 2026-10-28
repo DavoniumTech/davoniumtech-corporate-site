@@ -1,5 +1,13 @@
 # Changelog
 
+## V49 — 29 October 2026
+- Added the native ES-module immersive controls layer for the current Three.js scene and DVNM Bot renderers.
+- Added adaptive render quality, rolling FPS telemetry, estimated GPU-memory reporting, camera presets, PNG capture, reduced effects, and opt-in procedural audio.
+- Added pointer raycasting hover response to abstract 3D page-scene objects.
+- Improved resize/animation allocation behavior and scene resource disposal.
+- Updated service-worker cache version and Windows guarded publisher for V49.
+
+
 ## V45 — 26 October 2026
 
 - Replaced the homepage's balloon-like full-body robot presentation with a procedurally modelled, articulated Three.js human presenter; retained transparent CGI art only as fallback.

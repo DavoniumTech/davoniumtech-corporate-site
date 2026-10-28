@@ -1,56 +1,44 @@
-# Davonium Technologies — V48 immersive website release
+# Davonium Technologies — V49 immersive website release
 
 **Production domain:** https://www.davoniumtech.com/  
 **Repository:** https://github.com/DavoniumTech/davoniumtech-corporate-site.git  
-**Current release marker:** V48  
-**Deploy target configured in this source:** Cloudflare Worker with static assets (`davoniumtech-corporate-site` in `wrangler.jsonc`).
+**Release marker:** V49  
+**Deployment configuration in this source:** Cloudflare Worker with static assets (`davoniumtech-corporate-site`, as configured in `wrangler.jsonc`). This is not configured as a plain GitHub Pages deployment.
 
-## What changed in V48
+## What V49 adds
 
-- Added a consistent Inter-led typography system with system-font fallbacks and a clean, high-contrast light/dark interface across all 73 HTML routes. The exact font used by the A&S Tech reference could not be verified from its accessible source, so Inter is a deliberate approximation rather than a claim of exact font matching.
-- Removed the second full-screen intro injection from the legacy scene module; the existing DVNM welcome remains the sole entry greeting. The headline reveal is letter-by-letter, short, skippable through the existing welcome action, and respects reduced-motion settings.
-- Fixed the page-scene rendering bug where `baseX` and `baseZ` were referenced without being destructured from each scene object, which could stop the animation loop on first draw.
-- Fixed the duplicate Creative/Skills scene-control row. The shared V48 controls on all five demos now update the real Three.js scene mode as well as the visible control state; Skills controls also change the sample learning accordion state.
-- Corrected the actual demo class selectors for DVNM Biz and DVNM Skills, so the right accent, surface and theme environment apply.
-- Kept the angular, articulated, procedural Three.js DVNM Bot as the common character for the homepage, welcome and Work feature, with the head-only assistant launcher and vector fallback. The old concept-image references are absent from the Work source.
-- Kept the assistant to one launcher and one speech toggle, including a visible “Stop speaking” state. Voice settings remain inside a collapsed panel section. Speech remains user-triggered.
-- Added crisp, different light/dark surface, lighting, orbital motion and demo-environment treatments without changing page wording. Reduced motion turns off looping decorative effects.
-- Refined mobile nav, bottom-sheet bounds, touch targets, safe-area spacing, Docs typography/search panels, certificate output/print/share styles, and code block containment.
-- Corrected Services content to describe exactly five core demos and added scoped business-systems/workflow automation and analytics/integration services inspired by useful business-software categories in the Hestek reference—without copying its claims, testimonials or metrics.
-- Included an editable business digital-presence and operations proposal under `LOCAL-DELIVERABLES/` for local reference. The proposal is excluded from GitHub and the public Worker release.
-- Updated service-worker cache version to V48 and adjusted CSP for the optional Google Fonts stylesheet/files and locally generated certificate image blob URLs.
-- Rebuilt the publisher for Windows PowerShell 5.1 syntax: it checks live remote `main` first, copies only public website files into a clean clone, checks private paths and common credential patterns, asks for `PUSH`, backs up the current main commit to a branch, uses a normal non-force push, then verifies the exact remote SHA. Cloudflare Worker deployment is separate and asks for `DEPLOY` twice, including account confirmation.
+- A native ES-module immersive control layer under `assets/js/immersive/`: `App.js`, `EventDispatcher.js`, `AssetLoader.js`, `SceneManager.js`, `RenderEngine.js`, `InputController.js`, and `AudioManager.js`.
+- A compact, accessible control deck on the homepage, Work page, and five core demos. It stays hidden until an actual WebGL scene reports ready, so failed WebGL/CDN loads do not leave a dead control panel over the fallback.
+- Render quality selection: Adaptive, High performance, and Battery saver. The two scene renderers expose rolling 60-frame telemetry and adapt pixel ratio in Adaptive mode within device-aware caps.
+- Live frame-rate readout, approximate GPU-memory estimate, Orbit/Cinematic/Reset camera presets, a theme shortcut, PNG capture, a visible reduce-effects preference, opt-in synthesized ambient audio, and optional pointer-based spatialisation. Sound is never started before the visitor turns it on.
+- Page-scene raycasting for object hover feedback and more purposeful interactive 3D response.
+- Lower-allocation renderer resize/animation work in the procedural DVNM Bot, improved scene resource disposal when a robot canvas is removed, and a ResizeObserver fallback for older browsers.
+- Service-worker cache version and cache-busting URLs updated to V49; the new module graph and control-deck stylesheet are included in the PWA core cache.
+- Windows PowerShell 5.1 publisher updated to V49. It checks remote `main`, prepares the public tree from the clean remote clone, excludes local-only files and deployment scripts, scans staged changes for common credential patterns, asks for exact `PUSH` approval before a normal non-force push, then separately asks for `DEPLOY` and account confirmation before Cloudflare deployment.
 
-## Main entry points
+## What remains from the V48 site
 
-- `index.html`: homepage and angular 3D DVNM Bot stage.
-- `work.html`: product progress, delivery process and shared robot scene; no old concept-image block.
-- `services.html`: service catalogue and the five-demo journey.
-- `assets/css/davonium-v48-cinematic.css`: global typography, theme environments, responsive page layout and demo scene controls.
-- `assets/js/davonium-v48-experience.js`: shared demo scene controls, assistant/welcome consistency and runtime orchestration.
-- `assets/js/dvnm-final-v45.js`: existing modular scene renderer, type reveal, docs search/filter and related enhancements; updated for V48 scene control integration.
-- `assets/js/dvnm-robot-3d.js`: articulated, hard-surface Three.js DVNM Bot and its animation states.
-- `assets/js/site.js`: navigation, persisted appearance settings, DVNM Bot, browser speech and PWA behavior.
-- `demos/`: five distinct sample experiences, local sample interactions, and certificate/showcase material.
-- `docs/`: public guide catalogue and individual documentation routes.
-- `sw.js`, `manifest.webmanifest`, `_headers`, `_redirects`, `wrangler.jsonc`: PWA, routing, security headers, and current Worker-with-assets configuration.
-- `LOCAL-DELIVERABLES/`: locally editable business proposal (MD + DOCX); **not sent to GitHub or the public Worker**.
-- `directory.md`: local-only source map; **not sent to GitHub or the public Worker**.
-- `DEPLOY-DAVONIUM-V48.ps1`: local publishing tool; **not sent to GitHub or the public Worker**.
-- `V48-QA-REPORT.json`: static checks and explicit limitations.
+The existing semantic HTML, company content, logo/icon, 73 published HTML routes, PWA/offline experience, readable documentation library, product-status language, five distinct demo route identities, certificate showcase, shared procedural Three.js DVNM Bot, fallback art, and light/dark theme are preserved. V49 builds on the supplied V48 archive; it is not a new generic site template.
 
-## One-command release on Windows
+## Entry points
 
-Save this ZIP in your Windows Downloads folder, open Windows PowerShell 5.1 or later, and paste the single command supplied with this release. It extracts the archive to a fresh timestamped folder and runs the included `DEPLOY-DAVONIUM-V48.ps1` script. You do not need to download a separate script.
+- `index.html`: company homepage and full DVNM Bot welcome scene.
+- `work.html`: product status, four-stage delivery process, shared robot scene.
+- `demos/business.html`, `shop.html`, `portfolio.html`, `learning.html`, `technology.html`: five original demo experiences.
+- `assets/js/immersive/App.js`: module entry for the new scene-control layer.
+- `assets/js/immersive/`: event bus, asset tracking, input, audio, scene registry and renderer controls.
+- `assets/js/dvnm-final-v45.js`: existing page-scene renderer, now exposing a bounded adapter for module controls.
+- `assets/js/dvnm-robot-3d.js`: articulated procedural Three.js robot renderer, with quality/camera/telemetry hooks.
+- `assets/css/davonium-v49-hud.css`: compact responsive control deck.
+- `sw.js`, `manifest.webmanifest`, `_headers`, `_redirects`, `wrangler.jsonc`: PWA, headers and deployment/routing configuration.
+- `directory.md`, `LOCAL-DELIVERABLES/`, `V49-QA-REPORT.json`, `V49-RELEASE-NOTES.md`, `MASTER-PROMPT-COVERAGE.md`, and `DEPLOY-DAVONIUM-V49.ps1`: local-only package content. They must not be published by the release helper.
 
-Requirements: Git for Windows, Node.js/npm for the optional Cloudflare step, and authenticated permission for the GitHub repository/Cloudflare account. If the `PUSH` prompt is not explicitly approved, the GitHub release is cancelled. After the push is verified, the script offers an optional `DEPLOY` step for the Worker configured in `wrangler.jsonc`; it will not change DNS or rewrite Git history.
+## One-command Windows release
 
-## Privacy and release integrity
+Save `Davonium-Technologies-V49-Immersive-Release.zip` in your Windows Downloads folder. Open Windows PowerShell 5.1 or later and paste the single command in `PUBLISH-ONE-COMMAND.txt`. The command extracts the archive into a fresh timestamped folder and runs the included V49 publisher; no separate helper download is needed.
 
-`directory.md`, `LOCAL-DELIVERABLES/`, and deployment helpers are included only in the local ZIP and are excluded from the public repository/Worker. A deletion from the current commit does not remove data from older public Git history. If credentials were ever committed, rotate them and review history separately. Never put keys, passwords or account secrets in frontend source.
+Requirements: Git for Windows, permission to the GitHub repository, and Node.js/npm plus authenticated Cloudflare access only if you approve the separate Worker deployment. The script will not push without typing `PUSH`, will not force-push, and will not deploy to Cloudflare without typing `DEPLOY` twice. It will not change DNS or rewrite Git history.
 
-## QA status
+## Honest QA status
 
-The V48 QA report records static checks. In this environment: 73 HTML pages were parsed; 3,385 local HTML `href`/`src` references resolved; 331 same-page fragment links were checked with no missing targets; there were no duplicate HTML IDs, CSS parser errors or Node JavaScript syntax errors; sitemap XML, Web App Manifest, and Worker config parsed. Nine CSS URL references were also checked. All five demo routes exist and include the shared scene-control layer.
-
-**Not claimed:** native Windows PowerShell execution; a full interactive browser visual pass (local headless Chromium timed out); physical Android/iOS/tablet testing; a GitHub push or Cloudflare deployment from this environment; or confirmation of live CDN/cache changes. Use the staged summary and route marker checks in the publisher to verify actual release state.
+The generated `V49-QA-REPORT.json` is the source of truth for the checks run in this environment. Static integrity and syntax checks can be run locally here. Native Windows PowerShell execution and a full browser/physical-device pass could not be performed in this environment; GitHub and the public website could not be reached from the shell network, and Chromium navigation was blocked by the environment. The publisher therefore remains guarded and must verify the real remote/live environment from your Windows machine before publication.

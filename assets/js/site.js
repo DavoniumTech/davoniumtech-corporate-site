@@ -338,7 +338,7 @@
   // DVNM Bot is represented by a clean, angular head-only mark in the assistant UI.
   // The full-body character is intentionally not repeated beside the WhatsApp control.
   const robotMarkup = (extra = '') => `<span class="dvnm-mini dvnm-bot-head-icon ${extra}" aria-hidden="true"><svg viewBox="0 0 96 96" focusable="false"><path d="M28 8h40l14 16 2 29-15 25-13 8H40l-13-8-15-25 2-29z" fill="#f3f8fc" stroke="#7b9ab5" stroke-width="2.8" stroke-linejoin="round"/><path d="M19 26l10-10h38l10 10-1 25-10 10H30L20 51z" fill="#0a1b2d" stroke="#47718c" stroke-width="2.5"/><path d="M29 35h12m14 0h12" stroke="#56eff2" stroke-width="6" stroke-linecap="round"/><path d="M39 47q9 7 18 0" fill="none" stroke="#52e5ed" stroke-width="3.5" stroke-linecap="round"/><path d="M26 61l12 10h20l12-10" fill="none" stroke="#9db4c9" stroke-width="3"/><path d="M36 76h24" stroke="#31bbd7" stroke-width="4" stroke-linecap="round"/><path d="M10 34h8v19h-8m68-19h8v19h-8" fill="#9fb4c9" stroke="#587893" stroke-width="2"/><circle cx="15" cy="42" r="3" fill="#44e8ef"/><circle cx="81" cy="42" r="3" fill="#44e8ef"/></svg></span>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=48');
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=49');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -863,12 +863,12 @@
 
   // Load only the small local loader now; Three.js itself is imported on demand when a robot canvas enters view.
   if (document.querySelector('[data-dvnm-robot]')) {
-    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=48`, location.href).href;
+    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=49`, location.href).href;
     if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === robotCssUrl)) {
       const robotCss = document.createElement('link'); robotCss.rel = 'stylesheet'; robotCss.href = robotCssUrl; document.head.appendChild(robotCss);
     }
     if (!document.querySelector('script[data-dvnm3d-loader]')) {
-      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=48`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
+      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=49`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
     }
   }
 

@@ -1,10 +1,10 @@
-/* Davonium V48 experience controller. Enhancements only; core content remains usable without WebGL. */
+/* Davonium V49 experience controller. Enhancements only; core content remains usable without WebGL. */
 (() => {
   'use strict';
   const $ = (selector, context = document) => context.querySelector(selector);
   const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
   const root = document.documentElement;
-  root.dataset.davoniumRelease = 'V48';
+  root.dataset.davoniumRelease = 'V49';
   document.body.classList.add('dvnm-v48-experience');
 
   // Remove any stale intro veil injected by a cached older release. V48 uses the single DVNM welcome.
@@ -113,13 +113,13 @@
     if (!$('link[href*="dvnm-robot-3d.css"]')) {
       const css = document.createElement('link');
       css.rel = 'stylesheet'; css.dataset.dvnmV48RobotCss = 'true';
-      css.href = new URL('assets/css/dvnm-robot-3d.css?v=48', baseUrl).href;
+      css.href = new URL('assets/css/dvnm-robot-3d.css?v=49', baseUrl).href;
       document.head.appendChild(css);
     }
     if (!$('script[data-dvnm3d-loader]')) {
       const script = document.createElement('script');
       script.async = true; script.dataset.dvnm3dLoader = 'true';
-      script.src = new URL('assets/js/dvnm-robot-3d.js?v=48', baseUrl).href;
+      script.src = new URL('assets/js/dvnm-robot-3d.js?v=49', baseUrl).href;
       script.onerror = () => { document.body.classList.add('dvnm-v48-robot-fallback'); };
       document.head.appendChild(script);
     }

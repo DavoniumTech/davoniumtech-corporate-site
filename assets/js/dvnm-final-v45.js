@@ -14,6 +14,8 @@
   let threePromise = null;
   const getThree = () => threePromise || (threePromise = import(THREE_URL));
   const sceneRecords = [];
+  // Shared read-only registry consumed by the V49 ES-module control deck.
+  window.DavoniumSceneRegistry = { getScenes: () => sceneRecords.filter((state) => !state.stopped && state.canvas?.isConnected) };
   const pageKind = () => {
     const path = location.pathname.toLowerCase();
     if (document.body.dataset.page === 'home' || path === '/' || path.endsWith('/index.html') && !/docs|demos/.test(path)) return 'home';
@@ -136,7 +138,9 @@
     try {
       renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !low, powerPreference: 'low-power', failIfMajorPerformanceCaveat: false });
     } catch (_) { host.dataset.v45SceneFallback = 'true'; canvas.remove(); return null; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, low ? 1 : 1.5));
+    const maxPixelRatio = low ? 1.25 : 1.75;
+    const initialPixelRatio = Math.min(window.devicePixelRatio || 1, low ? 1 : 1.45);
+    renderer.setPixelRatio(initialPixelRatio);
     renderer.setClearColor(0x000000, 0);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, .1, 80); camera.position.set(0, 0, 7.4);
@@ -175,7 +179,33 @@
     particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particles = new THREE.Points(particlesGeo, new THREE.PointsMaterial({ color: p.colors[0], size: low ? .025 : .032, transparent: true, opacity: .62, depthWrite: false })); scene.add(particles);
     const ground = new THREE.Mesh(new THREE.CircleGeometry(2.1, 48), new THREE.MeshBasicMaterial({ color: p.colors[1], transparent: true, opacity: .07, depthWrite: false })); ground.scale.set(1.1, .62, 1); ground.position.set(0, -1.48, -1.1); scene.add(ground);
-    const state = { THREE, canvas, host, kind, renderer, scene, camera, world, rings, objects, particles, materials: matList, ambient, key, rim, ground, low, pX: 0, pY: 0, scroll: 0, started: performance.now(), raf: 0, visible: true, stopped: false, mode: host.dataset.v45Motion || ({ strategy: 'orbit', delivery: 'focus', launch: 'prism', catalogue: 'orbit', product: 'focus', compare: 'prism', web: 'orbit', brand: 'prism', explore: 'orbit', learn: 'orbit', practice: 'focus', progress: 'path', websites: 'orbit', apps: 'focus', systems: 'path' }[host.dataset.sceneMode] || 'default') };
+    const state = { THREE, canvas, host, kind, renderer, scene, camera, world, rings, objects, particles, materials: matList, ambient, key, rim, ground, low, pX: 0, pY: 0, scroll: 0, started: performance.now(), raf: 0, visible: true, stopped: false, mode: host.dataset.v45Motion || ({ strategy: 'orbit', delivery: 'focus', launch: 'prism', catalogue: 'orbit', product: 'focus', compare: 'prism', web: 'orbit', brand: 'prism', explore: 'orbit', learn: 'orbit', practice: 'focus', progress: 'path', websites: 'orbit', apps: 'focus', systems: 'path' }[host.dataset.sceneMode] || 'default'), quality: 'auto', pixelRatio: initialPixelRatio, maxPixelRatio, reducedEffects: false, frameTimes: new Float32Array(60), frameIndex: 0, frameSamples: 0, frameCount: 0, lastFrameAt: 0, fps: 0, cameraPreset: 'orbit', cameraTarget: new THREE.Vector3(0, 0, 7.4), cameraAim: new THREE.Vector3(0, 0, 0), raycaster: new THREE.Raycaster(), rayPointer: new THREE.Vector2(2, 2), pickTargets: objects.map((item) => item.mesh), hoveredObject: null, needsRaycast: false };
+    state.applyPixelRatio = (ratio) => {
+      const next = Math.max(.85, Math.min(state.maxPixelRatio, ratio));
+      if (Math.abs(next - state.pixelRatio) < .035) return;
+      state.pixelRatio = next; renderer.setPixelRatio(next); state.resize();
+    };
+    state.setQuality = (profile = 'auto') => {
+      state.quality = ['auto', 'high', 'battery'].includes(profile) ? profile : 'auto';
+      if (state.quality === 'battery') state.applyPixelRatio(Math.min(1, window.devicePixelRatio || 1));
+      else if (state.quality === 'high') state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, state.maxPixelRatio));
+      else state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, low ? 1 : 1.4));
+    };
+    state.setReducedEffects = (enabled) => { state.reducedEffects = Boolean(enabled); if (state.reducedEffects) { state.pX *= .25; state.pY *= .25; } };
+    state.setCameraPreset = (preset = 'orbit') => {
+      state.cameraPreset = ['orbit', 'cinematic', 'reset'].includes(preset) ? preset : 'orbit';
+      if (state.cameraPreset === 'cinematic') { state.cameraTarget.set(.55, .28, 6.4); state.cameraAim.set(.08, 0, 0); }
+      else { state.cameraTarget.set(0, 0, 7.4); state.cameraAim.set(0, 0, 0); }
+      if (reduced || state.reducedEffects) { camera.position.copy(state.cameraTarget); camera.lookAt(state.cameraAim); }
+    };
+    state.getStats = () => {
+      const info = renderer.info || {};
+      const memory = info.memory || {};
+      const draw = info.render || {};
+      // Browser APIs do not reveal physical VRAM use; this is a conservative canvas/resource estimate only.
+      const bytes = (canvas.width * canvas.height * 8) + (Number(memory.geometries || 0) * 65536) + (Number(memory.textures || 0) * 262144);
+      return { fps: state.fps, estimatedVramMB: bytes / 1048576, geometries: Number(memory.geometries || 0), textures: Number(memory.textures || 0), drawCalls: Number(draw.calls || 0), quality: state.quality, pixelRatio: state.pixelRatio };
+    };
     const resize = () => {
       if (state.stopped) return;
       const rect = canvas.getBoundingClientRect(); if (rect.width < 4 || rect.height < 4) return;
@@ -191,12 +221,18 @@
       host.dataset.v45Theme = root.dataset.theme || 'light';
       if (reduced && state.start) state.start();
     };
-    const pointer = (event) => { const rect = host.getBoundingClientRect(); state.pX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2)); state.pY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2)); };
+    const pointer = (event) => {
+      const rect = host.getBoundingClientRect();
+      state.pX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2));
+      state.pY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2));
+      state.rayPointer.set(state.pX, -state.pY); state.needsRaycast = true;
+    };
+    const leavePointer = () => { state.pX *= .25; state.pY *= .25; state.rayPointer.set(2, 2); state.needsRaycast = true; };
     host.addEventListener('pointermove', pointer, { passive: true });
-    host.addEventListener('pointerleave', () => { state.pX *= .25; state.pY *= .25; }, { passive: true });
+    host.addEventListener('pointerleave', leavePointer, { passive: true });
     const onScroll = () => { const rect = host.getBoundingClientRect(); state.scroll = Math.max(-1, Math.min(1, (window.innerHeight * .6 - rect.top) / Math.max(1, window.innerHeight + rect.height))); };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-    state.cleanup = () => { host.removeEventListener('pointermove', pointer); window.removeEventListener('scroll', onScroll); };
+    state.cleanup = () => { host.removeEventListener('pointermove', pointer); host.removeEventListener('pointerleave', leavePointer); window.removeEventListener('scroll', onScroll); };
     canvas.addEventListener('webglcontextlost', (event) => { event.preventDefault(); host.classList.remove('has-v45-webgl'); state.pause(); }, false);
     canvas.addEventListener('webglcontextrestored', () => { state.resize(); state.theme(); state.start(); }, false);
     state.theme(); resize();
@@ -205,7 +241,34 @@
       if (state.stopped) return;
       state.raf = 0;
       const t = (now - state.started) / 1000;
-      const activeMotion = !reduced;
+      state.frameCount += 1;
+      if (state.lastFrameAt > 0) {
+        const delta = now - state.lastFrameAt;
+        if (delta > 0 && delta < 200) {
+          state.frameTimes[state.frameIndex] = delta;
+          state.frameIndex = (state.frameIndex + 1) % state.frameTimes.length;
+          state.frameSamples = Math.min(state.frameSamples + 1, state.frameTimes.length);
+          if (state.frameSamples >= 12 && state.frameCount % 12 === 0) {
+            let totalFrameTime = 0;
+            for (let frameIndex = 0; frameIndex < state.frameSamples; frameIndex++) totalFrameTime += state.frameTimes[frameIndex];
+            state.fps = 1000 / Math.max(1, totalFrameTime / state.frameSamples);
+          }
+          if (state.quality === 'auto' && state.frameSamples === 60 && state.frameCount % 60 === 0) {
+            if (state.fps < 48) state.applyPixelRatio(state.pixelRatio - .10);
+            else if (state.fps > 58) state.applyPixelRatio(state.pixelRatio + .05);
+          }
+        }
+      }
+      state.lastFrameAt = now;
+      const activeMotion = !reduced && !state.reducedEffects;
+      camera.position.lerp(state.cameraTarget, reduced || state.reducedEffects ? .18 : .035);
+      camera.lookAt(state.cameraAim);
+      if (state.needsRaycast) {
+        state.raycaster.setFromCamera(state.rayPointer, camera);
+        const hit = state.raycaster.intersectObjects(state.pickTargets, false)[0]?.object || null;
+        if (hit !== state.hoveredObject) { state.hoveredObject = hit; window.dispatchEvent(new CustomEvent('davonium:scene-hover', { detail: { kind: state.kind, active: Boolean(hit) } })); }
+        state.needsRaycast = false;
+      }
       const focus = state.mode === 'focus';
       const orbit = state.mode === 'orbit' || state.mode === 'default';
       const darkMode = root.dataset.theme === 'dark';
@@ -219,8 +282,9 @@
         mesh.position.x = focus ? baseX * .32 : state.mode === 'path' ? Math.cos(a + (activeMotion ? t * (darkMode ? -.095 : .055) : 0)) * radius : baseX;
         mesh.position.y = (focus ? baseY * .35 : baseY) + (activeMotion && !focus ? Math.sin(t * (darkMode ? .78 : .49) + a) * (darkMode ? .12 : .075) : 0);
         mesh.position.z = focus ? baseZ * .25 : baseZ;
-        if (state.mode === 'prism') mesh.scale.setScalar((.76 + (index % 4) * .14) * (1 + (activeMotion ? .06 * Math.sin(t + index) : 0)));
-        else mesh.scale.setScalar(.78 + (index % 4) * .14);
+        const hoverScale = mesh === state.hoveredObject && activeMotion ? 1.14 : 1;
+        if (state.mode === 'prism') mesh.scale.setScalar((.76 + (index % 4) * .14) * (1 + (activeMotion ? .06 * Math.sin(t + index) : 0)) * hoverScale);
+        else mesh.scale.setScalar((.78 + (index % 4) * .14) * hoverScale);
       });
       particles.rotation.y = activeMotion ? t * (darkMode ? .027 : -.014) : 0; particles.rotation.z = state.pX * .025;
       renderer.render(scene, camera);
@@ -241,6 +305,7 @@
         if (!state) return;
         sceneHost.classList.add('has-v45-webgl');
         sceneRecords.push(state);
+        window.dispatchEvent(new CustomEvent('davonium:scene-ready', { detail: { source: 'page-scene', kind: state.kind } }));
         const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => { state.visible = entry.isIntersecting; if (state.visible) state.start(); else state.pause(); }), { rootMargin: '120px' }) : null;
         if (io) { io.observe(sceneHost); state.observerVisibility = io; } else state.start();
         const themeObserver = new MutationObserver(() => state.theme()); themeObserver.observe(root, { attributes: true, attributeFilter: ['data-theme'] });

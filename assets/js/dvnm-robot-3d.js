@@ -11,6 +11,7 @@
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const lowPower = Number(navigator.hardwareConcurrency || 4) <= 4 || /Android|iPhone|iPad/i.test(navigator.userAgent);
   const rendererState = new Map();
+  window.DavoniumRobotRegistry = { getScenes: () => [...rendererState.values()].filter((state) => !state.disposed && state.canvas?.isConnected) };
   let THREE = null, importPromise = null;
 
   const loadThree = () => {
@@ -39,7 +40,9 @@
     const camera = new THREE.PerspectiveCamera(mini ? 34 : 31, 1, .1, 80);
     camera.position.set(0, 1.57, mini ? 6.8 : 5.65);
     camera.lookAt(0,1.45,0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.25 : 1.7));
+    const maxPixelRatio = lowPower ? 1.25 : 1.7;
+    const initialPixelRatio = Math.min(window.devicePixelRatio || 1, maxPixelRatio);
+    renderer.setPixelRatio(initialPixelRatio);
     renderer.setClearColor(0x000000,0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -209,7 +212,7 @@
 
     const hostBox = host.getBoundingClientRect();
     const state={canvas,host,renderer,scene,camera,robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,worldObjects,worldArc,
-      active:false,disposed:false,started:performance.now(),lastBlink:performance.now()+1300+Math.random()*1600,blinkEnd:0,pointerX:0,pointerY:0,theme:'dark',size:{w:Math.max(1,hostBox.width),h:Math.max(1,hostBox.height)}};
+      kind:'robot',active:false,disposed:false,started:performance.now(),lastBlink:performance.now()+1300+Math.random()*1600,blinkEnd:0,pointerX:0,pointerY:0,theme:'dark',size:{w:Math.max(1,hostBox.width),h:Math.max(1,hostBox.height)},sizeInitialized:false,quality:'auto',pixelRatio:initialPixelRatio,maxPixelRatio,reducedEffects:false,frameTimes:new Float32Array(60),frameIndex:0,frameSamples:0,frameCount:0,lastFrameAt:0,fps:0,cameraPreset:'orbit',cameraTarget:new THREE.Vector3(0,1.57,mini?6.8:5.65),cameraAim:new THREE.Vector3(0,1.45,0)};
     rendererState.set(canvas,state);
 
     function updateTheme() {
@@ -223,13 +226,36 @@
       rimLight.intensity=dark?18:14;
     }
     updateTheme();
+    state.applyPixelRatio=(ratio)=>{
+      const next=Math.max(.85,Math.min(state.maxPixelRatio,ratio));
+      if(Math.abs(next-state.pixelRatio)<.035 && state.sizeInitialized) return;
+      state.pixelRatio=next; renderer.setPixelRatio(next); state.sizeInitialized=false; state.resize();
+    };
+    state.setQuality=(profile='auto')=>{
+      state.quality=['auto','high','battery'].includes(profile)?profile:'auto';
+      if(state.quality==='battery') state.applyPixelRatio(Math.min(1,window.devicePixelRatio||1));
+      else if(state.quality==='high') state.applyPixelRatio(Math.min(window.devicePixelRatio||1,state.maxPixelRatio));
+      else state.applyPixelRatio(Math.min(window.devicePixelRatio||1,state.maxPixelRatio,lowPower?1.1:1.4));
+    };
+    state.setReducedEffects=(enabled)=>{state.reducedEffects=Boolean(enabled);if(state.reducedEffects){state.pointerX*=.25;state.pointerY*=.25;}};
+    state.setCameraPreset=(preset='orbit')=>{
+      state.cameraPreset=['orbit','cinematic','reset'].includes(preset)?preset:'orbit';
+      if(state.cameraPreset==='cinematic') {state.cameraTarget.set(.32,1.72,mini?6.3:5.15);state.cameraAim.set(.05,1.45,0);}
+      else {state.cameraTarget.set(0,1.57,mini?6.8:5.65);state.cameraAim.set(0,1.45,0);}
+      if(reduceMotion||state.reducedEffects){camera.position.copy(state.cameraTarget);camera.lookAt(state.cameraAim);}
+    };
+    state.getStats=()=>{
+      const memory=renderer.info?.memory||{}; const draw=renderer.info?.render||{};
+      const bytes=(canvas.width*canvas.height*8)+(Number(memory.geometries||0)*65536)+(Number(memory.textures||0)*262144);
+      return {fps:state.fps,estimatedVramMB:bytes/1048576,geometries:Number(memory.geometries||0),textures:Number(memory.textures||0),drawCalls:Number(draw.calls||0),quality:state.quality,pixelRatio:state.pixelRatio};
+    };
     const resize=()=>{
       if(state.disposed) return;
       const box=host.getBoundingClientRect();
       if(box.width<2 || box.height<2) return;
       const w=Math.round(box.width),h=Math.round(box.height);
-      if(w===state.size.w && h===state.size.h && renderer.getSize(new THREE.Vector2()).x===w) return;
-      state.size={w,h}; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+      if(state.sizeInitialized && w===state.size.w && h===state.size.h) return;
+      state.size={w,h}; state.sizeInitialized=true; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
     };
     state.resize=resize; resize();
     const interactionHost=host.closest('.art') || host.closest('.dvnm-stage') || host;
@@ -242,13 +268,15 @@
     interactionHost.addEventListener('pointermove',onPointerMove,{passive:true});
     const onClick=()=>{ state.waveUntil=performance.now()+1150; };
     interactionHost.addEventListener('click',onClick,{passive:true});
-    state.cleanup=()=>{interactionHost.removeEventListener('pointermove',onPointerMove);interactionHost.removeEventListener('click',onClick);};
+    state.cleanup=()=>{interactionHost.removeEventListener('pointermove',onPointerMove);interactionHost.removeEventListener('click',onClick);if(!('ResizeObserver' in window))window.removeEventListener('resize',resize);};
     host.dataset.threeReady='true'; host.setAttribute('data-three-ready','true');
     host.querySelector('.dvnm-three-loading')?.remove();
     if(!host.querySelector('.dvnm-three-loading')) { /* no status text needed once the canvas appears */ }
-    state.observer = new ResizeObserver(resize); state.observer.observe(host);
+    if ('ResizeObserver' in window) { state.observer = new ResizeObserver(resize); state.observer.observe(host); }
+    else window.addEventListener('resize', resize, { passive: true });
     state.speaking=false;
     state.updateTheme=updateTheme;
+    window.dispatchEvent(new CustomEvent('davonium:robot-ready', { detail: { source: 'robot-scene', size: mini ? 'mini' : 'full' } }));
   }
 
   function animateState(state, now) {
@@ -256,44 +284,43 @@
     const t=(now-state.started)/1000;
     const speaking=state.speaking || state.host.classList.contains('is-speaking');
     const waving=now<(state.waveUntil||0);
-    const breathe=reduceMotion?0:Math.sin(t*1.4)*.018;
-    robot.position.y=.045+(reduceMotion?0:Math.sin(t*1.75)*.035);
-    robot.rotation.y=(reduceMotion?0:Math.sin(t*.34)*.07)+state.pointerX*.16;
+    const motionReduced=reduceMotion||state.reducedEffects;
+    const breathe=motionReduced?0:Math.sin(t*1.4)*.018;
+    robot.position.y=.045+(motionReduced?0:Math.sin(t*1.75)*.035);
+    robot.rotation.y=(motionReduced?0:Math.sin(t*.34)*.07)+state.pointerX*.16;
     robot.rotation.z=state.pointerX*-.018;
-    head.rotation.y=state.pointerX*.24 + (reduceMotion?0:Math.sin(t*.75)*.025);
-    head.rotation.x=-state.pointerY*.10 + (speaking&&!reduceMotion?Math.sin(t*3.2)*.025:0);
+    head.rotation.y=state.pointerX*.24 + (motionReduced?0:Math.sin(t*.75)*.025);
+    head.rotation.x=-state.pointerY*.10 + (speaking&&!motionReduced?Math.sin(t*3.2)*.025:0);
     head.position.y=2.48+breathe;
-    core.rotation.z=reduceMotion?0:t*.42;
-    const pulse=speaking&&!reduceMotion ? .68+.42*(.5+.5*Math.sin(t*16.5)) : .9+(reduceMotion?0:.10*Math.sin(t*2.2));
+    core.rotation.z=motionReduced?0:t*.42;
+    const pulse=speaking&&!motionReduced ? .68+.42*(.5+.5*Math.sin(t*16.5)) : .9+(motionReduced?0:.10*Math.sin(t*2.2));
     core.scale.setScalar(pulse); coreRing.material.emissiveIntensity=speaking?1.5:1.0;
-    coreInner.scale.y=speaking&&!reduceMotion? .85+Math.abs(Math.sin(t*15))*.3:1;
-    mouthCavity.scale.y=speaking&&!reduceMotion ? .6+Math.abs(Math.sin(t*15.2))*.9 : .42;
-    mouthGlow.scale.x=speaking&&!reduceMotion ? .75+Math.abs(Math.sin(t*14.1))*.35 : 1;
-    jaw.rotation.x=speaking&&!reduceMotion ? -.10-Math.abs(Math.sin(t*14.8))*.17 : 0;
-    antennaTip.scale.setScalar(.9+(speaking&&!reduceMotion?Math.sin(t*7)*.12:Math.sin(t*1.8)*.06));
-    antennaHalo.rotation.z=reduceMotion?0:t*.65;
+    coreInner.scale.y=speaking&&!motionReduced? .85+Math.abs(Math.sin(t*15))*.3:1;
+    mouthCavity.scale.y=speaking&&!motionReduced ? .6+Math.abs(Math.sin(t*15.2))*.9 : .42;
+    mouthGlow.scale.x=speaking&&!motionReduced ? .75+Math.abs(Math.sin(t*14.1))*.35 : 1;
+    jaw.rotation.x=speaking&&!motionReduced ? -.10-Math.abs(Math.sin(t*14.8))*.17 : 0;
+    antennaTip.scale.setScalar(.9+(speaking&&!motionReduced?Math.sin(t*7)*.12:Math.sin(t*1.8)*.06));
+    antennaHalo.rotation.z=motionReduced?0:t*.65;
     const wave= waving ? Math.sin((now-(state.waveUntil-1150))/1150*Math.PI*4)*.34 : 0;
-    arms.forEach(({side,shoulder,forearmPivot})=>{
-      const idle=reduceMotion?0:Math.sin(t*1.35+side)*.035;
+    for(let i=0;i<arms.length;i++) {
+      const arm=arms[i], side=arm.side, shoulder=arm.shoulder, forearmPivot=arm.forearmPivot;
+      const idle=motionReduced?0:Math.sin(t*1.35+side)*.035;
       if(side>0) {
-        shoulder.rotation.z=wave + (speaking&&!reduceMotion?-.24 + Math.sin(t*5)*.06: .08) + idle;
-        forearmPivot.rotation.z=wave*.38+(speaking&&!reduceMotion?-.22:0);
+        shoulder.rotation.z=wave + (speaking&&!motionReduced?-.24 + Math.sin(t*5)*.06: .08) + idle;
+        forearmPivot.rotation.z=wave*.38+(speaking&&!motionReduced?-.22:0);
       } else {
-        shoulder.rotation.z=-.08+(speaking&&!reduceMotion?.12:0)+idle;
-        forearmPivot.rotation.z=speaking&&!reduceMotion?.12:0;
+        shoulder.rotation.z=-.08+(speaking&&!motionReduced?.12:0)+idle;
+        forearmPivot.rotation.z=speaking&&!motionReduced?.12:0;
       }
-    });
-    legs.forEach((leg,i)=>{ leg.rotation.x=(!reduceMotion&&waving)?Math.sin(t*8+i)*.035:0; });
+    }
+    for(let i=0;i<legs.length;i++) legs[i].rotation.x=(!motionReduced&&waving)?Math.sin(t*8+i)*.035:0;
     const blink = now>state.lastBlink && now<state.lastBlink+135;
     if(now>state.lastBlink+135) state.lastBlink=now+1800+Math.random()*2600;
-    eyes.forEach(eye=>{eye.scale.y=blink?.006:1;});
-    halo.rotation.z=reduceMotion?0:Math.sin(t*.15)*.08; haloRing2.rotation.z=.38+(reduceMotion?0:t*.08);
-    worldArc.rotation.y=.42+(reduceMotion?0:t*.055); worldArc.rotation.z=.65+(reduceMotion?0:t*.08);
-    worldObjects.forEach(({mesh,phase,r},i)=>{if(!reduceMotion){mesh.rotation.x+=.0015+(i%3)*.0007;mesh.rotation.y+=.002;mesh.position.y+=Math.sin(t*.6+phase)*.0008;}});
-    motes.forEach(({mesh,phase,r})=>{
-      if(reduceMotion) return;
-      const a=phase+t*.13; mesh.position.x=Math.cos(a)*r; mesh.position.z=Math.sin(a)*.35-.35; mesh.position.y=.32+((phase*1.37+t*.11)%2.2);
-    });
+    for(let i=0;i<eyes.length;i++) eyes[i].scale.y=blink?.006:1;
+    halo.rotation.z=motionReduced?0:Math.sin(t*.15)*.08; haloRing2.rotation.z=.38+(motionReduced?0:t*.08);
+    worldArc.rotation.y=.42+(motionReduced?0:t*.055); worldArc.rotation.z=.65+(motionReduced?0:t*.08);
+    for(let i=0;i<worldObjects.length;i++) { const item=worldObjects[i]; if(!motionReduced){item.mesh.rotation.x+=.0015+(i%3)*.0007;item.mesh.rotation.y+=.002;item.mesh.position.y+=Math.sin(t*.6+item.phase)*.0008;} }
+    if(!motionReduced) for(let i=0;i<motes.length;i++) { const item=motes[i]; const a=item.phase+t*.13; item.mesh.position.x=Math.cos(a)*item.r; item.mesh.position.z=Math.sin(a)*.35-.35; item.mesh.position.y=.32+((item.phase*1.37+t*.11)%2.2); }
   }
 
   let running=false;
@@ -304,8 +331,22 @@
     for(const state of rendererState.values()) {
       if(state.disposed || !state.active || !state.canvas.isConnected) continue;
       needsNext=true;
-      try { state.resize(); animateState(state,now); state.renderer.render(state.scene,state.camera); }
-      catch(_) { setFallback(state.host); state.active=false; }
+      try {
+        if(state.lastFrameAt>0) {
+          const delta=now-state.lastFrameAt;
+          if(delta>0 && delta<200) {
+            state.frameTimes[state.frameIndex]=delta; state.frameIndex=(state.frameIndex+1)%state.frameTimes.length;
+            state.frameSamples=Math.min(state.frameSamples+1,state.frameTimes.length);
+            if(state.frameSamples>=12 && state.frameCount%12===0) { let total=0; for(let i=0;i<state.frameSamples;i++) total+=state.frameTimes[i]; state.fps=1000/Math.max(1,total/state.frameSamples); }
+            if(state.quality==='auto' && state.frameSamples===60 && state.frameCount%60===0) { if(state.fps<48) state.applyPixelRatio(state.pixelRatio-.10); else if(state.fps>58) state.applyPixelRatio(state.pixelRatio+.05); }
+          }
+        }
+        state.lastFrameAt=now; state.frameCount++;
+        state.resize(); animateState(state,now);
+        camera.position.lerp(state.cameraTarget, (state.reducedEffects || reduceMotion) ? .18 : .035);
+        camera.lookAt(state.cameraAim);
+        state.renderer.render(state.scene,state.camera);
+      } catch(_) { setFallback(state.host); state.active=false; }
     }
     if(needsNext) {running=true; requestAnimationFrame(frame);}
   }
@@ -377,7 +418,11 @@
     removed.forEach(canvas=>{
       const state=rendererState.get(canvas); if(!state || canvas.isConnected) return;
       state.disposed=true; state.active=false; state.cleanup?.(); state.observer?.disconnect();
-      state.renderer.dispose(); rendererState.delete(canvas);
+      const geometries=new Set(), materials=new Set();
+      state.scene.traverse(object=>{if(object.geometry)geometries.add(object.geometry);if(object.material){for(const material of (Array.isArray(object.material)?object.material:[object.material])) materials.add(material);}});
+      geometries.forEach(geometry=>geometry.dispose()); materials.forEach(material=>material.dispose());
+      state.renderer.renderLists?.dispose?.(); state.renderer.dispose(); rendererState.delete(canvas);
+      window.dispatchEvent(new CustomEvent('davonium:scene-disposed',{detail:{source:'robot-scene'}}));
     });
   };
   const cleanupObserver=new MutationObserver(records=>records.forEach(record=>record.removedNodes.forEach(disposeIfRemoved)));
