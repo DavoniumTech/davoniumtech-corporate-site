@@ -1,0 +1,133 @@
+/* DAVONIUM V53 — Phase A cinematic scroll layer
+   Principles from Lusion (scroll storytelling, focal hierarchy, controlled motion)
+   Davonium identity only. Content remains readable without WebGL.
+*/
+:root {
+  --v53-cyan: #00e8f5;
+  --v53-violet: #7c6bff;
+  --v53-ink: #0a121c;
+  --v53-paper: #f6f8fa;
+  --v53-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Scroll progress indicator */
+.v53-scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 2000;
+  background: transparent;
+  pointer-events: none;
+}
+.v53-scroll-progress > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--v53-cyan), var(--v53-violet));
+  transition: width .08s linear;
+}
+
+/* Full-bleed scene canvas behind content */
+#v53-scene-host {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .6s var(--v53-ease);
+}
+#v53-scene-host.is-ready { opacity: 1; }
+#v53-scene-host canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Content stays above the scene */
+body.v53-cinematic .head,
+body.v53-cinematic main,
+body.v53-cinematic footer,
+body.v53-cinematic .dvnm-bot-dock {
+  position: relative;
+  z-index: 10;
+}
+
+/* Chapter markers for scroll storytelling */
+.v53-chapter {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(48px, 8vh, 120px) 0;
+}
+.v53-chapter .wrap {
+  width: min(1120px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+/* Large typography moments */
+.v53-display {
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+.v53-display .grad {
+  background: linear-gradient(105deg, var(--v53-cyan), #7ee8d8 45%, var(--v53-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft scene veil so text stays readable */
+.v53-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(8,12,19,.55) 0%,
+    rgba(8,12,19,.25) 40%,
+    rgba(8,12,19,.45) 100%);
+}
+:root[data-theme="light"] .v53-veil {
+  background: linear-gradient(180deg,
+    rgba(246,248,250,.75) 0%,
+    rgba(246,248,250,.35) 40%,
+    rgba(246,248,250,.7) 100%);
+}
+
+/* Scroll cue */
+.v53-scroll-cue {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .7;
+  pointer-events: none;
+}
+.v53-scroll-cue span {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(180deg, var(--v53-cyan), transparent);
+  animation: v53-cue 1.6s var(--v53-ease) infinite;
+}
+@keyframes v53-cue {
+  0% { transform: scaleY(0.3); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v53-scroll-cue span { animation: none; opacity: .5; }
+  #v53-scene-host { display: none !important; }
+}
