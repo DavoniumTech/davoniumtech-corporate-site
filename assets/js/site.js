@@ -337,8 +337,8 @@
   const botUrl = (path) => new URL(path, botRoot).href;
   // DVNM Bot is represented by a clean, angular head-only mark in the assistant UI.
   // The full-body character is intentionally not repeated beside the WhatsApp control.
-  const robotMarkup = (extra = '') => `<span class="dvnm-mini dvnm-bot-head-icon ${extra}" aria-hidden="true"><svg viewBox="0 0 96 96" focusable="false"><path d="M28 8h40l14 16 2 29-15 25-13 8H40l-13-8-15-25 2-29z" fill="#f3f8fc" stroke="#7b9ab5" stroke-width="2.8" stroke-linejoin="round"/><path d="M19 26l10-10h38l10 10-1 25-10 10H30L20 51z" fill="#0a1b2d" stroke="#47718c" stroke-width="2.5"/><path d="M29 35h12m14 0h12" stroke="#56eff2" stroke-width="6" stroke-linecap="round"/><path d="M39 47q9 7 18 0" fill="none" stroke="#52e5ed" stroke-width="3.5" stroke-linecap="round"/><path d="M26 61l12 10h20l12-10" fill="none" stroke="#9db4c9" stroke-width="3"/><path d="M36 76h24" stroke="#31bbd7" stroke-width="4" stroke-linecap="round"/><path d="M10 34h8v19h-8m68-19h8v19h-8" fill="#9fb4c9" stroke="#587893" stroke-width="2"/><circle cx="15" cy="42" r="3" fill="#44e8ef"/><circle cx="81" cy="42" r="3" fill="#44e8ef"/></svg></span>`;
-  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=50');
+  const robotMarkup = (extra = '') => `<span class="dvnm-mini dvnm-bot-head-icon ${extra}" aria-hidden="true"><svg viewBox="0 0 96 96" focusable="false"><defs><linearGradient id="dvnm-shell-${extra.replace(/[^a-z0-9_-]/gi,'')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b8dce4"/></linearGradient></defs><ellipse cx="48" cy="84" rx="26" ry="4" fill="#23d8e7" opacity=".18"/><path class="bot-shell" d="M28 13Q31 8 38 8H58Q65 8 68 13L79 27 78 56Q77 68 66 75L56 81H40L30 75Q19 68 18 56L17 27Z" fill="url(#dvnm-shell-${extra.replace(/[^a-z0-9_-]/gi,'')})" stroke="#83b9c9" stroke-width="2.5" stroke-linejoin="round"/><path class="bot-visor" d="M25 31Q25 25 32 24H64Q71 25 71 31V49Q70 57 63 59H33Q26 57 25 49Z" fill="#092331" stroke="#267f96" stroke-width="2"/><circle class="bot-eye" cx="38" cy="40" r="4.5" fill="#57f8f0"/><circle class="bot-eye" cx="58" cy="40" r="4.5" fill="#57f8f0"/><path class="bot-mouth" d="M41 50Q48 54 55 50" fill="none" stroke="#55f7f0" stroke-width="2.6" stroke-linecap="round"/><path d="M33 67Q48 73 63 67" stroke="#69dfe8" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M36 79H60" stroke="#34dbe5" stroke-width="4" stroke-linecap="round"/><circle cx="48" cy="7" r="4" fill="#66fff4" stroke="#9cf9f8" stroke-width="1.5"/></svg></span>`;
+  const botCssHref = botUrl('assets/css/dvnm-bot.css?v=51');
   if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === botCssHref)) {
     const botStylesheet = document.createElement('link'); botStylesheet.rel = 'stylesheet'; botStylesheet.href = botCssHref; document.head.appendChild(botStylesheet);
   }
@@ -475,6 +475,7 @@
       const charLength = Math.max(1, Math.min(18, Number(event?.charLength) || 4));
       const aperture = Math.max(8, Math.min(48, 8 + charLength * 2.2));
       const duration = Math.max(74, Math.min(230, 48 + charLength * 17));
+      window.dispatchEvent(new CustomEvent('dvnm:robot-mouth-pulse', { detail: { duration } }));
       $$('.dvnm-css-bot.is-speaking, .dvnm-reference-bot.is-speaking').forEach(robot => {
         robot.classList.add('has-speech-boundaries', 'is-mouth-pulsing');
         robot.style.setProperty('--dvnm-mouth-aperture', `${aperture}%`);
@@ -752,7 +753,7 @@
     const welcome = document.createElement('section');
     welcome.className = 'dvnm-welcome-overlay'; welcome.id = 'dvnm-welcome-overlay';
     welcome.hidden = true; welcome.setAttribute('role', 'dialog'); welcome.setAttribute('aria-modal', 'true'); welcome.setAttribute('aria-labelledby', 'dvnm-welcome-title');
-    welcome.innerHTML = `<div class="dvnm-welcome-card dvnm-v46-welcome-card"><button type="button" class="dvnm-welcome-x" id="dvnm-welcome-x" aria-label="Close welcome">×</button><div class="dvnm-welcome-hero dvnm-v46-welcome-hero"><div class="dvnm-welcome-robot dvnm-v46-welcome-robot" data-dvnm-robot-host><canvas class="dvnm-robot-canvas" data-dvnm-robot data-robot-size="full" aria-hidden="true"></canvas><img class="dvnm-robot-fallback" src="${botUrl('assets/images/dvnm-robot-fallback-v46.svg')}" alt="DVNM Bot, the white and cyan robot guide" width="520" height="640" decoding="async"></div><div class="dvnm-welcome-heading"><span class="dvnm-welcome-eyebrow"><span class="dvnm-live-dot"></span> YOUR DIGITAL GUIDE</span><h2 id="dvnm-welcome-title">Hi, I’m DVNM Bot.</h2><p class="dvnm-welcome-tagline">Useful technology, built with care.</p><p class="dvnm-welcome-subtitle" id="dvnm-welcome-subtitle">Welcome to Davonium Technologies. Let’s find what you came for.</p><label class="dvnm-name-label" for="dvnm-visitor-name">What may I call you? <span>Optional</span></label><input id="dvnm-visitor-name" class="dvnm-visitor-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Your name (optional)"><p class="dvnm-welcome-privacy">Your name is used for this greeting only.</p></div></div><div class="dvnm-welcome-details dvnm-v46-welcome-details"><p class="dvnm-welcome-section-title">I can help you</p><ol class="dvnm-welcome-points"><li>Explore our company, products and digital services.</li><li>Preview five distinct website experiences.</li><li>Find documentation, product status and contact options.</li></ol></div><p class="dvnm-welcome-status" id="dvnm-welcome-status" aria-live="polite">Voice is off until you choose Hear introduction.</p><div class="dvnm-welcome-actions dvnm-v46-welcome-actions"><button type="button" class="btn" id="dvnm-welcome-continue">Meet DVNM Bot <span aria-hidden="true">↗</span></button><button type="button" class="btn alt" id="dvnm-welcome-hear" aria-pressed="false">▶ Hear introduction</button><button type="button" class="dvnm-welcome-skip" id="dvnm-welcome-skip">Skip and explore the website</button></div></div>`;
+    welcome.innerHTML = `<div class="dvnm-welcome-card dvnm-v46-welcome-card"><button type="button" class="dvnm-welcome-x" id="dvnm-welcome-x" aria-label="Close welcome">×</button><div class="dvnm-welcome-hero dvnm-v46-welcome-hero"><div class="dvnm-welcome-robot dvnm-v46-welcome-robot" data-dvnm-robot-host><canvas class="dvnm-robot-canvas" data-dvnm-robot data-robot-size="full" aria-hidden="true"></canvas><img class="dvnm-robot-fallback" src="${botUrl('assets/images/dvnm-robot-fallback-v46.svg')}" alt="DVNM Bot, a compact friendly guide with glowing cyan eyes and a luminous DVNM chest mark" width="520" height="640" decoding="async"></div><div class="dvnm-welcome-heading"><span class="dvnm-welcome-eyebrow"><span class="dvnm-live-dot"></span> YOUR DIGITAL GUIDE</span><h2 id="dvnm-welcome-title">Hi, I’m DVNM Bot.</h2><p class="dvnm-welcome-tagline">Useful technology, built with care.</p><p class="dvnm-welcome-subtitle" id="dvnm-welcome-subtitle">Welcome to Davonium Technologies. Let’s find what you came for.</p><label class="dvnm-name-label" for="dvnm-visitor-name">What may I call you? <span>Optional</span></label><input id="dvnm-visitor-name" class="dvnm-visitor-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Your name (optional)"><p class="dvnm-welcome-privacy">Your name is used for this greeting only.</p></div></div><div class="dvnm-welcome-details dvnm-v46-welcome-details"><p class="dvnm-welcome-section-title">I can help you</p><ol class="dvnm-welcome-points"><li>Explore our company, products and digital services.</li><li>Preview five distinct website experiences.</li><li>Find documentation, product status and contact options.</li></ol></div><p class="dvnm-welcome-status" id="dvnm-welcome-status" aria-live="polite">Voice is off until you choose Hear introduction.</p><div class="dvnm-welcome-actions dvnm-v46-welcome-actions"><button type="button" class="btn" id="dvnm-welcome-continue">Meet DVNM Bot <span aria-hidden="true">↗</span></button><button type="button" class="btn alt" id="dvnm-welcome-hear" aria-pressed="false">▶ Hear introduction</button><button type="button" class="dvnm-welcome-skip" id="dvnm-welcome-skip">Skip and explore the website</button></div></div>`;
     document.body.appendChild(welcome);
     refreshVoiceChoices();
     const welcomeVoiceSelect = $('#dvnm-welcome-voice', welcome);
@@ -863,12 +864,12 @@
 
   // Load only the small local loader now; Three.js itself is imported on demand when a robot canvas enters view.
   if (document.querySelector('[data-dvnm-robot]')) {
-    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=50`, location.href).href;
+    const robotCssUrl = new URL(`${botBase.replace(/\/$/, '')}/assets/css/dvnm-robot-3d.css?v=51`, location.href).href;
     if (![...document.querySelectorAll('link[rel="stylesheet"]')].some(link => link.href === robotCssUrl)) {
       const robotCss = document.createElement('link'); robotCss.rel = 'stylesheet'; robotCss.href = robotCssUrl; document.head.appendChild(robotCss);
     }
     if (!document.querySelector('script[data-dvnm3d-loader]')) {
-      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=50`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
+      const robotScript = document.createElement('script'); robotScript.src = new URL(`${botBase.replace(/\/$/, '')}/assets/js/dvnm-robot-3d.js?v=51`, location.href).href; robotScript.async = true; robotScript.dataset.dvnm3dLoader = 'true'; document.head.appendChild(robotScript);
     }
   }
 
@@ -915,9 +916,9 @@
     if (scope instanceof HTMLElement && scope.matches('[id], [class], [data-dvnm-assistant], [data-dvnm-launcher], iframe[title]')) list.unshift(scope);
     list.forEach(function (el) {
       if (!(el instanceof HTMLElement)) return;
+      // V51 owns the compact DVNM Bot dock; never paint the retired V29 cutout over it.
+      if (el.matches('#dvnm-bot-launcher, .dvnm-launcher, .dvnm-bot-dock, #dvnm-bot-panel')) return;
       var info = describe(el);
-      /* V32 owns the real DVNM launcher placement; do not retag it as a generic extra floater. */
-      if (el.matches('#dvnm-bot-launcher, .dvnm-bot-dock, #dvnm-bot-panel')) return;
       if (!/(dvnm|hoverbot|hoverboard|assistant|chat.?bot)/i.test(info)) return;
       if (/(skeleton|torso|forearm|upper.?arm|shin|thigh|hand|foot|eye|head|stage|hero|orbit|backglow)/i.test(info)) return;
       if (/(panel|window|dialog|drawer|popup|conversation.?box|chat.?panel)/i.test(info)) { el.classList.add('dvnm-v29-mobile-panel'); return; }

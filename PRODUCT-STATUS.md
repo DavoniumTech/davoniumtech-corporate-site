@@ -1,4 +1,4 @@
-# Product Status — V45
+# Product Status — V51
 
 The current showcase presents five primary demos: DVNM Biz, DVNM Market, DVNM Creative, DVNM Skills, and DVNM Digital. Previous Growth and Connect routes remain as non-indexed compatibility pages folded into Biz and Skills.
 
@@ -29,3 +29,8 @@ We update public product pages and guides when a verified release changes these 
 
 
 V46 replaces the V45 broken deployment script with `DEPLOY-DAVONIUM-V46.ps1`. The new deployment is not published until the owner approves it with PUSH.
+
+
+## V51 corporate-site UI release note — 29 October 2026
+
+The corporate-site source package includes a V51 visual-system refresh and a compact DVNM Bot redesign. This is a source release prepared for review, not evidence that the production domain has already changed. Product statuses above remain unchanged unless a separately verified product release says otherwise.

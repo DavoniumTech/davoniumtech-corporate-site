@@ -137,6 +137,8 @@
     if (scope instanceof HTMLElement && scope.matches('[id], [class], [data-dvnm-assistant], [data-dvnm-launcher], iframe[title]')) list.unshift(scope);
     list.forEach(function (el) {
       if (!(el instanceof HTMLElement)) return;
+      // V51 owns the compact DVNM Bot dock; never paint the retired V29 cutout over it.
+      if (el.matches('#dvnm-bot-launcher, .dvnm-launcher, .dvnm-bot-dock, #dvnm-bot-panel')) return;
       var info = describe(el);
       if (!/(dvnm|hoverbot|hoverboard|assistant|chat.?bot)/i.test(info)) return;
       if (/(skeleton|torso|forearm|upper.?arm|shin|thigh|hand|foot|eye|head|stage|hero|orbit|backglow)/i.test(info)) return;

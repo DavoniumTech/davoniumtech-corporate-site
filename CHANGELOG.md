@@ -1,3 +1,12 @@
+## V51 — 2026-10-29 — Studio redesign and compact DVNM Bot
+
+- Replaced the heavy articulated robot presentation with a compact procedural Three.js DVNM Bot: friendly visor/face, expressive eyes and smile, short limbs, and a visible glowing DVNM chest mark.
+- Bound bot body/chest glow to speech-active state and added mouth pulses for browser speech-boundary events where supported; speech remains user-triggered and cancellable.
+- Added the V51 studio visual system across all 73 HTML pages, with page-family styling and distinct DVNM Biz, Market, Creative, Skills, and Digital identities.
+- Preserved the existing information/routes/content and updated asset/service-worker query versions to V51.
+- Added updated QA/coverage notes and a guarded Windows PowerShell publisher. No GitHub push or production deployment is claimed.
+- Browser rendering and GLSL compilation remain unverified because local Chromium navigation was blocked by administrator policy.
+
 ## V50 — 2026-10-29 — GLSL instancing, spatial audio, and lifecycle refinements
 
 - Added a lifecycle/service registry, bounded Three.js math pools, a small GLSL shader pipeline, and lazy instanced particles with adaptive and battery profiles.

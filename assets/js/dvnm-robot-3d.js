@@ -1,430 +1,325 @@
-/* Davonium Technologies V44 — faceted hard-surface procedural 3D DVNM Bot.
- * Three.js and RoundedBoxGeometry are lazy-imported only when a canvas becomes visible.
- * No visitor data, external model files, or audio are transmitted by this renderer.
- */
+/* Davonium V51 — minimal, expressive Three.js DVNM Bot. Optional WebGL enhancement with 2D SVG fallback. */
 (() => {
   'use strict';
-  if (window.__dvnmThreeRobotLoader) return;
-  window.__dvnmThreeRobotLoader = true;
+  if (window.__dvnmThreeRobotLoaderV51) return;
+  window.__dvnmThreeRobotLoaderV51 = true;
 
   const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js';
-  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-  const lowPower = Number(navigator.hardwareConcurrency || 4) <= 4 || /Android|iPhone|iPad/i.test(navigator.userAgent);
-  const rendererState = new Map();
-  window.DavoniumRobotRegistry = { getScenes: () => [...rendererState.values()].filter((state) => !state.disposed && state.canvas?.isConnected) };
-  let THREE = null, importPromise = null;
-
-  const loadThree = () => {
-    if (!importPromise) importPromise = import(THREE_URL).then(three => { THREE = three; return true; });
-    return importPromise;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const lowPower = Number(navigator.hardwareConcurrency || 4) <= 4 || /Android|iPhone|iPad/i.test(navigator.userAgent) || navigator.connection?.saveData;
+  const states = new Map();
+  let THREE = null, importPromise = null, raf = 0;
+  const registry = window.DavoniumRobotRegistry = {
+    getScenes: () => [...states.values()].filter(s => !s.disposed && s.canvas?.isConnected),
+    setSpeaking: active => {
+      const speaking = Boolean(active);
+      states.forEach(s => { s.speaking = speaking; s.host?.classList.toggle('is-speaking', speaking); if (speaking) activate(s); });
+      // Keep the approved fallback responsive to speech even when WebGL cannot initialize.
+      document.querySelectorAll('[data-dvnm-robot-host]').forEach(host => host.classList.toggle('is-speaking', speaking));
+    },
+    disposeAll: () => states.forEach(dispose)
   };
 
-  function setFallback(host) {
+  function setFallback(host, reason = 'fallback') {
+    if (!host) return;
     host.dataset.threeFailed = 'true';
-    host.setAttribute('data-three-failed','true');
+    host.dataset.botState = 'fallback';
+    host.dataset.botFallbackReason = reason;
     host.querySelector('.dvnm-three-loading')?.remove();
+    host.querySelector('.dvnm-robot-fallback')?.setAttribute('aria-hidden', 'false');
   }
-  function material(color, metalness=.34, roughness=.3, extra={}) {
-    return new THREE.MeshStandardMaterial({ color, metalness, roughness, ...extra });
+  function loadThree() {
+    if (!importPromise) importPromise = import(THREE_URL).then(module => (THREE = module));
+    return importPromise;
   }
-  function makeRobot(canvas, host) {
-    if (!canvas || rendererState.has(canvas) || !canvas.isConnected) return;
-    if (!window.WebGLRenderingContext) { setFallback(host); return; }
+  function simpleMaterial(color, options = {}) {
+    return new THREE.MeshPhysicalMaterial({ color, roughness: .27, metalness: .18, clearcoat: .45, clearcoatRoughness: .22, ...options });
+  }
+  function makeLabelTexture() {
+    const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = '800 76px Manrope, Inter, Arial, sans-serif';
+    ctx.shadowColor = '#37f5f0'; ctx.shadowBlur = 22; ctx.fillStyle = '#8ffff8'; ctx.fillText('DVNM', 256, 64);
+    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(210,255,255,.85)'; ctx.lineWidth = 1.5; ctx.strokeText('DVNM', 256, 64);
+    const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace; texture.needsUpdate = true;
+    return texture;
+  }
+  function createScene(canvas, host) {
+    if (!canvas || !canvas.isConnected || states.has(canvas)) return null;
+    if (navigator.connection?.saveData || !window.WebGLRenderingContext) { setFallback(host, 'webgl-unavailable-or-save-data'); return null; }
     let renderer;
     try {
-      renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:!lowPower, powerPreference:'low-power', depth:true, stencil:false, premultipliedAlpha:true });
-    } catch (_) { setFallback(host); return; }
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !lowPower, powerPreference: 'low-power', depth: true, stencil: false, premultipliedAlpha: true });
+    } catch (_) { setFallback(host, 'webgl-initialization-failed'); return null; }
 
     const mini = canvas.dataset.robotSize === 'mini';
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(mini ? 34 : 31, 1, .1, 80);
-    camera.position.set(0, 1.57, mini ? 6.8 : 5.65);
-    camera.lookAt(0,1.45,0);
-    const maxPixelRatio = lowPower ? 1.25 : 1.7;
-    const initialPixelRatio = Math.min(window.devicePixelRatio || 1, maxPixelRatio);
-    renderer.setPixelRatio(initialPixelRatio);
-    renderer.setClearColor(0x000000,0);
+    const camera = new THREE.PerspectiveCamera(mini ? 34 : 30, 1, .1, 40);
+    const aim = new THREE.Vector3(0, .88, 0);
+    const cameraHome = new THREE.Vector3(0, .92, mini ? 4.1 : 4.65);
+    camera.position.copy(cameraHome); camera.lookAt(aim);
+    const maxPixelRatio = lowPower ? 1.15 : 1.65;
+    const rendererPixelRatio = Math.min(window.devicePixelRatio || 1, lowPower ? 1.05 : 1.3);
+    renderer.setPixelRatio(rendererPixelRatio); renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.28;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.12;
 
-    scene.add(new THREE.HemisphereLight(0xe1f5ff,0x28314f,2.05));
-    const keyLight = new THREE.DirectionalLight(0xf3f7ff,3.4); keyLight.position.set(-3.4,5.2,5); scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0x24d7ef,18,9,2); rimLight.position.set(2.8,2.8,-1.3); scene.add(rimLight);
-    const violet = new THREE.PointLight(0x7967ff,9,8,2); violet.position.set(-3.2,1.8,2); scene.add(violet);
+    scene.add(new THREE.HemisphereLight(0xe4fbff, 0x1a3043, 2.1));
+    const key = new THREE.DirectionalLight(0xf6fcff, 3.0); key.position.set(-3, 4.5, 4); scene.add(key);
+    const rim = new THREE.PointLight(0x24ecf0, 8, 7, 2); rim.position.set(2.1, 2.2, -1.4); scene.add(rim);
+    const fill = new THREE.PointLight(0x8178ff, 3.2, 7, 2); fill.position.set(-2.8, .9, 1.8); scene.add(fill);
 
+    const shell = simpleMaterial(0xeaf6fa, { metalness: .2, roughness: .23, emissive: 0x06212a, emissiveIntensity: .05 });
+    const seam = simpleMaterial(0x9fb9c8, { metalness: .48, roughness: .27 });
+    const dark = simpleMaterial(0x071d2a, { metalness: .5, roughness: .18, clearcoat: .8 });
+    const cyan = simpleMaterial(0x61fff5, { color: 0x61fff5, roughness: .2, metalness: .08, emissive: 0x16e4eb, emissiveIntensity: 1.5 });
+    const cyanDeep = simpleMaterial(0x087a91, { emissive: 0x087a91, emissiveIntensity: .7 });
     const robot = new THREE.Group(); scene.add(robot);
-    const cyan = material(0x37e2ed,.35,.24,{ emissive:0x0bb8da, emissiveIntensity:1.25, metalness:.3 });
-    const cyanDark = material(0x087b9d,.55,.28,{ emissive:0x063e63, emissiveIntensity:.65 });
-    const jointMat = material(0x313d52,.68,.31);
-    const trimMat = material(0x9aa8bd,.62,.25);
-    const black = material(0x091421,.52,.18,{ metalness:.56 });
-    const warmShell = material(0xe1e9f4,.44,.26);
-    const darkShell = material(0x243246,.58,.27);
-    const accent = material(0xb6f8ff,.22,.2,{ emissive:0x39dff5, emissiveIntensity:1.2 });
-    const shell = warmShell;
-
-    const rounded = (w,h,d,r=.08,mat=shell) => {
-      // Bevelled extruded rounded-rectangle: smooth corners without downloading a second geometry library.
-      const bevel=Math.max(.002,Math.min(r,Math.min(w,h,d)*.24));
-      const sw=Math.max(.012,w-2*bevel), sh=Math.max(.012,h-2*bevel), sr=Math.min(Math.max(.004,r-bevel*.48),sw*.48,sh*.48);
-      const shape=new THREE.Shape();
-      shape.moveTo(-sw/2+sr,-sh/2); shape.lineTo(sw/2-sr,-sh/2); shape.quadraticCurveTo(sw/2,-sh/2,sw/2,-sh/2+sr);
-      shape.lineTo(sw/2,sh/2-sr); shape.quadraticCurveTo(sw/2,sh/2,sw/2-sr,sh/2); shape.lineTo(-sw/2+sr,sh/2);
-      shape.quadraticCurveTo(-sw/2,sh/2,-sw/2,sh/2-sr); shape.lineTo(-sw/2,-sh/2+sr); shape.quadraticCurveTo(-sw/2,-sh/2,-sw/2+sr,-sh/2);
-      const g=new THREE.ExtrudeGeometry(shape,{depth:Math.max(.004,d-2*bevel),bevelEnabled:true,bevelSegments:2,steps:1,bevelSize:bevel*.45,bevelThickness:bevel,curveSegments:5});
-      g.center(); const mesh=new THREE.Mesh(g,mat); mesh.castShadow=false; mesh.receiveShadow=false; return mesh;
+    const sphere = (parent, material, position, scale, segments = 22) => {
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, segments, Math.max(12, segments - 6)), material);
+      mesh.position.set(...position); mesh.scale.set(...scale); mesh.castShadow = false; mesh.receiveShadow = false; parent.add(mesh); return mesh;
     };
-    const sphere = (x,y,z,sx,sy,sz,mat) => {
-      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, lowPower?18:28, lowPower?12:20),mat);
-      mesh.position.set(x,y,z); mesh.scale.set(sx,sy,sz); mesh.castShadow=false; return mesh;
+    const capsule = (parent, material, position, radius, length, segments = 10) => {
+      const mesh = new THREE.Mesh(new THREE.CapsuleGeometry(radius, length, 4, segments), material);
+      mesh.position.set(...position); parent.add(mesh); return mesh;
     };
-    const cylinder = (rt,rb,h,mat,rad=20) => new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,rad),mat);
-    const capsule = (x,y,z,r,len,mat) => {
-      const mesh = new THREE.Mesh(new THREE.CapsuleGeometry(r,len,4,lowPower?8:12),mat);
-      mesh.position.set(x,y,z); return mesh;
+    const roundedBox = (parent, material, position, size, bevel = .04) => {
+      // Slightly rounded silhouette constructed from a small scaled sphere gives the bot its friendly shape.
+      const geometry = new THREE.BoxGeometry(...size);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(...position); mesh.scale.set(1, 1, 1); mesh.castShadow = false; parent.add(mesh);
+      mesh.geometry.computeVertexNormals();
+      return mesh;
     };
-    const add = (parent,mesh,x=0,y=0,z=0) => { mesh.position.x += x; mesh.position.y += y; mesh.position.z += z; parent.add(mesh); return mesh; };
 
-    // Ground glow and a precision ring under the character.
-    const ground = new THREE.Mesh(new THREE.CircleGeometry(1.05,64),new THREE.MeshBasicMaterial({color:0x16a9cd,transparent:true,opacity:.09,depthWrite:false}));
-    ground.rotation.x=-Math.PI/2; ground.position.y=.025; ground.scale.set(1.15,.65,1); scene.add(ground);
-    const floorRing = new THREE.Mesh(new THREE.TorusGeometry(.7,.012,8,72),material(0x36d9ef,.35,.24,{emissive:0x0e9ac4,emissiveIntensity:.8}));
-    floorRing.rotation.x=Math.PI/2; floorRing.position.y=.04; floorRing.scale.set(1.35,.7,1); scene.add(floorRing);
-    const halo = new THREE.Group(); halo.position.set(0,1.58,-.48); halo.rotation.y=-.18; scene.add(halo);
-    const haloRing = new THREE.Mesh(new THREE.TorusGeometry(1.18,.008,6,100),material(0x26b9ec,.3,.35,{emissive:0x167ec5,emissiveIntensity:.8}));
-    haloRing.scale.set(.76,1.14,1); halo.add(haloRing);
-    const haloRing2 = new THREE.Mesh(new THREE.TorusGeometry(1.37,.005,5,100),material(0x8973ff,.2,.4,{emissive:0x5c43d8,emissiveIntensity:.65}));
-    haloRing2.scale.set(.68,1.05,1); haloRing2.rotation.z=.38; halo.add(haloRing2);
-    // Architectural depth layer: glassy orbital markers, fine 3D rings and floating precision forms.
-    const worldObjects=[];
-    const worldMatA=material(0x23d9e8,.68,.22,{transparent:true,opacity:.72,emissive:0x087eac,emissiveIntensity:.5});
-    const worldMatB=material(0x8e7bff,.58,.24,{transparent:true,opacity:.68,emissive:0x4f35c0,emissiveIntensity:.55,wireframe:true});
-    for(let i=0;i<(lowPower?5:9);i++){
-      const form=i%3===0?new THREE.IcosahedronGeometry(.11+(i%2)*.035,0):i%3===1?new THREE.BoxGeometry(.12,.12,.12):new THREE.TorusGeometry(.10,.009,5,20);
-      const obj=new THREE.Mesh(form,i%2?worldMatA:worldMatB); const a=i*2.399963;
-      obj.position.set(Math.cos(a)*(1.48+(i%3)*.14),.55+(i%5)*.47,Math.sin(a)*.48-.42);
-      obj.rotation.set(a*.3,a,a*.7); scene.add(obj); worldObjects.push({mesh:obj,phase:a,r:1.48+(i%3)*.14});
-    }
-    const worldArc=new THREE.Mesh(new THREE.TorusGeometry(1.65,.006,5,100),material(0x33c9e9,.25,.3,{emissive:0x176eab,emissiveIntensity:.65}));
-    worldArc.position.set(0,1.65,-.58); worldArc.rotation.set(.3,.42,.65); worldArc.scale.set(1.05,.72,1); scene.add(worldArc);
+    // One quiet orbital halo and a small luminous footing: no particle storm or excessive greebles.
+    const haloMaterial = new THREE.MeshBasicMaterial({ color: 0x49e9ed, transparent: true, opacity: .43, depthWrite: false });
+    const halo = new THREE.Mesh(new THREE.TorusGeometry(.86, .009, 6, 96), haloMaterial);
+    halo.position.set(0, .92, -.28); halo.rotation.set(.25, -.22, .48); halo.scale.set(1, .78, 1); scene.add(halo);
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(.77, 48), new THREE.MeshBasicMaterial({ color: 0x13d6e6, transparent: true, opacity: .08, depthWrite: false }));
+    floor.rotation.x = -Math.PI / 2; floor.position.y = -.03; floor.scale.set(1.2, .72, 1); scene.add(floor);
+    const platform = new THREE.Mesh(new THREE.TorusGeometry(.47, .012, 7, 60), new THREE.MeshBasicMaterial({ color: 0x52e8ed, transparent: true, opacity: .58 }));
+    platform.rotation.x = Math.PI / 2; platform.position.y = -.01; platform.scale.set(1.05, .8, 1); scene.add(platform);
 
-    // Feet, legs and hip assembly.
-    const hip = add(robot,rounded(.64,.28,.4,.11,jointMat),0,1.1,0);
-    const legs=[];
-    for (const side of [-1,1]) {
-      const leg = new THREE.Group(); leg.position.set(side*.205,1.03,0); robot.add(leg);
-      add(leg,sphere(0,0,0,.16,.16,.17,trimMat));
-      add(leg,rounded(.28,.46,.31,.1,shell),0,-.22,0);
-      add(leg,sphere(0,-.45,.015,.125,.12,.13,jointMat));
-      add(leg,rounded(.235,.43,.27,.085,side<0?darkShell:shell),0,-.69,.005);
-      add(leg,rounded(.29,.12,.18,.045,cyanDark),0,-.68,.145);
-      const ankle=add(leg,cylinder(.092,.105,.12,jointMat,18),0,-.91,.015); ankle.rotation.x=.06;
-      const foot=add(leg,rounded(.34,.17,.48,.075,darkShell),0,-1.0,.13);
-      add(leg,rounded(.2,.035,.12,.015,cyan),0,-1.015,.345);
-      legs.push(leg);
+    // Small body with simple shoulder joints and a single glowing DVNM chest window.
+    const body = new THREE.Group(); robot.add(body);
+    sphere(body, shell, [0, .48, 0], [.34, .42, .25], 28);
+    sphere(body, seam, [0, .48, .194], [.255, .26, .078], 24);
+    const chest = sphere(body, dark, [0, .49, .24], [.235, .205, .052], 24);
+    const chestGlow = new THREE.Mesh(new THREE.TorusGeometry(.188, .008, 6, 48), cyan); chestGlow.position.set(0, .49, .292); chestGlow.scale.set(1.12, .75, 1); body.add(chestGlow);
+    const labelTexture = makeLabelTexture();
+    if (labelTexture) {
+      const label = new THREE.Mesh(new THREE.PlaneGeometry(.33, .083), new THREE.MeshBasicMaterial({ map: labelTexture, transparent: true, depthWrite: false, toneMapped: false }));
+      label.position.set(0, .49, .299); body.add(label);
     }
-    // Torso is layered so it reads as machined hardware, not a flat cartoon.
-    add(robot,rounded(.78,.78,.48,.15,shell),0,1.66,0);
-    add(robot,rounded(.69,.62,.045,.08,darkShell),0,1.67,.242);
-    add(robot,rounded(.59,.5,.035,.07,jointMat),0,1.68,.27);
-    add(robot,rounded(.5,.43,.022,.055,shell),0,1.68,.294);
-    // chest core: rings, inner lens, and a small animated light.
-    const core = new THREE.Group(); core.position.set(0,1.68,.335); robot.add(core);
-    const coreRing = new THREE.Mesh(new THREE.TorusGeometry(.145,.018,8,48),accent); core.add(coreRing);
-    const coreInner = sphere(0,0,.005,.096,.096,.035,cyan); core.add(coreInner);
-    const corePin = sphere(0,0,.038,.037,.037,.014,accent); core.add(corePin);
-    for (const side of [-1,1]) {
-      add(robot,rounded(.08,.38,.05,.02,cyanDark),side*.275,1.67,.306);
-      add(robot,sphere(side*.235,1.92,.27,.033,.033,.02,accent));
-    }
-    add(robot,rounded(.35,.09,.16,.04,jointMat),0,2.085,0);
-    const neck = cylinder(.12,.15,.16,jointMat,24); add(robot,neck,0,2.16,0);
-    add(robot,cylinder(.075,.075,.08,cyanDark,20),0,2.2,.01);
+    const heart = sphere(body, cyan, [0, .25, .276], [.04, .04, .018], 18);
 
-    // Articulated shoulders / arms; the speaking gesture is animated at each joint.
-    const arms=[];
-    for (const side of [-1,1]) {
-      const shoulder = new THREE.Group(); shoulder.position.set(side*.47,1.97,0); robot.add(shoulder);
-      add(shoulder,sphere(0,0,0,.19,.19,.19,trimMat));
-      add(shoulder,sphere(0,0,.07,.14,.14,.12,cyanDark));
-      const upper = rounded(.25,.42,.27,.09,shell); add(shoulder,upper,side*.035,-.24,.005); upper.rotation.z=side*-.12;
-      const elbow = add(shoulder,sphere(side*.035,-.46,.01,.115,.115,.12,jointMat));
-      const forearmPivot = new THREE.Group(); forearmPivot.position.set(side*.035,-.47,.005); shoulder.add(forearmPivot);
-      const forearm = rounded(.23,.36,.235,.075,darkShell); add(forearmPivot,forearm,side*.01,-.18,.005); forearm.rotation.z=side*.1;
-      add(forearmPivot,rounded(.17,.12,.06,.025,cyanDark),side*.01,-.17,.128);
-      const wrist=add(forearmPivot,sphere(0,-.37,.01,.09,.085,.09,trimMat));
-      const hand=add(forearmPivot,rounded(.19,.18,.18,.06,shell),0,-.48,.03);
-      add(forearmPivot,rounded(.095,.04,.11,.02,cyan),0,-.48,.125);
-      arms.push({side,shoulder,forearmPivot,hand});
-    }
-    // Head pivots separately for attention, eye contact, blinking and speech. It is a faceted, hard-surface helmet—not a sphere.
-    const head = new THREE.Group(); head.position.set(0,2.48,.005); robot.add(head);
-    const helmetShape = new THREE.Shape();
-    helmetShape.moveTo(-.285,-.305); helmetShape.lineTo(.285,-.305);
-    helmetShape.lineTo(.382,-.205); helmetShape.lineTo(.392,.105);
-    helmetShape.lineTo(.274,.292); helmetShape.lineTo(-.274,.292);
-    helmetShape.lineTo(-.392,.105); helmetShape.lineTo(-.382,-.205); helmetShape.closePath();
-    const helmetGeo = new THREE.ExtrudeGeometry(helmetShape,{depth:.48,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.035,bevelThickness:.035,curveSegments:2});
-    helmetGeo.center();
-    const helmetShell = new THREE.Mesh(helmetGeo,shell); head.add(helmetShell);
-    // Raised brow, angular visor surround, and separate dark glass faceplate define a purposeful robotic silhouette.
-    add(head,rounded(.52,.105,.14,.035,darkShell),0,.222,.235);
-    add(head,rounded(.67,.365,.105,.065,darkShell),0,-.018,.263);
-    add(head,rounded(.575,.275,.065,.045,black),0,-.012,.322);
-    add(head,rounded(.47,.018,.025,.008,trimMat),0,.118,.362);
-    // Machined cheek guards, side sensors, and tapered ear armour.
-    for (const side of [-1,1]) {
-      const cheek=add(head,rounded(.115,.225,.14,.025,cyanDark),side*.344,-.055,.295);
-      cheek.rotation.z=side*-.09;
-      add(head,rounded(.075,.19,.12,.018,trimMat),side*.408,-.02,.025);
-      add(head,rounded(.042,.105,.048,.014,accent),side*.41,-.022,.087);
-      add(head,rounded(.12,.04,.09,.012,jointMat),side*.255,-.245,.265);
-    }
-    const eyes=[];
-    for (const side of [-1,1]) {
-      add(head,rounded(.115,.095,.032,.022,cyanDark),side*.137,.035,.363);
-      const eye = add(head,rounded(.078,.057,.025,.018,accent),side*.137,.035,.385);
-      add(head,rounded(.027,.033,.012,.008,material(0xffffff,.1,.18,{emissive:0x68f5ff,emissiveIntensity:1.2})),side*.143,.041,.402);
-      eyes.push(eye);
-    }
-    add(head,rounded(.18,.016,.018,.006,trimMat),0,-.066,.389);
-    const mouthCavity = add(head,rounded(.17,.047,.026,.009,black),0,-.132,.386);
-    add(head,rounded(.19,.028,.055,.008,jointMat),0,-.207,.335);
-    const mouthGlow = add(head,rounded(.105,.012,.012,.004,cyan),0,-.132,.405);
-    const jaw = add(head,rounded(.31,.086,.14,.025,shell),0,-.245,.25);
-    add(head,rounded(.21,.022,.025,.006,cyanDark),0,-.252,.325);
-    // A low-profile sensor bar and paired light pipes replace the balloon-like antenna.
-    add(head,rounded(.31,.055,.13,.018,darkShell),0,.307,.035);
-    const antennaStem=cylinder(.012,.019,.095,trimMat,8); add(head,antennaStem,0,.362,.025);
-    const antennaHalo=new THREE.Mesh(new THREE.TorusGeometry(.047,.007,6,20),accent); antennaHalo.position.set(0,.41,.025); antennaHalo.scale.set(1,.55,1); head.add(antennaHalo);
-    const antennaTip=add(head,sphere(0,.412,.027,.023,.023,.023,accent));
-
-    // Floating data motes use instanced, tiny geometry to keep draw calls low.
-    const moteGeo = new THREE.SphereGeometry(.018,8,6);
-    const moteMat = new THREE.MeshBasicMaterial({color:0x36daee,transparent:true,opacity:.8});
-    const motes=[];
-    for (let i=0;i<(lowPower?10:20);i++) {
-      const mote=new THREE.Mesh(moteGeo,moteMat); const a=i*2.399963;
-      mote.position.set(Math.cos(a)*(1.15+(i%3)*.08),.38+(i%7)*.37,Math.sin(a)*.34-.35);
-      mote.scale.setScalar(.6+(i%4)*.22); scene.add(mote); motes.push({mesh:mote,phase:i*.7,r:1.15+(i%3)*.08});
-    }
+    const headPivot = new THREE.Group(); headPivot.position.set(0, 1.05, .015); robot.add(headPivot);
+    sphere(headPivot, shell, [0, 0, 0], [.405, .34, .32], 30);
+    sphere(headPivot, seam, [0, -.015, .207], [.357, .255, .14], 26);
+    sphere(headPivot, dark, [0, -.008, .258], [.318, .205, .095], 28);
+    const eyeLeft = sphere(headPivot, cyan, [-.125, .026, .33], [.053, .065, .024], 18);
+    const eyeRight = sphere(headPivot, cyan, [.125, .026, .33], [.053, .065, .024], 18);
+    const mouth = sphere(headPivot, cyan, [0, -.105, .336], [.072, .012, .018], 16);
+    // Compact antenna, intentionally understated.
+    capsule(headPivot, seam, [0, .352, -.025], .018, .075, 8);
+    const antenna = sphere(headPivot, cyan, [0, .405, -.025], [.038, .038, .038], 16);
+    const earLeft = sphere(headPivot, cyanDeep, [-.39, -.008, .025], [.045, .08, .07], 16);
+    const earRight = sphere(headPivot, cyanDeep, [.39, -.008, .025], [.045, .08, .07], 16);
+    // Arms/feet are deliberately short and smooth; speaking is expressed by a small presentation gesture.
+    const armLeft = new THREE.Group(); armLeft.position.set(-.32, .68, 0); robot.add(armLeft);
+    capsule(armLeft, seam, [0, -.13, .02], .075, .20, 10).rotation.z = -.2;
+    sphere(armLeft, shell, [0, -.27, .05], [.075, .06, .07], 14);
+    const armRight = new THREE.Group(); armRight.position.set(.32, .68, 0); robot.add(armRight);
+    capsule(armRight, seam, [0, -.13, .02], .075, .20, 10).rotation.z = .2;
+    sphere(armRight, shell, [0, -.27, .05], [.075, .06, .07], 14);
+    capsule(robot, seam, [-.135, .08, .015], .072, .11, 9);
+    capsule(robot, seam, [.135, .08, .015], .072, .11, 9);
+    sphere(robot, dark, [-.135, .018, .075], [.108, .045, .12], 16);
+    sphere(robot, dark, [.135, .018, .075], [.108, .045, .12], 16);
 
     const hostBox = host.getBoundingClientRect();
-    const state={canvas,host,renderer,scene,camera,robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,worldObjects,worldArc,
-      kind:'robot',active:false,disposed:false,started:performance.now(),lastBlink:performance.now()+1300+Math.random()*1600,blinkEnd:0,pointerX:0,pointerY:0,theme:'dark',size:{w:Math.max(1,hostBox.width),h:Math.max(1,hostBox.height)},sizeInitialized:false,quality:'auto',pixelRatio:initialPixelRatio,maxPixelRatio,reducedEffects:false,frameTimes:new Float32Array(60),frameIndex:0,frameSamples:0,frameCount:0,lastFrameAt:0,fps:0,cameraPreset:'orbit',cameraTarget:new THREE.Vector3(0,1.57,mini?6.8:5.65),cameraAim:new THREE.Vector3(0,1.45,0)};
-    rendererState.set(canvas,state);
-
-    function updateTheme() {
-      state.theme=document.documentElement.dataset.theme || 'light';
-      const dark=state.theme==='dark';
-      shell.color.setHex(dark?0xe8f0fb:0x40526b);
-      darkShell.color.setHex(dark?0x293b50:0x16273e);
-      cyan.color.setHex(dark?0x3fe5f3:0x17bad0);
-      cyan.emissive.setHex(dark?0x0bb8da:0x0786ad);
-      keyLight.intensity=dark?3.2:2.9;
-      rimLight.intensity=dark?18:14;
-    }
-    updateTheme();
-    state.applyPixelRatio=(ratio)=>{
-      const next=Math.max(.85,Math.min(state.maxPixelRatio,ratio));
-      if(Math.abs(next-state.pixelRatio)<.035 && state.sizeInitialized) return;
-      state.pixelRatio=next; renderer.setPixelRatio(next); state.sizeInitialized=false; state.resize();
+    const state = {
+      canvas, host, renderer, scene, camera, robot, body, headPivot, mouth, eyeLeft, eyeRight, antenna, chest, chestGlow, heart, halo,
+      armLeft, armRight, key, rim, fill, shell, cyan, dark, disposed:false, active:false, speaking:false,
+      started:performance.now(), lastFrameAt:0, frameCount:0, frameSamples:0, frameIndex:0, frameTimes:new Float32Array(60), fps:0,
+      quality:'auto', pixelRatio:rendererPixelRatio, maxPixelRatio, reducedEffects:reducedMotion, cameraPreset:'orbit',
+      cameraHome, cameraTarget:cameraHome.clone(), cameraAim:aim, size:{w:Math.max(1,hostBox.width),h:Math.max(1,hostBox.height)}, sizeInitialized:false,
+      pulseUntil:0, theme:document.documentElement.dataset.theme || 'light'
     };
-    state.setQuality=(profile='auto')=>{
-      state.quality=['auto','high','battery'].includes(profile)?profile:'auto';
-      if(state.quality==='battery') state.applyPixelRatio(Math.min(1,window.devicePixelRatio||1));
-      else if(state.quality==='high') state.applyPixelRatio(Math.min(window.devicePixelRatio||1,state.maxPixelRatio));
-      else state.applyPixelRatio(Math.min(window.devicePixelRatio||1,state.maxPixelRatio,lowPower?1.1:1.4));
+    states.set(canvas, state);
+    state.resize = () => {
+      if (state.disposed || !canvas.isConnected) return;
+      const rect = host.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width)); const height = Math.max(1, Math.round(rect.height));
+      if (width === state.size.w && height === state.size.h && state.sizeInitialized) return;
+      state.size.w = width; state.size.h = height;
+      renderer.setSize(width, height, false); camera.aspect = width / height; camera.updateProjectionMatrix(); state.sizeInitialized = true;
     };
-    state.setReducedEffects=(enabled)=>{state.reducedEffects=Boolean(enabled);if(state.reducedEffects){state.pointerX*=.25;state.pointerY*=.25;}};
-    state.setCameraPreset=(preset='orbit')=>{
-      state.cameraPreset=['orbit','cinematic','reset'].includes(preset)?preset:'orbit';
-      if(state.cameraPreset==='cinematic') {state.cameraTarget.set(.32,1.72,mini?6.3:5.15);state.cameraAim.set(.05,1.45,0);}
-      else {state.cameraTarget.set(0,1.57,mini?6.8:5.65);state.cameraAim.set(0,1.45,0);}
-      if(reduceMotion||state.reducedEffects){camera.position.copy(state.cameraTarget);camera.lookAt(state.cameraAim);}
+    state.applyPixelRatio = ratio => {
+      const next = Math.max(.8, Math.min(state.maxPixelRatio, ratio));
+      if (Math.abs(next - state.pixelRatio) < .035) return;
+      state.pixelRatio = next; renderer.setPixelRatio(next); state.sizeInitialized = false; state.resize();
     };
-    state.getStats=()=>{
-      const memory=renderer.info?.memory||{}; const draw=renderer.info?.render||{};
-      const bytes=(canvas.width*canvas.height*8)+(Number(memory.geometries||0)*65536)+(Number(memory.textures||0)*262144);
-      return {fps:state.fps,estimatedVramMB:bytes/1048576,geometries:Number(memory.geometries||0),textures:Number(memory.textures||0),drawCalls:Number(draw.calls||0),quality:state.quality,pixelRatio:state.pixelRatio};
+    state.setQuality = profile => {
+      state.quality = ['auto','high','battery'].includes(profile) ? profile : 'auto';
+      if (state.quality === 'battery') state.applyPixelRatio(Math.min(1, window.devicePixelRatio || 1));
+      else if (state.quality === 'high') state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, state.maxPixelRatio));
+      else state.applyPixelRatio(Math.min(window.devicePixelRatio || 1, state.maxPixelRatio, lowPower ? 1.05 : 1.3));
     };
-    const resize=()=>{
-      if(state.disposed) return;
-      const box=host.getBoundingClientRect();
-      if(box.width<2 || box.height<2) return;
-      const w=Math.round(box.width),h=Math.round(box.height);
-      if(state.sizeInitialized && w===state.size.w && h===state.size.h) return;
-      state.size={w,h}; state.sizeInitialized=true; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+    state.setReducedEffects = enabled => { state.reducedEffects = Boolean(enabled); };
+    state.setCameraPreset = preset => {
+      state.cameraPreset = ['orbit','cinematic','reset'].includes(preset) ? preset : 'orbit';
+      if (state.cameraPreset === 'cinematic') { state.cameraTarget.set(.18, 1.04, mini ? 3.9 : 4.18); state.cameraAim.set(0, .82, 0); }
+      else if (state.cameraPreset === 'reset') { state.cameraTarget.copy(state.cameraHome); state.cameraAim.set(0, .88, 0); }
+      else { state.cameraTarget.copy(state.cameraHome); state.cameraAim.set(0, .88, 0); }
+      activate(state);
     };
-    state.resize=resize; resize();
-    const interactionHost=host.closest('.art') || host.closest('.dvnm-stage') || host;
-    const onPointerMove=event=>{
-      if(!event.isPrimary) return;
-      const b=interactionHost.getBoundingClientRect();
-      state.pointerX=Math.max(-1,Math.min(1,((event.clientX-b.left)/Math.max(1,b.width)-.5)*2));
-      state.pointerY=Math.max(-1,Math.min(1,((event.clientY-b.top)/Math.max(1,b.height)-.5)*2));
+    state.updateTheme = () => {
+      const darkTheme = document.documentElement.dataset.theme === 'dark'; state.theme = darkTheme ? 'dark' : 'light';
+      if (darkTheme) { key.intensity = 3.2; rim.intensity = 8; fill.intensity = 3.5; shell.color.setHex(0xeaf6fa); }
+      else { key.intensity = 3.6; rim.intensity = 6.5; fill.intensity = 2.7; shell.color.setHex(0xf6ffff); }
     };
-    interactionHost.addEventListener('pointermove',onPointerMove,{passive:true});
-    const onClick=()=>{ state.waveUntil=performance.now()+1150; };
-    interactionHost.addEventListener('click',onClick,{passive:true});
-    state.cleanup=()=>{interactionHost.removeEventListener('pointermove',onPointerMove);interactionHost.removeEventListener('click',onClick);if(!('ResizeObserver' in window))window.removeEventListener('resize',resize);};
-    host.dataset.threeReady='true'; host.setAttribute('data-three-ready','true');
+    state.getStats = () => {
+      const info = renderer.info || {};
+      const bytes = ((info.memory?.geometries || 0) * 22000) + ((info.memory?.textures || 0) * 512 * 512 * 4);
+      return { fps:state.fps, estimatedVramMB:bytes/1048576, geometries:Number(info.memory?.geometries||0), textures:Number(info.memory?.textures||0), drawCalls:Number(info.render?.calls||0), quality:state.quality, pixelRatio:state.pixelRatio };
+    };
+    state.pause = () => { state.active = false; };
+    state.start = () => activate(state);
+    state.dispose = () => dispose(state);
+    state.updateTheme(); state.resize();
+    canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); setFallback(host, 'webgl-context-lost'); state.pause(); }, { passive:false });
+    const observer = 'ResizeObserver' in window ? new ResizeObserver(state.resize) : null;
+    observer?.observe(host); state.observer = observer;
+    host.dataset.threeReady = 'true'; host.dataset.botState = 'ready'; host.dataset.theme = state.theme;
     host.querySelector('.dvnm-three-loading')?.remove();
-    if(!host.querySelector('.dvnm-three-loading')) { /* no status text needed once the canvas appears */ }
-    if ('ResizeObserver' in window) { state.observer = new ResizeObserver(resize); state.observer.observe(host); }
-    else window.addEventListener('resize', resize, { passive: true });
-    state.speaking=false;
-    state.updateTheme=updateTheme;
-    window.dispatchEvent(new CustomEvent('davonium:robot-ready', { detail: { source: 'robot-scene', size: mini ? 'mini' : 'full' } }));
+    const fallback = host.querySelector('.dvnm-robot-fallback'); if (fallback) fallback.setAttribute('aria-hidden', 'true');
+    return state;
   }
 
-  function animateState(state, now) {
-    const {robot,head,arms,legs,core,coreRing,coreInner,antennaTip,antennaHalo,eyes,mouthCavity,mouthGlow,jaw,halo,haloRing2,motes,worldObjects,worldArc,canvas}=state;
-    const t=(now-state.started)/1000;
-    const speaking=state.speaking || state.host.classList.contains('is-speaking');
-    const waving=now<(state.waveUntil||0);
-    const motionReduced=reduceMotion||state.reducedEffects;
-    const breathe=motionReduced?0:Math.sin(t*1.4)*.018;
-    robot.position.y=.045+(motionReduced?0:Math.sin(t*1.75)*.035);
-    robot.rotation.y=(motionReduced?0:Math.sin(t*.34)*.07)+state.pointerX*.16;
-    robot.rotation.z=state.pointerX*-.018;
-    head.rotation.y=state.pointerX*.24 + (motionReduced?0:Math.sin(t*.75)*.025);
-    head.rotation.x=-state.pointerY*.10 + (speaking&&!motionReduced?Math.sin(t*3.2)*.025:0);
-    head.position.y=2.48+breathe;
-    core.rotation.z=motionReduced?0:t*.42;
-    const pulse=speaking&&!motionReduced ? .68+.42*(.5+.5*Math.sin(t*16.5)) : .9+(motionReduced?0:.10*Math.sin(t*2.2));
-    core.scale.setScalar(pulse); coreRing.material.emissiveIntensity=speaking?1.5:1.0;
-    coreInner.scale.y=speaking&&!motionReduced? .85+Math.abs(Math.sin(t*15))*.3:1;
-    mouthCavity.scale.y=speaking&&!motionReduced ? .6+Math.abs(Math.sin(t*15.2))*.9 : .42;
-    mouthGlow.scale.x=speaking&&!motionReduced ? .75+Math.abs(Math.sin(t*14.1))*.35 : 1;
-    jaw.rotation.x=speaking&&!motionReduced ? -.10-Math.abs(Math.sin(t*14.8))*.17 : 0;
-    antennaTip.scale.setScalar(.9+(speaking&&!motionReduced?Math.sin(t*7)*.12:Math.sin(t*1.8)*.06));
-    antennaHalo.rotation.z=motionReduced?0:t*.65;
-    const wave= waving ? Math.sin((now-(state.waveUntil-1150))/1150*Math.PI*4)*.34 : 0;
-    for(let i=0;i<arms.length;i++) {
-      const arm=arms[i], side=arm.side, shoulder=arm.shoulder, forearmPivot=arm.forearmPivot;
-      const idle=motionReduced?0:Math.sin(t*1.35+side)*.035;
-      if(side>0) {
-        shoulder.rotation.z=wave + (speaking&&!motionReduced?-.24 + Math.sin(t*5)*.06: .08) + idle;
-        forearmPivot.rotation.z=wave*.38+(speaking&&!motionReduced?-.22:0);
-      } else {
-        shoulder.rotation.z=-.08+(speaking&&!motionReduced?.12:0)+idle;
-        forearmPivot.rotation.z=speaking&&!motionReduced?.12:0;
+  function animate(state, now) {
+    if (state.disposed || !state.active) return;
+    if (state.lastFrameAt) {
+      const delta = now - state.lastFrameAt;
+      if (delta > 0 && delta < 200) {
+        state.frameTimes[state.frameIndex] = delta; state.frameIndex = (state.frameIndex + 1) % state.frameTimes.length;
+        state.frameSamples = Math.min(60, state.frameSamples + 1);
+        if (state.frameSamples >= 12 && state.frameCount % 12 === 0) {
+          let sum = 0; for (let i = 0; i < state.frameSamples; i++) sum += state.frameTimes[i]; state.fps = 1000 / Math.max(1, sum / state.frameSamples);
+        }
+        if (state.quality === 'auto' && state.frameSamples === 60 && state.frameCount % 60 === 0) {
+          if (state.fps < 48) state.applyPixelRatio(state.pixelRatio - .1);
+          else if (state.fps > 58) state.applyPixelRatio(state.pixelRatio + .045);
+        }
       }
     }
-    for(let i=0;i<legs.length;i++) legs[i].rotation.x=(!motionReduced&&waving)?Math.sin(t*8+i)*.035:0;
-    const blink = now>state.lastBlink && now<state.lastBlink+135;
-    if(now>state.lastBlink+135) state.lastBlink=now+1800+Math.random()*2600;
-    for(let i=0;i<eyes.length;i++) eyes[i].scale.y=blink?.006:1;
-    halo.rotation.z=motionReduced?0:Math.sin(t*.15)*.08; haloRing2.rotation.z=.38+(motionReduced?0:t*.08);
-    worldArc.rotation.y=.42+(motionReduced?0:t*.055); worldArc.rotation.z=.65+(motionReduced?0:t*.08);
-    for(let i=0;i<worldObjects.length;i++) { const item=worldObjects[i]; if(!motionReduced){item.mesh.rotation.x+=.0015+(i%3)*.0007;item.mesh.rotation.y+=.002;item.mesh.position.y+=Math.sin(t*.6+item.phase)*.0008;} }
-    if(!motionReduced) for(let i=0;i<motes.length;i++) { const item=motes[i]; const a=item.phase+t*.13; item.mesh.position.x=Math.cos(a)*item.r; item.mesh.position.z=Math.sin(a)*.35-.35; item.mesh.position.y=.32+((item.phase*1.37+t*.11)%2.2); }
-  }
-
-  let running=false;
-  function frame(now) {
-    running=false;
-    if(document.visibilityState==='hidden') return;
-    let needsNext=false;
-    for(const state of rendererState.values()) {
-      if(state.disposed || !state.active || !state.canvas.isConnected) continue;
-      needsNext=true;
-      try {
-        if(state.lastFrameAt>0) {
-          const delta=now-state.lastFrameAt;
-          if(delta>0 && delta<200) {
-            state.frameTimes[state.frameIndex]=delta; state.frameIndex=(state.frameIndex+1)%state.frameTimes.length;
-            state.frameSamples=Math.min(state.frameSamples+1,state.frameTimes.length);
-            if(state.frameSamples>=12 && state.frameCount%12===0) { let total=0; for(let i=0;i<state.frameSamples;i++) total+=state.frameTimes[i]; state.fps=1000/Math.max(1,total/state.frameSamples); }
-            if(state.quality==='auto' && state.frameSamples===60 && state.frameCount%60===0) { if(state.fps<48) state.applyPixelRatio(state.pixelRatio-.10); else if(state.fps>58) state.applyPixelRatio(state.pixelRatio+.05); }
-          }
-        }
-        state.lastFrameAt=now; state.frameCount++;
-        state.resize(); animateState(state,now);
-        camera.position.lerp(state.cameraTarget, (state.reducedEffects || reduceMotion) ? .18 : .035);
-        camera.lookAt(state.cameraAim);
-        state.renderer.render(state.scene,state.camera);
-      } catch(_) { setFallback(state.host); state.active=false; }
+    state.lastFrameAt = now; state.frameCount++;
+    const t = now * .001;
+    const speaking = state.speaking || state.host.classList.contains('is-speaking');
+    const pulse = speaking ? .5 + .5 * Math.sin(t * 13) : (now < state.pulseUntil ? .5 + .5 * Math.sin(t * 18) : 0);
+    if (!state.reducedEffects) {
+      state.robot.position.y = .025 + Math.sin(t * 1.05) * .028;
+      state.robot.rotation.y = Math.sin(t * .38) * .08;
+      state.headPivot.rotation.y = Math.sin(t * .74) * .045;
+      state.headPivot.rotation.z = speaking ? Math.sin(t * 5) * .024 : Math.sin(t * .7) * .012;
+      state.halo.rotation.z += .0008;
     }
-    if(needsNext) {running=true; requestAnimationFrame(frame);}
+    state.armLeft.rotation.z = (speaking ? -.25 : -.04) + Math.sin(t * (speaking ? 8 : .8)) * (speaking ? .12 : .025);
+    state.armRight.rotation.z = (speaking ? .38 : .04) + Math.sin(t * (speaking ? 8.6 : .9)) * (speaking ? .15 : .025);
+    state.mouth.scale.y = speaking ? .012 + pulse * .054 : .012 + pulse * .024;
+    const glow = speaking ? 1.25 + pulse * 1.6 : .45;
+    state.cyan.emissiveIntensity = speaking ? 1.25 + pulse * 1.6 : 1.05;
+    state.shell.emissiveIntensity = speaking ? .09 + pulse * .08 : .04;
+    state.chestGlow.material.emissiveIntensity = glow;
+    state.heart.material.emissiveIntensity = glow + .3;
+    state.antenna.material.emissiveIntensity = speaking ? 1.7 + pulse : 1.1;
+    state.eyeLeft.material.emissiveIntensity = speaking ? 1.7 + pulse : 1.2;
+    state.eyeRight.material.emissiveIntensity = speaking ? 1.7 + pulse : 1.2;
+    state.camera.position.lerp(state.cameraTarget, state.reducedEffects ? .12 : .045); state.camera.lookAt(state.cameraAim);
+    state.resize(); state.renderer.render(state.scene, state.camera);
   }
-  function ensureFrame(){ if(!running && document.visibilityState!=='hidden'){running=true;requestAnimationFrame(frame);} }
-  const activate=state=>{ if(!state || state.disposed)return; state.active=true; state.started=performance.now(); ensureFrame(); };
-  const deactivate=state=>{if(state)state.active=false;};
-
+  function frame(now) {
+    raf = 0; let needsNext = false;
+    for (const state of states.values()) {
+      if (!state.active || state.disposed || !state.canvas.isConnected || document.visibilityState === 'hidden') continue;
+      needsNext = true;
+      try { animate(state, now); }
+      catch (_) { setFallback(state.host, 'render-error'); state.active = false; }
+    }
+    if (needsNext) raf = requestAnimationFrame(frame);
+  }
+  function ensureFrame() { if (!raf && document.visibilityState !== 'hidden') raf = requestAnimationFrame(frame); }
+  function activate(state) { if (!state || state.disposed) return; state.active = true; state.resize(); ensureFrame(); }
+  function deactivate(state) { if (state) state.active = false; }
+  function dispose(state) {
+    if (!state || state.disposed) return;
+    state.disposed = true; state.active = false; state.observer?.disconnect();
+    const geometries = new Set(), materials = new Set(), textures = new Set();
+    state.scene.traverse(object => {
+      if (object.geometry) geometries.add(object.geometry);
+      if (object.material) for (const material of (Array.isArray(object.material) ? object.material : [object.material])) {
+        materials.add(material); Object.values(material).forEach(value => { if (value?.isTexture) textures.add(value); });
+      }
+    });
+    textures.forEach(texture => texture.dispose()); geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose());
+    state.renderer.renderLists?.dispose?.(); state.renderer.dispose(); states.delete(state.canvas);
+  }
   async function upgrade(canvas) {
-    if(rendererState.has(canvas) || canvas.dataset.threeRequested || !canvas.isConnected) return;
-    const host=canvas.closest('[data-dvnm-robot-host]'); if(!host)return;
-    if(host.closest('[hidden]')) return;
-    canvas.dataset.threeRequested='true';
+    if (!canvas || canvas.dataset.threeRequested || states.has(canvas) || !canvas.isConnected) return;
+    const host = canvas.closest('[data-dvnm-robot-host]'); if (!host || host.closest('[hidden]')) return;
+    if (navigator.connection?.saveData) { setFallback(host, 'save-data'); return; }
+    canvas.dataset.threeRequested = 'true';
     try {
       await loadThree();
-      if(!canvas.isConnected || host.closest('[hidden]')) { delete canvas.dataset.threeRequested; return; }
-      makeRobot(canvas,host);
-      const state=rendererState.get(canvas); if(state) activate(state);
-    } catch(error) {
-      delete canvas.dataset.threeRequested;
-      setFallback(host);
-      console.warn('DVNM Bot 3D renderer could not load; using its compatibility artwork.',error);
-    }
+      if (!canvas.isConnected || host.closest('[hidden]')) { delete canvas.dataset.threeRequested; return; }
+      const state = createScene(canvas, host); if (state) activate(state);
+    } catch (_) { delete canvas.dataset.threeRequested; setFallback(host, 'three-module-load-failed'); }
   }
-
-  let visibilityObserver;
-  if('IntersectionObserver' in window) {
-    visibilityObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      const canvas=entry.target; const state=rendererState.get(canvas);
-      if(entry.isIntersecting) { if(state) activate(state); else upgrade(canvas); }
-      else deactivate(state);
-    }),{rootMargin:'180px 0px',threshold:.01});
-  }
-  function watch(root=document) {
-    root.querySelectorAll?.('[data-dvnm-robot]').forEach(canvas=>{
-      if(canvas.dataset.threeObserved) return;
+  const visibilityObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => {
+    const state = states.get(entry.target);
+    if (entry.isIntersecting) { if (state) activate(state); else upgrade(entry.target); }
+    else deactivate(state);
+  }), { rootMargin:'120px 0px', threshold:.01 }) : null;
+  const observe = (root = document) => {
+    root.querySelectorAll?.('[data-dvnm-robot]').forEach(canvas => {
+      if (canvas.dataset.threeObserved) {
+        if (!states.has(canvas) && !canvas.dataset.threeRequested && !canvas.closest('[hidden]')) upgrade(canvas);
+        return;
+      }
       canvas.dataset.threeObserved='true';
-      if(visibilityObserver) visibilityObserver.observe(canvas);
-      else upgrade(canvas);
+      if (visibilityObserver) visibilityObserver.observe(canvas); else upgrade(canvas);
     });
-  }
-  watch();
-  const mutations=new MutationObserver(records=>records.forEach(record=>{
-    record.addedNodes.forEach(node=>{if(node.nodeType===1){ if(node.matches?.('[data-dvnm-robot]')) watch(node.parentNode||document); else watch(node); }});
-    // A visitor can open/close a hidden dialog after the original scan.
-    if(record.type==='attributes' && record.target.matches?.('[data-dvnm-robot]')) { const state=rendererState.get(record.target); if(state && !record.target.closest('[hidden]')) activate(state); }
+  };
+  observe();
+  const mutations = new MutationObserver(records => records.forEach(record => {
+    record.addedNodes.forEach(node => { if (node.nodeType !== 1) return; if (node.matches?.('[data-dvnm-robot]')) observe(node.parentNode || document); else if (node.querySelector?.('[data-dvnm-robot]')) observe(node); });
+    if (record.type === 'attributes') {
+      if (record.target.matches?.('[data-dvnm-robot]')) {
+        const state = states.get(record.target);
+        if (state && !record.target.closest('[hidden]')) activate(state);
+        else if (!state && !record.target.closest('[hidden]')) upgrade(record.target);
+      } else if (!record.target.closest?.('[hidden]')) observe(record.target);
+    }
   }));
-  mutations.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']});
-
-  const setSpeaking=event=>{
-    const active=Boolean(event.detail?.active);
-    rendererState.forEach(state=>{state.speaking=active; if(active)activate(state);});
-  };
-  window.addEventListener('dvnm:robot-speaking',setSpeaking);
-  const onThemeChange=()=>rendererState.forEach(state=>{
-    state.updateTheme?.();
-    state.host.dataset.theme=document.documentElement.dataset.theme||'light';
+  mutations.observe(document.documentElement, { childList:true, subtree:true, attributes:true, attributeFilter:['hidden'] });
+  window.addEventListener('dvnm:robot-speaking', event => registry.setSpeaking(Boolean(event.detail?.active)));
+  window.addEventListener('dvnm:robot-mouth-pulse', event => states.forEach(state => { state.pulseUntil = performance.now() + Math.max(70, Math.min(240, Number(event.detail?.duration) || 140)); activate(state); }));
+  const themeObserver = new MutationObserver(() => states.forEach(state => state.updateTheme()));
+  themeObserver.observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') states.forEach(deactivate);
+    else states.forEach(state => { const rect = state.host.getBoundingClientRect(); if (rect.bottom > 0 && rect.top < innerHeight) activate(state); });
   });
-  new MutationObserver(onThemeChange).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-  document.addEventListener('visibilitychange',()=>{
-    if(document.visibilityState==='hidden') rendererState.forEach(deactivate);
-    else {rendererState.forEach(state=>{if(state.canvas.getBoundingClientRect().bottom>=0&&state.canvas.getBoundingClientRect().top<innerHeight)activate(state);});}
-  });
-
-  // Clean up renderers if a temporary dialog/component is removed from the document.
-  const disposeIfRemoved = node => {
-    const removed=[];
-    if(node?.nodeType===1 && node.matches?.('[data-dvnm-robot]')) removed.push(node);
-    node?.querySelectorAll?.('[data-dvnm-robot]').forEach(canvas=>removed.push(canvas));
-    removed.forEach(canvas=>{
-      const state=rendererState.get(canvas); if(!state || canvas.isConnected) return;
-      state.disposed=true; state.active=false; state.cleanup?.(); state.observer?.disconnect();
-      const geometries=new Set(), materials=new Set();
-      state.scene.traverse(object=>{if(object.geometry)geometries.add(object.geometry);if(object.material){for(const material of (Array.isArray(object.material)?object.material:[object.material])) materials.add(material);}});
-      geometries.forEach(geometry=>geometry.dispose()); materials.forEach(material=>material.dispose());
-      state.renderer.renderLists?.dispose?.(); state.renderer.dispose(); rendererState.delete(canvas);
-      window.dispatchEvent(new CustomEvent('davonium:scene-disposed',{detail:{source:'robot-scene'}}));
-    });
+  const cleanupRemoved = node => {
+    const canvases = [];
+    if (node?.nodeType === 1 && node.matches?.('[data-dvnm-robot]')) canvases.push(node);
+    node?.querySelectorAll?.('[data-dvnm-robot]').forEach(canvas => canvases.push(canvas));
+    canvases.forEach(canvas => { const state = states.get(canvas); if (state && !canvas.isConnected) dispose(state); });
   };
-  const cleanupObserver=new MutationObserver(records=>records.forEach(record=>record.removedNodes.forEach(disposeIfRemoved)));
-  cleanupObserver.observe(document.documentElement,{childList:true,subtree:true});
+  const cleanupObserver = new MutationObserver(records => records.forEach(record => record.removedNodes.forEach(cleanupRemoved)));
+  cleanupObserver.observe(document.documentElement, { childList:true, subtree:true });
+  window.addEventListener('pagehide', () => { states.forEach(deactivate); if (raf) cancelAnimationFrame(raf); raf = 0; }, { once:true });
 })();

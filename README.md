@@ -1,43 +1,53 @@
-# Davonium Technologies — V50 immersive website release
+# Davonium Technologies — V51 Studio Redesign
 
 **Production domain:** https://www.davoniumtech.com/  
 **Repository:** https://github.com/DavoniumTech/davoniumtech-corporate-site.git  
-**Release marker:** V50  
-**Configured deployment:** Cloudflare Worker with static assets (`davoniumtech-corporate-site`, as configured in `wrangler.jsonc`). The release helper does not assume that the site is hosted by plain GitHub Pages.
+**Release marker:** V51  
+**Configured deployment:** Cloudflare Worker with static assets (`davoniumtech-corporate-site`, from `wrangler.jsonc`). Do not assume this is a plain GitHub Pages target.
 
-## V50 additions
+## V51 visual redesign
 
-- An incremental vanilla-JavaScript ES-module layer under `assets/js/immersive/`: `App.js`, `CoreEngine.js`, `EventDispatcher.js`, `AssetLoader.js`, `SceneManager.js`, `RenderEngine.js`, `InputController.js`, `AudioManager.js`, `ObjectPool.js`, `ShaderPipeline.js`, and `ParticleEngine.js`.
-- A responsive control deck on the homepage, Work page and five core demo experiences. It becomes available only after a live 3D scene reports ready.
-- Adaptive / High / Battery render-quality profiles, a rolling 60-frame FPS sample already present in the page renderer, an explicitly estimated GPU-memory readout, Orbit/Cinematic/Reset camera presets, theme controls, reduced-effects mode, PNG capture, and user-activated procedural audio.
-- A GLSL-displaced `THREE.InstancedMesh` field. High mode supports up to 100,000 instances on desktop-capacity scenes; adaptive and battery profiles build smaller counts by default. This is not a measured 100k performance benchmark or a physics engine.
-- Optional Web Audio `PannerNode` positioning with stereo-panning fallback and real loader-progress support for Three.js-style loaders.
-- More careful scene listener/resource disposal, query/cache version V50, and a publisher that checks remote `main` and asks for explicit release approval.
+V51 introduces a new visual direction for the existing Davonium site: a cleaner editorial layout, stronger responsive typography, clearer actions, updated theme/surface tokens, restrained cyan/violet accents, more deliberate hero composition, and a consistent control style. It preserves the company's real content, product statuses, policies, documentation, contact paths, five demo URLs, certificate/QR pages, PWA behavior, and compatibility routes rather than replacing the website with a content-free template.
 
-## Existing site preserved
+Page families have different treatments. About, Products, Services, Work, Contact, Install, Support, Documentation and legal pages have their own section treatments. DVNM Biz, Market, Creative, Skills, and Digital use separate art directions and accent palettes. All 73 HTML pages load the new `assets/css/davonium-v51-studio.css` layer.
 
-The release builds upon the supplied V48 source and the previous V49 control layer; it is not a generic replacement template. It retains the existing semantic HTML, company identity, product/status copy, 73 HTML pages, documentation library, PWA/offline behavior, policies, certificates, QR assets, five distinct demo routes and the procedural DVNM Bot. Text and primary actions remain outside WebGL so the site remains readable if graphics fail.
+## The compact DVNM Bot
+
+The former bulky articulated robot has been replaced by a small, friendly real-time Three.js companion: a simple light shell, dark visor, expressive cyan eyes and smile, compact limbs, and a glowing `DVNM` chest mark. While browser speech synthesis is active, the chest/body glow responds to the speaking state and the mouth pulses at reported speech boundaries where the browser supports them. Speech is user initiated and has a stop action; there is no microphone capture. WebGL/import failure, context loss, reduced-motion/low-data conditions, and supported fallback paths must not make the site's text or primary controls inaccessible.
+
+The fallback SVGs are illustrations, not described as live 3D. Real-time rendering depends on the user's browser and the external Three.js module load.
+
+## Engineering retained and extended
+
+- Vanilla JavaScript and native ES modules; no React or Vue migration was introduced.
+- Existing Three.js scene manager with capped pixel ratio, adaptive timing, resize/visibility controls, camera presets, reduced-effects mode, optional procedural Web Audio, PNG capture, and a GLSL-displaced instanced-particle option.
+- Existing immersive module layer under `assets/js/immersive/` for event dispatch, scene management, controls, audio, assets, pools, shaders, and particles.
+- CSS-sized canvas layout, responsive breakpoints, safe-area-aware floating controls, focus states, theme tokens, and reduced-motion styling.
+- Service-worker cache version and asset references updated to V51.
+
+High particle mode is a capacity option, not an asserted 100,000-particle benchmark or guaranteed 60/120 FPS. The full advanced blueprint is not claimed as complete: CSM, HDRI/PMREM, a complete production post-processing chain, Rapier/Cannon physics, and a fully authored GLTF/Rive content pipeline still require implementation or verification. See `MASTER-PROMPT-COVERAGE.md` and `MASTER-3D-APPLICATION-BLUEPRINT.md` in the local release archive.
 
 ## Entry points
 
-- `index.html`: company homepage and DVNM Bot welcome scene.
-- `work.html`: work/product progress and delivery story.
-- `demos/business.html`, `demos/shop.html`, `demos/portfolio.html`, `demos/learning.html`, `demos/technology.html`: five distinct sample experiences.
-- `assets/js/immersive/App.js`: module entry point for immersive controls.
-- `assets/js/immersive/`: event, lifecycle, asset-progress, input, audio, pooling, shader, particle, scene and render-control modules.
-- `assets/js/dvnm-final-v45.js`: existing page-scene renderer with the V50 particle integration hooks.
-- `assets/js/dvnm-robot-3d.js`: articulated procedural robot renderer.
-- `assets/css/davonium-v50-hud.css`: responsive control deck.
-- `sw.js`, `manifest.webmanifest`, `_headers`, `_redirects`, `wrangler.jsonc`: PWA, headers and route/deployment configuration.
+- `index.html` — company homepage and compact DVNM Bot experience.
+- `about.html`, `products.html`, `services.html`, `work.html`, `contact.html`, `install.html`, `support.html` — core company journeys.
+- `demos/business.html`, `demos/shop.html`, `demos/portfolio.html`, `demos/learning.html`, `demos/technology.html` — five distinct sample experiences.
+- `assets/css/davonium-v51-studio.css` — V51 visual system.
+- `assets/js/dvnm-robot-3d.js` — small real-time Three.js DVNM Bot.
+- `assets/js/site.js` — shared UI, theme, speech and event coordination.
+- `assets/js/immersive/` — modular immersive-engine support layer.
+- `sw.js`, `manifest.webmanifest`, `_headers`, `_redirects`, `wrangler.jsonc` — PWA, headers, route and deployment configuration.
 
 ## One-command Windows release
 
-Save `Davonium-Technologies-V50-World-Class-3D-Release.zip` in your Windows Downloads folder, then paste the single command from `PUBLISH-ONE-COMMAND.txt` into Windows PowerShell 5.1 or later. It extracts to a timestamped folder and invokes `DEPLOY-DAVONIUM-V50.ps1`. The script checks the actual remote `main` SHA, stages changes from a clean remote clone, checks for private files and common credential patterns, asks for exact `PUSH` confirmation, creates a backup branch, uses a normal non-force push and verifies the remote SHA. Cloudflare deployment is a separate choice and requires `DEPLOY` confirmation twice plus account verification. It does not change DNS or rewrite Git history.
+Save `Davonium-Technologies-V51-Complete-Redesign.zip` in your Windows Downloads folder, then paste the one-line command from `PUBLISH-ONE-COMMAND.txt` into Windows PowerShell 5.1 or later. It extracts to a timestamped directory and starts `DEPLOY-DAVONIUM-V51.ps1`.
 
-Requirements: Git for Windows and access to the GitHub repository. Node.js/npm and Cloudflare authentication are needed only if deployment is separately approved. The supplied command does not itself prove publication or deployment succeeded.
+The publisher checks the existing remote `main` SHA, clones into a clean temporary directory, excludes local-only files and deployment helpers, checks common credential patterns, requests exact `PUSH` approval, creates a backup branch, uses a normal non-force push, and verifies the resulting remote SHA. If no repository-based Cloudflare deploy workflow is detected, a separate optional Worker deployment requires two `DEPLOY` confirmations and Cloudflare account verification. It does not change DNS, rewrite Git history, or claim success simply because a subprocess started. External Git-to-Cloudflare integrations must still be checked in the Cloudflare dashboard.
 
-## Honest QA status
+`directory.md`, this private QA/coverage material, the original Davonium redesign brief (`LOCAL-DELIVERABLES/DAVONIUM-MASTER-REDESIGN-BRIEF-ORIGINAL.md`) and the 3D blueprint transcription (`LOCAL-DELIVERABLES/MASTER-3D-APPLICATION-BLUEPRINT-TRANSCRIPTION.md`), ZIPs and deployment script are local-delivery artifacts and are excluded from the public push. Removing an already-tracked private file from the latest revision does not erase older public Git history.
 
-`V50-QA-REPORT.json` records the static and local HTTP checks that actually passed. The V50 tree passed HTML/reference/fragment checks, CSS parsing and URL resolution, JavaScript syntax/import checks, SVG/XML/JSON/config parsing, the service-worker path audit, and 19/19 local HTTP smoke checks. Chromium browser navigation was blocked by administrator policy, so full visual/runtime checks and a real GLSL compile were not verified. Native Windows PowerShell 5.1 execution, physical device/screen-reader testing, live GitHub verification and production deployment remain pending.
+## QA status — read before publishing
 
-`MASTER-PROMPT-COVERAGE.md` maps the six-section interactive 3D blueprint and 24-section Davonium redesign brief. `MASTER-3D-APPLICATION-BLUEPRINT.md` records the technical blueprint. The original 24-section prompt, QA notes and coverage docs are kept in the local ZIP for review but excluded by the publisher from the public deployment tree. `directory.md` is local-only and is removed from the public staged tree if tracked; deleting it from the latest commit does not erase older Git history.
+`V51-QA-REPORT.json` records the static checks and limitations observed for this package. Current source audit: 73 HTML pages, 3,472 local references, 333 fragment checks, no unresolved references/fragments, no duplicate-ID pages, no CSS parser errors, no JavaScript syntax errors or missing relative imports, valid SVG/XML, and V51 stylesheet linked on all HTML pages. These are source-level checks, not proof of visual correctness.
+
+Chromium navigation was blocked by administrator policy (`ERR_BLOCKED_BY_ADMINISTRATOR`), so browser rendering, actual shader compilation, screen-size screenshots, bot click/reopen stress tests, voice quality, and physical mobile-device behavior are not verified. Native Windows PowerShell execution, live GitHub verification and production deployment have not been run in this environment. Review the V51 QA report and remaining requirements before approving release.

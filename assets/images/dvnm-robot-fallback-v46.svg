@@ -1,1 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 640" role="img" aria-labelledby="t d"><title id="t">DVNM Bot</title><desc id="d">A white and silver articulated robot with an angular dark visor, cyan eyes, chest core, and a raised waving hand.</desc><defs><linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".55" stop-color="#d9e4f0"/><stop offset="1" stop-color="#8398b1"/></linearGradient><linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1a354b"/><stop offset="1" stop-color="#071421"/></linearGradient><linearGradient id="cyan" x1="0" x2="1"><stop stop-color="#45f1ee"/><stop offset="1" stop-color="#1c9edf"/></linearGradient><filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="258" cy="605" rx="115" ry="15" fill="#24bfd9" opacity=".16"/><g stroke="#637e99" stroke-width="4" stroke-linejoin="round"><path fill="#d4e2ef" d="M212 323h92l16 42-17 62h-91l-16-62z"/><path fill="url(#shell)" d="M191 352l-35 19-21 71 24 11 28-59 21-10z"/><path fill="#92a8be" d="M129 437l-19 15 7 22 30-9 12-14z"/><path fill="url(#shell)" d="M325 352l35 19 21 71-24 11-28-59-21-10z"/><path fill="#92a8be" d="M387 437l19 15-7 22-30-9-12-14z"/><path fill="url(#shell)" d="M203 407h44l-5 72-16 12-29-12z"/><path fill="url(#shell)" d="M270 407h44l6 72-29 12-16-12z"/><path fill="#7d93aa" d="M198 476l25 10 17 75-21 14-32-70z"/><path fill="#7d93aa" d="M274 486l25-10 11 29-32 70-21-14z"/><path fill="url(#shell)" d="M186 560l31 15 12 16-10 17h-54l-16-17 9-16z"/><path fill="url(#shell)" d="M300 575l31-15 28 15 9 16-16 17h-54l-10-17z"/><path fill="#23455f" stroke="#18b8d4" d="M193 369h134v64H193z"/><path fill="url(#shell)" d="M185 171l12-74 33-33h60l33 33 12 74-18 80-28 24h-58l-28-24z"/><path fill="#8da3bb" d="M185 121l-22 14-5 55 26 7zM335 121l22 14 5 55-26 7z"/><path fill="url(#glass)" stroke="#56758e" stroke-width="5" d="M196 120l20-22h88l20 22-2 68-24 21h-76l-24-21z"/><path fill="url(#cyan)" stroke="none" filter="url(#glow)" d="M214 135h27v14h-27zM279 135h27v14h-27z"/><path fill="none" stroke="#51ecf0" stroke-width="5" stroke-linecap="round" d="M239 175q21 17 42 0"/><path fill="#b5c6d9" d="M192 205l30 25h76l30-25-6 38-24 20h-76l-24-20z"/><path fill="#c7d8e7" d="M233 75h54l-14 17h-26z"/><path fill="#1b4b6b" d="M232 290h56v45h-56z"/><path fill="url(#shell)" d="M195 310l20-22h91l20 22-20 66h-91z"/><rect x="237" y="324" width="36" height="36" rx="10" fill="#123a51" stroke="#35cfeb" stroke-width="3"/><circle cx="255" cy="342" r="11" fill="url(#cyan)" filter="url(#glow)" stroke="none"/><path fill="url(#shell)" d="M163 380l-31 36 13 29 31-25z"/><path fill="url(#shell)" d="M356 382l29 30-2 40-27-15z"/><path fill="url(#shell)" d="M125 415l-23-18-13-22 10-12 25 18 12 18z"/><path fill="url(#shell)" d="M377 428l22-16 14-22-10-12-25 17-12 18z"/><path fill="#1f526d" stroke="#35d5e6" d="M231 383h49v19h-49z"/></g><g fill="#62eaf1"><circle cx="224" cy="142" r="4"/><circle cx="293" cy="142" r="4"/><circle cx="255" cy="342" r="4"/></g><path d="M206 230h98" stroke="#a3b5c8" stroke-width="3"/><text x="260" y="395" fill="#e7fbff" font-family="Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="2" text-anchor="middle">DVNM</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="620" viewBox="0 0 520 620" role="img" aria-labelledby="title desc">
+<title id="title">DVNM Bot</title><desc id="desc">A small friendly white robot with aqua eyes and a glowing DVNM chest light.</desc>
+<defs>
+ <linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".58" stop-color="#dff1f5"/><stop offset="1" stop-color="#a8cad5"/></linearGradient>
+ <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f9ffff"/><stop offset="1" stop-color="#b6d4de"/></linearGradient>
+ <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173847"/><stop offset="1" stop-color="#061a28"/></linearGradient>
+ <radialGradient id="aura"><stop stop-color="#28e1e9" stop-opacity=".28"/><stop offset="1" stop-color="#28e1e9" stop-opacity="0"/></radialGradient>
+ <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<ellipse cx="260" cy="318" rx="215" ry="230" fill="url(#aura)"/>
+<ellipse cx="260" cy="554" rx="108" ry="20" fill="#22dce9" opacity=".18"/>
+<g stroke-linejoin="round" stroke-linecap="round">
+ <!-- short, soft arms -->
+ <path d="M167 365Q131 371 126 411L126 447Q128 464 146 463Q162 462 163 446L167 411" fill="url(#shell)" stroke="#8cb9c9" stroke-width="5"/>
+ <path d="M353 365Q389 371 394 411L394 447Q392 464 374 463Q358 462 357 446L353 411" fill="url(#shell)" stroke="#8cb9c9" stroke-width="5"/>
+ <path d="M208 468L203 508Q204 525 223 526H244L245 479M312 468L317 508Q316 525 297 526H276L275 479" fill="url(#shell)" stroke="#8cb9c9" stroke-width="5"/>
+ <path d="M196 526H243Q251 526 251 538V545H185Q176 541 180 534Z M324 526H277Q269 526 269 538V545H335Q344 541 340 534Z" fill="#143544" stroke="#638a9d" stroke-width="4"/>
+ <!-- torso -->
+ <path d="M194 326Q194 308 214 307H306Q326 308 326 326L340 442Q341 461 322 469H198Q179 461 180 442Z" fill="url(#body)" stroke="#8cb9c9" stroke-width="5"/>
+ <path d="M208 347Q208 336 222 336H298Q312 336 312 347V425Q312 437 298 437H222Q208 437 208 425Z" fill="#0b2734" stroke="#3d8495" stroke-width="4"/>
+ <rect x="218" y="354" width="84" height="11" rx="5.5" fill="#8efdf7" opacity=".5"/>
+ <rect x="217" y="369" width="86" height="42" rx="8" fill="#071b28"/>
+ <text x="260" y="397" font-family="Arial, sans-serif" font-weight="800" font-size="23" text-anchor="middle" fill="#75fff4" filter="url(#glow)">DVNM</text>
+ <circle cx="260" cy="433" r="7" fill="#66fff5" filter="url(#glow)"/>
+ <!-- head -->
+ <path d="M228 124L292 124 324 150 336 184 332 258Q329 287 302 304L280 318H240L218 304Q191 287 188 258L184 184 196 150Z" fill="url(#shell)" stroke="#7eafc0" stroke-width="5"/>
+ <path d="M206 173Q206 159 223 158H297Q314 159 314 173V235Q313 256 296 260H224Q207 256 206 235Z" fill="url(#visor)" stroke="#438596" stroke-width="4"/>
+ <g fill="#64fff4" filter="url(#glow)"><circle cx="234" cy="202" r="10"/><circle cx="286" cy="202" r="10"/></g>
+ <path d="M244 226Q260 238 276 226" fill="none" stroke="#6bfff4" stroke-width="5"/>
+ <path d="M222 275Q260 291 298 275" fill="none" stroke="#6ab3c4" stroke-width="5"/>
+ <path d="M242 130V107Q260 98 278 107V130" fill="none" stroke="#8cb9c9" stroke-width="6"/>
+ <circle cx="260" cy="101" r="12" fill="#68fff4" stroke="#a5fffb" stroke-width="3" filter="url(#glow)"/>
+ <circle cx="180" cy="202" r="13" fill="#0d8aa1" stroke="#7cdae3" stroke-width="4"/><circle cx="340" cy="202" r="13" fill="#0d8aa1" stroke="#7cdae3" stroke-width="4"/>
+</g>
+</svg>

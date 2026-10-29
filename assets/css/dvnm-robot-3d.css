@@ -1,55 +1,10 @@
-/* V43 — responsive live 3D DVNM character. The old artwork is used only when WebGL/CDN loading fails. */
-.dvnm-3d-hero-stage { min-height: clamp(410px, 45vw, 620px); overflow: visible; }
-.dvnm-3d-hero-stage::after { width: 77%; border-radius: 45% 55% 58% 42% / 44% 45% 55% 56%; }
-.dvnm-three-robot { position: relative !important; display: block !important; min-width: 0 !important; min-height: 0 !important; overflow: hidden; isolation: isolate; transform: none !important; perspective: none !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
-.dvnm-three-canvas { position: absolute !important; inset: 0 !important; z-index: 2; display: block !important; width: 100% !important; height: 100% !important; min-width: 0 !important; min-height: 0 !important; opacity: 0; outline: 0; touch-action: pan-y; transition: opacity .35s ease; }
-.dvnm-three-robot[data-three-ready="true"] .dvnm-three-canvas { opacity: 1; }
-.dvnm-three-fallback { position: absolute !important; z-index: 1; inset: 0; display: block !important; width: 100% !important; height: 100% !important; object-fit: contain; object-position: center bottom; pointer-events: none; opacity: .78; transition: opacity .35s ease; }
-.dvnm-three-robot[data-three-ready="true"] .dvnm-three-fallback { opacity: 0; }
-.dvnm-three-robot[data-three-failed="true"] .dvnm-three-fallback { opacity: 1; }
-.dvnm-three-robot[data-three-failed="true"] .dvnm-three-canvas { display: none !important; }
-.dvnm-three-loading { position: absolute; inset: auto 0 6%; z-index: 0; color: var(--muted); font-size: .8rem; text-align: center; opacity: .8; }
-.dvnm-three-robot[data-three-ready="true"] .dvnm-three-loading, .dvnm-three-robot[data-three-failed="true"] .dvnm-three-loading { display: none; }
-.dvnm-three-orbit { position: absolute; z-index: 0; left: 50%; top: 44%; width: 62%; height: 84%; border: 1px solid rgba(64,190,226,.3); border-radius: 50%; transform: translate(-50%,-50%) rotate(24deg); pointer-events: none; }
-.dvnm-three-orbit::before, .dvnm-three-orbit::after { content:""; position:absolute; width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 15px rgba(42,221,237,.8); }
-.dvnm-three-orbit::before { top:13%; left:12%; }
-.dvnm-three-orbit::after { bottom:9%; right:15%; width:5px; height:5px; }
-.orbit-b { width:76%; height:63%; border-color:rgba(138,111,255,.3); transform:translate(-50%,-50%) rotate(-34deg); }
-.dvnm-hero-status { position:absolute; z-index:5; left:50%; bottom:20px; display:flex; align-items:center; gap:11px; width:min(330px,calc(100% - 36px)); padding:12px 14px; border:1px solid var(--line); border-radius:17px; color:var(--ink); background:color-mix(in srgb,var(--surface) 84%,transparent); box-shadow:var(--shadow); backdrop-filter:blur(14px); transform:translateX(-50%); }
-.dvnm-hero-status>span:nth-child(2) { display:flex; min-width:0; flex:1; flex-direction:column; gap:2px; }
-.dvnm-hero-status strong { font-size:.88rem; }
-.dvnm-hero-status small { color:var(--muted); font-size:.73rem; }
-.dvnm-live-indicator { width:9px; height:9px; flex:0 0 9px; border-radius:50%; background:#29cba1; box-shadow:0 0 0 4px rgba(41,203,161,.13),0 0 13px rgba(41,203,161,.48); }
-.dvnm-hero-status-pill { padding:5px 7px; border:1px solid rgba(22,190,209,.3); border-radius:7px; color:var(--cyan); background:rgba(22,190,209,.08); font-size:.62rem; font-weight:850; letter-spacing:.08em; white-space:nowrap; }
-.dvnm-stage-3d { overflow:hidden; }
-.dvnm-stage-3d > .dvnm-three-robot { position:absolute !important; inset:0; width:100% !important; height:100% !important; }
-.dvnm-stage-3d .dvnm-three-canvas { position:absolute !important; inset:0; }
-.dvnm-stage-3d .dvnm-stage-label { z-index:6; }
-.dvnm-panel-intro .dvnm-robot-mini-frame { overflow:hidden; }
-.dvnm-panel-intro .dvnm-three-robot { height:145px !important; width:110px !important; flex:0 0 110px; }
-.dvnm-welcome-robot .dvnm-three-robot { height:280px !important; width:min(100%,300px) !important; }
-.dvnm-three-robot.is-speaking .dvnm-three-canvas { filter:drop-shadow(0 0 16px rgba(32,216,233,.15)); }
-:root[data-theme="light"] .dvnm-three-orbit { border-color:rgba(70,92,210,.22); }
-:root[data-theme="light"] .dvnm-hero-status-pill { color:#3b54bb; background:#eef1ff; border-color:#d5dcff; }
-@media(max-width:950px) {
- .v36-hero-stage.dvnm-3d-hero-stage { min-height:clamp(360px,68vw,520px); max-width:640px; width:100%; margin-inline:auto; }
- .dvnm-three-orbit { width:64%; height:85%; }
-}
-@media(max-width:600px) {
- .v36-hero-stage.dvnm-3d-hero-stage { min-height:clamp(330px,105vw,430px); max-height:440px; margin-top:0; }
- .dvnm-hero-status { bottom:9px; width:min(296px,calc(100% - 22px)); padding:9px 11px; }
- .dvnm-three-orbit { width:70%; height:82%; }
- .dvnm-three-orbit.orbit-b { width:82%; height:63%; }
- .dvnm-stage-3d { min-height:350px; }
- .dvnm-panel-intro .dvnm-robot-mini-frame { min-width:86px; max-width:86px; height:105px; }
- .dvnm-panel-intro .dvnm-three-robot { width:86px !important; height:105px !important; }
-}
-@media(max-width:360px) {
- .v36-hero-stage.dvnm-3d-hero-stage { min-height:315px; }
- .dvnm-hero-status { gap:7px; }
- .dvnm-hero-status-pill { font-size:.55rem; }
-}
-@media(prefers-reduced-motion:reduce) {
- .dvnm-three-canvas,.dvnm-three-fallback { transition:none !important; }
- .dvnm-three-orbit { animation:none !important; }
-}
+/* V51 compact 3D companion scene. Kept small so page CSS owns composition. */
+[data-dvnm-robot-host] { position:relative!important; isolation:isolate!important; overflow:hidden; }
+[data-dvnm-robot] { position:absolute!important; inset:0!important; display:block!important; width:100%!important; height:100%!important; min-width:0!important; min-height:0!important; z-index:2!important; pointer-events:none!important; opacity:0; transition:opacity .25s ease; }
+[data-dvnm-robot-host][data-three-ready="true"] [data-dvnm-robot] { opacity:1; }
+.dvnm-robot-fallback { position:absolute!important; z-index:1!important; inset:5% 0!important; width:100%!important; height:90%!important; object-fit:contain!important; pointer-events:none!important; opacity:.96; transition:opacity .25s ease; }
+[data-dvnm-robot-host][data-three-ready="true"] .dvnm-robot-fallback { opacity:0; }
+[data-dvnm-robot-host][data-three-failed="true"] [data-dvnm-robot] { display:none!important; }
+[data-dvnm-robot-host][data-three-failed="true"] .dvnm-robot-fallback { opacity:1!important; }
+[data-dvnm-robot-host][data-bot-state="ready"] .dvnm-live-dot { box-shadow:0 0 0 4px rgba(48,232,231,.1),0 0 15px rgba(48,232,231,.7); }
+@media(prefers-reduced-motion:reduce){[data-dvnm-robot],.dvnm-bot-dock *{animation:none!important;transition:none!important}}
