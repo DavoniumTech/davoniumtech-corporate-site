@@ -1,0 +1,107 @@
+/* V55 — match approved full-body robot hero mockups */
+.hero {
+  min-height: min(92vh, 920px) !important;
+}
+.hero .hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  width: min(1200px, calc(100% - 48px)) !important;
+}
+
+/* Remove ALL stage card chrome */
+.hero .art.dvnm-v46-bot-stage,
+.hero .v55-robot-hero {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  min-height: 480px !important;
+  width: 100% !important;
+  max-width: 520px !important;
+  margin-inline: auto !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+/* Hide the old caption card, meet button, orbit label on hero */
+.hero .dvnm-v46-stage-caption,
+.hero .dvnm-v46-meet-button,
+.hero .dvnm-v46-orbit-label {
+  display: none !important;
+}
+
+/* Full-body hero image */
+.hero .v55-robot-fullbody {
+  width: min(100%, 460px) !important;
+  height: auto !important;
+  max-height: 560px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 20px 40px rgba(0, 200, 230, 0.18));
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Keep 3D canvas/fallback behind or as secondary */
+.hero .dvnm-robot-canvas,
+.hero .dvnm-robot-fallback {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  opacity: 0 !important; /* fullbody image is primary visual */
+  pointer-events: none !important;
+}
+
+/* Platform under robot */
+.hero .v55-robot-hero::after,
+.hero .art.dvnm-v46-bot-stage::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 2% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 55% !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse, rgba(0, 229, 242, 0.5), transparent 70%) !important;
+  filter: blur(6px) !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Cleaner CTAs like mockup */
+.hero .cta .btn.alt,
+.hero .cta .btn.install-cta {
+  background: transparent !important;
+  border: 1px solid rgba(160, 200, 220, 0.35) !important;
+  color: inherit !important;
+  border-radius: 999px !important;
+}
+html[data-theme="light"] .hero .cta .btn.alt,
+html[data-theme="light"] .hero .cta .btn.install-cta {
+  border-color: rgba(20, 40, 60, 0.18) !important;
+}
+
+.hero .principles {
+  width: min(1200px, calc(100% - 48px)) !important;
+  margin: 32px auto 0 !important;
+  opacity: 0.9 !important;
+}
+
+@media (max-width: 900px) {
+  .hero .v55-robot-fullbody {
+    max-height: 360px !important;
+  }
+  .hero .art.dvnm-v46-bot-stage,
+  .hero .v55-robot-hero {
+    min-height: 320px !important;
+  }
+}
