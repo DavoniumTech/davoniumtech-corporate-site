@@ -1,0 +1,57 @@
+{
+  "release": "Davonium Technologies V51 — Studio UI Redesign and Compact DVNM Bot",
+  "date": "2026-10-29",
+  "source": "Davonium-Technologies-V48-Immersive-Final-Release.zip plus prior V49/V50 module/control work and the V51 design revision",
+  "scope": "A new visual-system layer across the existing website, separate visual identities for five core demos, and a smaller procedural Three.js bot that glows and animates its mouth while user-initiated speech is active where supported. Existing content/routes are preserved. This report does not claim full completion of every advanced item in either prompt.",
+  "counts": {
+    "html_pages": 73,
+    "html_pages_with_v51_release_marker": 73,
+    "html_pages_with_v51_stylesheet": 73,
+    "local_references_checked": 3472,
+    "fragment_checks": 331,
+    "css_files": 10,
+    "css_url_references_checked": 9,
+    "javascript_files": 20,
+    "relative_js_imports_checked": 18,
+    "svg_files": 21,
+    "local_http_routes": 16
+  },
+  "static_checks": {
+    "source_zip_integrity": true,
+    "unresolved_local_references": 0,
+    "missing_fragment_targets": 0,
+    "duplicate_html_id_pages": 0,
+    "css_parse_errors": 0,
+    "unresolved_css_urls": 0,
+    "javascript_syntax_failures": 0,
+    "missing_relative_js_imports": 0,
+    "svg_xml_errors": 0,
+    "sitemap_xml_valid": true,
+    "json_file_parse_errors": 0,
+    "old_robot_copy_in_html": 0,
+    "local_http_smoke_test": true
+  },
+  "browser_test": {
+    "attempted": true,
+    "status": "BLOCKED",
+    "reason": "Chromium executable was available but local page navigation failed with net::ERR_BLOCKED_BY_ADMINISTRATOR.",
+    "shader_compile_verified": false,
+    "visual_screenshots_verified": false,
+    "speech_ui_verified_in_browser": false
+  },
+  "deployment": {
+    "github_push_performed": false,
+    "cloudflare_deploy_performed": false,
+    "live_site_verified": false,
+    "native_windows_powershell_executed": false,
+    "target_config": "Cloudflare Worker with static assets; not assumed to be plain GitHub Pages."
+  },
+  "known_limitations": [
+    "Full CSM, HDRI/PMREM environment, complete multi-pass EffectComposer stack, physics integration, authored GLTF/Rive runtime pipeline, and a measured zero-allocation guarantee are not complete or not evidenced by the current release.",
+    "The 100,000 particle count is an optional capacity profile, not a measured performance result or FPS guarantee.",
+    "Speech boundary events vary by browser; no microphone capture is provided or implied.",
+    "Physical-device, screen-reader, Lighthouse/Web Vitals, slow-network and production-route browser checks remain outstanding."
+  ],
+  "publisher_execution_status": "Script source checks passed for explicit PUSH approval, backup branch, no force-push, credential-value suppression, separate Cloudflare DEPLOY approval, and V51 live marker verification. Native Windows PowerShell execution was not available here.",
+  "release_archive_integrity": "Final ZIP is independently CRC-tested after packaging before delivery; see the package verification in the release handoff."
+}

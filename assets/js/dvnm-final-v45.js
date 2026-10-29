@@ -470,7 +470,7 @@
     });
     art.appendChild(bar);
   }
-  // V48 provides one unified scene-control bar across all seven demos; the legacy V45 bar is intentionally not injected.
+  // V48 provides one unified scene-control bar across all five demos; the legacy V45 bar is intentionally not injected.
 
   // High-quality but restrained scroll reveals; no section is hidden unless an observer can reveal it.
   if (!reduced && 'IntersectionObserver' in window) {

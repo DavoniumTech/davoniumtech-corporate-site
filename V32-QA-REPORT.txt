@@ -1,0 +1,37 @@
+DAVONIUM TECHNOLOGIES V32 — RELEASE QA REPORT
+Date: 22 October 2026
+Package: complete website source, not a patch ZIP
+
+SOURCE / SCOPE
+- Based on the uploaded davoniumtech-corporate-site-v31 source archive.
+- Older davoniumtech-website-main theme reviewed as the dark-mode reference.
+- HTML pages: 72
+- Files before ZIP: 150
+- Uncompressed project size: 4,665,538 bytes
+- Stylesheets checked: 6
+- JavaScript files: 3
+- SVG assets: 10
+
+STATIC CHECKS
+- JavaScript syntax: site.js, demos.js and sw.js all pass Node syntax checks.
+- CSS: 6 stylesheets have balanced braces.
+- Local href/src targets: 3113 checked; broken file targets: 0.
+- Same-page and target-page anchor checks with known local pages: 0 missing anchor references.
+- Duplicate IDs: 0; duplicate attributes: 0.
+- Sitemap: valid XML with 67 URL entries.
+- All 72 HTML pages load release-polish-v32.css?v=32.
+- Demos update to demos.css?v=32 and demos.js?v=32.
+- Service worker cache name is V32 and includes V32 theme CSS, robot layers, and the new bot guide.
+
+VISIBLE / FUNCTIONAL RELEASE CONTENT
+- Existing company site, product pages, legal pages, QR images, certificate PDFs, seven demo pages and documentation library retained.
+- Supplied transparent robot art is now the core figure; separate masked head layer enables small head turns/nods; face overlay blinks and responds to speech-boundary events; chest aura and art brightness react during speaking.
+- Browser-provided voice list is populated when available and choice is stored locally. Speech is opt-in.
+- Dark theme uses the older midnight palette with lower blur and translucent glass; light and dark pages have soft white, mint, gray, beige, violet, indigo and rose section tones.
+- Mobile fixed controls are right-aligned with safe-area-aware spacing; bot dock is higher in the stack and physically above WhatsApp.
+
+KNOWN LIMITATIONS / TESTING
+- This is a 2D image-based rig, not a 3D/skeletal animation engine. Arms/hands/legs remain visible in supplied full-body art and move with body motion; independent limb walking is not physically simulated.
+- Mouth motion follows browser speech word-boundary timing when available, with CSS fallback. It cannot be guaranteed to match every phoneme on every device.
+- Voice selection/naturalness depends on what the browser/OS exposes.
+- Live visual browser QA was not possible in this execution environment because Chromium navigation to local/localhost test pages returned ERR_BLOCKED_BY_ADMINISTRATOR. Test 320px, 360px, 390px, tablet and desktop after deployment, including the WhatsApp and robot launch controls.

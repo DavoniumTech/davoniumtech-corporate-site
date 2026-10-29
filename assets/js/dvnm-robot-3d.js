@@ -1,8 +1,8 @@
-/* Davonium V55 — lightweight cinematic Three.js DVNM Bot with speech-aware face and SVG fallback. */
+/* Davonium V51 — minimal, expressive Three.js DVNM Bot. Optional WebGL enhancement with 2D SVG fallback. */
 (() => {
   'use strict';
-  if (window.__dvnmThreeRobotLoaderV55) return;
-  window.__dvnmThreeRobotLoaderV55 = true;
+  if (window.__dvnmThreeRobotLoaderV51) return;
+  window.__dvnmThreeRobotLoaderV51 = true;
 
   const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js';
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
@@ -94,10 +94,14 @@
       return mesh;
     };
 
-    // One quiet orbital halo; no floor plane, footing, or cast shadow.
+    // One quiet orbital halo and a small luminous footing: no particle storm or excessive greebles.
     const haloMaterial = new THREE.MeshBasicMaterial({ color: 0x49e9ed, transparent: true, opacity: .43, depthWrite: false });
     const halo = new THREE.Mesh(new THREE.TorusGeometry(.86, .009, 6, 96), haloMaterial);
     halo.position.set(0, .92, -.28); halo.rotation.set(.25, -.22, .48); halo.scale.set(1, .78, 1); scene.add(halo);
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(.77, 48), new THREE.MeshBasicMaterial({ color: 0x13d6e6, transparent: true, opacity: .08, depthWrite: false }));
+    floor.rotation.x = -Math.PI / 2; floor.position.y = -.03; floor.scale.set(1.2, .72, 1); scene.add(floor);
+    const platform = new THREE.Mesh(new THREE.TorusGeometry(.47, .012, 7, 60), new THREE.MeshBasicMaterial({ color: 0x52e8ed, transparent: true, opacity: .58 }));
+    platform.rotation.x = Math.PI / 2; platform.position.y = -.01; platform.scale.set(1.05, .8, 1); scene.add(platform);
 
     // Small body with simple shoulder joints and a single glowing DVNM chest window.
     const body = new THREE.Group(); robot.add(body);
@@ -116,18 +120,9 @@
     sphere(headPivot, shell, [0, 0, 0], [.405, .34, .32], 30);
     sphere(headPivot, seam, [0, -.015, .207], [.357, .255, .14], 26);
     sphere(headPivot, dark, [0, -.008, .258], [.318, .205, .095], 28);
-    const eyeLeft = sphere(headPivot, cyan, [-.125, .026, .33], [.059, .071, .027], 18);
-    const eyeRight = sphere(headPivot, cyan, [.125, .026, .33], [.059, .071, .027], 18);
-    // Distinct deep-black pupils and tiny reflective catchlights make the eye display read clearly.
-    const pupilMaterial = simpleMaterial(0x020a16, { metalness: .12, roughness: .12, clearcoat: 1, emissive: 0x020812, emissiveIntensity: .02 });
-    sphere(headPivot, pupilMaterial, [-.125, .027, .357], [.023, .032, .014], 18);
-    sphere(headPivot, pupilMaterial, [.125, .027, .357], [.023, .032, .014], 18);
-    const glintMaterial = new THREE.MeshBasicMaterial({ color: 0xf4ffff });
-    sphere(headPivot, glintMaterial, [-.133, .039, .369], [.006, .009, .004], 10);
-    sphere(headPivot, glintMaterial, [.117, .039, .369], [.006, .009, .004], 10);
-    // A dark mouth cavity expands vertically while browser speech synthesis is active.
-    sphere(headPivot, cyan, [0, -.105, .336], [.080, .024, .016], 16);
-    const mouth = sphere(headPivot, dark, [0, -.105, .353], [.059, .010, .015], 16);
+    const eyeLeft = sphere(headPivot, cyan, [-.125, .026, .33], [.053, .065, .024], 18);
+    const eyeRight = sphere(headPivot, cyan, [.125, .026, .33], [.053, .065, .024], 18);
+    const mouth = sphere(headPivot, cyan, [0, -.105, .336], [.072, .012, .018], 16);
     // Compact antenna, intentionally understated.
     capsule(headPivot, seam, [0, .352, -.025], .018, .075, 8);
     const antenna = sphere(headPivot, cyan, [0, .405, -.025], [.038, .038, .038], 16);
@@ -232,10 +227,9 @@
       state.headPivot.rotation.z = speaking ? Math.sin(t * 5) * .024 : Math.sin(t * .7) * .012;
       state.halo.rotation.z += .0008;
     }
-    // Keep both arms relaxed at the sides. Speech motion is carried by the mouth, eyes and chest only.
-    state.armLeft.rotation.z = -.035 + Math.sin(t * .72) * .009;
-    state.armRight.rotation.z = .035 + Math.sin(t * .69) * .009;
-    state.mouth.scale.y = speaking ? .010 + pulse * .055 : .008 + pulse * .004;
+    state.armLeft.rotation.z = (speaking ? -.25 : -.04) + Math.sin(t * (speaking ? 8 : .8)) * (speaking ? .12 : .025);
+    state.armRight.rotation.z = (speaking ? .38 : .04) + Math.sin(t * (speaking ? 8.6 : .9)) * (speaking ? .15 : .025);
+    state.mouth.scale.y = speaking ? .012 + pulse * .054 : .012 + pulse * .024;
     const glow = speaking ? 1.25 + pulse * 1.6 : .45;
     state.cyan.emissiveIntensity = speaking ? 1.25 + pulse * 1.6 : 1.05;
     state.shell.emissiveIntensity = speaking ? .09 + pulse * .08 : .04;

@@ -1,0 +1,110 @@
+{
+  "release": "V48",
+  "date": "2026-10-28",
+  "source": "User-uploaded Davonium-Technologies-V46-Final-Release(2).zip; implementation carried forward from audited V46 source tree",
+  "scope": "Final static/source validation after V48 changes; does not constitute a completed production deploy or native Windows PowerShell/browser/device test.",
+  "checks": {
+    "html_pages": 73,
+    "html_parse_or_structure_issues": [],
+    "html_pages_missing_v48_includes": [],
+    "local_html_href_src_reference_count": 3385,
+    "unresolved_local_references": [],
+    "same_page_fragment_links_checked": 331,
+    "missing_same_page_fragment_targets": [],
+    "duplicate_html_ids": [],
+    "css_files": 8,
+    "css_parser_errors": [],
+    "css_url_references_checked": 9,
+    "unresolved_css_urls": [],
+    "javascript_files": 9,
+    "javascript_syntax_failures": [],
+    "svg_files": 21,
+    "svg_xml_errors": [],
+    "xml_files": {
+      "sitemap.xml": true
+    },
+    "json_and_config_files": {
+      "manifest.webmanifest": true,
+      "wrangler.jsonc": true,
+      "BUILD-REPORT.json": true,
+      "V48-QA-REPORT.json": true
+    },
+    "local_http_route_checks": {
+      "/": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/work.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/docs/": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/demos/business.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/demos/shop.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/demos/portfolio.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/demos/learning.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/demos/technology.html": {
+        "status": 200,
+        "content_type": "text/html"
+      },
+      "/assets/css/davonium-v48-cinematic.css?v=48": {
+        "status": 200,
+        "content_type": "text/css"
+      },
+      "/assets/js/davonium-v48-experience.js?v=48": {
+        "status": 200,
+        "content_type": "text/javascript"
+      }
+    },
+    "five_demo_routes_exist": {
+      "DVNM Biz": true,
+      "DVNM Market": true,
+      "DVNM Creative": true,
+      "DVNM Skills": true,
+      "DVNM Digital": true
+    },
+    "services_page_describes_five_demos": false,
+    "work_page_obsolete_concepts_absent": true,
+    "directory_md_present_locally": true,
+    "proposal_files_present": [
+      true,
+      true,
+      true
+    ],
+    "wrangler_worker_name": "davoniumtech-corporate-site",
+    "publisher_required_tokens_or_shell_syntax_issues": [],
+    "publisher_utf8_bom": true,
+    "publisher_uses_npx_cmd": true,
+    "unused_human_presenter_implementation_removed": true,
+    "legacy_full_screen_entry_injection_removed": true
+  },
+  "not_run": [
+    "Native Windows PowerShell 5.1 parser/runtime execution; no PowerShell runtime is installed in this environment. Lexical/text checks are not native parsing.",
+    "Full interactive browser run/screenshot: the headless Chromium invocation timed out in this environment.",
+    "Physical Android/iOS/tablet tests.",
+    "GitHub push or Cloudflare Worker deployment from this environment.",
+    "Live release-marker verification after a new deployment."
+  ],
+  "notes": [
+    "Publisher clones current remote main, checks current SHA, stages only intended public source, checks private paths/common secret patterns, asks for PUSH, pushes a backup branch, normal non-force push, and verifies exact remote SHA. Optional Cloudflare Worker deploy asks for separate DEPLOY approval and account confirmation, calls npx.cmd to avoid npx.ps1 policy blocking, then verifies the V48 stylesheet marker on core routes.",
+    "directory.md and LOCAL-DELIVERABLES are local-only and are excluded from published files. A deletion commit does not erase any older public Git history.",
+    "Cloudflare config in this source is a Worker with static assets named davoniumtech-corporate-site. The publisher only offers that deploy step after explicit approval.",
+    "A&S Tech exact font-family could not be verified from available source; Inter is the selected approximation with system fallbacks.",
+    "A CSS absolute URL beginning / is checked against the site root."
+  ]
+}

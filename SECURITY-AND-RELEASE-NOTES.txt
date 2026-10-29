@@ -1,0 +1,13 @@
+Davonium Technologies — Internal release checks
+
+The public website is a company information and product-discovery experience. This static delivery does not add backend identity, payment, or private-record handling. Keep secrets out of browser-delivered files.
+
+Before publication:
+- Confirm the domain redirect sends the bare host to the preferred www host without a loop.
+- Verify expected response headers and check the browser console for policy violations.
+- Confirm the sitemap contains only canonical public pages and draft policy routes remain excluded.
+- Verify important product, contact, documentation, and WhatsApp routes on mobile and desktop.
+- Re-test the site after cache refresh and while offline after an online visit.
+- Confirm Cloudflare Git integration permission before making the source repository private.
+
+Crawler preferences support discovery; they do not provide access control or guarantee search/AI inclusion.

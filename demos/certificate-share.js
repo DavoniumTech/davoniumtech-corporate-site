@@ -24,12 +24,10 @@
   dateLabel.textContent = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }).format(now);
   const allSamples = [
     ['biz', '01', 'DVNM Biz', 'Business websites and service pathways'],
-    ['growth', '02', 'DVNM Growth', 'Campaigns, positioning and growth journeys'],
-    ['market', '03', 'DVNM Market', 'Commerce and product discovery'],
-    ['creative', '04', 'DVNM Creative', 'Portfolio storytelling and motion'],
-    ['skills', '05', 'DVNM Skills', 'Learning and guided practice'],
-    ['digital', '06', 'DVNM Digital', 'Technology and digital products'],
-    ['connect', '07', 'DVNM Connect', 'Community and collaboration']
+    ['market', '02', 'DVNM Market', 'Commerce and product discovery'],
+    ['creative', '03', 'DVNM Creative', 'Portfolio storytelling and motion'],
+    ['skills', '04', 'DVNM Skills', 'Learning and guided practice'],
+    ['digital', '05', 'DVNM Digital', 'Technology and digital products']
   ];
   const selected = () => demoSelect.value;
   const selectedItems = () => selected() === 'all' ? allSamples : allSamples.filter(item => item[0] === selected());
@@ -38,7 +36,7 @@
     recipient.textContent = name;
     if (descriptionDetail) {
       descriptionDetail.textContent = selected() === 'all'
-        ? 'explored all seven original Davonium Technologies sample experiences and their design directions.'
+        ? 'explored all five original Davonium Technologies sample experiences and their design directions.'
         : `explored the ${allSamples.find(item => item[0] === selected())?.[2] || 'selected'} sample experience and its design direction.`;
     }
     samples.forEach(li => {
@@ -90,13 +88,13 @@
     ctx.fillStyle = '#61728d'; ctx.font = '32px Arial, sans-serif'; ctx.fillText('This records that', 1200, 575);
     const displayName = String(nameInput.value || '').trim().slice(0, 64) || 'A Digital Explorer';
     ctx.fillStyle = '#1a8da9'; ctx.font = `700 ${displayName.length > 28 ? 44 : 60}px Arial, sans-serif`; ctx.fillText(displayName, 1200, 665, 1800);
-    const chosen = selectedItems();
     ctx.fillStyle = '#536580'; ctx.font = '30px Arial, sans-serif';
-    const selectedDescription = selected() === 'all' ? 'explored all seven original Davonium Technologies sample experiences and their design directions.' : `explored the ${chosen[0]?.[2] || 'selected'} sample experience and its design direction.`;
+    const selectedDescription = selected() === 'all' ? 'explored all five original Davonium Technologies sample experiences and their design directions.' : `explored the ${chosen[0]?.[2] || 'selected'} sample experience and its design direction.`;
     ctx.fillText(selectedDescription, 1200, 730, 1900);
     const rule = ctx.createLinearGradient(780, 0, 1620, 0); rule.addColorStop(0, '#2db5d3'); rule.addColorStop(.5, '#7661e5'); rule.addColorStop(1, '#e8b36e'); ctx.fillStyle = rule; roundedRect(ctx, 1100, 786, 200, 8, 4); ctx.fill();
+    const chosen = selectedItems();
     ctx.textAlign = 'left'; let yy = 875;
-    ctx.fillStyle = '#6a7790'; ctx.font = '800 20px Arial, sans-serif'; ctx.fillText(selected() === 'all' ? 'SEVEN DISTINCT EXPERIENCES' : 'SELECTED EXPERIENCE', 250, 842);
+    ctx.fillStyle = '#6a7790'; ctx.font = '800 20px Arial, sans-serif'; ctx.fillText(selected() === 'all' ? 'FIVE CORE EXPERIENCES' : 'SELECTED EXPERIENCE', 250, 842);
     chosen.forEach((item, index) => {
       const col = index % 2; const row = Math.floor(index / 2); const x = 250 + col * 720; const y0 = yy + row * 105;
       ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#d6e1f0'; ctx.lineWidth = 2; roundedRect(ctx, x, y0, 660, 78, 14); ctx.fill(); ctx.stroke();
