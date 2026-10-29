@@ -1,0 +1,139 @@
+{
+  "release": "Davonium Technologies V51 — complete visual redesign and compact DVNM Bot",
+  "date": "2026-10-29",
+  "source_archive": "/mnt/data/Davonium-Technologies-V48-Immersive-Final-Release.zip",
+  "scope": "Static source audit and local HTTP smoke test for the V51 work tree. Chromium browser navigation was attempted but blocked by administrator policy (ERR_BLOCKED_BY_ADMINISTRATOR). Native Windows PowerShell, actual visual browser checks, physical-device testing, live GitHub verification and production deployment were not performed.",
+  "environment": {
+    "node": "v22.16.0",
+    "python": "3.13.5",
+    "tinycss2": "1.5.1",
+    "chromium_executable": "/usr/bin/chromium",
+    "browser_navigation": "BLOCKED: net::ERR_BLOCKED_BY_ADMINISTRATOR"
+  },
+  "checks": {
+    "input_source_archive_integrity": {
+      "exists": true,
+      "entries": 192,
+      "testzip": null
+    },
+    "html_pages": 73,
+    "html_structure_issues": [],
+    "local_references_checked": 3472,
+    "unresolved_local_reference_count": 0,
+    "unresolved_local_references": [],
+    "same_page_fragment_checks": 331,
+    "missing_fragment_count": 0,
+    "missing_fragments": [],
+    "duplicate_html_id_page_count": 0,
+    "duplicate_html_ids": [],
+    "html_pages_with_v51_stylesheet": 73,
+    "unstyled_html_pages": [],
+    "html_pages_with_v51_release_marker": 73,
+    "release_marker_mismatch_pages": [],
+    "body_data_page_marker_count": 23,
+    "css_files": 10,
+    "css_parser_errors": [],
+    "css_url_references_checked": 9,
+    "unresolved_css_urls": [],
+    "javascript_files": 20,
+    "javascript_syntax_failures": [],
+    "relative_js_imports_checked": 18,
+    "missing_relative_js_imports": [],
+    "svg_files": 21,
+    "svg_xml_errors": [],
+    "sitemap_xml_valid": true,
+    "json_files_invalid": [],
+    "old_robot_copy_in_html": [],
+    "local_http_smoke_test": {
+      "passed": 16,
+      "total": 16,
+      "all_passed": true,
+      "results": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 26377
+        },
+        {
+          "path": "/index.html",
+          "status": 200,
+          "bytes": 26377
+        },
+        {
+          "path": "/work.html",
+          "status": 200,
+          "bytes": 14308
+        },
+        {
+          "path": "/assets/css/davonium-v51-studio.css?v=51",
+          "status": 200,
+          "bytes": 39239
+        },
+        {
+          "path": "/assets/js/dvnm-robot-3d.js?v=51",
+          "status": 200,
+          "bytes": 22103
+        },
+        {
+          "path": "/assets/js/site.js?v=51",
+          "status": 200,
+          "bytes": 68048
+        },
+        {
+          "path": "/demos/business.html",
+          "status": 200,
+          "bytes": 10931
+        },
+        {
+          "path": "/demos/shop.html",
+          "status": 200,
+          "bytes": 11217
+        },
+        {
+          "path": "/demos/portfolio.html",
+          "status": 200,
+          "bytes": 11478
+        },
+        {
+          "path": "/demos/learning.html",
+          "status": 200,
+          "bytes": 10823
+        },
+        {
+          "path": "/demos/technology.html",
+          "status": 200,
+          "bytes": 11610
+        },
+        {
+          "path": "/docs/index.html",
+          "status": 200,
+          "bytes": 44000
+        },
+        {
+          "path": "/assets/images/dvnm-robot-fallback-v46.svg",
+          "status": 200,
+          "bytes": 3602
+        },
+        {
+          "path": "/sw.js",
+          "status": 200,
+          "bytes": 9418
+        },
+        {
+          "path": "/manifest.webmanifest",
+          "status": 200,
+          "bytes": 1155
+        },
+        {
+          "path": "/wrangler.jsonc",
+          "status": 200,
+          "bytes": 205
+        }
+      ]
+    },
+    "browser_visual_runtime_verified": false,
+    "native_powershell_executed": false,
+    "github_push_performed": false,
+    "cloudflare_deploy_performed": false
+  }
+}

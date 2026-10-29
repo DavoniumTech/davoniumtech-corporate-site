@@ -1,0 +1,95 @@
+/* DAVONIUM V52 — cinematic refinement (builds on V51 studio)
+   - Stronger hero depth without covering text
+   - Mobile-first floating bot bottom sheet with safe-area
+   - Distinct demo accents
+   - Reduced-motion safety
+   - No layout shift from optional 3D
+*/
+:root {
+  --v52-cyan: #00e5f2;
+  --v52-violet: #7b6cff;
+  --v52-space: #050a12;
+  --v52-porcelain: #f7f9fb;
+  --v52-radius-lg: 28px;
+  --v52-ease: cubic-bezier(.22, 1, .36, 1);
+}
+:root[data-theme="dark"] { --v52-glow: rgba(0, 229, 242, .14); }
+:root[data-theme="light"] { --v52-glow: rgba(11, 191, 210, .10); }
+
+/* Hero depth */
+.hero { isolation: isolate; }
+.hero .art {
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.09),
+    0 40px 110px rgba(0,0,0,.28),
+    0 0 80px rgba(0, 200, 220, .08) !important;
+}
+
+/* Floating bot — keep clear of WhatsApp and bottom chrome */
+.dvnm-bot-dock {
+  z-index: 1100 !important;
+  bottom: max(96px, calc(env(safe-area-inset-bottom) + 88px)) !important;
+  right: max(14px, env(safe-area-inset-right)) !important;
+}
+@media (max-width: 640px) {
+  .dvnm-bot-dock {
+    left: max(10px, env(safe-area-inset-left)) !important;
+    right: max(10px, env(safe-area-inset-right)) !important;
+    width: auto !important;
+    bottom: max(88px, calc(env(safe-area-inset-bottom) + 80px)) !important;
+  }
+  .dvnm-panel {
+    position: fixed !important;
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    max-height: min(72dvh, 620px) !important;
+    border-radius: 22px 22px 18px 18px !important;
+    overscroll-behavior: contain !important;
+  }
+  .dvnm-panel-head { border-radius: 22px 22px 0 0 !important; }
+  .dvnm-panel-actions { position: sticky; bottom: 0; background: inherit; }
+}
+
+/* Demo accent identity */
+.demo-page-business .hero .art,
+body[data-demo="business"] .demo-accent { --demo-accent: #0bbfd2; }
+.demo-page-shop .hero .art,
+body[data-demo="shop"] .demo-accent { --demo-accent: #3b82f6; }
+.demo-page-portfolio .hero .art,
+body[data-demo="portfolio"] .demo-accent { --demo-accent: #8b5cf6; }
+.demo-page-learning .hero .art,
+body[data-demo="learning"] .demo-accent { --demo-accent: #10b981; }
+.demo-page-technology .hero .art,
+body[data-demo="technology"] .demo-accent { --demo-accent: #f59e0b; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dvnm-character,
+  .hero .art::before,
+  .hero .art::after,
+  .dvnm-spark {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Clear focus */
+.btn:focus-visible,
+.dvnm-launcher:focus-visible,
+.demo-tab-btn:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--v52-cyan) !important;
+  outline-offset: 3px !important;
+}
+
+/* Prevent 3D canvas from stealing first paint */
+#webgl-container,
+[data-dvnm-robot-host] canvas {
+  max-width: 100%;
+  pointer-events: none;
+}
+[data-dvnm-robot-host].is-interactive canvas {
+  pointer-events: auto;
+}
