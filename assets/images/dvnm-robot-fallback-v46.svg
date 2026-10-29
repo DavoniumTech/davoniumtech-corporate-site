@@ -4,11 +4,9 @@
  <linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".58" stop-color="#dff1f5"/><stop offset="1" stop-color="#a8cad5"/></linearGradient>
  <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f9ffff"/><stop offset="1" stop-color="#b6d4de"/></linearGradient>
  <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173847"/><stop offset="1" stop-color="#061a28"/></linearGradient>
- <radialGradient id="aura"><stop stop-color="#28e1e9" stop-opacity=".28"/><stop offset="1" stop-color="#28e1e9" stop-opacity="0"/></radialGradient>
- <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="glow" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <style>.blink-lid{opacity:0;transform-box:fill-box;transform-origin:center;animation:v55-eye-blink 5.4s ease-in-out infinite}.blink-lid.right{animation-delay:.07s}@keyframes v55-eye-blink{0%,89%,92%,100%{opacity:0;transform:scaleY(.04)}90%,91%{opacity:1;transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.blink-lid{animation:none;opacity:0}}</style>
 </defs>
-<ellipse cx="260" cy="318" rx="215" ry="230" fill="url(#aura)"/>
-<ellipse cx="260" cy="554" rx="108" ry="20" fill="#22dce9" opacity=".18"/>
 <g stroke-linejoin="round" stroke-linecap="round">
  <!-- short, soft arms -->
  <path d="M167 365Q131 371 126 411L126 447Q128 464 146 463Q162 462 163 446L167 411" fill="url(#shell)" stroke="#8cb9c9" stroke-width="5"/>
@@ -25,7 +23,9 @@
  <!-- head -->
  <path d="M228 124L292 124 324 150 336 184 332 258Q329 287 302 304L280 318H240L218 304Q191 287 188 258L184 184 196 150Z" fill="url(#shell)" stroke="#7eafc0" stroke-width="5"/>
  <path d="M206 173Q206 159 223 158H297Q314 159 314 173V235Q313 256 296 260H224Q207 256 206 235Z" fill="url(#visor)" stroke="#438596" stroke-width="4"/>
- <g fill="#64fff4" filter="url(#glow)"><circle cx="234" cy="202" r="10"/><circle cx="286" cy="202" r="10"/></g>
+ <g fill="#64fff4" filter="url(#glow)"><circle cx="234" cy="202" r="10"/><circle cx="286" cy="202" r="10"/><ellipse class="v55-pupil" cx="234" cy="202" rx="7.3" ry="8.2" fill="#061523" stroke="#082e40" stroke-width="2"/><ellipse cx="231" cy="199" rx="2.2" ry="2.8" fill="#ecffff" opacity=".94"/><ellipse class="v55-pupil" cx="286" cy="202" rx="7.3" ry="8.2" fill="#061523" stroke="#082e40" stroke-width="2"/><ellipse cx="283" cy="199" rx="2.2" ry="2.8" fill="#ecffff" opacity=".94"/></g>
+ <ellipse class="blink-lid" cx="234" cy="202" rx="13.2" ry="10.4" fill="#0b2634"/>
+ <ellipse class="blink-lid right" cx="286" cy="202" rx="13.2" ry="10.4" fill="#0b2634"/>
  <path d="M244 226Q260 238 276 226" fill="none" stroke="#6bfff4" stroke-width="5"/>
  <path d="M222 275Q260 291 298 275" fill="none" stroke="#6ab3c4" stroke-width="5"/>
  <path d="M242 130V107Q260 98 278 107V130" fill="none" stroke="#8cb9c9" stroke-width="6"/>

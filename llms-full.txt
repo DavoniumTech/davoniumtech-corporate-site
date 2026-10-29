@@ -56,7 +56,7 @@ Davonium Technologies builds software, applications, digital products, websites,
 We keep public product status and guide links aligned. Search submission and crawler access help discovery but do not guarantee crawling, indexing, ranking, or AI citations. Privacy, terms, and browser-storage policies remain drafts pending review against our actual practices.
 
 ## Demo Studio
-- Five core DVNM sample website demonstrations: DVNM Biz (business), DVNM Market (commerce), DVNM Creative (portfolio), DVNM Skills (learning), and DVNM Digital (technology). Older Growth and Connect routes redirect into the core experiences; the seven-route QR directory is historical: https://www.davoniumtech.com/demos/
+- Seven independent DVNM sample website demonstrations: DVNM Biz (business), DVNM Growth (growth & marketing), DVNM Market (commerce), DVNM Creative (portfolio), DVNM Skills (learning), DVNM Digital (technology), and DVNM Connect (community). Each has its own route, visual identity, and showcase certificate: https://www.davoniumtech.com/demos/
 - DVNM Bot visitor guide: https://www.davoniumtech.com/docs/guides/dvnm-bot
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
 

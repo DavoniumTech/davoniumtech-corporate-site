@@ -7,7 +7,7 @@
   }));
   // v28: each demo detail page stays focused on its own experience.
   // Visitors can use the shared site navigation/footer to return to the Demo Studio index;
-  // only the index itself shows the five current core demo cards together; older Growth and Connect URLs redirect to their consolidated core experiences.
+  // only the index itself shows the all seven independent demo cards together; Growth and Connect are now independent full demo pages.
   // All forms are demos: never submit or collect personal details.
   $$('[data-demo-form]').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault(); const note = $('[data-demo-message]', form) || $('[data-demo-message]');

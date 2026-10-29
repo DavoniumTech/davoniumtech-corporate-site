@@ -8,3 +8,8 @@
 [data-dvnm-robot-host][data-three-failed="true"] .dvnm-robot-fallback { opacity:1!important; }
 [data-dvnm-robot-host][data-bot-state="ready"] .dvnm-live-dot { box-shadow:0 0 0 4px rgba(48,232,231,.1),0 0 15px rgba(48,232,231,.7); }
 @media(prefers-reduced-motion:reduce){[data-dvnm-robot],.dvnm-bot-dock *{animation:none!important;transition:none!important}}
+
+/* V55: no ground shadow; smooth mouth overlay for SVG fallback while speech is active. */
+[data-dvnm-robot-host]{overflow:visible!important;filter:none!important;box-shadow:none!important}
+[data-dvnm-robot-host] .dvnm-robot-fallback{filter:none!important;drop-shadow:none!important}
+
