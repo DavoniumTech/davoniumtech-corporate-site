@@ -1,3 +1,14 @@
+## V58 — 30 October 2026 — Signal Experience
+
+- Extended the star-sky background behind every route and content section, with translucent section cards and light/dark treatment.
+- Corrected homepage hero wrapping and refined public-facing company copy.
+- Added 18 unique images across the six main service galleries, plus independent photo-story galleries for the five demo websites.
+- Enabled direct demo-image navigation, cross-document View Transitions, an animated image lightbox, and a persistent Studio return link on individual demo pages.
+- Added user-triggered DVNM Bot speech controls with a selectable English device voice; removed character shadow treatment and kept WhatsApp as the only floating shortcut.
+- Removed prominent sample-demonstration banners while retaining factual illustrative-data/payment disclosures.
+- Updated the PWA cache and added an ASCII-only guarded Windows PowerShell V58 publisher.
+- Static checks passed; Chromium visual capture was blocked by the local execution policy. No production push or deployment is claimed.
+
 ## V51 — 2026-10-29 — Studio redesign and compact DVNM Bot
 
 - Replaced the heavy articulated robot presentation with a compact procedural Three.js DVNM Bot: friendly visor/face, expressive eyes and smile, short limbs, and a visible glowing DVNM chest mark.

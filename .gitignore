@@ -84,3 +84,18 @@ PUBLISH-V57.ps1
 PREVIEW-V57.ps1
 PUBLISH-V57-ONE-COMMAND.txt
 preview-v57-server.cjs
+
+# Private/local release files - V58
+directory.md
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+PUBLISH-*.ps1
+PUBLISH-*.txt
+PREVIEW-*.ps1
+preview-v58-server.cjs

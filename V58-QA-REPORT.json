@@ -1,0 +1,136 @@
+{
+  "release": "Davonium Technologies V58 - Signal Experience",
+  "date": "2026-10-30",
+  "based_on": "V57 Signal Studio source",
+  "static_checks": {
+    "html_pages": 73,
+    "local_html_references": 3878,
+    "resolved_local_html_references": 3878,
+    "missing_references": 0,
+    "duplicate_ids": 0,
+    "broken_fragments": 0,
+    "css_files": 18,
+    "css_url_references": 10,
+    "resolved_css_urls": 10,
+    "css_parse_errors": 0,
+    "service_cards": [
+      {
+        "title": "Websites & web applications",
+        "images": 3,
+        "unique": true
+      },
+      {
+        "title": "Software & business systems",
+        "images": 3,
+        "unique": true
+      },
+      {
+        "title": "Android & mobile apps",
+        "images": 3,
+        "unique": true
+      },
+      {
+        "title": "Reporting & integrations",
+        "images": 3,
+        "unique": true
+      },
+      {
+        "title": "Progressive web apps",
+        "images": 3,
+        "unique": true
+      },
+      {
+        "title": "SEO & documentation",
+        "images": 3,
+        "unique": true
+      }
+    ],
+    "service_image_total": 18,
+    "service_images_all_unique_across_six_cards": true,
+    "demo_story_galleries": {
+      "business.html": {
+        "story_images": 3,
+        "unique": true,
+        "back_button_runtime": true
+      },
+      "shop.html": {
+        "story_images": 3,
+        "unique": true,
+        "back_button_runtime": true
+      },
+      "portfolio.html": {
+        "story_images": 3,
+        "unique": true,
+        "back_button_runtime": true
+      },
+      "learning.html": {
+        "story_images": 3,
+        "unique": true,
+        "back_button_runtime": true
+      },
+      "technology.html": {
+        "story_images": 3,
+        "unique": true,
+        "back_button_runtime": true
+      }
+    },
+    "demo_story_images_across_all_five_unique": true,
+    "dvnm_bot_voice_control_present": true,
+    "visible_sample_notice_removed": true,
+    "demo_header_return_arrow_runtime": true,
+    "starfield_asset_exists": true,
+    "new_service_assets": 6,
+    "new_demo_assets": 12,
+    "new_gallery_assets": 12,
+    "print_flyer_pdfs": 5,
+    "print_flyer_jpgs": 5,
+    "javascript_files_checked": 23,
+    "javascript_syntax_failures": [],
+    "private_files_found_in_source": [],
+    "publisher_ascii_only": true,
+    "publisher_checks": {
+      "explicit_PUSH_gate": true,
+      "no_force_push": true,
+      "remote_main_verification": true,
+      "backup_branch": true,
+      "clone_reuse_parameter": true
+    },
+    "demo_gallery_image_paths": {
+      "business.html": {
+        "count": 3,
+        "unique": true,
+        "missing": []
+      },
+      "shop.html": {
+        "count": 3,
+        "unique": true,
+        "missing": []
+      },
+      "portfolio.html": {
+        "count": 3,
+        "unique": true,
+        "missing": []
+      },
+      "learning.html": {
+        "count": 3,
+        "unique": true,
+        "missing": []
+      },
+      "technology.html": {
+        "count": 3,
+        "unique": true,
+        "missing": []
+      }
+    }
+  },
+  "browser_testing": {
+    "desktop_visual": "Not completed; local Chromium rendering failed in this environment.",
+    "mobile_visual": "Not completed; physical device testing not performed.",
+    "lighthouse": "Not performed."
+  },
+  "deployment": {
+    "github_push": "Not performed by this packaging step.",
+    "production_deploy": "Not performed or verified.",
+    "publisher": "PUBLISH-V58.ps1; PowerShell 5.1 compatible ASCII-only; reuses supplied existing clone path; requires explicit PUSH."
+  }
+}

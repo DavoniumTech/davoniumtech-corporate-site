@@ -359,7 +359,7 @@
     const topics = {
       company: { text: topicText([
         'Welcome to Davonium Technologies, a technology company building useful digital experiences.',
-        'Our work brings together website engineering, software, applications, digital products, and clear documentation for people and organisations worldwide.',
+        'Davonium work brings together website engineering, software, applications, digital products, and clear documentation for organisations worldwide.',
         'We aim to make technology easier to understand, access, and use.',
         'We design responsive experiences for phones, tablets, laptops, and desktop screens.',
         'We care about accessibility, page speed, readable content, and useful navigation.',

@@ -1,14 +1,18 @@
-# Davonium Technologies — V57 Signal Studio
+# Davonium Technologies — V58 Signal Experience
 
-V57 extends the V56 Signal Architecture with a site-wide star-sky atmosphere, photo-led services and product illustrations, five independent photographic demo experiences, a consistent icon-only sticky header, a single WhatsApp floating contact action, a matched DVNM Bot portrait crop, and five A4 QR flyers. See `V57-RELEASE-NOTES.md` and `V57-QA-REPORT.json`.
+V58 extends V57 with a continuous starfield, translucent section cards, complete hero typography, 18 unique service-gallery images, dedicated photo-story galleries for all five demos, animated project transitions, a full-screen image lightbox, DVNM Bot speech controls, and an improved guarded PowerShell publisher. See `DESIGN-DIRECTION-V58.md`, `V58-RELEASE-NOTES.md` and `V58-QA-REPORT.json`.
+
+## Previous release — V57 Signal Studio
+
+V57 introduced the site-wide star-sky base, photo-led service cards, five independent demo routes, the icon-only header, a single WhatsApp floating action, the matched DVNM Bot portrait and five A4 QR flyers. See `V57-RELEASE-NOTES.md` and `V57-QA-REPORT.json`.
 
 # Davonium Technologies — V56 Signal Architecture
 
 V56 is a V55-based visual and experience refinement. It preserves the existing multi-page website, five core demos, product statuses, documentation library, PWA, support and legal routes, certificate experiences, and approved Davonium brand assets.
 
-## Preview locally
+## Preview V56 locally (historical)
 
-1. Extract the ZIP.
+1. Extract the V56 ZIP.
 2. Open PowerShell in the extracted `davonium_v56` folder.
 3. Run:
 
@@ -41,3 +45,23 @@ Node.js is required for the included lightweight static preview server; no npm p
 - This ZIP has not been pushed to GitHub or deployed to Cloudflare. Do not publish without checking the repository's current remote state and explicitly approving `PUSH`.
 
 See `DESIGN-DIRECTION-V56.md`, `V56-RELEASE-NOTES.md` and `V56-QA-REPORT.json` for details.
+
+## V58 Preview and publishing
+
+## Preview V58 locally
+
+1. Extract the ZIP.
+2. Open PowerShell in the extracted `davonium_v58` folder.
+3. Run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V58.ps1
+```
+
+4. Open the local preview URL printed in PowerShell. The preview is local only and does not deploy the website.
+
+## Publish V58 to the existing GitHub clone
+
+Use the PowerShell command in `PUBLISH-V58-ONE-COMMAND.txt`. It expects the existing Davonium Git clone under the user's profile, creates a backup branch, prepares a commit and asks for `PUSH` before writing to `origin/main`. It does not deploy the Cloudflare production site.
+
+See `DESIGN-DIRECTION-V58.md`, `V58-RELEASE-NOTES.md` and `V58-QA-REPORT.json` for the V58 design, scope and verification record.

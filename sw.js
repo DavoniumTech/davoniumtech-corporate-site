@@ -1,8 +1,13 @@
-/* Davonium Technologies PWA service worker — V57 Signal Architecture design system and progressive hero scene. */
-const CACHE_NAME = 'davonium-site-v57-signal-studio-20261030';
+/* Davonium Technologies PWA service worker — V58 Signal Experience system and progressive hero scene. */
+const CACHE_NAME = 'davonium-site-v58-signal-experience-20261030';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
+  routeUrl("assets/css/davonium-v58-system.css?v=58"),
+  routeUrl("assets/js/davonium-v58-experience.js?v=58"),
+  routeUrl("assets/images/v58-starfield.svg"),
+  routeUrl("assets/images/dvnm-bot-head-match-v57.webp"),
+
   routeUrl("assets/css/davonium-v57-system.css?v=57"),
   routeUrl("assets/images/dvnm-bot-head-match-v57.webp"),
   routeUrl("assets/images/photography/biz-architecture.webp"),
