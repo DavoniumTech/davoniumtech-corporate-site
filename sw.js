@@ -1,8 +1,10 @@
 /* Davonium Technologies PWA service worker - V60 precision experience. */
-const CACHE_NAME = 'davonium-site-v60-precision-experience-20261030-r1';
+const CACHE_NAME = 'davonium-site-v61-signal-constellation-20261030-r1';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
+  routeUrl("assets/css/davonium-v61-constellation.css?v=61"),
+  routeUrl("assets/js/davonium-v61-experience.js?v=61"),
   routeUrl("assets/css/davonium-v60-precision.css?v=60"),
   routeUrl("assets/js/davonium-v60-experience.js?v=60"),
   routeUrl("assets/css/davonium-v59-finish.css?v=59"),

@@ -109,25 +109,39 @@ id_rsa
 id_ed25519
 directory.md
 
-# V60 local and private files
-directory.md
+
+# V61 local publishing helpers and private files
+PUBLISH-*.ps1
+PREVIEW-*.ps1
+DEPLOY-*.ps1
+DEPLOY-*.cmd
+preview-*-server.*
+*.zip
+*.sha256
 .env
 .env.*
+directory.md
+credentials.json
 *.pem
 *.key
 *.p12
 *.pfx
-credentials.json
-secrets.json
-token.json
-auth.json
-service-account*.json
-*.ppk
-*.keystore
-*.jks
-id_rsa
-id_ed25519
+
+# Local release helpers and private files
 PUBLISH-*.ps1
-PUBLISH-*.txt
+PUBLISH-*-ONE-COMMAND.txt
+PUBLISH-ONE-COMMAND.txt
 PREVIEW-*.ps1
-preview-v60-server.cjs
+DEPLOY-*.ps1
+DEPLOY-*.cmd
+preview-*-server.*
+*.zip
+*.sha256
+.env
+.env.*
+directory.md
+credentials.json
+*.pem
+*.key
+*.p12
+*.pfx

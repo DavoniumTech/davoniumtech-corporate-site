@@ -1,3 +1,19 @@
+
+## V61 — Signal Constellation (2026-10-30)
+- Continuous sparkling starfield, transparent section wrappers and independent glass surfaces across all routes.
+- Refined split hero and transparent header; dark remains default with a distinct porcelain light theme.
+- Demo return controls, animated transitions and six DVNM Bot spoken topics with volume and speech-linked face/chest response.
+- Updated service-worker cache and added a guarded Windows PowerShell 5.1 publisher.
+
+# V61 - Signal Constellation
+
+- Continuous twinkling canvas starfield across all routes.
+- Fully transparent section wrappers with individually surfaced glass cards.
+- Balanced desktop/laptop hero and responsive mobile composition.
+- Refined light/dark environments and editorial typography.
+- Demo Studio return controls and DVNM Bot voice topics/volume/lip-sync enhancement.
+- Updated PWA cache and guarded Windows publishing workflow.
+
 ## 2026-10-30 — V60 Precision Experience
 
 - Improved responsive mobile navigation and touch target layering.
