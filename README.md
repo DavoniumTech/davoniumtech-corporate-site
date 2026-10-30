@@ -1,67 +1,38 @@
-# Davonium Technologies — V58 Signal Experience
+# Davonium Technologies - V59 Final Signal Finish
 
-V58 extends V57 with a continuous starfield, translucent section cards, complete hero typography, 18 unique service-gallery images, dedicated photo-story galleries for all five demos, animated project transitions, a full-screen image lightbox, DVNM Bot speech controls, and an improved guarded PowerShell publisher. See `DESIGN-DIRECTION-V58.md`, `V58-RELEASE-NOTES.md` and `V58-QA-REPORT.json`.
+V59 is the final polish pass over the existing Davonium multi-page website. It preserves the existing public routes, products, documentation, Demo Studio experiences, PWA support, flyers and certificate workflows while applying a consistent dark-first identity and a complete company footer across every HTML page.
 
-## Previous release — V57 Signal Studio
+## Main changes
 
-V57 introduced the site-wide star-sky base, photo-led service cards, five independent demo routes, the icon-only header, a single WhatsApp floating action, the matched DVNM Bot portrait and five A4 QR flyers. See `V57-RELEASE-NOTES.md` and `V57-QA-REPORT.json`.
+- Dark mode is the first-visit default on all devices. A visitor's explicit theme choice is saved locally and respected on later visits.
+- The homepage displays the complete, stable headline: **Digital products, engineered for impact.** The older letter-by-letter headline split and blocking first-visit prelude are disabled on the homepage.
+- Manrope is used for headings and normal reading copy. Existing button styles are retained.
+- The starfield is denser and includes recognizable sparkle stars. Page sections remain transparent so the sky continues behind individual glass cards.
+- Ready2Go Learning, Marvel Chat and Davonium Nexus retain their approved product icons, copy and development statuses, without illustrative product photographs.
+- A complete company footer is present on all 73 HTML routes. Support email, telephone and WhatsApp details are clickable.
+- A circular DVNM Bot head control uses the head crop from the approved standing robot artwork. Its guide card has quick links and a user-activated speech control; it does not autoplay or open automatically. WhatsApp remains at the lower-right corner.
+- The certificate preview and high-resolution share image are refined, and the five flyer cards have independent PDF/JPG download links.
 
-# Davonium Technologies — V56 Signal Architecture
+## Preview locally
 
-V56 is a V55-based visual and experience refinement. It preserves the existing multi-page website, five core demos, product statuses, documentation library, PWA, support and legal routes, certificate experiences, and approved Davonium brand assets.
-
-## Preview V56 locally (historical)
-
-1. Extract the V56 ZIP.
-2. Open PowerShell in the extracted `davonium_v56` folder.
+1. Extract the archive.
+2. Open Windows PowerShell in the extracted `davonium_v59` folder.
 3. Run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V56.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V59.ps1
 ```
 
-4. Open the local preview URL printed in PowerShell. Stop the server with `Ctrl+C`.
+4. Open the local address printed by the preview server. Press `Ctrl+C` to stop it.
 
-Node.js is required for the included lightweight static preview server; no npm packages need to be installed. This is a local preview only; it does not deploy or publish the site.
+Node.js is required for this local preview server; no npm dependencies need to be installed.
 
-## Main V56 changes
+## Publish to GitHub
 
-- New Signal Architecture visual system: graphite/cyan dark mode and porcelain/cyan light mode.
-- Homepage hero uses the approved transparent DVNM Bot cutout against a Davonium-specific architectural portal composition.
-- Optional desktop WebGL architecture scene; CSS and approved artwork remain the fallback. The 3D layer pauses when off-screen or when the tab is hidden and is skipped for reduced-motion, mobile/low-power and Save-Data contexts.
-- Demo Studio cards now use the existing original DVNM demo artwork instead of generic placeholder windows.
-- Homepage services preview expanded to reflect the actual service catalogue.
-- Added a concise four-stage delivery process.
-- Shared design tokens and responsive refinements added to the existing HTML routes.
-- Work-page description made more precise about what the procedural robot renderer actually does.
-- PWA service-worker cache name and core assets refreshed for V56.
+Use `PUBLISH-V59.ps1` with the existing clean clone of `DavoniumTech/davoniumtech-corporate-site`. The script verifies the repository and remote `main`, creates a local backup branch, copies the release, excludes publishing helpers and private files, prepares a commit, and asks for the exact word `PUSH` before uploading. It never force-pushes and does not deploy the production website.
 
-## Important
+A copy-paste Windows PowerShell command is included in this conversation's release handover and in `PUBLISH-V59-ONE-COMMAND.txt`.
 
-- No customer results, testimonials, certifications, awards, performance scores or commercial launch statuses have been invented.
-- Product statuses and route destinations are retained from the V55 source.
-- The homepage robot is an approved transparent artwork. A separate real-time 3D architectural scene is an optional progressive enhancement; the character artwork is not described as a live 3D model.
-- The standalone enterprise HTML concept was not merged because it contained nonfunctional demo/search controls and an enquiry flow that displayed success without a real submission backend.
-- This ZIP has not been pushed to GitHub or deployed to Cloudflare. Do not publish without checking the repository's current remote state and explicitly approving `PUSH`.
+## Verification and limitations
 
-See `DESIGN-DIRECTION-V56.md`, `V56-RELEASE-NOTES.md` and `V56-QA-REPORT.json` for details.
-
-## V58 Preview and publishing
-
-## Preview V58 locally
-
-1. Extract the ZIP.
-2. Open PowerShell in the extracted `davonium_v58` folder.
-3. Run:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V58.ps1
-```
-
-4. Open the local preview URL printed in PowerShell. The preview is local only and does not deploy the website.
-
-## Publish V58 to the existing GitHub clone
-
-Use the PowerShell command in `PUBLISH-V58-ONE-COMMAND.txt`. It expects the existing Davonium Git clone under the user's profile, creates a backup branch, prepares a commit and asks for `PUSH` before writing to `origin/main`. It does not deploy the Cloudflare production site.
-
-See `DESIGN-DIRECTION-V58.md`, `V58-RELEASE-NOTES.md` and `V58-QA-REPORT.json` for the V58 design, scope and verification record.
+See `V59-QA-REPORT.json`. Static source and archive checks passed. Real browser visual checks, physical Android/iPhone checks, Web Vitals/Lighthouse and production deployment were not completed in this environment. Speech synthesis also depends on voices exposed by each visitor's browser/device.

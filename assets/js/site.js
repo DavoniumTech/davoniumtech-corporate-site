@@ -12,61 +12,41 @@
   const year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // Theme follows the device by default. Only a deliberate choice is saved.
-  // The old davonium-theme key was also written on first load, so ignore it during migration.
+  // V59: dark mode is the company-wide default on every device. A deliberate visitor choice is remembered.
   const theme = $('#theme-toggle');
-  const themeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-  const systemTheme = () => themeMedia && themeMedia.matches ? 'dark' : 'light';
   let themePreference = safeStore.get('davonium-theme-choice');
-  if (!['light', 'dark'].includes(themePreference)) themePreference = 'system';
-  const resolvedTheme = () => themePreference === 'system' ? systemTheme() : themePreference;
+  if (!['light', 'dark'].includes(themePreference)) {
+    themePreference = 'dark';
+    safeStore.set('davonium-theme-choice', 'dark');
+  }
   const renderTheme = () => {
-    const value = resolvedTheme();
-    const systemValue = systemTheme();
+    const value = themePreference;
     document.documentElement.dataset.theme = value;
+    document.documentElement.classList.toggle('dark', value === 'dark');
+    document.documentElement.classList.toggle('light', value === 'light');
     const themeColor = $('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#080c13' : '#f5f7fb');
+    if (themeColor) themeColor.setAttribute('content', value === 'dark' ? '#050b15' : '#f5f8fb');
     if (theme) {
-      const other = value === 'dark' ? 'light' : 'dark';
+      const next = value === 'dark' ? 'light' : 'dark';
       theme.textContent = value === 'dark' ? '☀' : '☾';
-      let label;
-      let title;
-      if (themePreference === 'system') {
-        label = `Switch to ${other} theme; currently following system appearance`;
-        title = `Following system appearance (${value}). Click to use ${other} theme.`;
-      } else if (themePreference === systemValue) {
-        label = `Use system appearance; currently showing ${value}`;
-        title = `Manual ${value} theme. Click to return to system appearance.`;
-      } else {
-        label = `Switch to ${systemValue} theme; manual preference is ${value}`;
-        title = `Manual ${value} theme. Click to switch to ${systemValue}; click again to follow the system.`;
-      }
-      theme.setAttribute('aria-label', label);
-      theme.setAttribute('title', title);
+      theme.setAttribute('aria-label', `Switch to ${next} theme`);
+      theme.setAttribute('title', `Currently ${value} mode. Switch to ${next} mode.`);
     }
   };
   renderTheme();
-  // Click cycles from system to the opposite mode, then the system's current mode, then back to system.
   if (theme) theme.addEventListener('click', () => {
     document.documentElement.classList.add('theme-transition');
     window.setTimeout(() => document.documentElement.classList.remove('theme-transition'), 360);
-    const current = resolvedTheme();
-    const systemValue = systemTheme();
-    if (themePreference === 'system') {
-      themePreference = current === 'dark' ? 'light' : 'dark';
-    } else if (themePreference !== systemValue) {
-      themePreference = systemValue;
-    } else {
-      themePreference = 'system';
-    }
+    themePreference = themePreference === 'dark' ? 'light' : 'dark';
     safeStore.set('davonium-theme-choice', themePreference);
     renderTheme();
   });
-  if (themeMedia) {
-    const onSystemThemeChange = () => { if (themePreference === 'system') renderTheme(); };
-    if (typeof themeMedia.addEventListener === 'function') themeMedia.addEventListener('change', onSystemThemeChange);
-    else if (typeof themeMedia.addListener === 'function') themeMedia.addListener(onSystemThemeChange);
-  }
+  window.addEventListener('storage', event => {
+    if (event.key === 'davonium-theme-choice' && ['light', 'dark'].includes(event.newValue)) {
+      themePreference = event.newValue;
+      renderTheme();
+    }
+  });
 
   // Mobile menu: close after navigation, outside click, or Escape; keep the existing page links unchanged.
   const menu = $('#menu-toggle');
@@ -839,7 +819,7 @@
     const isHomePage = document.body.dataset.page === 'home' || location.pathname === '/' || /\/index\.html$/i.test(location.pathname) && !/\/(docs|demos)\//i.test(location.pathname);
     let welcomeAlreadySeen = false;
     try { welcomeAlreadySeen = sessionStorage.getItem('dvnmWelcomeSeen_20261028_v48') === '1'; } catch (_) {}
-    if (isHomePage && !welcomeAlreadySeen) {
+    if (false && isHomePage && !welcomeAlreadySeen) { // V59: no intrusive first-visit overlay; visitors open the DVNM Bot when ready.
       window.setTimeout(() => {
         if (!welcome.isConnected || welcomeAlreadySeen) return;
         welcome.hidden = false;

@@ -37,7 +37,7 @@
     }else $$('.dvnm-reveal').forEach(el=>el.classList.add('dvnm-revealed'));
   }
   function typeHeadline(){
-    if(reduceMotion) return;
+    if(reduceMotion || kind==='home' || $('.hero h1')) return; // V59: stable, complete homepage headline.
     const h=$('main h1'); if(!h || h.dataset.dvnmTyped) return;
     h.dataset.dvnmTyped='true';
     const full=h.textContent.replace(/\s+/g,' ').trim();
@@ -77,19 +77,7 @@
     button.addEventListener('click',()=>{soundOn=!soundOn;button.textContent=soundOn?'♪ Sound on':'♪ Sound off';button.setAttribute('aria-pressed',String(soundOn));if(soundOn)unlockSound();else if(audioCtx)audioCtx.suspend().catch(()=>{})});
     host.appendChild(button);
   }
-  function entryPrelude(){
-    if(kind!=='home' || safeSession.get('dvnm-v44-intro'))return;
-    safeSession.set('dvnm-v44-intro','1');
-    const pre=document.createElement('div');pre.className='dvnm-prelude';pre.setAttribute('role','presentation');
-    pre.innerHTML='<div class="dvnm-prelude-orb"><i></i><b></b></div><div class="dvnm-prelude-word" aria-label="Davonium Technologies">DAVONIUM<span>TECHNOLOGIES</span></div><div class="dvnm-prelude-caption">Useful technology, built with care</div><div class="dvnm-prelude-progress"><i></i></div><div class="dvnm-prelude-dots"><i></i><i></i><i></i></div>';
-    // Write the company mark letter-by-letter; audio remains gesture-gated by browser autoplay policy.
-    const mark=$('.dvnm-prelude-word',pre);let letterIndex=0;
-    const animateTextNode=node=>{const frag=document.createDocumentFragment();for(const ch of node.nodeValue){const letter=document.createElement('span');letter.className='dvnm-prelude-letter';letter.textContent=ch;letter.style.setProperty('--dvnm-prelude-delay',`${letterIndex++*28}ms`);letter.setAttribute('aria-hidden','true');frag.appendChild(letter)}node.replaceWith(frag)};
-    [...mark.childNodes].forEach(node=>{if(node.nodeType===Node.TEXT_NODE)animateTextNode(node);else if(node.nodeType===Node.ELEMENT_NODE)[...node.childNodes].forEach(child=>{if(child.nodeType===Node.TEXT_NODE)animateTextNode(child)})});
-    document.body.appendChild(pre);
-    const remove=()=>{pre.classList.add('is-leaving');setTimeout(()=>pre.remove(),420)};
-    pre.addEventListener('pointerdown',remove,{once:true});setTimeout(remove,920);
-  }
+  function entryPrelude(){ return; /* V59: render the homepage immediately; no timed blocking prelude. */ }
   function installHeroTools(stage){
     if(!stage)return; soundControl(stage);
     if(kind==='creative' || kind==='skills'){

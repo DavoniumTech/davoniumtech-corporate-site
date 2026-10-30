@@ -34,7 +34,7 @@
 
   // Text is split into accessible words/letters only when motion is allowed; the original full title remains the accessible name.
   function typeHeadline() {
-    if (reduced) return;
+    if (reduced || document.querySelector('main .hero h1')) return; // V59: never animate or split the full homepage headline.
     const headings = $$('main h1').slice(0, 1);
     headings.forEach((heading) => {
       if (heading.dataset.v45Typed === 'yes') return;

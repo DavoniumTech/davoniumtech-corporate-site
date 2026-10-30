@@ -69,47 +69,61 @@
     return new Promise(resolve => { const img = new Image(); img.onload = () => resolve(img); img.onerror = () => resolve(null); img.src = src; });
   }
   async function renderCertificate() {
+    if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (_) {} }
     const canvas = document.createElement('canvas'); canvas.width = 2400; canvas.height = 1600;
     const ctx = canvas.getContext('2d'); if (!ctx) throw new Error('Your browser cannot create the certificate image.');
     const logo = await loadImage('../assets/images/davonium-d-icon.webp');
     const qr = await loadImage('../assets/images/qr-dvnm-demo-studio.png');
-    const bg = ctx.createLinearGradient(0, 0, 2400, 1600); bg.addColorStop(0, '#f8fbff'); bg.addColorStop(.55, '#f0f3ff'); bg.addColorStop(1, '#e9faf7');
+    const bg = ctx.createLinearGradient(0, 0, 2400, 1600);
+    bg.addColorStop(0, '#050d18'); bg.addColorStop(.56, '#0a1c31'); bg.addColorStop(1, '#11172b');
     ctx.fillStyle = bg; ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.lineWidth = 12; ctx.strokeStyle = '#7493c0'; roundedRect(ctx, 36, 36, 2328, 1528, 22); ctx.stroke();
-    ctx.lineWidth = 2; ctx.strokeStyle = '#b6c9e4'; roundedRect(ctx, 63, 63, 2274, 1474, 14); ctx.stroke();
-    ctx.globalAlpha = .16; ctx.strokeStyle = '#3f9fcb'; ctx.lineWidth = 3;
-    for (let r = 0; r < 5; r++) { ctx.beginPath(); ctx.arc(2240, 140, 80 + r * 35, 0, Math.PI * 2); ctx.stroke(); }
-    ctx.globalAlpha = 1;
-    if (logo) ctx.drawImage(logo, 215, 128, 112, 112);
-    ctx.textAlign = 'left'; ctx.fillStyle = '#172a49'; ctx.font = '800 42px Arial, sans-serif'; ctx.fillText('DAVONIUM TECHNOLOGIES', 355, 176);
-    ctx.fillStyle = '#61748f'; ctx.font = '600 23px Arial, sans-serif'; ctx.fillText('USEFUL TECHNOLOGY, BUILT WITH CARE', 357, 221);
-    ctx.textAlign = 'center'; ctx.fillStyle = '#2c70a6'; ctx.font = '800 26px Arial, sans-serif'; ctx.letterSpacing = '8px'; ctx.fillText('DEMO STUDIO  ·  DIGITAL EXPERIENCE PASSPORT', 1200, 350); ctx.letterSpacing = '0px';
-    ctx.fillStyle = '#132b52'; ctx.font = '700 112px Georgia, "Times New Roman", serif'; ctx.fillText('Showcase Certificate', 1200, 490);
-    ctx.fillStyle = '#61728d'; ctx.font = '32px Arial, sans-serif'; ctx.fillText('This records that', 1200, 575);
+    // Quiet star points and a fine geometric signal motif.
+    for (let i = 0; i < 145; i++) {
+      const x = (i * 173 + 91) % 2360 + 20, y = (i * 293 + 63) % 1560 + 20;
+      const radius = i % 11 === 0 ? 3.0 : (i % 4 === 0 ? 1.8 : 1.1);
+      ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fillStyle = i % 3 === 0 ? 'rgba(134,239,255,.68)' : 'rgba(220,249,255,.42)'; ctx.fill();
+    }
+    ctx.save(); ctx.globalAlpha = .16; ctx.strokeStyle = '#48d7ef'; ctx.lineWidth = 3;
+    for (let i = 0; i < 7; i++) { ctx.beginPath(); ctx.arc(2205, 210, 115 + i * 42, 0, Math.PI * 2); ctx.stroke(); }
+    ctx.restore();
+    // Two-level frame and a restrained luminous signature line.
+    ctx.lineWidth = 7; ctx.strokeStyle = 'rgba(99,223,239,.75)'; roundedRect(ctx, 34, 34, 2332, 1532, 30); ctx.stroke();
+    ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(205,236,247,.32)'; roundedRect(ctx, 59, 59, 2282, 1482, 22); ctx.stroke();
+    const edge = ctx.createLinearGradient(180, 0, 2220, 0); edge.addColorStop(0, '#2bc8dc'); edge.addColorStop(.5, '#8d8bff'); edge.addColorStop(1, '#e5bd81');
+    ctx.fillStyle = edge; roundedRect(ctx, 190, 292, 2020, 5, 3); ctx.fill();
+    if (logo) ctx.drawImage(logo, 170, 105, 126, 126);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#f4fbff'; ctx.font = '800 40px Manrope, Arial, sans-serif'; ctx.fillText('DAVONIUM TECHNOLOGIES', 330, 157);
+    ctx.fillStyle = '#89a8bc'; ctx.font = '700 20px Manrope, Arial, sans-serif'; ctx.letterSpacing = '3px'; ctx.fillText('USEFUL TECHNOLOGY, BUILT WITH CARE', 332, 202); ctx.letterSpacing = '0px';
+    ctx.textAlign = 'center'; ctx.fillStyle = '#66e6f4'; ctx.font = '800 23px Manrope, Arial, sans-serif'; ctx.letterSpacing = '5px'; ctx.fillText('DAVONIUM DEMO STUDIO  /  EXPERIENCE RECORD', 1200, 385); ctx.letterSpacing = '0px';
+    ctx.fillStyle = '#f3f8ff'; ctx.font = '800 100px Manrope, Arial, sans-serif'; ctx.fillText('Showcase Certificate', 1200, 525);
+    ctx.fillStyle = '#a7bdcb'; ctx.font = '500 30px Manrope, Arial, sans-serif'; ctx.fillText('Prepared as a record of exploration for', 1200, 610);
     const displayName = String(nameInput.value || '').trim().slice(0, 64) || 'A Digital Explorer';
-    ctx.fillStyle = '#1a8da9'; ctx.font = `700 ${displayName.length > 28 ? 44 : 60}px Arial, sans-serif`; ctx.fillText(displayName, 1200, 665, 1800);
-    ctx.fillStyle = '#536580'; ctx.font = '30px Arial, sans-serif';
-    const selectedDescription = selected() === 'all' ? 'explored all five original Davonium Technologies sample experiences and their design directions.' : `explored the ${chosen[0]?.[2] || 'selected'} sample experience and its design direction.`;
-    ctx.fillText(selectedDescription, 1200, 730, 1900);
-    const rule = ctx.createLinearGradient(780, 0, 1620, 0); rule.addColorStop(0, '#2db5d3'); rule.addColorStop(.5, '#7661e5'); rule.addColorStop(1, '#e8b36e'); ctx.fillStyle = rule; roundedRect(ctx, 1100, 786, 200, 8, 4); ctx.fill();
+    ctx.fillStyle = '#85eff8'; ctx.font = `800 ${displayName.length > 28 ? 48 : 66}px Manrope, Arial, sans-serif`; ctx.fillText(displayName, 1200, 710, 1850);
+    ctx.fillStyle = '#c0d0dc'; ctx.font = '500 27px Manrope, Arial, sans-serif';
+    const selectedDescription = selected() === 'all' ? 'explored all five original Davonium Technologies digital experiences.' : `explored the ${allSamples.find(item => item[0] === selected())?.[2] || 'selected'} Davonium digital experience.`;
+    ctx.fillText(selectedDescription, 1200, 775, 1900);
     const chosen = selectedItems();
-    ctx.textAlign = 'left'; let yy = 875;
-    ctx.fillStyle = '#6a7790'; ctx.font = '800 20px Arial, sans-serif'; ctx.fillText(selected() === 'all' ? 'FIVE CORE EXPERIENCES' : 'SELECTED EXPERIENCE', 250, 842);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#76e3f0'; ctx.font = '800 19px Manrope, Arial, sans-serif'; ctx.letterSpacing = '3px'; ctx.fillText(selected() === 'all' ? 'FIVE CORE EXPERIENCES' : 'SELECTED EXPERIENCE', 215, 865); ctx.letterSpacing = '0px';
     chosen.forEach((item, index) => {
-      const col = index % 2; const row = Math.floor(index / 2); const x = 250 + col * 720; const y0 = yy + row * 105;
-      ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#d6e1f0'; ctx.lineWidth = 2; roundedRect(ctx, x, y0, 660, 78, 14); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#3a80c3'; roundedRect(ctx, x + 17, y0 + 15, 48, 48, 10); ctx.fill();
-      ctx.textAlign = 'center'; ctx.fillStyle = '#fff'; ctx.font = '800 20px Arial, sans-serif'; ctx.fillText(item[1], x + 41, y0 + 45);
-      ctx.textAlign = 'left'; ctx.fillStyle = '#19345d'; ctx.font = '800 26px Arial, sans-serif'; ctx.fillText(item[2], x + 84, y0 + 34);
-      ctx.fillStyle = '#62718a'; ctx.font = '19px Arial, sans-serif'; ctx.fillText(item[3], x + 84, y0 + 59, 540);
+      const col = index % 2; const row = Math.floor(index / 2); const x = 205 + col * 710; const y0 = 905 + row * 112;
+      ctx.fillStyle = 'rgba(240,250,255,.07)'; ctx.strokeStyle = 'rgba(134,216,232,.38)'; ctx.lineWidth = 2; roundedRect(ctx, x, y0, 650, 82, 16); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#45d9e9'; roundedRect(ctx, x + 17, y0 + 16, 48, 48, 12); ctx.fill();
+      ctx.textAlign = 'center'; ctx.fillStyle = '#06202e'; ctx.font = '800 19px Manrope, Arial, sans-serif'; ctx.fillText(item[1], x + 41, y0 + 46);
+      ctx.textAlign = 'left'; ctx.fillStyle = '#f2f8fc'; ctx.font = '800 25px Manrope, Arial, sans-serif'; ctx.fillText(item[2], x + 86, y0 + 35);
+      ctx.fillStyle = '#a7bdcc'; ctx.font = '500 17px Manrope, Arial, sans-serif'; ctx.fillText(item[3], x + 86, y0 + 61, 525);
     });
-    if (qr) { ctx.fillStyle = '#fff'; ctx.strokeStyle = '#d1deed'; roundedRect(ctx, 1810, 845, 320, 320, 16); ctx.fill(); ctx.stroke(); ctx.drawImage(qr, 1830, 865, 280, 280); ctx.textAlign = 'center'; ctx.fillStyle = '#435775'; ctx.font = '800 18px Arial, sans-serif'; ctx.fillText('SCAN TO EXPLORE THE DEMO STUDIO', 1970, 1195); }
-    ctx.strokeStyle = '#ccd9eb'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(230, 1280); ctx.lineTo(2170, 1280); ctx.stroke();
-    ctx.textAlign = 'left'; ctx.fillStyle = '#19345d'; ctx.font = '700 27px Georgia, "Times New Roman", serif'; ctx.fillText('Davonium Technologies', 250, 1340); ctx.fillStyle = '#62718a'; ctx.font = '20px Arial, sans-serif'; ctx.fillText('Company showcase · Sample experiences', 250, 1377);
-    ctx.fillStyle = '#19345d'; ctx.font = '700 27px Georgia, "Times New Roman", serif'; ctx.fillText(dateLabel.textContent, 1050, 1340); ctx.fillStyle = '#62718a'; ctx.font = '20px Arial, sans-serif'; ctx.fillText('Date prepared in this browser', 1050, 1377);
-    ctx.textAlign = 'right'; ctx.fillStyle = '#506487'; ctx.font = '800 21px monospace'; ctx.fillText(serial, 2150, 1340);
-    ctx.textAlign = 'center'; ctx.fillStyle = '#6a7890'; ctx.font = '18px Arial, sans-serif';
-    wrapText(ctx, 'SELF-GENERATED, NON-OFFICIAL SHOWCASE RECORD. NOT AN ACCREDITED CERTIFICATE, ACADEMIC AWARD, PROFESSIONAL QUALIFICATION, OR VERIFICATION OF CUSTOMER WORK.', 1200, 1470, 1950, 26, 2);
+    if (qr) {
+      ctx.fillStyle = 'rgba(255,255,255,.96)'; ctx.strokeStyle = 'rgba(121,222,237,.54)'; ctx.lineWidth = 2; roundedRect(ctx, 1748, 895, 385, 385, 18); ctx.fill(); ctx.stroke();
+      ctx.drawImage(qr, 1773, 920, 335, 335); ctx.textAlign = 'center'; ctx.fillStyle = '#d7f8ff'; ctx.font = '800 17px Manrope, Arial, sans-serif'; ctx.fillText('SCAN TO EXPLORE THE DEMO STUDIO', 1940, 1315);
+    }
+    ctx.strokeStyle = 'rgba(164,215,229,.32)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(190, 1390); ctx.lineTo(2210, 1390); ctx.stroke();
+    ctx.textAlign = 'left'; ctx.fillStyle = '#f0f7fc'; ctx.font = '800 23px Manrope, Arial, sans-serif'; ctx.fillText('Davonium Technologies', 205, 1450);
+    ctx.fillStyle = '#9bb3c2'; ctx.font = '500 17px Manrope, Arial, sans-serif'; ctx.fillText('Company showcase · Sample digital experiences', 205, 1483);
+    ctx.fillStyle = '#e3f5fa'; ctx.font = '700 19px Manrope, Arial, sans-serif'; ctx.fillText(dateLabel.textContent, 1020, 1450);
+    ctx.fillStyle = '#9bb3c2'; ctx.font = '500 17px Manrope, Arial, sans-serif'; ctx.fillText('Date prepared in this browser', 1020, 1483);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#9feef5'; ctx.font = '800 19px monospace'; ctx.fillText(serial, 2195, 1450);
+    ctx.textAlign = 'center'; ctx.fillStyle = '#9db1c0'; ctx.font = '600 15px Manrope, Arial, sans-serif';
+    wrapText(ctx, 'NON-OFFICIAL SHOWCASE RECORD. NOT AN ACCREDITED CERTIFICATE, ACADEMIC AWARD, PROFESSIONAL QUALIFICATION, OR VERIFICATION OF CUSTOMER WORK.', 1200, 1532, 1970, 20, 2);
     return canvas;
   }
   async function canvasBlob(canvas) { return new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('The certificate image could not be encoded.')), 'image/png')); }

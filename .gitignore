@@ -85,7 +85,31 @@ PREVIEW-V57.ps1
 PUBLISH-V57-ONE-COMMAND.txt
 preview-v57-server.cjs
 
-# Private/local release files - V58
+# V59 local preview and publishing helpers
+PUBLISH-V59.ps1
+PUBLISH-V59-ONE-COMMAND.txt
+PREVIEW-V59.ps1
+preview-v59-server.cjs
+# Private credentials and signing material
+.env
+.env.*
+credentials.json
+secrets.json
+token.json
+auth.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+*.keystore
+*.jks
+id_rsa
+id_ed25519
+directory.md
+
+# V59 local and private files
 directory.md
 .env
 .env.*
@@ -94,8 +118,16 @@ directory.md
 *.p12
 *.pfx
 credentials.json
+secrets.json
+token.json
+auth.json
 service-account*.json
+*.ppk
+*.keystore
+*.jks
+id_rsa
+id_ed25519
 PUBLISH-*.ps1
 PUBLISH-*.txt
 PREVIEW-*.ps1
-preview-v58-server.cjs
+preview-v59-server.cjs

@@ -166,3 +166,13 @@ These sample websites are demonstrations, not claims of completed customer engag
 - New transparent SVG mascot layers with relaxed arms, black pupils, no shadow or backdrop, and more visible mouth/chest/head speech activity.
 - Improved small-screen assistant readability, dismissal positioning, button size, and stable scrolling by avoiding fixed backgrounds.
 - Versioned all core CSS/JS/robot paths and rotated the service-worker cache.
+
+
+## V59 — Final Signal Finish (30 October 2026)
+
+- Dark-first theme default, full stable homepage headline, and improved centred laptop composition.
+- Brighter site-wide starfield with recognisable sparkle stars and individually composed glass cards.
+- Removed illustrative product photography from Ready2Go Learning, Marvel Chat and Davonium Nexus cards.
+- Standardised complete clickable company footer across all routes.
+- Added persistent standing-robot DVNM Bot head control above WhatsApp, with a speakable guide card.
+- Refined certificate page and high-resolution showcase record; repaired independent flyer download cards.
