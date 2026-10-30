@@ -1,1 +1,0 @@
-document.addEventListener("click",function(event){const button=event.target.closest("[data-message]");if(!button)return;const target=document.querySelector("[data-demo-message]");if(target)target.textContent=button.getAttribute("data-message")||"This is a sample interaction.";});

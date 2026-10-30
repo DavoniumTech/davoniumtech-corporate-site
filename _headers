@@ -53,3 +53,9 @@ https://:version.:subdomain.workers.dev/*
 
 /demos/certificates/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
+/assets/images/flyers/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
+/docs/media/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800

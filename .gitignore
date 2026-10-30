@@ -126,23 +126,3 @@ credentials.json
 *.key
 *.p12
 *.pfx
-
-# V62 local publishing and preview tools
-PUBLISH-*.ps1
-PREVIEW-*.ps1
-DEPLOY-*.ps1
-DEPLOY-*.cmd
-preview-*-server.*
-PUBLISH-*-ONE-COMMAND.txt
-PUBLISH-ONE-COMMAND.txt
-*.zip
-*.sha256
-.env
-.env.*
-directory.md
-DIRECTORY.md
-credentials.json
-*.pem
-*.key
-*.p12
-*.pfx

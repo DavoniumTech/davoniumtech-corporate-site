@@ -1,0 +1,381 @@
+/* DAVONIUM V63 - STUDIO POSITION & OPAQUE NAVIGATION FINISH
+   Keep the starfield behind the page. Only the header, open mobile menu and footer
+   use solid surfaces for legibility. The standing hero Bot moves into the right
+   side of the desktop composition; mobile/tablet remains vertically stacked. */
+:root {
+  --v63-header-dark: #030a14;
+  --v63-footer-dark: #020811;
+  --v63-menu-dark: #020812;
+  --v63-header-light: #f7fbfe;
+  --v63-footer-light: #f5f9fc;
+  --v63-menu-light: #f8fcff;
+}
+
+/* Opaque company header: readable against every animated scene. */
+html body > header.head,
+html body header.head,
+html body .head.v57-header,
+html body .demo-page header.head {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 30000 !important;
+  isolation: isolate !important;
+  background: var(--v63-header-dark) !important;
+  background-color: var(--v63-header-dark) !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(105, 218, 238, .20) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 8px 26px rgba(0,0,0,.24) !important;
+}
+html[data-theme="light"] body > header.head,
+html[data-theme="light"] body header.head,
+html[data-theme="light"] body .head.v57-header,
+html[data-theme="light"] body .demo-page header.head {
+  background: var(--v63-header-light) !important;
+  background-color: var(--v63-header-light) !important;
+  border-bottom-color: rgba(30, 115, 145, .20) !important;
+  box-shadow: 0 8px 24px rgba(24, 65, 85, .10) !important;
+}
+
+/* Menu button always visible on touch/tablet widths; open menu is solid, never glass. */
+html body #menu-toggle,
+html body button.menu,
+html body .menu-toggle,
+html body [data-menu-toggle] {
+  z-index: 30015 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+@media (max-width: 1120px) {
+  html body header.head .wrap.nav,
+  html body .head .wrap.nav {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 68px !important;
+    gap: 8px !important;
+  }
+  html body #menu-toggle,
+  html body button.menu,
+  html body .menu-toggle,
+  html body [data-menu-toggle] {
+    display: inline-grid !important;
+    place-items: center !important;
+    flex: 0 0 46px !important;
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    min-height: 46px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #f4fbff !important;
+    background: #0a1a2a !important;
+    border: 1px solid rgba(105, 218, 238, .32) !important;
+    border-radius: 13px !important;
+    font-size: 1.2rem !important;
+    line-height: 1 !important;
+  }
+  html[data-theme="light"] body #menu-toggle,
+  html[data-theme="light"] body button.menu,
+  html[data-theme="light"] body .menu-toggle,
+  html[data-theme="light"] body [data-menu-toggle] {
+    color: #102b3d !important;
+    background: #ffffff !important;
+    border-color: rgba(30, 115, 145, .26) !important;
+  }
+  html body #primary-nav.links:not(.open) {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  html body #primary-nav.links.open,
+  html body #primary-nav.links[data-open="true"],
+  html body .links#primary-nav.open {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: auto !important;
+    right: 0 !important;
+    z-index: 30020 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    width: min(430px, calc(100vw - 22px)) !important;
+    max-width: calc(100vw - 22px) !important;
+    max-height: min(78dvh, calc(100dvh - 92px)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: 12px !important;
+    gap: 5px !important;
+    border: 1px solid rgba(111, 221, 240, .36) !important;
+    border-radius: 17px !important;
+    background: var(--v63-menu-dark) !important;
+    background-color: var(--v63-menu-dark) !important;
+    color: #f2f8fc !important;
+    box-shadow: 0 24px 70px rgba(0,0,0,.55) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+  html[data-theme="light"] body #primary-nav.links.open,
+  html[data-theme="light"] body #primary-nav.links[data-open="true"] {
+    background: var(--v63-menu-light) !important;
+    background-color: var(--v63-menu-light) !important;
+    color: #102b3d !important;
+    border-color: rgba(30, 115, 145, .28) !important;
+    box-shadow: 0 24px 60px rgba(22, 67, 86, .18) !important;
+  }
+  html body #primary-nav.links.open a,
+  html body #primary-nav.links[data-open="true"] a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+    border-radius: 11px !important;
+    color: #f2f8fc !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+  html body #primary-nav.links.open a:hover,
+  html body #primary-nav.links.open a:focus-visible {
+    background: rgba(55, 205, 229, .13) !important;
+    color: #75e8f2 !important;
+  }
+  html[data-theme="light"] body #primary-nav.links.open a,
+  html[data-theme="light"] body #primary-nav.links[data-open="true"] a {
+    color: #102b3d !important;
+  }
+  html[data-theme="light"] body #primary-nav.links.open a:hover,
+  html[data-theme="light"] body #primary-nav.links.open a:focus-visible {
+    background: rgba(30, 155, 180, .10) !important;
+    color: #006c86 !important;
+  }
+  html body .head .actions > .btn { display: none !important; }
+}
+@media (max-width: 600px) {
+  html body .head .wrap.nav { width: calc(100% - 22px) !important; min-height: 64px !important; }
+  html body .head .brand { min-width: 0 !important; max-width: calc(100% - 112px) !important; }
+  html body .head .brand img { width: 38px !important; height: 38px !important; }
+  html body #primary-nav.links.open,
+  html body #primary-nav.links[data-open="true"] { width: calc(100vw - 18px) !important; max-width: calc(100vw - 18px) !important; right: 0 !important; }
+}
+
+/* Opaque footer for clear company identity and readable policies/contact details. */
+html body footer.v59-footer,
+html body .v59-footer,
+html body footer.demo-foot,
+html body footer.foot {
+  position: relative !important;
+  z-index: 4 !important;
+  background: var(--v63-footer-dark) !important;
+  background-color: var(--v63-footer-dark) !important;
+  background-image: none !important;
+  border: 1px solid rgba(105, 218, 238, .22) !important;
+  border-top: 1px solid rgba(105, 218, 238, .28) !important;
+  color: #edf7fc !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 -12px 36px rgba(0,0,0,.18) !important;
+}
+html[data-theme="light"] body footer.v59-footer,
+html[data-theme="light"] body .v59-footer,
+html[data-theme="light"] body footer.demo-foot,
+html[data-theme="light"] body footer.foot {
+  background: var(--v63-footer-light) !important;
+  background-color: var(--v63-footer-light) !important;
+  color: #102b3d !important;
+  border-color: rgba(30, 115, 145, .22) !important;
+  box-shadow: 0 -10px 30px rgba(24, 65, 85, .08) !important;
+}
+html[data-theme="light"] body .v59-footer-brand > p,
+html[data-theme="light"] body .v59-footer-column a,
+html[data-theme="light"] body .v59-footer-bottom { color: #425e70 !important; }
+html[data-theme="light"] body .v59-footer-column h2 { color: #102b3d !important; }
+
+/* Hero composition: preserve the approved full-body robot, but move it into the
+   previously empty right-hand field marked in the user's screenshot. */
+@media (min-width: 1121px) {
+  html body .hero > .wrap {
+    width: min(calc(100% - 76px), 1540px) !important;
+    max-width: 1540px !important;
+    margin-inline: auto !important;
+  }
+  html body .hero .hero-grid {
+    display: grid !important;
+    grid-template-columns: minmax(350px, .78fr) minmax(0, 1.22fr) !important;
+    align-items: center !important;
+    gap: clamp(22px, 2.8vw, 46px) !important;
+    width: 100% !important;
+  }
+  html body .hero .hero-grid > div:first-child {
+    max-width: 610px !important;
+    justify-self: start !important;
+    text-align: left !important;
+  }
+  html body .hero h1 {
+    max-width: 12.8ch !important;
+    font-size: clamp(3.85rem, 5.25vw, 6.35rem) !important;
+    line-height: .91 !important;
+    text-align: left !important;
+  }
+  html body .hero .lead { max-width: 48ch !important; text-align: left !important; }
+  html body .hero .cta { justify-content: flex-start !important; }
+  html body .hero .small-note { text-align: left !important; }
+  html body .hero .art.v56-robot-stage {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: clamp(610px, 51vw, 740px) !important;
+    min-height: 610px !important;
+    justify-self: stretch !important;
+    overflow: visible !important;
+  }
+  html body .hero .v55-robot-fullbody {
+    left: 74% !important;
+    height: 94% !important;
+    max-height: 700px !important;
+    transform: translateX(-50%) !important;
+    object-position: center bottom !important;
+  }
+  html body .hero .v56-portal { left: 74% !important; width: min(70%, 620px) !important; }
+  html body .hero .v56-portal-line { left: 74% !important; width: 77% !important; }
+  html body .hero .art.v56-robot-stage::before { right: -5% !important; width: 92% !important; }
+  html body .hero .art.v56-robot-stage::after { right: -1% !important; width: 80% !important; }
+  html body .hero .v56-stage-chip { right: 0 !important; }
+  html body .hero .v56-stage-note { left: 43% !important; bottom: 4% !important; }
+  html body .hero .v62-hero-status.one { left: 34% !important; }
+  html body .hero .v62-hero-status.two { right: 0 !important; }
+  html body .hero .v62-hero-status.three { right: 5% !important; }
+}
+
+/* Tablet and mobile retain the proven stacked composition and a centred robot. */
+@media (max-width: 1120px) {
+  html body .hero .hero-grid { grid-template-columns: minmax(0,1fr) !important; gap: 14px !important; }
+  html body .hero .hero-grid > div:first-child { margin-inline: auto !important; text-align: center !important; }
+  html body .hero .eye { margin-inline: auto !important; }
+  html body .hero h1 { text-align: center !important; margin-inline: auto !important; }
+  html body .hero .lead { text-align: center !important; margin-inline: auto !important; }
+  html body .hero .cta { justify-content: center !important; }
+  html body .hero .small-note { text-align: center !important; margin-inline: auto !important; }
+  html body .hero .art.v56-robot-stage { max-width: 760px !important; min-height: clamp(390px, 67vw, 590px) !important; margin-inline: auto !important; }
+  html body .hero .v55-robot-fullbody { left: 51% !important; height: 94% !important; }
+  html body .hero .v56-portal, html body .hero .v56-portal-line { left: 51% !important; }
+}
+
+/* The Demo Studio landing and each individual demo use a balanced two-column hero;
+   each retains a real visual on one side and meaningful introduction on the other. */
+html body .demo-page .demo-hero-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr) !important;
+  align-items: center !important;
+  gap: clamp(24px, 4vw, 64px) !important;
+  width: min(calc(100% - 48px), 1380px) !important;
+  margin-inline: auto !important;
+}
+html body .demo-page .demo-hero-grid > :first-child { min-width: 0 !important; }
+html body .demo-page .demo-hero-art,
+html body .demo-page .demo-hero-art.dvnm-demo-feature-art-wrap {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 360px !important;
+  overflow: hidden !important;
+  border-radius: 24px !important;
+}
+html body .demo-page .demo-hero-art .dvnm-demo-feature-art,
+html body .demo-page .demo-hero-art > img {
+  display: block !important;
+  width: 100% !important;
+  height: clamp(320px, 34vw, 480px) !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+html body .demo-studio .demo-hero-art { min-height: 420px !important; }
+html body .demo-studio .demo-hero-art .demo-panel { min-height: 390px !important; }
+@media (max-width: 850px) {
+  html body .demo-page .demo-hero-grid { grid-template-columns: minmax(0,1fr) !important; width: min(calc(100% - 34px), 760px) !important; }
+  html body .demo-page .demo-hero-art { min-height: 270px !important; }
+  html body .demo-page .demo-hero-art .dvnm-demo-feature-art,
+  html body .demo-page .demo-hero-art > img { height: clamp(270px, 62vw, 390px) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .hero .art.v56-robot-stage::before,
+  html body .hero .art.v56-robot-stage::after { animation: none !important; }
+}
+
+
+/* Demo Studio hero artwork: a five-experience visual constellation, not an empty right panel. */
+html body .demo-studio .v63-studio-mosaic {
+  position: relative !important;
+  min-height: 420px !important;
+  padding: 16px !important;
+  border: 1px solid rgba(106, 221, 239, .30) !important;
+  border-radius: 26px !important;
+  background: rgba(3, 12, 23, .20) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+html body .demo-studio .v63-studio-mosaic-grid {
+  position: absolute !important;
+  inset: 16px !important;
+  display: grid !important;
+  grid-template-columns: 1.15fr .85fr .85fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 9px !important;
+  opacity: .94 !important;
+}
+html body .demo-studio .v63-studio-mosaic-grid img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  border: 1px solid rgba(121, 220, 237, .22) !important;
+  border-radius: 14px !important;
+  filter: saturate(.92) !important;
+}
+html body .demo-studio .v63-studio-mosaic-grid img:first-child {
+  grid-row: 1 / span 2 !important;
+}
+html body .demo-studio .v63-studio-mosaic-grid img:last-child {
+  grid-column: 2 / span 2 !important;
+}
+html body .demo-studio .v63-studio-mosaic-caption {
+  position: absolute !important;
+  z-index: 3 !important;
+  inset: auto 28px 28px 28px !important;
+  display: grid !important;
+  gap: 9px !important;
+  padding: 17px 18px !important;
+  border: 1px solid rgba(114, 223, 239, .34) !important;
+  border-radius: 16px !important;
+  background: rgba(2, 10, 19, .82) !important;
+  color: #f0f9fd !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+}
+html body .demo-studio .v63-studio-mosaic-caption strong { font-size: clamp(1.05rem, 1.8vw, 1.45rem) !important; letter-spacing: -.025em !important; }
+html body .demo-studio .v63-studio-mosaic-caption > span:last-child { color: #b7d3de !important; font-size: .75rem !important; }
+@media (max-width: 850px) {
+  html body .demo-studio .v63-studio-mosaic { min-height: clamp(310px, 82vw, 430px) !important; }
+  html body .demo-studio .v63-studio-mosaic-caption { inset: auto 22px 22px 22px !important; }
+}
+@media (max-width: 520px) {
+  html body .demo-studio .v63-studio-mosaic { min-height: 330px !important; padding: 10px !important; }
+  html body .demo-studio .v63-studio-mosaic-grid { inset: 10px !important; gap: 6px !important; }
+  html body .demo-studio .v63-studio-mosaic-grid img { border-radius: 9px !important; }
+  html body .demo-studio .v63-studio-mosaic-caption { inset: auto 14px 14px 14px !important; padding: 13px !important; }
+}
