@@ -78,3 +78,9 @@ DEPLOY-DAVONIUM-V49.ps1
 V49-QA-REPORT.json
 V49-RELEASE-NOTES.md
 MASTER-PROMPT-COVERAGE.md
+
+# Local-only V56 release and preview helpers
+DEPLOY-*.ps1
+DEPLOY-*.cmd
+PREVIEW-*.ps1
+preview-*-server.*
