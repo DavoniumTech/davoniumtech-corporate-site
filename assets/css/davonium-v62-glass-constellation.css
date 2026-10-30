@@ -1,0 +1,846 @@
+/* DAVONIUM TECHNOLOGIES V62 - GLASS CONSTELLATION
+   QR-section transparency becomes the shared visual rule for the full site.
+   Section wrappers stay clear; only useful content cards carry a glass surface. */
+:root {
+  --v62-star-cyan: 83,226,246;
+  --v62-glass-dark: rgba(5,18,32,.27);
+  --v62-glass-dark-strong: rgba(5,17,30,.48);
+  --v62-glass-light: rgba(250,253,255,.38);
+  --v62-glass-light-strong: rgba(255,255,255,.58);
+  --v62-glass-line-dark: rgba(111,220,240,.27);
+  --v62-glass-line-light: rgba(23,126,157,.25);
+  --v62-glass-blur: 9px;
+}
+html[data-theme="dark"] {
+  color-scheme: dark !important;
+  --v62-ink: #f3f9fc;
+  --v62-muted: #b8ccd8;
+  --v62-card: var(--v62-glass-dark);
+  --v62-card-strong: var(--v62-glass-dark-strong);
+  --v62-line: var(--v62-glass-line-dark);
+  --v62-shadow: 0 16px 44px rgba(0,0,0,.15);
+  --v62-header: rgba(4,12,22,.54);
+}
+html[data-theme="light"] {
+  color-scheme: light !important;
+  --v62-ink: #102b3d;
+  --v62-muted: #4f687b;
+  --v62-card: var(--v62-glass-light);
+  --v62-card-strong: var(--v62-glass-light-strong);
+  --v62-line: var(--v62-glass-line-light);
+  --v62-shadow: 0 14px 38px rgba(26,74,98,.075);
+  --v62-header: rgba(249,252,255,.48);
+}
+html, body { min-height:100%; background:transparent !important; }
+html { background:#030a14 !important; }
+body {
+  position:relative !important;
+  isolation:isolate !important;
+  color:var(--v62-ink,var(--ink,#f2f8fb)) !important;
+  background:transparent !important;
+  overflow-x:clip !important;
+}
+body::before {
+  content:"" !important;
+  position:fixed !important;
+  inset:0 !important;
+  z-index:-2 !important;
+  pointer-events:none !important;
+  opacity:1 !important;
+  background:
+    radial-gradient(ellipse at 9% 8%,rgba(0,190,220,.16),transparent 34%),
+    radial-gradient(ellipse at 87% 17%,rgba(111,91,224,.14),transparent 38%),
+    radial-gradient(ellipse at 48% 92%,rgba(0,153,194,.095),transparent 44%),
+    linear-gradient(145deg,#020711 0%,#061525 48%,#050b19 100%) !important;
+}
+html[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse at 9% 8%,rgba(38,185,205,.105),transparent 34%),
+    radial-gradient(ellipse at 87% 17%,rgba(112,139,218,.075),transparent 38%),
+    radial-gradient(ellipse at 48% 92%,rgba(38,158,189,.06),transparent 44%),
+    linear-gradient(145deg,#fbfdff 0%,#eef5f9 50%,#f8fbfd 100%) !important;
+}
+body::after {
+  opacity:.12 !important;
+  pointer-events:none !important;
+  mix-blend-mode:screen !important;
+}
+html[data-theme="light"] body::after { opacity:.10 !important; mix-blend-mode:multiply !important; }
+#v61-star-canvas {
+  position:fixed !important; inset:0 !important; z-index:0 !important;
+  display:block !important; width:100vw !important; height:100vh !important;
+  pointer-events:none !important; opacity:1 !important;
+}
+body > header, body > header.head, body > main, body > footer,
+body > .v59-footer, body > .foot, body > .demo-foot, body > .demo-footer-cert {
+  position:relative !important; z-index:2 !important;
+}
+body > .v59-bot-dock, body > .wa-float, body > #v61-page-transition,
+body > .install, body > .modal, body > [role="dialog"] { position:fixed; }
+
+/* 1) CLEAR SECTION CANVASES: no opaque slabs, colour bands or section-sized glass cards. */
+html body main,
+html body main > section,
+html body main > .section,
+html body main > .pagehero,
+html body main > .demo-hero,
+html body main > .demo-section,
+html body main section.section,
+html body main section.section.tint,
+html body main section.section.tinted,
+html body main section.section.soft,
+html body main .section,
+html body main .section.tint,
+html body main .section.tinted,
+html body main .section.soft,
+html body main .tint,
+html body main .soft,
+html body main .pagehero,
+html body main .demo-hero,
+html body main .demo-section,
+html body main .v57-demo-photo-story,
+html body main .dvnm-demo-qr,
+html body main .dvnm-demo-qr-section,
+html body main .v56-process,
+html body main .v56-services,
+html body main .product-showcase,
+html body main .concept-tech,
+html body main .dvnm-feature-section,
+html body main .dvnm-bot-section,
+html body main .dvnm-studio-section,
+html body main .v62-clear-section {
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+html body main > section::before,
+html body main > section::after,
+html body main .section::before,
+html body main .section::after,
+html body main .section.tint::before,
+html body main .section.tint::after,
+html body main .section.soft::before,
+html body main .section.soft::after,
+html body main .pagehero::before,
+html body main .pagehero::after,
+html body main .demo-hero::before,
+html body main .demo-hero::after,
+html body main .demo-section::before,
+html body main .demo-section::after,
+html body main .v57-demo-photo-story::before,
+html body main .v57-demo-photo-story::after,
+html body main .dvnm-demo-qr::before,
+html body main .dvnm-demo-qr::after {
+  background:none !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+html body main > .wrap,
+html body main > section > .wrap,
+html body main .section > .wrap,
+html body main .pagehero > .wrap,
+html body main .demo-hero > .wrap,
+html body main .demo-section > .wrap,
+html body main .section-head,
+html body main .v57-demo-photo-story-inner,
+html body main .dvnm-demo-qr-inner,
+html body main .hero > .wrap {
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+html body main .section-head,
+html body main .section-head > *,
+html body main .pagehero .crumb,
+html body main .section-head .eye { position:relative; z-index:2; }
+
+/* Quote bands and bottom CTA are typography on the shared sky, not large opaque panels. */
+html body main .quote,
+html body main .band,
+html body main .section .quote,
+html body main .section .band,
+html body main .v56-process-intro,
+html body main .v62-open-copy {
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  padding-inline:0 !important;
+}
+
+/* 2) TRUE GLASS FOR REAL CONTENT CARDS: isolated, individual surfaces with stars visible behind. */
+html body .card,
+html body article.card,
+html body .product-card,
+html body .demo-card,
+html body .demo-panel,
+html body .app-promo-card,
+html body .dvnm-qr-card,
+html body .tech-orbit-card,
+html body .dvnm-demo-qr-card,
+html body .demo-cart-summary,
+html body .demo-course-card,
+html body .docs-card,
+html body .guide-card,
+html body .doc-card,
+html body .v59-flyer-card,
+html body .demo-page .tech-product,
+html body .demo-page .community-event,
+html body .v56-process-grid article,
+html body .v61-surface-card,
+html body .v61-service-card,
+html body .notice,
+html body .steps .step,
+html body .timeline li,
+html body .feature-panel,
+html body .dvnm-demo-card,
+html body .dvnm-head-feature-card,
+html body .dvnm-bot-card-feature,
+html body .v62-glass-card {
+  background:var(--v62-card,rgba(5,18,32,.27)) !important;
+  background-color:var(--v62-card,rgba(5,18,32,.27)) !important;
+  border:1px solid var(--v62-line,rgba(111,220,240,.27)) !important;
+  border-radius:22px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),var(--v62-shadow,0 16px 44px rgba(0,0,0,.15)) !important;
+  -webkit-backdrop-filter:blur(var(--v62-glass-blur,9px)) saturate(140%) !important;
+  backdrop-filter:blur(var(--v62-glass-blur,9px)) saturate(140%) !important;
+  isolation:isolate !important;
+}
+html[data-theme="light"] body .card,
+html[data-theme="light"] body .product-card,
+html[data-theme="light"] body .demo-card,
+html[data-theme="light"] body .demo-panel,
+html[data-theme="light"] body .app-promo-card,
+html[data-theme="light"] body .dvnm-qr-card,
+html[data-theme="light"] body .tech-orbit-card,
+html[data-theme="light"] body .dvnm-demo-qr-card,
+html[data-theme="light"] body .demo-cart-summary,
+html[data-theme="light"] body .demo-course-card,
+html[data-theme="light"] body .docs-card,
+html[data-theme="light"] body .guide-card,
+html[data-theme="light"] body .doc-card,
+html[data-theme="light"] body .v59-flyer-card,
+html[data-theme="light"] body .demo-page .tech-product,
+html[data-theme="light"] body .demo-page .community-event,
+html[data-theme="light"] body .v56-process-grid article,
+html[data-theme="light"] body .v61-surface-card,
+html[data-theme="light"] body .v61-service-card,
+html[data-theme="light"] body .notice,
+html[data-theme="light"] body .steps .step,
+html[data-theme="light"] body .timeline li,
+html[data-theme="light"] body .feature-panel,
+html[data-theme="light"] body .dvnm-demo-card,
+html[data-theme="light"] body .dvnm-head-feature-card,
+html[data-theme="light"] body .v62-glass-card {
+  background:rgba(249,253,255,.39) !important;
+  background-color:rgba(249,253,255,.39) !important;
+  border-color:rgba(23,126,157,.25) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),var(--v62-shadow) !important;
+}
+html body .card:hover,
+html body .product-card:hover,
+html body .demo-card:hover,
+html body .docs-card:hover,
+html body .doc-card:hover,
+html body .guide-card:hover,
+html body .v61-service-card:hover,
+html body .v61-surface-card:hover,
+html body .dvnm-demo-card:hover {
+  border-color:rgba(72,222,241,.56) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 48px rgba(0,0,0,.17) !important;
+}
+html[data-theme="light"] body .card:hover,
+html[data-theme="light"] body .product-card:hover,
+html[data-theme="light"] body .demo-card:hover,
+html[data-theme="light"] body .docs-card:hover,
+html[data-theme="light"] body .doc-card:hover,
+html[data-theme="light"] body .guide-card:hover,
+html[data-theme="light"] body .v61-service-card:hover,
+html[data-theme="light"] body .dvnm-demo-card:hover { border-color:rgba(0,145,177,.48) !important; }
+
+/* 3) The QR section is the reference: clear outer canvas, softly frosted inner QR panel. */
+html body .dvnm-demo-qr,
+html body .dvnm-demo-qr-inner,
+html body .dvnm-qr-grid { background:transparent !important; }
+html body .dvnm-demo-qr-card,
+html body .dvnm-qr-card {
+  background:var(--v62-card-strong) !important;
+  -webkit-backdrop-filter:blur(11px) saturate(150%) !important;
+  backdrop-filter:blur(11px) saturate(150%) !important;
+}
+
+/* 4) Preserve the current header, but let the shared stars show through it. */
+html body .head,
+html body header.head,
+html body .demo-page .head {
+  position:sticky !important; top:0 !important; z-index:30000 !important;
+  isolation:isolate !important; overflow:visible !important;
+  background:var(--v62-header,rgba(4,12,22,.54)) !important;
+  background-color:var(--v62-header,rgba(4,12,22,.54)) !important;
+  border-bottom:1px solid var(--v62-line) !important;
+  box-shadow:0 8px 26px rgba(0,0,0,.08) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(150%) !important;
+  backdrop-filter:blur(18px) saturate(150%) !important;
+}
+html body .head .wrap.nav { width:min(calc(100% - 36px),1460px) !important; max-width:1460px !important; min-height:72px !important; gap:clamp(12px,2vw,28px) !important; }
+html body .head .brand { flex:0 0 auto !important; }
+html body .head .brand::after { font-family:"Cormorant Garamond",Georgia,serif !important; font-size:1.5rem !important; letter-spacing:.085em !important; }
+html body .head .links { gap:clamp(13px,1.8vw,27px) !important; }
+html body .head .links a { white-space:nowrap !important; }
+html body .head .actions { display:flex !important; align-items:center !important; flex:0 0 auto !important; gap:9px !important; }
+html body #menu-toggle,
+html body .menu,
+html body .menu-toggle,
+html body [data-menu-toggle] {
+  position:relative !important; z-index:30005 !important; pointer-events:auto !important;
+  touch-action:manipulation !important; min-width:46px !important; min-height:46px !important;
+}
+html body #primary-nav { pointer-events:auto !important; }
+@media(max-width:1120px) {
+  html body .head .wrap.nav { min-height:68px !important; }
+  html body #menu-toggle, html body .menu { display:inline-grid !important; place-items:center !important; }
+  html body #primary-nav.links:not(.open) { display:none !important; }
+  html body #primary-nav.links.open {
+    position:absolute !important; top:calc(100% + 8px) !important; right:0 !important; left:auto !important;
+    z-index:30010 !important; display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; justify-content:flex-start !important;
+    width:min(430px,calc(100vw - 22px)) !important; max-width:calc(100vw - 22px) !important;
+    max-height:min(78dvh,calc(100dvh - 100px)) !important; overflow:auto !important;
+    padding:12px !important; gap:5px !important; border:1px solid var(--v62-line) !important;
+    border-radius:20px !important; background:var(--v62-card-strong) !important; color:var(--v62-ink) !important;
+    box-shadow:0 24px 70px rgba(0,0,0,.35) !important;
+    -webkit-backdrop-filter:blur(24px) saturate(155%) !important; backdrop-filter:blur(24px) saturate(155%) !important;
+    visibility:visible !important; opacity:1 !important; pointer-events:auto !important; transform:none !important;
+  }
+  html body #primary-nav.links.open a {
+    display:flex !important; align-items:center !important; width:100% !important;
+    min-height:48px !important; padding:12px 14px !important; white-space:normal !important;
+    pointer-events:auto !important; touch-action:manipulation !important; color:var(--v62-ink) !important;
+  }
+}
+@media(max-width:600px) {
+  html body .head .wrap.nav { width:calc(100% - 22px) !important; min-height:62px !important; gap:7px !important; }
+  html body .head .brand { gap:7px !important; }
+  html body .head .brand img { width:36px !important; height:36px !important; flex-basis:36px !important; }
+  html body .head .brand::after { font-size:1.18rem !important; letter-spacing:.06em !important; }
+  html body .head .actions { gap:5px !important; }
+  html body .head .actions > .btn { display:none !important; }
+  html body #primary-nav.links.open { width:calc(100vw - 18px) !important; max-width:calc(100vw - 18px) !important; right:0 !important; }
+}
+
+/* 5) Wide desktop studio hero: large editorial copy left, full-width robot/orbit scene right. */
+html body .hero {
+  min-height:0 !important;
+  padding:clamp(34px,4.5vw,68px) 0 clamp(34px,4vw,58px) !important;
+  overflow:visible !important;
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+}
+html body .hero > .wrap {
+  width:min(calc(100% - 72px),1460px) !important;
+  max-width:1460px !important;
+  margin-inline:auto !important;
+}
+html body .hero .hero-grid {
+  display:grid !important;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr) !important;
+  align-items:center !important;
+  gap:clamp(26px,3vw,54px) !important;
+  width:100% !important;
+  max-width:none !important;
+}
+html body .hero .hero-grid > div:first-child {
+  min-width:0 !important; max-width:690px !important; margin:0 !important;
+  text-align:left !important; justify-self:start !important;
+}
+html body .hero .eye { margin:0 !important; }
+html body .hero h1 {
+  width:100% !important; max-width:14.6ch !important;
+  margin:18px 0 19px !important;
+  font-size:clamp(4.1rem,6.15vw,6.45rem) !important;
+  line-height:.88 !important; text-align:left !important;
+  letter-spacing:-.055em !important;
+}
+html body .hero h1 .v56-gradient { display:block !important; white-space:normal !important; opacity:1 !important; visibility:visible !important; }
+html body .hero .lead {
+  max-width:49ch !important; margin:0 !important; text-align:left !important;
+  font-size:clamp(1rem,1.17vw,1.18rem) !important; line-height:1.72 !important;
+}
+html body .hero .cta { display:flex !important; flex-wrap:wrap !important; justify-content:flex-start !important; gap:12px !important; margin-top:24px !important; }
+html body .hero .small-note { max-width:52ch !important; margin:16px 0 0 !important; text-align:left !important; }
+html body .hero .art.v56-robot-stage {
+  position:relative !important; display:block !important; justify-self:stretch !important;
+  width:100% !important; max-width:none !important; min-width:0 !important;
+  height:clamp(570px,49vw,710px) !important; min-height:570px !important;
+  margin:0 !important; padding:0 !important; overflow:visible !important;
+  border:0 !important; border-radius:0 !important; background:transparent !important;
+  background-image:none !important; box-shadow:none !important; isolation:isolate !important;
+}
+html body .hero .art.v56-robot-stage::before {
+  content:"" !important; position:absolute !important; z-index:0 !important;
+  top:1% !important; right:-2% !important; width:91% !important; height:91% !important;
+  border:1px solid rgba(72,218,239,.46) !important; border-radius:50% !important;
+  transform:rotate(24deg) scaleX(.78) !important;
+  background:radial-gradient(ellipse at 52% 50%,rgba(25,178,215,.12),transparent 64%) !important;
+  box-shadow:0 0 45px rgba(37,193,218,.13),inset 0 0 44px rgba(37,193,218,.07) !important;
+  animation:v62-orbit-breathe 8.5s ease-in-out infinite alternate !important;
+}
+html body .hero .art.v56-robot-stage::after {
+  content:"" !important; position:absolute !important; z-index:0 !important;
+  top:12% !important; right:7% !important; width:76% !important; height:72% !important;
+  border:1px solid rgba(144,137,255,.34) !important;
+  border-left-color:rgba(65,222,239,.72) !important; border-right-color:rgba(65,222,239,.72) !important;
+  border-radius:50% !important; transform:rotate(-29deg) scaleX(.78) !important;
+  background:radial-gradient(ellipse at 50% 50%,rgba(94,88,202,.075),transparent 70%) !important;
+  box-shadow:0 0 29px rgba(107,105,232,.11) !important;
+  animation:v62-orbit-breathe 11s ease-in-out infinite alternate-reverse !important;
+}
+html body .hero .v56-portal {
+  left:51% !important; top:6% !important; width:min(72%,570px) !important; height:82% !important;
+  transform:translateX(-50%) perspective(1000px) rotateY(-9deg) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(0,185,201,.025) 46%,rgba(93,105,223,.025)) !important;
+  box-shadow:inset 0 0 0 10px rgba(111,220,228,.025),inset 0 0 48px rgba(0,185,201,.08),0 0 0 1px rgba(0,185,201,.10) !important;
+}
+html body .hero .v56-portal-line { left:51% !important; top:15% !important; width:80% !important; height:69% !important; }
+html body .hero .v57-d-monument { z-index:2 !important; }
+html body .hero .v55-robot-fullbody {
+  position:absolute !important; z-index:4 !important; display:block !important;
+  left:51% !important; bottom:0 !important; height:94% !important; width:auto !important;
+  max-height:660px !important; max-width:none !important;
+  object-fit:contain !important; object-position:center bottom !important;
+  transform:translateX(-50%) !important; transform-origin:50% 82% !important;
+  filter:none !important; -webkit-filter:none !important; box-shadow:none !important;
+  pointer-events:none !important; user-select:none !important;
+}
+html body .hero .v60-robot-image-host { position:absolute !important; inset:0 !important; z-index:4 !important; pointer-events:none !important; }
+html body .hero .v56-stage-chip { top:9% !important; right:3% !important; z-index:7 !important; }
+html body .hero .v56-stage-note { left:3% !important; bottom:5% !important; z-index:7 !important; }
+html body .hero .v57-signal-node { z-index:6 !important; }
+html body .hero .principles {
+  position:relative !important; display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:10px !important; width:100% !important; max-width:none !important; margin:26px 0 0 !important;
+  padding:8px 0 0 !important; border:0 !important; border-top:1px solid var(--v62-line) !important;
+  border-radius:0 !important; background:transparent !important; box-shadow:none !important;
+  -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+}
+html body .hero .principles b { grid-column:1/-1 !important; color:var(--v62-ink) !important; font-size:.72rem !important; letter-spacing:.14em !important; }
+html body .hero .principles span {
+  min-height:48px !important; padding:10px 12px !important; border:1px solid var(--v62-line) !important;
+  border-radius:13px !important; background:var(--v62-card) !important; color:var(--v62-muted) !important;
+  -webkit-backdrop-filter:blur(7px) !important; backdrop-filter:blur(7px) !important;
+  font-size:.77rem !important; line-height:1.38 !important;
+}
+@keyframes v62-orbit-breathe { from{opacity:.54;filter:brightness(.88)} to{opacity:1;filter:brightness(1.26)} }
+@media(max-width:1060px) {
+  html body .hero > .wrap { width:min(calc(100% - 42px),920px) !important; }
+  html body .hero .hero-grid { grid-template-columns:minmax(0,1fr) !important; gap:14px !important; }
+  html body .hero .hero-grid > div:first-child { max-width:780px !important; margin-inline:auto !important; text-align:center !important; }
+  html body .hero .eye { margin-inline:auto !important; }
+  html body .hero h1 { max-width:14ch !important; margin-inline:auto !important; text-align:center !important; font-size:clamp(3.8rem,8vw,5.5rem) !important; }
+  html body .hero .lead { margin-inline:auto !important; text-align:center !important; }
+  html body .hero .cta { justify-content:center !important; }
+  html body .hero .small-note { margin-inline:auto !important; text-align:center !important; }
+  html body .hero .art.v56-robot-stage { height:clamp(440px,64vw,590px) !important; min-height:440px !important; max-width:760px !important; margin-inline:auto !important; }
+  html body .hero .v55-robot-fullbody { height:95% !important; max-height:560px !important; }
+  html body .hero .principles { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+@media(max-width:600px) {
+  html body .hero > .wrap { width:calc(100% - 28px) !important; }
+  html body .hero h1 { max-width:12.8ch !important; font-size:clamp(2.95rem,11.7vw,4.1rem) !important; line-height:.94 !important; }
+  html body .hero .lead { font-size:.98rem !important; }
+  html body .hero .art.v56-robot-stage { width:100% !important; height:clamp(350px,100vw,470px) !important; min-height:350px !important; }
+  html body .hero .v55-robot-fullbody { height:94% !important; max-height:450px !important; }
+  html body .hero .v56-stage-chip { top:5% !important; right:0 !important; max-width:82% !important; font-size:.58rem !important; }
+  html body .hero .v56-stage-note { left:0 !important; bottom:3% !important; max-width:165px !important; }
+  html body .hero .principles { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  html body .hero .principles span { min-height:45px !important; font-size:.70rem !important; }
+}
+
+/* 6) Demo Studio and demo pages: full company header, transparent universe, individual demo identity. */
+html body .demo-page .head { display:block !important; }
+html body .demo-page main { background:transparent !important; background-image:none !important; }
+html body .demo-page .demo-hero { padding:clamp(42px,5vw,74px) 0 40px !important; border:0 !important; }
+html body .demo-page .demo-hero-grid { position:relative !important; z-index:2 !important; }
+html body .demo-page .demo-hero-art,
+html body .demo-page .tech-orbit-card {
+  background:var(--v62-card) !important; border:1px solid var(--v62-line) !important;
+  -webkit-backdrop-filter:blur(8px) saturate(140%) !important; backdrop-filter:blur(8px) saturate(140%) !important;
+}
+html body .demo-page .demo-section.soft,
+html body .demo-page .v57-demo-photo-story,
+html body .demo-page .dvnm-demo-qr { background:transparent !important; background-image:none !important; border:0 !important; }
+html body .v61-demo-back-wrap { position:relative !important; z-index:5 !important; }
+html body .v61-demo-back { background:var(--v62-card) !important; -webkit-backdrop-filter:blur(8px) !important; backdrop-filter:blur(8px) !important; }
+
+/* 7) DVNM Bot: keep the exact approved character, add audible access and visible synced speech motion. */
+html body .v59-bot-dock {
+  z-index:1403 !important; right:max(18px,env(safe-area-inset-right)) !important;
+  bottom:calc(88px + env(safe-area-inset-bottom)) !important;
+}
+html body .v59-bot-card {
+  width:min(420px,calc(100vw - 28px)) !important;
+  max-height:min(78dvh,700px) !important; overflow:auto !important;
+  background:rgba(5,17,30,.84) !important; border:1px solid var(--v62-line) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(145%) !important; backdrop-filter:blur(18px) saturate(145%) !important;
+}
+html[data-theme="light"] body .v59-bot-card { background:rgba(248,253,255,.91) !important; }
+html body .v59-bot-card .v59-bot-copy { line-height:1.68 !important; }
+html body .v61-bot-topics { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:7px !important; margin:12px 0 10px !important; }
+html body .v61-bot-topic {
+  min-height:38px !important; padding:8px 10px !important; border:1px solid var(--v62-line) !important;
+  border-radius:12px !important; background:var(--v62-card) !important; color:var(--v62-ink) !important;
+  font:700 .72rem Manrope,system-ui,sans-serif !important; text-align:left !important; cursor:pointer !important;
+}
+html body .v61-bot-topic:hover, html body .v61-bot-topic[aria-pressed="true"] { border-color:#4bd8e9 !important; background:rgba(45,210,230,.13) !important; }
+html body .v62-bot-open-section {
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  width:100% !important; min-height:42px !important; margin:4px 0 10px !important; padding:10px 13px !important;
+  border:1px solid rgba(76,219,238,.40) !important; border-radius:12px !important;
+  background:rgba(26,190,211,.13) !important; color:var(--v62-ink) !important;
+  font:800 .76rem Manrope,system-ui,sans-serif !important; text-decoration:none !important;
+}
+html body .v62-bot-open-section:hover { border-color:rgba(76,219,238,.78) !important; box-shadow:0 0 20px rgba(39,204,227,.14) !important; }
+html body .v61-bot-audio {
+  display:grid !important; grid-template-columns:auto minmax(90px,1fr) auto !important;
+  align-items:center !important; gap:9px !important; width:100% !important; margin:10px 0 !important;
+  color:var(--v62-muted) !important; font:700 .72rem Manrope,system-ui,sans-serif !important;
+}
+html body .v61-bot-audio .v61-volume-icon { width:25px !important; color:#4bd8e9 !important; }
+html body .v61-bot-audio input[type="range"] { width:100% !important; accent-color:#26c8dd !important; }
+html body .v61-bot-audio output { min-width:34px !important; text-align:right !important; font-variant-numeric:tabular-nums !important; }
+html body .v59-bot-trigger .v60-face-wrap, html body .v59-bot-card-head .v60-face-wrap { overflow:visible !important; }
+html body .v60-face-mouth { left:50.5% !important; top:58.5% !important; width:16% !important; height:4.2% !important; }
+html body .v60-robot-image-host.is-speaking .v60-robot-mouth,
+html body .v60-robot-image-host.is-speaking .v60-robot-mouth:not(.is-open),
+html body .v60-face-wrap.is-speaking .v60-face-mouth,
+html body .v59-bot-dock.is-speaking .v60-face-mouth {
+  opacity:1 !important; animation:v62-robot-mouth 150ms ease-in-out infinite alternate !important;
+}
+html body .v60-robot-image-host.is-speaking .v60-robot-mouth.is-open,
+html body .v60-face-wrap.is-speaking .v60-face-mouth.is-open {
+  height:var(--v60-mouth-open,13px) !important; opacity:1 !important;
+  background:rgba(2,18,40,.9) !important; box-shadow:0 0 14px rgba(58,239,255,.96),inset 0 0 6px rgba(47,221,255,.6) !important;
+}
+html body .v60-robot-image-host.is-speaking .v60-robot-chest {
+  opacity:1 !important; animation:v62-chest-pulse 540ms ease-in-out infinite alternate !important;
+}
+html body .v59-bot-dock.is-speaking .v60-face-wrap { filter:drop-shadow(0 0 12px rgba(48,221,244,.26)) !important; }
+@keyframes v62-robot-mouth { 0%{transform:translate(-50%,-50%) scaleY(.35)} 42%{transform:translate(-50%,-50%) scaleY(1.6)} 100%{transform:translate(-50%,-50%) scaleY(2.25)} }
+@keyframes v62-chest-pulse { from{opacity:.46;transform:scale(.90)} to{opacity:1;transform:scale(1.24);filter:drop-shadow(0 0 14px rgba(45,222,242,.7))} }
+html body .wa-float { z-index:1402 !important; right:max(18px,env(safe-area-inset-right)) !important; bottom:calc(14px + env(safe-area-inset-bottom)) !important; }
+html body .v62-bot-audio-shortcut {
+  display:inline-grid !important; place-items:center !important; flex:0 0 44px !important;
+  width:44px !important; height:44px !important; min-width:44px !important; min-height:44px !important;
+  border:1px solid var(--v62-line) !important; border-radius:13px !important;
+  background:var(--v62-card) !important; color:var(--v62-ink) !important;
+  cursor:pointer !important; touch-action:manipulation !important;
+}
+html body .v62-bot-audio-shortcut:hover { border-color:rgba(65,220,240,.72) !important; box-shadow:0 0 18px rgba(45,210,230,.16) !important; }
+html body .v62-bot-audio-shortcut svg { width:20px !important; height:20px !important; }
+@media(max-width:760px) {
+  html body .v59-bot-card { width:min(390px,calc(100vw - 20px)) !important; max-height:min(72dvh,650px) !important; }
+  html body .v61-bot-topics { gap:6px !important; }
+  html body .v61-bot-topic { font-size:.70rem !important; padding:8px !important; }
+  html body .v61-bot-audio { grid-template-columns:25px minmax(80px,1fr) 34px !important; }
+  html body .v62-bot-audio-shortcut { width:40px !important; height:40px !important; min-width:40px !important; min-height:40px !important; flex-basis:40px !important; }
+}
+@media(max-width:390px) {
+  html body .v59-bot-card { right:-2px !important; width:calc(100vw - 16px) !important; padding:14px !important; }
+  html body .v61-bot-topics { grid-template-columns:1fr 1fr !important; }
+}
+
+/* Respect visitors who request less motion without making the sky disappear. */
+@media(prefers-reduced-motion:reduce) {
+  html body .hero .art.v56-robot-stage::before,
+  html body .hero .art.v56-robot-stage::after,
+  html body .status, html body .status-pill,
+  html body .v60-robot-image-host.is-speaking .v60-robot-mouth,
+  html body .v60-robot-image-host.is-speaking .v60-robot-chest,
+  html body .v60-face-wrap.is-speaking .v60-face-mouth { animation:none !important; }
+}
+
+
+/* V62 FINAL CASCADE: QR-section transparency is the reference for every page. */
+html body main > section:not(.hero):not(.card):not(article):nth-of-type(n),
+html body main > .section:nth-child(n),
+html body main > .page-section:nth-child(n),
+html body main > .demo-section:nth-child(n),
+html body main > .content-section:nth-child(n),
+html body main section.section,
+html body main section.section.tint,
+html body main section.section.soft,
+html body main section.section.tinted,
+html body main .section,
+html body main .section.tint,
+html body main .section.soft,
+html body main .section.tinted,
+html body main .pagehero,
+html body main .demo-hero,
+html body main .demo-section,
+html body main .v57-demo-photo-story,
+html body main .dvnm-demo-qr,
+html body main .dvnm-demo-qr-section,
+html body main .v56-process,
+html body main .v56-services,
+html body main .product-showcase,
+html body main .concept-tech,
+html body main .dvnm-feature-section,
+html body main .dvnm-bot-section,
+html body main .dvnm-studio-section,
+html body main .quote,
+html body main .band,
+html body main .app-promo,
+html body main .v62-clear-section {
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+html body main > section:not(.hero):not(.card):not(article):nth-of-type(n)::before,
+html body main > section:not(.hero):not(.card):not(article):nth-of-type(n)::after,
+html body main .section::before,
+html body main .section::after,
+html body main .pagehero::before,
+html body main .pagehero::after,
+html body main .demo-hero::before,
+html body main .demo-hero::after,
+html body main .demo-section::before,
+html body main .demo-section::after,
+html body main .quote::before,
+html body main .band::after,
+html body main .app-promo::before,
+html body main .app-promo::after {
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
+  background:none !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+html body main > .wrap,
+html body main > section > .wrap,
+html body main .section > .wrap,
+html body main .pagehero > .wrap,
+html body main .demo-hero > .wrap,
+html body main .demo-section > .wrap,
+html body main .section-head,
+html body main .split,
+html body main .prose,
+html body main .dvnm-feature-grid > div:first-child,
+html body main .dvnm-qr-grid,
+html body main .dvnm-qr-copy,
+html body main .dvnm-demo-qr-inner,
+html body main .dvnm-demo-qr-copy,
+html body main .v57-demo-photo-story-inner,
+html body main .v62-open-copy {
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+
+/* Real cards alone receive the QR-style glass treatment. Text-only section columns stay open. */
+html body main .checks li,
+html body main .step,
+html body main .steps .step,
+html body main .timeline li,
+html body main .notice,
+html body main .feature-panel,
+html body main .dvnm-head-feature-card,
+html body main .dvnm-demo-qr-card,
+html body main .dvnm-qr-card,
+html body main .app-promo-card,
+html body main .v58-bot-audio-controls,
+html body main article.card,
+html body main [class*="-card"],
+html body main [class$="-panel"],
+html body main .showcase-card,
+html body main .stat-card,
+html body main .metric-card,
+html body main .listing-card {
+  background:var(--v62-card,rgba(5,18,32,.27)) !important;
+  background-color:var(--v62-card,rgba(5,18,32,.27)) !important;
+  border:1px solid var(--v62-line,rgba(111,220,240,.27)) !important;
+  border-radius:20px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),var(--v62-shadow,0 16px 44px rgba(0,0,0,.15)) !important;
+  -webkit-backdrop-filter:blur(10px) saturate(145%) !important;
+  backdrop-filter:blur(10px) saturate(145%) !important;
+}
+html[data-theme="light"] body main .checks li,
+html[data-theme="light"] body main .step,
+html[data-theme="light"] body main .steps .step,
+html[data-theme="light"] body main .timeline li,
+html[data-theme="light"] body main .notice,
+html[data-theme="light"] body main .feature-panel,
+html[data-theme="light"] body main .dvnm-head-feature-card,
+html[data-theme="light"] body main .dvnm-demo-qr-card,
+html[data-theme="light"] body main .dvnm-qr-card,
+html[data-theme="light"] body main .app-promo-card,
+html[data-theme="light"] body main .v58-bot-audio-controls,
+html[data-theme="light"] body main article.card,
+html[data-theme="light"] body main [class*="-card"],
+html[data-theme="light"] body main [class$="-panel"],
+html[data-theme="light"] body main .showcase-card,
+html[data-theme="light"] body main .stat-card,
+html[data-theme="light"] body main .metric-card,
+html[data-theme="light"] body main .listing-card {
+  background:rgba(249,253,255,.42) !important;
+  background-color:rgba(249,253,255,.42) !important;
+  border-color:rgba(23,126,157,.26) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.56),var(--v62-shadow) !important;
+}
+html body main .checks li { padding:13px 16px 13px 44px !important; }
+html body main .steps .step { padding:19px 21px !important; }
+html body main .dvnm-head-feature-card { padding:22px !important; }
+html body main .v58-bot-audio-controls { padding:14px !important; margin-top:15px !important; }
+
+/* Keep the full fixed starfield visible behind every section, including transparent cards. */
+html body #v61-star-canvas {
+  position:fixed !important; inset:0 !important; z-index:0 !important;
+  width:100vw !important; height:100vh !important; opacity:1 !important;
+  visibility:visible !important; pointer-events:none !important;
+}
+html body main, html body > header, html body > footer, html body > .v59-footer {
+  position:relative !important; z-index:2 !important;
+  background:transparent !important; background-image:none !important;
+}
+html body .v59-footer, html body footer.foot, html body .demo-footer, html body .demo-foot {
+  background:transparent !important; background-color:transparent !important;
+  background-image:none !important; border-top:1px solid var(--v62-line) !important;
+  box-shadow:none !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+}
+html body .v59-footer-shell, html body .v59-footer-bottom { background:transparent !important; box-shadow:none !important; }
+
+/* Laptop-first hero balance: left editorial copy, large right-side DVNM Bot stage, no dead quadrant. */
+@media(min-width:1181px) {
+  html body main > .hero { padding-block:42px 36px !important; }
+  html body main > .hero > .wrap {
+    width:min(calc(100% - 64px),1480px) !important; max-width:1480px !important;
+  }
+  html body main > .hero .hero-grid {
+    grid-template-columns:minmax(0,.98fr) minmax(0,1.12fr) !important;
+    gap:clamp(26px,3.3vw,52px) !important; align-items:center !important;
+    width:100% !important; max-width:none !important;
+  }
+  html body main > .hero .hero-grid > div:first-child {
+    width:100% !important; max-width:650px !important; justify-self:start !important;
+    margin:0 !important; text-align:left !important;
+  }
+  html body main > .hero h1 {
+    max-width:16ch !important; width:100% !important;
+    font-size:clamp(4.55rem,6.35vw,6.9rem) !important;
+    line-height:.87 !important; letter-spacing:-.064em !important;
+    margin:18px 0 22px !important; text-align:left !important;
+  }
+  html body main > .hero .lead { max-width:52ch !important; font-size:clamp(1.05rem,1.22vw,1.22rem) !important; line-height:1.72 !important; }
+  html body main > .hero .art.v56-robot-stage {
+    width:100% !important; max-width:none !important; min-width:0 !important;
+    height:clamp(560px,44vw,650px) !important; min-height:560px !important;
+    justify-self:stretch !important; margin:0 !important; overflow:visible !important;
+  }
+  html body main > .hero .v55-robot-fullbody {
+    left:53% !important; height:93% !important; max-height:630px !important;
+  }
+  html body main > .hero .v56-portal { left:53% !important; width:min(78%,650px) !important; }
+  html body main > .hero .v56-portal-line { left:53% !important; width:88% !important; }
+  html body main > .hero .art.v56-robot-stage::before { right:-1% !important; width:98% !important; height:93% !important; }
+  html body main > .hero .art.v56-robot-stage::after { right:1% !important; width:88% !important; height:79% !important; }
+}
+@media(min-width:761px) and (max-width:1180px) {
+  html body main > .hero > .wrap { width:min(calc(100% - 44px),980px) !important; }
+  html body main > .hero .hero-grid { grid-template-columns:minmax(0,1fr) !important; gap:6px !important; }
+  html body main > .hero .hero-grid > div:first-child { max-width:830px !important; margin-inline:auto !important; text-align:center !important; }
+  html body main > .hero h1 { margin-inline:auto !important; text-align:center !important; font-size:clamp(4rem,7.2vw,5.5rem) !important; }
+  html body main > .hero .lead { margin-inline:auto !important; text-align:center !important; }
+  html body main > .hero .cta { justify-content:center !important; }
+  html body main > .hero .small-note { text-align:center !important; }
+  html body main > .hero .art.v56-robot-stage { width:100% !important; max-width:780px !important; height:clamp(470px,58vw,610px) !important; margin-inline:auto !important; }
+}
+@media(max-width:760px) {
+  html body main > .hero > .wrap { width:calc(100% - 28px) !important; }
+  html body main > .hero .art.v56-robot-stage { width:100% !important; max-width:520px !important; margin-inline:auto !important; }
+}
+
+/* Small luminous status labels on the open right-side hero canvas. */
+html body .hero .v62-hero-status {
+  position:absolute !important; z-index:8 !important; display:inline-flex !important;
+  align-items:center !important; gap:9px !important; max-width:230px !important;
+  padding:9px 12px !important; border:1px solid rgba(78,220,239,.28) !important;
+  border-radius:999px !important; color:var(--v62-ink) !important;
+  background:rgba(4,18,30,.32) !important; -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important; font:800 .63rem/1.2 Manrope,system-ui,sans-serif !important;
+  letter-spacing:.095em !important; text-transform:uppercase !important;
+  box-shadow:0 0 16px rgba(43,206,228,.10) !important;
+  animation:v62-status-drift 6.5s ease-in-out infinite !important;
+}
+html[data-theme="light"] body .hero .v62-hero-status {
+  color:#163b53 !important; background:rgba(248,253,255,.45) !important;
+  border-color:rgba(30,139,166,.27) !important;
+}
+html body .hero .v62-hero-status::before {
+  content:"" !important; width:7px !important; height:7px !important; flex:0 0 7px !important;
+  border-radius:50% !important; background:#45e6f4 !important;
+  box-shadow:0 0 7px #45e6f4,0 0 15px rgba(69,230,244,.7) !important;
+  animation:v62-status-pulse 1.5s ease-in-out infinite alternate !important;
+}
+html body .hero .v62-hero-status.one { top:20% !important; left:2% !important; }
+html body .hero .v62-hero-status.two { top:51% !important; right:1% !important; animation-delay:-2.2s !important; }
+html body .hero .v62-hero-status.three { bottom:16% !important; right:8% !important; animation-delay:-4.1s !important; }
+@keyframes v62-status-drift { 0%,100%{translate:0 0} 50%{translate:0 -7px} }
+@keyframes v62-status-pulse { from{opacity:.48;transform:scale(.8)} to{opacity:1;transform:scale(1.25)} }
+@media(max-width:760px) {
+  html body .hero .v62-hero-status { font-size:.54rem !important; padding:7px 9px !important; }
+  html body .hero .v62-hero-status.one { left:0 !important; top:12% !important; }
+  html body .hero .v62-hero-status.two { right:0 !important; top:51% !important; }
+  html body .hero .v62-hero-status.three { right:2% !important; bottom:11% !important; }
+}
+
+/* Demo hero art and demo cards remain individual glass surfaces, with the shared header above them. */
+html body .demo-page .head { position:sticky !important; top:0 !important; z-index:30000 !important; }
+html body .demo-page .links { z-index:30001 !important; }
+html body .demo-page .demo-hero-art,
+html body .demo-page .tech-orbit-card,
+html body .demo-page .demo-card,
+html body .demo-page .dvnm-demo-card,
+html body .demo-page .dvnm-demo-qr-card { isolation:isolate !important; }
+html body .demo-page .demo-hero,
+html body .demo-page .demo-section,
+html body .demo-page .v57-demo-photo-story,
+html body .demo-page .dvnm-demo-qr { background:transparent !important; background-image:none !important; }
+html body .demo-page .demo-hero-art img { display:block !important; width:100% !important; height:auto !important; object-fit:contain !important; object-position:center !important; }
+
+/* The page-aware Bot reads the current page/topic and keeps the approved head/body artwork. */
+html body .v59-bot-dock { z-index:1403 !important; }
+html body .v59-bot-trigger { border-color:rgba(83,220,241,.74) !important; box-shadow:0 0 0 1px rgba(83,220,241,.10),0 0 24px rgba(32,192,220,.15) !important; }
+html body .v59-bot-card { z-index:1405 !important; }
+html body .v60-robot-image-host.is-speaking .v60-robot-mouth:not(.is-open) { animation:v62-robot-mouth 170ms ease-in-out infinite alternate !important; opacity:1 !important; }
+html body .v60-face-wrap.is-talking .v60-face-mouth:not(.is-open) { animation:v62-robot-mouth 170ms ease-in-out infinite alternate !important; opacity:1 !important; }
+html body .v60-robot-image-host.is-speaking .v60-robot-chest { animation:v62-chest-pulse 540ms ease-in-out infinite alternate !important; }
+@media(prefers-reduced-motion:reduce) {
+  html body .hero .v62-hero-status,
+  html body .hero .v62-hero-status::before,
+  html body .v60-robot-image-host.is-speaking .v60-robot-mouth,
+  html body .v60-robot-image-host.is-speaking .v60-robot-chest,
+  html body .v60-face-wrap.is-talking .v60-face-mouth { animation:none !important; }
+}

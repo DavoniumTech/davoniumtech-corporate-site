@@ -1,3 +1,12 @@
+## V62 - Glass Constellation final integration (2026-10-30)
+
+- Transparent section canvases now override the older rotating colour washes across every route; genuine content cards remain individual glass surfaces.
+- Increased visible star density, twinkle brightness, and drift while respecting reduced-motion preferences.
+- Rebalanced the laptop/desktop hero so the heading and approved standing robot occupy the available width. Added subtle floating engineering status labels.
+- Removed the extra glass surface around the DVNM Bot feature text; retained the portrait as a single actual card.
+- Added a stronger speech-activity mouth animation and ensured topic selections on About, Services, Products, Work, Demo Studio and Documentation read the current page.
+- Refreshed the PWA cache for V62.
+
 
 ## V61 — Signal Constellation (2026-10-30)
 - Continuous sparkling starfield, transparent section wrappers and independent glass surfaces across all routes.
@@ -202,3 +211,9 @@ These sample websites are demonstrations, not claims of completed customer engag
 - Standardised complete clickable company footer across all routes.
 - Added persistent standing-robot DVNM Bot head control above WhatsApp, with a speakable guide card.
 - Refined certificate page and high-resolution showcase record; repaired independent flyer download cards.
+
+## V62 - Glass Constellation
+- Standardised clear section canvases and individual translucent glass cards across corporate, documentation, certificate and demo routes.
+- Increased star density, sparkle and drift, and corrected the desktop hero's right-side robot/orbit composition.
+- Added DVNM Bot current-page voice guidance, section links and header voice shortcut; improved speech-linked mouth/chest animation.
+- Rotated the PWA cache and added a Windows PowerShell 5.1 publisher with recovery, status-aware helper checks and an explicit push gate.

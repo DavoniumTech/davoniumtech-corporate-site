@@ -32,19 +32,19 @@
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var count = Math.max(150, Math.min(360, Math.round(width * height / 4700)));
+      var count = Math.max(520, Math.min(1450, Math.round(width * height / 1050)));
       stars = [];
       for (var i = 0; i < count; i++) {
-        stars.push({ x: random() * width, y: random() * height, r: .58 + random() * 1.72,
-          phase: random() * Math.PI * 2, speed: .78 + random() * 2.15,
-          drift: .9 + random() * 4.1, glint: i % 9 === 0 || random() > .935 });
+        stars.push({ x: random() * width, y: random() * height, r: .62 + random() * 1.95,
+          phase: random() * Math.PI * 2, speed: 1.2 + random() * 3.1,
+          drift: 1.5 + random() * 6.8, glint: i % 8 === 0 || random() > .90 });
       }
       draw(0, true);
     }
     function themeColors() {
       return document.documentElement.dataset.theme === 'light'
-        ? { main:'37,129,160', accent:'63,161,198', violet:'111,119,190' }
-        : { main:'194,239,255', accent:'70,222,245', violet:'164,153,255' };
+        ? { main:'25,112,148', accent:'42,155,190', violet:'103,105,178' }
+        : { main:'214,246,255', accent:'82,231,250', violet:'180,167,255' };
     }
     function draw(time, staticFrame) {
       if (!ctx) return;
@@ -53,19 +53,27 @@
       var seconds = (time || 0) * .001;
       for (var i = 0; i < stars.length; i++) {
         var s = stars[i];
-        var twinkle = staticFrame || reduced ? .72 : .43 + (Math.sin(seconds * s.speed + s.phase) + 1) * .285;
+        var twinkle = staticFrame || reduced ? .92 : .12 + (Math.sin(seconds * s.speed + s.phase) + 1) * .44;
         var y = (s.y - (staticFrame || reduced ? 0 : seconds * s.drift)) % height;
+        var x = s.x + (staticFrame || reduced ? 0 : Math.sin(seconds * .18 + s.phase) * 7);
         if (y < 0) y += height;
+        if (x < 0) x += width; else if (x > width) x -= width;
         var rgb = s.glint ? c.accent : (i % 9 === 0 ? c.violet : c.main);
-        var alpha = (s.glint ? .45 : .23) + twinkle * (s.glint ? .48 : .50);
-        ctx.fillStyle = 'rgba(' + rgb + ',' + Math.min(.96, alpha) + ')';
-        ctx.beginPath(); ctx.arc(s.x, y, s.r * (s.glint ? 1.02 : .82), 0, Math.PI * 2); ctx.fill();
+        var alpha = (s.glint ? .43 : .25) + twinkle * (s.glint ? .56 : .68);
+        ctx.shadowBlur = s.glint ? 16 : 6;
+        ctx.shadowColor = 'rgba(' + rgb + ',' + (s.glint ? .78 : .38) + ')';
+        ctx.fillStyle = 'rgba(' + rgb + ',' + Math.min(.98, alpha) + ')';
+        ctx.beginPath(); ctx.arc(x, y, s.r * (s.glint ? 1.08 : .84), 0, Math.PI * 2); ctx.fill();
         if (s.glint) {
-          var reach = s.r * (2.8 + twinkle * 2.5);
-          ctx.strokeStyle = 'rgba(' + rgb + ',' + Math.min(.72, alpha * .7) + ')';
-          ctx.lineWidth = .65;
-          ctx.beginPath(); ctx.moveTo(s.x - reach, y); ctx.lineTo(s.x + reach, y); ctx.moveTo(s.x, y - reach); ctx.lineTo(s.x, y + reach); ctx.stroke();
+          var reach = s.r * (3.0 + twinkle * 3.1);
+          ctx.strokeStyle = 'rgba(' + rgb + ',' + Math.min(.88, alpha * .78) + ')';
+          ctx.lineWidth = .72;
+          ctx.beginPath(); ctx.moveTo(x - reach, y); ctx.lineTo(x + reach, y); ctx.moveTo(x, y - reach); ctx.lineTo(x, y + reach); ctx.stroke();
+          if (twinkle > .78) {
+            ctx.beginPath(); ctx.moveTo(x - reach * .54, y - reach * .54); ctx.lineTo(x + reach * .54, y + reach * .54); ctx.moveTo(x - reach * .54, y + reach * .54); ctx.lineTo(x + reach * .54, y - reach * .54); ctx.stroke();
+          }
         }
+        ctx.shadowBlur = 0;
       }
     }
     function loop(time) {
@@ -117,7 +125,8 @@
     { key:'products', label:'Products', text:'Davonium has three named product initiatives. Ready2Go Learning is an educational and exam-practice product in development. Marvel Chat has an initial build with active development and refinement continuing. Davonium Nexus is a client project and delivery workspace in development. Product status is described honestly on the website.', link:'products' },
     { key:'studio', label:'Five demo experiences', text:'The Davonium Demo Studio contains five independent experiences. DVNM Biz demonstrates a business website. DVNM Market demonstrates digital commerce. DVNM Creative demonstrates a creative portfolio. DVNM Skills demonstrates digital learning. DVNM Digital presents a technology company and connected digital products. Each has its own visual identity and navigation.', link:'demos/' },
     { key:'work', label:'Our work', text:'The Work section documents Davonium product development, design decisions, capabilities and delivery process. It distinguishes real Davonium product work from illustrative demonstrations and does not invent client case studies or testimonials.', link:'work' },
-    { key:'docs', label:'Documentation and support', text:'The documentation library provides guides on products, engineering, accessibility, privacy, performance, browser behaviour, installation and support. The Support page explains how to get help, and the Contact page provides a route to discuss a project.', link:'docs/' }
+    { key:'docs', label:'Documentation and support', text:'The documentation library provides guides on products, engineering, accessibility, privacy, performance, browser behaviour, installation and support. The Support page explains how to get help, and the Contact page provides a route to discuss a project.', link:'docs/' },
+    { key:'contact', label:'Contact and support', text:'You can contact Davonium Technologies at support@davoniumtech.com or call +234 707 260 4426. For WhatsApp enquiries, use the WhatsApp button on the website. The Contact page explains how to share a project brief and start a conversation.', link:'contact' }
   ];
 
   function installBotEnhancements() {

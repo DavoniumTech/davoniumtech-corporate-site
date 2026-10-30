@@ -1,32 +1,37 @@
-# Davonium Technologies — V61 Signal Constellation
+# Davonium Technologies — V62 Glass Constellation
 
-V61 is the final refinement of the existing Davonium multi-page website. It preserves the current public routes, official logo, approved standing DVNM Bot, five demo experiences, product status copy, documentation, footer, PWA, QR assets, certificate and printable flyers.
+V62 is a transparent-section and studio-layout refinement of the existing Davonium multi-page website. It preserves the current routes, official brand mark, standing DVNM Bot, five independent demos, product statuses, documentation, footer, QR assets, certificates, flyers and PWA.
 
-## What changed in V61
+## V62 highlights
 
-- A continuous, denser animated starfield spans all pages and remains visible through transparent section wrappers, cards and a more translucent navigation header.
-- The homepage uses a balanced desktop split composition: the full headline and company statement on the left, the existing DVNM Bot and Davonium D architecture on the right, with a larger orbital scene to use the available laptop width.
-- Dark mode is the first-visit default. The separate porcelain light theme remains available and is remembered after a visitor changes it.
-- Calligraphic display headings use Cormorant Garamond; body copy uses Manrope for legibility. Existing button styling is retained.
-- Cards have independent translucent surfaces; the five demo experiences keep their own identity, page structure and routes, with a clear return-to-Studio link.
-- DVNM Bot includes a topic-based spoken company guide, visible volume control, boundary-driven mouth animation and chest illumination while speaking. Audio only starts after a visitor action.
-- Internal page transitions are short and respect reduced-motion preferences.
-- The service-worker cache is versioned to V61.
+- The QR/share section's clear outer canvas is now the standard throughout the website: section wrappers are transparent and the same starfield remains visible behind About, Services, Products, Work, Contact, Documentation, the certificate and all five demo experiences.
+- Individual useful cards retain a translucent glass finish. Large section slabs, quote bands and CTA bands no longer hide the background.
+- The star canvas is denser and brighter, with more visible twinkle, drift and sparkle glints. It pauses when the document is hidden and respects reduced-motion preferences.
+- The laptop hero uses a wide two-column studio composition, with larger headline copy on the left and the full standing DVNM Bot/architectural stage on the right. Tablet and mobile layouts stack responsively.
+- Dark is the first-visit default; visitors can explicitly switch to the separate light theme.
+- The existing DVNM Bot gains a header audio shortcut, current-page explanation, working topic-to-section links, and more visible mouth/chest animation while speaking. Audio begins only after a visitor action.
+- Existing company navigation and return-to-Studio links remain available on the demo pages.
+- The PWA cache has been rotated to V62.
 
-## Preview locally
+## Local preview
 
-Extract the ZIP and run this from the extracted `davonium_v61` folder in Windows PowerShell 5.1:
+Extract the ZIP, open Windows PowerShell 5.1 in the extracted `davonium_v62` folder, and run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V61.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\PREVIEW-V62.ps1
 ```
 
-The script opens a local static preview. It does not publish or deploy anything.
+Then open `http://localhost:8080/`. The local preview does not publish or deploy the website.
 
-## Publish to GitHub
+## GitHub publishing
 
-Use `PUBLISH-V61.ps1` with the existing clean clone of `DavoniumTech/davoniumtech-corporate-site`. The publisher fetches `origin/main`, creates a local backup branch, copies the website while excluding local publishing helpers and private files, prepares one commit, checks that the remote parent has not moved, and requires the exact word `PUSH` before uploading. It never force-pushes and never deploys the production website.
+Use `PUBLISH-V62.ps1` with the existing clean clone of `DavoniumTech/davoniumtech-corporate-site`. The publisher fetches `origin/main`, creates a local backup, copies the website while excluding local tools and private files, checks staged additions/modifications (safe helper deletions are allowed), prepares one commit, checks that the remote parent has not moved and requires the exact word `PUSH` before uploading. If a previous V61 attempt left uncommitted changes, the script backs up a patch and any untracked files and asks for `BACKUP-AND-RESET` before resetting the interrupted working tree. It never force-pushes and never deploys production.
 
 ## Verification status
 
-See `V61-QA-REPORT.json`. Static route/reference checks, CSS parsing, JavaScript syntax checks, local HTTP smoke tests and ZIP CRC verification are recorded there. Real browser screenshots, physical-device checks and Lighthouse/Web Vitals were not completed in the packaging environment; they are not claimed as passed.
+See `V62-QA-REPORT.json`. Static route/reference checks, CSS parsing, JavaScript syntax checks, local HTTP smoke tests and ZIP CRC verification are recorded there. Real browser screenshots, physical-device tests and Lighthouse/Web Vitals are not claimed as passed.
+
+
+## V62 visual system
+
+V62 applies the QR/share section transparency model throughout the site: section canvases stay clear, genuine content cards receive individual glass surfaces, and the shared animated starfield remains visible behind the page. The homepage uses a balanced wide desktop hero with the approved standing DVNM Bot artwork. The Bot topic controls now read the actual page when the selected company topic matches the current route.
