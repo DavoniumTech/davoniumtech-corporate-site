@@ -109,7 +109,7 @@ id_rsa
 id_ed25519
 directory.md
 
-# V59 local and private files
+# V60 local and private files
 directory.md
 .env
 .env.*
@@ -130,4 +130,4 @@ id_ed25519
 PUBLISH-*.ps1
 PUBLISH-*.txt
 PREVIEW-*.ps1
-preview-v59-server.cjs
+preview-v60-server.cjs

@@ -167,6 +167,7 @@
     }
     function stop(message) {
       if (synth) { try { synth.cancel(); } catch (_) {} }
+      if (window.DVNMV60Talk) window.DVNMV60Talk(false);
       speaking = false;
       button.textContent = '▶ Hear DVNM Bot introduction';
       button.setAttribute('aria-pressed', 'false');
@@ -188,7 +189,10 @@
         utterance.rate = .96;
         utterance.pitch = 1.02;
         utterance.volume = 1;
-        utterance.onstart = function () { speaking = true; button.textContent = '■ Stop speaking'; button.setAttribute('aria-pressed', 'true'); status.textContent = 'DVNM Bot is speaking. Select Stop speaking at any time.'; };
+        utterance.onstart = function () { speaking = true; if (window.DVNMV60Talk) window.DVNMV60Talk(true); button.textContent = '■ Stop speaking'; button.setAttribute('aria-pressed', 'true'); status.textContent = 'DVNM Bot is speaking. Select Stop speaking at any time.'; };
+        utterance.onboundary = function (event) { if (window.DVNMV60Talk) window.DVNMV60Talk(true, Math.max(120, Math.min(280, ((event && event.charLength) || 3) * 34))); };
+        utterance.onpause = function () { if (window.DVNMV60Talk) window.DVNMV60Talk(false); };
+        utterance.onresume = function () { if (window.DVNMV60Talk) window.DVNMV60Talk(true); };
         utterance.onend = function () { stop('Introduction complete. The written information and links remain available.'); };
         utterance.onerror = function (event) {
           var reason = event && event.error ? String(event.error) : 'unavailable';

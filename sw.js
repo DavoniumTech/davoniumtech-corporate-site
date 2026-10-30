@@ -1,8 +1,10 @@
-/* Davonium Technologies PWA service worker — V59 dark-first final finish. */
-const CACHE_NAME = 'davonium-site-v59-dark-first-final-finish-20261030';
+/* Davonium Technologies PWA service worker - V60 precision experience. */
+const CACHE_NAME = 'davonium-site-v60-precision-experience-20261030-r1';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
+  routeUrl("assets/css/davonium-v60-precision.css?v=60"),
+  routeUrl("assets/js/davonium-v60-experience.js?v=60"),
   routeUrl("assets/css/davonium-v59-finish.css?v=59"),
   routeUrl("assets/js/davonium-v59-experience.js?v=59"),
   routeUrl("assets/images/v59-starfield.svg"),
@@ -121,7 +123,7 @@ const CORE = [
   routeUrl("docs/media/Davonium-DVNM-Showcase-Certificate.pdf"),
   routeUrl("demos/demos.css?v=56"),
   routeUrl("demos/demos.js?v=56"),
-  routeUrl("assets/js/site.js?v=57"),
+  routeUrl("assets/js/site.js?v=60"),
   routeUrl("assets/js/certificate-print.js?v=56"),
   routeUrl("assets/images/demo-art/dvnm-biz.svg"),
   routeUrl("assets/images/demo-art/dvnm-growth.svg"),

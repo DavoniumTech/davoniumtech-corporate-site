@@ -1,3 +1,5 @@
+# Davonium Technologies — V60 Precision Experience
+
 # Davonium Technologies - V59 Final Signal Finish
 
 V59 is the final polish pass over the existing Davonium multi-page website. It preserves the existing public routes, products, documentation, Demo Studio experiences, PWA support, flyers and certificate workflows while applying a consistent dark-first identity and a complete company footer across every HTML page.
@@ -36,3 +38,8 @@ A copy-paste Windows PowerShell command is included in this conversation's relea
 ## Verification and limitations
 
 See `V59-QA-REPORT.json`. Static source and archive checks passed. Real browser visual checks, physical Android/iPhone checks, Web Vitals/Lighthouse and production deployment were not completed in this environment. Speech synthesis also depends on voices exposed by each visitor's browser/device.
+
+
+## Current release: V60 Precision Experience
+
+See `V60-RELEASE-NOTES.md`, `V60-QA-REPORT.json`, and `DESIGN-DIRECTION-V60.md`. The guarded Windows publisher is `PUBLISH-V60.ps1`; it reuses an existing clean clone and requires a typed `PUSH` before updating `origin/main`.

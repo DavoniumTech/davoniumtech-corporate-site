@@ -1,3 +1,13 @@
+## 2026-10-30 — V60 Precision Experience
+
+- Improved responsive mobile navigation and touch target layering.
+- Rebalanced desktop hero and placed the audience strip across the full hero width.
+- Retained dark-first default with a separate high-contrast light theme.
+- Added editorial heading typography and preserved button styling.
+- Synced the existing DVNM Bot mouth overlay to browser speech word-boundary events; chest illumination follows active speech.
+- Strengthened persistent starfield visibility, floating status motion and shared page surfaces.
+- Added a guarded PowerShell 5.1 publishing script.
+
 ## V58 — 30 October 2026 — Signal Experience
 
 - Extended the star-sky background behind every route and content section, with translucent section cards and light/dark treatment.

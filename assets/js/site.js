@@ -34,6 +34,7 @@
     }
   };
   renderTheme();
+  if (theme) theme.dataset.v60ThemeBound = 'true';
   if (theme) theme.addEventListener('click', () => {
     document.documentElement.classList.add('theme-transition');
     window.setTimeout(() => document.documentElement.classList.remove('theme-transition'), 360);
@@ -59,6 +60,7 @@
     menu.textContent = '☰';
   };
   if (menu && nav) {
+    menu.dataset.v60MenuBound = 'true';
     menu.addEventListener('click', (event) => {
       event.stopPropagation();
       const open = nav.classList.toggle('open');
