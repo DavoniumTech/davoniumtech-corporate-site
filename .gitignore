@@ -79,8 +79,8 @@ V49-QA-REPORT.json
 V49-RELEASE-NOTES.md
 MASTER-PROMPT-COVERAGE.md
 
-# Local-only V56 release and preview helpers
-DEPLOY-*.ps1
-DEPLOY-*.cmd
-PREVIEW-*.ps1
-preview-*-server.*
+# V57 local-only preview/publish helpers
+PUBLISH-V57.ps1
+PREVIEW-V57.ps1
+PUBLISH-V57-ONE-COMMAND.txt
+preview-v57-server.cjs

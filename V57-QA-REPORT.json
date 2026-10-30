@@ -1,0 +1,148 @@
+{
+  "release": "Davonium Technologies V57 \u2014 Signal Studio",
+  "prepared_date": "2026-10-30",
+  "source": "V56 Signal Architecture project, refined with user-requested V57 changes",
+  "project_inventory": {
+    "regular_files": 258,
+    "html_routes": 73,
+    "extensionless_legacy_html_copy": true,
+    "css_files": 17,
+    "javascript_files": 24,
+    "photographic_webp_assets": 8,
+    "a4_flyer_pdfs": 5,
+    "flyer_jpg_previews": 5
+  },
+  "checks": {
+    "local_html_resource_and_navigation_references": {
+      "checked": 3826,
+      "missing": 0
+    },
+    "duplicate_html_ids": {
+      "found": 0
+    },
+    "same_page_anchor_targets": {
+      "unresolved": 0
+    },
+    "css_parse": {
+      "files": 17,
+      "errors": 0
+    },
+    "javascript_syntax": {
+      "files": 24,
+      "errors": 0
+    },
+    "json_and_webmanifest": {
+      "errors": 0
+    },
+    "xml": {
+      "errors": 0
+    },
+    "qr_codes": {
+      "verified": 5,
+      "all_destinations_match": true,
+      "destinations": {
+        "biz": "https://www.davoniumtech.com/demos/business",
+        "market": "https://www.davoniumtech.com/demos/shop",
+        "creative": "https://www.davoniumtech.com/demos/portfolio",
+        "skills": "https://www.davoniumtech.com/demos/learning",
+        "digital": "https://www.davoniumtech.com/demos/technology"
+      }
+    },
+    "print_flyers": {
+      "pdf_count": 5,
+      "all_one_page_a4": true,
+      "format": "A4 portrait, 200-DPI JPG preview plus PDF"
+    },
+    "local_preview_http_smoke_test": {
+      "results": [
+        [
+          "/",
+          200,
+          "text/html; charset=utf-8"
+        ],
+        [
+          "/index.html",
+          200,
+          "text/html; charset=utf-8"
+        ],
+        [
+          "/assets/css/davonium-v57-system.css?v=57",
+          200,
+          "text/css; charset=utf-8"
+        ],
+        [
+          "/assets/images/dvnm-bot-head-match-v57.webp",
+          200,
+          "image/webp"
+        ],
+        [
+          "/assets/images/photography/creative-studio.webp",
+          200,
+          "image/webp"
+        ],
+        [
+          "/assets/images/flyers/dvnm-digital-print-flyer.pdf",
+          200,
+          "application/pdf"
+        ],
+        [
+          "/demos/technology.html",
+          200,
+          "text/html; charset=utf-8"
+        ],
+        [
+          "/does-not-exist",
+          404,
+          "expected 404"
+        ]
+      ],
+      "all_expected": true
+    },
+    "feature_source_checks": {
+      "all_html_link_v57_css": true,
+      "home_hero_has_full_headline": true,
+      "no_floating_robot_launcher_markup": true,
+      "site_js_launcher_creation_disabled": true,
+      "home_uses_matching_robot_head_crop": true,
+      "work_uses_approved_standing_artwork": true,
+      "five_demo_pages_have_photo_story": true,
+      "demo_headers_share_v57_header": true,
+      "five_flyer_pdf_files": true,
+      "five_flyer_jpg_files": true,
+      "five_qr_codes_verified": true,
+      "no_private_or_directory_files": true
+    },
+    "private_file_scan": {
+      "files_found": []
+    }
+  },
+  "not_tested": [
+    "Real desktop/phone browser screenshot and interaction pass; this environment did not provide a dependable interactive browser rendering session.",
+    "Physical Android/iOS device testing.",
+    "Lighthouse, PageSpeed and Core Web Vitals on representative devices.",
+    "Production host deployment and Cloudflare Pages deployment result.",
+    "GitHub push of V57; this release package includes a guarded PowerShell publisher and requires user approval."
+  ],
+  "truthfulness_notes": [
+    "The new photoreal visual assets are AI-generated creative imagery, not documentary photographs of Davonium customers, premises, or live product screens.",
+    "The five demo websites remain sample demonstrations; existing form/cart/payment limitations remain accurately represented.",
+    "The DVNM Bot head image is cropped from the approved full-body artwork. The full-body image remains artwork, not a newly rigged full-body real-time character model.",
+    "The floating DVNM Bot launcher and first-visit robot popup have been disabled; WhatsApp is the only floating contact shortcut.",
+    "No live production deployment is claimed."
+  ],
+  "deployment": {
+    "script": "PUBLISH-V57.ps1",
+    "target_repository": "https://github.com/DavoniumTech/davoniumtech-corporate-site.git",
+    "target_branch": "main",
+    "existing_clone_reused": true,
+    "backup_branch_created_locally": true,
+    "push_requires_exact_input": "PUSH",
+    "automatic_host_deploy": false
+  },
+  "delivery": {
+    "project_root_inside_archive": "davonium_v57/",
+    "archive": "Davonium-Technologies-V57-Signal-Studio.zip",
+    "regular_files_in_archive": 258,
+    "archive_members_including_directories": 278
+  }
+}

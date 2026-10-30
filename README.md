@@ -1,3 +1,7 @@
+# Davonium Technologies — V57 Signal Studio
+
+V57 extends the V56 Signal Architecture with a site-wide star-sky atmosphere, photo-led services and product illustrations, five independent photographic demo experiences, a consistent icon-only sticky header, a single WhatsApp floating contact action, a matched DVNM Bot portrait crop, and five A4 QR flyers. See `V57-RELEASE-NOTES.md` and `V57-QA-REPORT.json`.
+
 # Davonium Technologies — V56 Signal Architecture
 
 V56 is a V55-based visual and experience refinement. It preserves the existing multi-page website, five core demos, product statuses, documentation library, PWA, support and legal routes, certificate experiences, and approved Davonium brand assets.
