@@ -120,7 +120,7 @@
   }
 
   var TOPICS = [
-    { key:'company', label:'About Davonium', text:'Davonium Technologies designs and engineers useful digital products and services. The company focuses on websites, web applications, mobile experiences, software systems, product engineering and connected technology. The goal is clear digital experiences, dependable delivery and long-term value.', link:'about' },
+    { key:'company', label:'About Davonium', text:'DAVONIUM stands for Digital Access, Venture Operations, Networking, Innovation, Unity and Marketing. Davonium Technologies is an independent technology company that designs and engineers useful digital products and services.  The company focuses on websites, web applications, mobile experiences, software systems, product engineering and connected technology. The goal is clear digital experiences, dependable delivery and long-term value.', link:'about' },
     { key:'services', label:'Services', text:'Our services cover corporate websites and web applications, mobile applications, custom software and business systems, product engineering, user interface and experience design, cloud services, integrations, reporting, progressive web apps and technical documentation.', link:'services' },
     { key:'products', label:'Products', text:'Davonium has three named product initiatives. Ready2Go Learning is an educational and exam-practice product in development. Marvel Chat has an initial build with active development and refinement continuing. Davonium Nexus is a client project and delivery workspace in development. Product status is described honestly on the website.', link:'products' },
     { key:'studio', label:'Five demo experiences', text:'The Davonium Demo Studio contains five independent experiences. DVNM Biz demonstrates a business website. DVNM Market demonstrates digital commerce. DVNM Creative demonstrates a creative portfolio. DVNM Skills demonstrates digital learning. DVNM Digital presents a technology company and connected digital products. Each has its own visual identity and navigation.', link:'demos/' },
@@ -172,22 +172,25 @@
     var boundarySeen = false;
     var activeTopic = null;
     var speechVersion = 0;
-    var baseIntro = 'Welcome to Davonium Technologies. Digital products, engineered for impact. We design and build websites, mobile applications, software products and useful digital systems for organisations that value clear design, dependable engineering and lasting digital value. Choose a topic to learn about our company, services, products, five demo experiences, our work or documentation and support.';
+    var baseIntro = 'Welcome to Davonium Technologies. DAVONIUM stands for Digital Access, Venture Operations, Networking, Innovation, Unity and Marketing. Digital products, engineered for impact. We design and build websites, mobile applications, software products and useful digital systems for organisations that value clear design, dependable engineering and lasting digital value. Choose a topic to learn about our company, services, products, five independent demo experiences, our work or documentation and support.';
 
     function talkState(active) {
       isSpeaking = !!active;
       dock.classList.toggle('is-speaking', isSpeaking);
+      document.documentElement.classList.toggle('v65-dvnm-speaking', isSpeaking);
+      window.dispatchEvent(new CustomEvent('dvnm:robot-speaking', { detail: { active: isSpeaking } }));
       if (window.DVNMV60Talk) window.DVNMV60Talk(isSpeaking);
       Array.prototype.forEach.call(dock.querySelectorAll('.v60-face-wrap'), function (face) { face.classList.toggle('is-talking', isSpeaking); });
     }
     function pulseMouth(duration) {
       duration = Math.max(100, Math.min(320, duration || 175));
-      var nodes = document.querySelectorAll('.v60-robot-mouth,.v60-face-mouth');
+      var nodes = document.querySelectorAll('.v60-robot-mouth,.v60-face-mouth,.v65-bot-mouth');
       Array.prototype.forEach.call(nodes, function (mouth) {
         mouth.classList.add('is-open');
         if (mouth.__v61PulseTimer) window.clearTimeout(mouth.__v61PulseTimer);
         mouth.__v61PulseTimer = window.setTimeout(function () { mouth.classList.remove('is-open'); }, duration);
       });
+      window.dispatchEvent(new CustomEvent('dvnm:v65-mouth-pulse'));
       Array.prototype.forEach.call(dock.querySelectorAll('.v60-face-wrap'), function (face) { face.classList.add('is-talking'); });
     }
     function clearTimers() {

@@ -1,0 +1,319 @@
+/* DAVONIUM V65 — Company & Demo Studio Edition.
+   Full-page constellation ambience, transparent section canvas, rounded glass cards,
+   large desktop Bot composition, social footer and five product identities. */
+:root {
+  --v65-night:#030b16; --v65-panel:rgba(5,18,32,.48); --v65-border:rgba(112,223,241,.26);
+  --v65-text:#f1f8fc; --v65-muted:#b8cbd7; --v65-radius:26px;
+}
+html[data-theme="dark"] { color-scheme:dark; --v65-page:#030b16; --v65-text:#f1f8fc; --v65-muted:#b8cbd7; --v65-panel:rgba(5,18,32,.46); --v65-border:rgba(112,223,241,.26); }
+html[data-theme="light"] { color-scheme:light; --v65-page:#f4f9fc; --v65-text:#102b3d; --v65-muted:#4d687b; --v65-panel:rgba(255,255,255,.68); --v65-border:rgba(23,126,157,.25); }
+html,body { min-height:100%; }
+body { background:transparent !important; color:var(--v65-text) !important; overflow-x:clip; }
+#v61-star-canvas { position:fixed !important; inset:0 !important; z-index:0 !important; pointer-events:none !important; opacity:1 !important; }
+body > header.head, body > main, body > footer, body > .v59-bot-dock, body > .wa-float { position:relative; z-index:2; }
+body > .v59-bot-dock, body > .wa-float { position:fixed !important; }
+/* The QR section is the benchmark: no opaque colour slabs on ordinary sections. */
+html body main > section, html body main section.section, html body main .section,
+html body main .section.tint, html body main .section.tinted, html body main .demo-section,
+html body main .v57-demo-photo-story, html body main .services-preview,
+html body main .v56-process, html body main .pagehero, html body main .demo-hero,
+html body main .dvnm-demo-qr, html body main .dvnm-qr-grid {
+  background:transparent !important; background-color:transparent !important; background-image:none !important;
+  box-shadow:none !important;
+}
+html body main > section::before, html body main > section::after,
+html body main .section::before, html body main .section::after,
+html body main .demo-section::before, html body main .demo-section::after { background:transparent !important; opacity:0 !important; }
+/* Clear section headings and prose so the animated sky is visible around them. */
+html body main .section-head, html body main .section-heading, html body main .section-intro,
+html body main .split, html body main .prose, html body main .v57-demo-photo-story-inner,
+html body main .demo-hero-grid, html body main .dvnm-qr-copy, html body main .pagehero > .wrap {
+  background:transparent !important; box-shadow:none !important; border-color:transparent !important;
+}
+/* Real content cards use translucent glass; all corners are rounded, never sharp. */
+html body main .card, html body main article.card, html body main .product-card,
+html body main .service-card, html body main .demo-card, html body main .docs-card,
+html body main .doc-card, html body main .guide-card, html body main .feature-card,
+html body main .feature-panel, html body main .quote, html body main .band,
+html body main .notice, html body main .steps .step, html body main .timeline li,
+html body main .v65-letter-card, html body main .principles span,
+html body main .dvnm-qr-card, html body main .dvnm-demo-qr-card,
+html body main .demo-hero-art, html body main .dvnm-demo-feature-art-wrap {
+  border-radius:var(--v65-radius) !important;
+  border:1px solid var(--v65-border) !important;
+  background:var(--v65-panel) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(150%) !important;
+  backdrop-filter:blur(18px) saturate(150%) !important;
+  box-shadow:0 16px 44px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+html[data-theme="light"] body main .card, html[data-theme="light"] body main article.card,
+html[data-theme="light"] body main .product-card, html[data-theme="light"] body main .service-card,
+html[data-theme="light"] body main .demo-card, html[data-theme="light"] body main .docs-card,
+html[data-theme="light"] body main .doc-card, html[data-theme="light"] body main .guide-card,
+html[data-theme="light"] body main .feature-card, html[data-theme="light"] body main .feature-panel,
+html[data-theme="light"] body main .quote, html[data-theme="light"] body main .band,
+html[data-theme="light"] body main .notice, html[data-theme="light"] body main .steps .step,
+html[data-theme="light"] body main .timeline li, html[data-theme="light"] body main .v65-letter-card,
+html[data-theme="light"] body main .principles span, html[data-theme="light"] body main .dvnm-qr-card,
+html[data-theme="light"] body main .dvnm-demo-qr-card, html[data-theme="light"] body main .demo-hero-art,
+html[data-theme="light"] body main .dvnm-demo-feature-art-wrap {
+  background:rgba(255,255,255,.69) !important; border-color:rgba(23,126,157,.22) !important;
+  box-shadow:0 16px 40px rgba(26,74,98,.07),inset 0 1px 0 rgba(255,255,255,.7) !important;
+}
+html body main .card:hover, html body main .product-card:hover, html body main .demo-card:hover,
+html body main .service-card:hover { transform:translateY(-3px); border-color:rgba(70,222,238,.48) !important; }
+html body main h1, html body main h2, html body main h3 { text-wrap:balance; }
+html body main p, html body main li, html body main label { color:var(--v65-muted); }
+html body main .btn, html body main button, html body header .btn { border-radius:999px !important; }
+/* Corporate header and footer remain opaque for strong legibility. */
+html body > header.head, html body header.head, html body .head.v57-header {
+  position:sticky !important; top:0 !important; z-index:30000 !important; isolation:isolate !important;
+  background:#030a14 !important; background-color:#030a14 !important; background-image:none !important;
+  border-bottom:1px solid rgba(105,218,238,.22) !important; box-shadow:0 8px 26px rgba(0,0,0,.25) !important;
+  -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+}
+html[data-theme="light"] body > header.head, html[data-theme="light"] body header.head { background:#f8fcff !important; color:#102b3d !important; border-bottom-color:rgba(23,126,157,.2) !important; }
+html body footer.v59-footer, html body .v59-footer, html body footer.demo-foot, html body footer.foot {
+  position:relative !important; z-index:4 !important; background:#020811 !important; background-color:#020811 !important;
+  background-image:none !important; border:1px solid rgba(105,218,238,.2) !important; border-top:1px solid rgba(105,218,238,.3) !important;
+  border-radius:26px 26px 0 0 !important; color:#edf7fc !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+}
+html[data-theme="light"] body footer.v59-footer, html[data-theme="light"] body .v59-footer,
+html[data-theme="light"] body footer.demo-foot, html[data-theme="light"] body footer.foot {
+  background:#f8fcff !important; background-color:#f8fcff !important; color:#102b3d !important;
+  border-color:rgba(23,126,157,.22) !important;
+}
+html[data-theme="light"] body .v59-footer-brand > p, html[data-theme="light"] body .v59-footer-column a,
+html[data-theme="light"] body .v59-footer-bottom { color:#435f71 !important; }
+html[data-theme="light"] body .v59-footer-column h2, html[data-theme="light"] body .v59-footer-brand-name strong { color:#102b3d !important; }
+.v65-footer-socials { min-width:0; padding:8px 6px; }
+.v65-footer-socials h2 { margin:0 0 14px; color:#e7f5fb; font:800 .78rem/1.2 Manrope,system-ui,sans-serif; letter-spacing:.14em; text-transform:uppercase; }
+html[data-theme="light"] .v65-footer-socials h2 { color:#102b3d; }
+.v65-social-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+.v65-social-link { display:flex; align-items:center; gap:9px; min-height:42px; padding:8px 10px; border:1px solid rgba(124,219,238,.22); border-radius:14px; color:#d9eaf1 !important; text-decoration:none !important; background:rgba(255,255,255,.035); font:650 .76rem/1.25 Manrope,system-ui,sans-serif; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+.v65-social-link:hover { transform:translateY(-2px); border-color:rgba(0,221,235,.55); background:rgba(0,221,235,.08); }
+.v65-social-link svg { display:block; width:21px; height:21px; flex:0 0 21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.v65-social-link:first-child svg { fill:currentColor; stroke:none; }
+.v65-social-link:nth-child(3) svg .facebook-mark { fill:currentColor; stroke:none; }
+.v65-social-link:nth-child(4) svg { color:#f5d25d; }
+html[data-theme="light"] .v65-social-link { color:#17394e !important; border-color:rgba(23,126,157,.2); background:rgba(255,255,255,.75); }
+@media(max-width:800px) { .v65-footer-socials { grid-column:1/-1; } .v65-social-row { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+/* Main company hero: left editorial message, right large standing DVNM Bot. */
+@media(min-width:1101px) {
+  html body main > .hero { min-height:0 !important; padding:clamp(44px,5vw,78px) 0 46px !important; overflow:visible !important; background:transparent !important; }
+  html body main > .hero > .wrap { width:min(calc(100% - 76px),1580px) !important; max-width:1580px !important; margin-inline:auto !important; }
+  html body main > .hero .hero-grid { display:grid !important; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr) !important; gap:clamp(26px,3.2vw,58px) !important; align-items:center !important; width:100% !important; max-width:none !important; }
+  html body main > .hero .hero-grid > div:first-child { max-width:690px !important; margin:0 !important; text-align:left !important; }
+  html body main > .hero h1 { max-width:12.5ch !important; font-size:clamp(3.65rem,5.2vw,6rem) !important; line-height:.92 !important; letter-spacing:-.045em !important; text-align:left !important; margin:20px 0 20px !important; }
+  html body main > .hero .lead { max-width:47ch !important; text-align:left !important; font-size:clamp(1rem,1.2vw,1.22rem) !important; line-height:1.72 !important; }
+  html body main > .hero .cta { justify-content:flex-start !important; }
+  html body main > .hero .small-note { text-align:left !important; }
+  html body main > .hero .art.v56-robot-stage { display:block !important; position:relative !important; width:100% !important; max-width:none !important; min-width:0 !important; height:clamp(620px,51vw,770px) !important; min-height:620px !important; margin:0 !important; overflow:visible !important; background:transparent !important; box-shadow:none !important; border:0 !important; }
+  html body main > .hero .v65-hero-character { position:absolute !important; display:block !important; left:54% !important; bottom:0 !important; height:98% !important; width:auto !important; aspect-ratio:2/3 !important; max-width:72% !important; transform:translateX(-50%) !important; z-index:5 !important; animation:v65-bot-float 7s ease-in-out infinite !important; }
+  html body main > .hero .v65-hero-character > img { display:block !important; width:100% !important; height:100% !important; max-width:none !important; max-height:none !important; object-fit:contain !important; object-position:center bottom !important; position:relative !important; left:auto !important; bottom:auto !important; transform:none !important; filter:none !important; box-shadow:none !important; }
+  html body main > .hero .v56-portal { left:54% !important; top:3% !important; width:min(72%,640px) !important; height:88% !important; }
+  html body main > .hero .v56-portal-line { left:54% !important; width:82% !important; }
+  html body main > .hero .v56-stage-chip { right:2% !important; left:auto !important; top:14% !important; }
+  html body main > .hero .v56-stage-note { left:15% !important; bottom:5% !important; }
+}
+@media(min-width:1101px) and (max-width:1280px) {
+  html body main > .hero .hero-grid { grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr) !important; gap:18px !important; }
+  html body main > .hero h1 { font-size:clamp(3.35rem,4.6vw,4.5rem) !important; }
+  html body main > .hero .art.v56-robot-stage { height:620px !important; min-height:620px !important; }
+}
+@media(max-width:1100px) {
+  html body main > .hero { padding:34px 0 24px !important; }
+  html body main > .hero > .wrap { width:min(calc(100% - 32px),900px) !important; }
+  html body main > .hero .hero-grid { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:12px !important; text-align:center !important; }
+  html body main > .hero .hero-grid > div:first-child { max-width:820px !important; margin-inline:auto !important; text-align:center !important; }
+  html body main > .hero h1 { max-width:13ch !important; margin:18px auto !important; text-align:center !important; font-size:clamp(3.2rem,8vw,5.8rem) !important; line-height:.94 !important; }
+  html body main > .hero .lead { margin-inline:auto !important; text-align:center !important; }
+  html body main > .hero .cta { justify-content:center !important; }
+  html body main > .hero .small-note { margin-inline:auto !important; text-align:center !important; }
+  html body main > .hero .art.v56-robot-stage { height:clamp(430px,68vw,620px) !important; min-height:430px !important; max-width:780px !important; margin:0 auto !important; }
+  html body main > .hero .v65-hero-character { position:absolute !important; left:50% !important; bottom:0 !important; height:98% !important; aspect-ratio:2/3 !important; width:auto !important; max-width:78% !important; transform:translateX(-50%) !important; }
+  html body main > .hero .v65-hero-character > img { width:100% !important; height:100% !important; object-fit:contain !important; }
+  html body main > .hero .v56-portal, html body main > .hero .v56-portal-line { left:50% !important; }
+}
+@media(max-width:600px) {
+  html body main > .hero > .wrap { width:calc(100% - 24px) !important; }
+  html body main > .hero h1 { font-size:clamp(2.75rem,11vw,4.1rem) !important; line-height:.96 !important; }
+  html body main > .hero .art.v56-robot-stage { height:clamp(350px,105vw,460px) !important; min-height:350px !important; }
+  html body main > .hero .v65-hero-character { height:96% !important; max-width:88% !important; }
+}
+/* Mouth overlay exactly follows the approved DVNM Bot face; speech-boundary events pulse it. */
+.v65-hero-character { pointer-events:none; user-select:none; }
+.v65-bot-mouth { position:absolute; z-index:8; display:block; pointer-events:none; width:11%; height:3.6%; left:55%; top:19.4%; transform:translate(-50%,-50%); filter:drop-shadow(0 0 5px rgba(0,231,255,.95)); }
+.v65-bot-mouth svg { display:block; width:100%; height:100%; overflow:visible; }
+.v65-bot-mouth path,.v65-bot-mouth ellipse { fill:none; stroke:#42f4ff; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
+.v65-bot-mouth .mouth-open { opacity:0; transform-origin:50% 50%; }
+.v65-bot-mouth.is-open .mouth-closed { opacity:0; }
+.v65-bot-mouth.is-open .mouth-open { opacity:1; animation:v65-mouth-open .17s ease-out both; }
+.v65-chest-glow { position:absolute; z-index:7; left:50%; top:39%; width:34%; height:13%; transform:translate(-50%,-50%); border-radius:50%; opacity:0; background:radial-gradient(ellipse,rgba(0,235,255,.38),transparent 68%); filter:blur(7px); mix-blend-mode:screen; pointer-events:none; }
+.v65-hero-character.is-speaking .v65-chest-glow { opacity:1; animation:v65-chest-pulse .5s ease-in-out infinite alternate; }
+.v59-bot-dock .v65-bot-avatar { position:relative; display:block; width:100%; height:100%; overflow:visible; }
+.v59-bot-dock .v65-bot-avatar img { display:block; width:100%; height:100%; object-fit:contain; }
+.v59-bot-dock .v65-avatar-mouth { width:17%; height:5%; left:50%; top:55.5%; }
+.v59-bot-dock.is-speaking .v65-bot-avatar { animation:v65-avatar-speaking .7s ease-in-out infinite alternate; }
+.v59-bot-card-head .v65-bot-avatar { width:54px; height:54px; flex:0 0 54px; }
+.v59-bot-card-head .v65-avatar-mouth { width:17%; height:5%; }
+/* Footer social icons are integrated into existing company footer, not event materials. */
+.v65-footer-socials { margin-left:auto; }
+/* About: DAVONIUM meaning panel and eight rounded letter modules. */
+.v65-brand-origin { padding:clamp(44px,6vw,88px) 0 !important; }
+.v65-brand-origin-wrap { width:min(calc(100% - 42px),1320px); margin-inline:auto; }
+.v65-brand-origin-intro { max-width:880px; margin:0 0 28px; }
+.v65-brand-origin-intro h2 { max-width:18ch; margin:12px 0; font-size:clamp(2.2rem,4.2vw,4.2rem); line-height:.98; letter-spacing:-.04em; }
+.v65-letter-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+.v65-letter-card { min-width:0; padding:22px; border-radius:23px; }
+.v65-letter-card strong { display:grid; place-items:center; width:46px; height:46px; border-radius:14px; margin-bottom:14px; color:#03111d; background:linear-gradient(135deg,#21e7ed,#72a9ff); font:800 1.35rem/1 Manrope,system-ui,sans-serif; }
+.v65-letter-card h3 { margin:0 0 8px; font:800 1rem/1.25 Manrope,system-ui,sans-serif; color:var(--v65-text); }
+.v65-letter-card p { margin:0; font-size:.88rem; line-height:1.55; }
+@media(max-width:760px) { .v65-letter-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .v65-letter-card { padding:16px; } }
+@media(max-width:360px) { .v65-letter-grid { grid-template-columns:1fr; } }
+/* Five independent demo product identities: individual colors, atmospheres and interface accents. */
+.demo-page { --v65-demo-accent:#43d9ef; --v65-demo-accent2:#6d8bff; --v65-demo-bg:#071624; }
+.demo-page .v65-demo-scene { position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; opacity:.9; }
+.demo-page .v65-demo-scene::before { content:""; position:absolute; width:66vw; height:66vw; max-width:900px; max-height:900px; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 30%,transparent); border-radius:50%; left:58%; top:20%; transform:translate(-50%,-50%) rotateX(68deg); box-shadow:0 0 90px color-mix(in srgb,var(--v65-demo-accent) 10%,transparent),inset 0 0 60px color-mix(in srgb,var(--v65-demo-accent) 7%,transparent); animation:v65-demo-orbit 32s linear infinite; }
+.demo-page .v65-demo-scene::after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 78% 14%,color-mix(in srgb,var(--v65-demo-accent) 15%,transparent),transparent 42%),radial-gradient(ellipse at 16% 75%,color-mix(in srgb,var(--v65-demo-accent2) 12%,transparent),transparent 44%); animation:v65-demo-glow 12s ease-in-out infinite alternate; }
+.demo-page main,.demo-page > footer { z-index:2; position:relative; }
+.demo-page .demo-hero { background:transparent !important; padding-block:clamp(46px,6vw,90px) !important; }
+.demo-page .demo-hero-grid { width:min(calc(100% - 52px),1440px) !important; margin-inline:auto !important; grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; gap:clamp(24px,4vw,68px) !important; }
+.demo-page .demo-hero h1 { max-width:13ch; color:var(--v65-text) !important; font-size:clamp(2.7rem,5.2vw,5.5rem) !important; line-height:.98 !important; letter-spacing:-.045em !important; }
+.demo-page .demo-hero p { color:var(--v65-muted) !important; font-size:1.04rem !important; line-height:1.72 !important; max-width:58ch; }
+.demo-page .demo-eyebrow { color:var(--v65-demo-accent) !important; letter-spacing:.15em !important; }
+.demo-page .demo-gradient-type { background:linear-gradient(125deg,var(--v65-demo-accent),var(--v65-demo-accent2)); -webkit-background-clip:text; background-clip:text; color:transparent !important; }
+.demo-page .demo-hero-art { background:var(--v65-panel) !important; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 38%,transparent) !important; border-radius:30px !important; box-shadow:0 24px 70px rgba(0,0,0,.20),0 0 42px color-mix(in srgb,var(--v65-demo-accent) 9%,transparent) !important; overflow:hidden !important; }
+.demo-page .demo-hero-art img { display:block; border-radius:inherit; }
+.demo-page .demo-section, .demo-page .v57-demo-photo-story { padding-block:clamp(38px,5vw,72px) !important; }
+.demo-page .demo-section h2,.demo-page .v57-demo-photo-story h2 { color:var(--v65-text) !important; font-size:clamp(2rem,3.8vw,3.5rem) !important; letter-spacing:-.035em !important; }
+.demo-page .demo-muted,.demo-page .demo-section p { color:var(--v65-muted) !important; }
+.demo-page .demo-card { border-radius:24px !important; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 30%,transparent) !important; background:color-mix(in srgb,var(--v65-demo-bg) 64%,transparent) !important; -webkit-backdrop-filter:blur(18px) saturate(145%) !important; backdrop-filter:blur(18px) saturate(145%) !important; }
+.demo-page .demo-pill { border-radius:999px !important; border-color:color-mix(in srgb,var(--v65-demo-accent) 45%,transparent) !important; }
+.demo-page .dvnm-demo-qr { background:transparent !important; }
+.demo-page .dvnm-demo-qr-card { border-radius:28px !important; background:var(--v65-panel) !important; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 36%,transparent) !important; }
+.demo-page .dvnm-demo-pagination,.demo-page .dvnm-demo-step,.demo-page .dvnm-demo-all { border-radius:22px !important; }
+/* Product-specific accent and atmosphere */
+body[data-v65-demo="biz"] { --v65-demo-accent:#36d9ee; --v65-demo-accent2:#4b83ff; --v65-demo-bg:#071c2b; }
+body[data-v65-demo="market"] { --v65-demo-accent:#66e2a2; --v65-demo-accent2:#d7be69; --v65-demo-bg:#071e19; }
+body[data-v65-demo="creative"] { --v65-demo-accent:#c8a0ff; --v65-demo-accent2:#ff83c9; --v65-demo-bg:#1a1028; }
+body[data-v65-demo="skills"] { --v65-demo-accent:#7ce7a8; --v65-demo-accent2:#62d7d1; --v65-demo-bg:#071e1b; }
+body[data-v65-demo="digital"] { --v65-demo-accent:#70a9ff; --v65-demo-accent2:#efc778; --v65-demo-bg:#091329; }
+body[data-v65-demo="market"] .demo-page .demo-card { border-radius:18px !important; }
+body[data-v65-demo="creative"] .demo-hero-art { transform:rotate(-1deg); }
+body[data-v65-demo="skills"] .demo-card { border-radius:28px 12px 28px 12px !important; }
+body[data-v65-demo="digital"] .demo-hero-art { border-radius:38px !important; }
+/* Standalone demo header: dark solid surface, product name, responsive menu. */
+html body .v65-demo-header { z-index:30000 !important; background:#020913 !important; border-bottom:1px solid color-mix(in srgb,var(--v65-demo-accent) 35%,transparent) !important; }
+html[data-theme="light"] body .v65-demo-header { background:#f8fcff !important; }
+.v65-demo-nav { width:min(calc(100% - 34px),1480px) !important; min-height:72px !important; gap:clamp(9px,1.7vw,24px) !important; }
+.v65-demo-brand { display:flex !important; align-items:center !important; gap:10px !important; text-decoration:none !important; }
+.v65-demo-brand img { width:42px !important; height:42px !important; object-fit:contain; }
+.v65-demo-brand-copy { display:flex; flex-direction:column; gap:2px; }
+.v65-demo-brand-copy strong { color:#f2f8fc; font:850 .95rem/1 Manrope,system-ui,sans-serif; letter-spacing:.08em; }
+.v65-demo-brand-copy small { color:#9db7c6; font:.63rem/1.3 Manrope,system-ui,sans-serif; }
+html[data-theme="light"] .v65-demo-brand-copy strong { color:#102b3d; }
+html[data-theme="light"] .v65-demo-brand-copy small { color:#5d7483; }
+.v65-demo-links { display:flex; align-items:center; gap:clamp(10px,1.3vw,20px) !important; }
+.v65-demo-links a { color:#dcebf2 !important; font-size:.76rem !important; font-weight:750 !important; }
+html[data-theme="light"] .v65-demo-links a { color:#173b50 !important; }
+.v65-demo-links .v65-demo-studio-back { color:var(--v65-demo-accent) !important; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 42%,transparent); border-radius:999px; padding:9px 13px; }
+.v65-demo-actions { display:flex; align-items:center; gap:8px !important; }
+.v65-demo-actions .v65-demo-cta { white-space:nowrap; background:linear-gradient(110deg,var(--v65-demo-accent),var(--v65-demo-accent2)) !important; color:#04131d !important; }
+@media(max-width:1120px) {
+ .v65-demo-nav { position:relative !important; }
+ .v65-demo-nav #primary-nav.links:not(.open) { display:none !important; }
+ .v65-demo-nav #primary-nav.links.open { position:absolute !important; top:calc(100% + 8px) !important; right:0 !important; left:auto !important; display:flex !important; flex-direction:column !important; align-items:stretch !important; width:min(430px,calc(100vw - 24px)) !important; max-height:78dvh !important; overflow:auto !important; padding:12px !important; border:1px solid color-mix(in srgb,var(--v65-demo-accent) 42%,transparent) !important; border-radius:20px !important; background:#020913 !important; box-shadow:0 20px 64px rgba(0,0,0,.48) !important; }
+ html[data-theme="light"] .v65-demo-nav #primary-nav.links.open { background:#f8fcff !important; }
+ .v65-demo-nav #primary-nav.links.open a { display:flex !important; min-height:46px !important; padding:12px !important; white-space:normal !important; }
+ .v65-demo-nav #menu-toggle { display:inline-grid !important; place-items:center !important; min-width:46px !important; min-height:46px !important; }
+ .v65-demo-nav .v65-demo-cta { display:none !important; }
+}
+@media(max-width:820px) { .demo-page .demo-hero-grid { grid-template-columns:minmax(0,1fr) !important; width:min(calc(100% - 30px),760px) !important; } .demo-page .demo-hero-art { min-height:260px !important; } }
+@media(max-width:600px) { .v65-demo-brand-copy small { display:none; } .v65-demo-nav { min-height:64px !important; width:calc(100% - 20px) !important; } .v65-demo-brand img { width:36px !important; height:36px !important; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+@keyframes v65-bot-float { 0%,100%{transform:translate(-50%,0)} 50%{transform:translate(-50%,-10px)} }
+@keyframes v65-mouth-open { from{transform:scaleY(.55)} to{transform:scaleY(1.1)} }
+@keyframes v65-chest-pulse { from{opacity:.4;transform:translate(-50%,-50%) scale(.92)} to{opacity:1;transform:translate(-50%,-50%) scale(1.13)} }
+@keyframes v65-avatar-speaking { from{transform:translateY(0)} to{transform:translateY(-1.5px)} }
+@keyframes v65-demo-orbit { from{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(0)} to{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(360deg)} }
+@keyframes v65-demo-glow { from{opacity:.55;filter:saturate(.9)} to{opacity:1;filter:saturate(1.25)} }
+
+
+/* V65.1 finishing layer: keep the company footer fully legible with the Connect column. */
+html body footer.v59-footer .v59-footer-shell {
+  grid-template-columns:minmax(220px,1.55fr) repeat(4,minmax(110px,1fr)) !important;
+  gap:clamp(16px,2.1vw,32px) !important;
+}
+@media(max-width:1120px) {
+  html body footer.v59-footer .v59-footer-shell { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  html body footer.v59-footer .v59-footer-brand { grid-column:1/-1 !important; }
+}
+@media(max-width:560px) {
+  html body footer.v59-footer .v59-footer-shell { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:22px 14px !important; }
+}
+
+/* Add a visible atmospheric layer to each standalone demo without obscuring copy. */
+.demo-page .v65-demo-scene { display:block; z-index:0 !important; opacity:1 !important; }
+.demo-page > header, .demo-page > main, .demo-page > footer,
+.demo-page > .v59-bot-dock, .demo-page > .wa-float { position:relative; z-index:3; }
+.demo-page > .v65-demo-scene { position:fixed; z-index:0; }
+.demo-page .v65-demo-scene::before { opacity:.68; }
+.demo-page .v65-demo-scene::after { opacity:.78; }
+.demo-page .demo-hero-grid > :first-child { align-self:center; }
+.demo-page .demo-hero-grid > :last-child { align-self:center; min-width:0; }
+.demo-page .dvnm-demo-qr-copy .btn, .demo-page .dvnm-demo-qr-copy a.btn { border-radius:999px !important; }
+
+/* Main hero: the full-size approved Bot occupies the right-side stage on wide screens. */
+@media(min-width:1101px) {
+  html body main > .hero .hero-grid { grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr) !important; }
+  html body main > .hero .art.v56-robot-stage { min-height:650px !important; height:clamp(650px,54vw,820px) !important; }
+  html body main > .hero .v65-hero-character { left:52% !important; height:100% !important; max-width:78% !important; }
+}
+
+/* More responsive, frame-synchronised mouth motion on the existing DVNM Bot avatar. */
+.v65-bot-mouth.is-open .mouth-open { opacity:1 !important; animation:v65-mouth-open .17s ease-out both; }
+.v65-bot-mouth.is-open .mouth-closed { opacity:0 !important; }
+.v59-bot-dock.is-speaking .v65-avatar-mouth { filter:drop-shadow(0 0 10px rgba(0,235,255,1)); }
+.v59-bot-dock.is-speaking .v65-avatar-mouth .mouth-open { opacity:1 !important; }
+.v59-bot-dock.is-speaking .v65-avatar-mouth .mouth-closed { opacity:0 !important; }
+.v65-hero-character.is-speaking .v65-hero-mouth .mouth-open { opacity:1 !important; }
+.v65-hero-character.is-speaking .v65-hero-mouth .mouth-closed { opacity:0 !important; }
+@media(prefers-reduced-motion:reduce) {
+ .demo-page .v65-demo-scene::before,.demo-page .v65-demo-scene::after { animation:none !important; }
+}
+
+/* A content statement is typography over the constellation, not another opaque panel. */
+html body main .quote, html body main .band {
+  background:transparent !important;
+  background-color:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  padding-inline:0 !important;
+}
+html body main .quote blockquote { max-width:26ch; margin-inline:0; }
+html body main .band { display:flex; align-items:center; gap:28px; }
+@media(max-width:760px) { html body main .band { align-items:flex-start; flex-direction:column; } }
+
+/* Product-specific demo ambience, not a copied corporate hero template. */
+body[data-v65-demo="biz"] .v65-demo-scene::before { border-style:solid; animation-duration:38s; }
+body[data-v65-demo="market"] .v65-demo-scene::before { border-style:dashed; border-width:2px; width:54vw; height:54vw; animation-duration:24s; }
+body[data-v65-demo="creative"] .v65-demo-scene::before { border-radius:42% 58% 52% 48%; border-width:2px; width:72vw; height:52vw; animation-duration:48s; }
+body[data-v65-demo="skills"] .v65-demo-scene::before { border-style:dotted; border-width:2px; width:48vw; height:48vw; animation-duration:30s; }
+body[data-v65-demo="digital"] .v65-demo-scene::before { border-width:2px; width:80vw; height:80vw; animation-direction:reverse; animation-duration:58s; }
+
+
+/* Consistent rounded geometry for all real surfaces, forms and demo artwork. */
+html body main .dvnm-demo-preview, html body main .v57-demo-photo,
+html body main .dvnm-head-feature-card, html body main .demo-hero-art,
+html body main form, html body main details, html body main fieldset,
+html body main .dvnm-qr-card, html body main .dvnm-demo-qr-card {
+  border-radius:26px !important; overflow:hidden;
+}
+html body input, html body select, html body textarea {
+  border-radius:14px !important; max-width:100%;
+}
+html body main figure img { border-radius:inherit; }

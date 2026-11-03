@@ -1,5 +1,5 @@
-/* Davonium Technologies PWA service worker - V63 studio finish. */
-const CACHE_NAME = 'davonium-site-v63-studio-20261030';
+/* Davonium Technologies PWA service worker - V65 company and Demo Studio. */
+const CACHE_NAME = 'davonium-site-v65-company-studio-20261103';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -10,8 +10,10 @@ const CORE = [
   routeUrl("assets/css/dvnm-bot.css?v=56"),
   routeUrl("assets/css/davonium-v62-glass-constellation.css?v=62"),
   routeUrl("assets/css/davonium-v63-studio-finish.css?v=63"),
+  routeUrl("assets/css/davonium-v65-company-studio.css?v=65"),
   routeUrl("assets/js/site.js?v=60"),
   routeUrl("assets/js/davonium-v62-experience.js?v=62"),
+  routeUrl("assets/js/davonium-v65-company-studio.js?v=65"),
   routeUrl("assets/images/davonium-d-icon.webp"),
   routeUrl("assets/images/dvnm-bot-cutout.webp")
 ];

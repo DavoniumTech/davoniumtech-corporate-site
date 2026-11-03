@@ -75,7 +75,7 @@
     if (document.querySelector('.wa-float')) return;
     var a = document.createElement('a');
     a.className = 'wa-float';
-    a.href = 'https://wa.me/2348032076924?text=Hello%20Davonium%20Technologies';
+    a.href = 'https://wa.me/2347072604426?text=Hello%20Davonium%20Technologies';
     a.target = '_blank'; a.rel = 'noopener noreferrer';
     a.title = 'Chat with Davonium Technologies on WhatsApp';
     a.setAttribute('aria-label', 'Chat with Davonium Technologies on WhatsApp');
