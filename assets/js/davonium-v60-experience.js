@@ -303,13 +303,13 @@
         var yFactor = pos.indexOf('top') >= 0 ? 0 : (pos.indexOf('bottom') >= 0 ? 1 : .5);
         var offX = (r.width - drawW) * xFactor; var offY = (r.height - drawH) * yFactor;
         var relLeft = r.left - p.left + offX; var relTop = r.top - p.top + offY;
-        var faceX = isHead ? .505 : .555; var faceY = isHead ? .55 : .205;
-        var mouthW = drawW * (isHead ? .15 : .095); var mouthH = Math.max(4, drawH * (isHead ? .035 : .016));
+        var faceX = isHead ? .505 : .512; var faceY = isHead ? .55 : .201;
+        var mouthW = drawW * (isHead ? .15 : .078); var mouthH = Math.max(4, drawH * (isHead ? .035 : .0125));
         mouth.style.left = (relLeft + drawW * faceX) + 'px';
         mouth.style.top = (relTop + drawH * faceY) + 'px';
         mouth.style.setProperty('--v60-mouth-width', mouthW + 'px');
         mouth.style.setProperty('--v60-mouth-height', mouthH + 'px');
-        mouth.style.setProperty('--v60-mouth-open', Math.max(8, mouthH * 1.7) + 'px');
+        mouth.style.setProperty('--v60-mouth-open', Math.max(7, mouthH * 1.55) + 'px');
         if (chest) {
           var chestX = relLeft + drawW * .555; var chestY = relTop + drawH * .355;
           chest.style.left = chestX + 'px'; chest.style.top = chestY + 'px';

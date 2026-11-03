@@ -1,0 +1,399 @@
+/* DAVONIUM TECHNOLOGIES V64 — executive refinement layer */
+:root { --v64-radius: 26px; --v64-radius-lg: 34px; --v64-soft-shadow: 0 18px 48px rgba(0,0,0,.13); }
+html { scroll-behavior: smooth; }
+img, video, canvas { max-width: 100%; }
+
+/* Rounded, deliberate geometry across the company site. */
+html body .card, html body .product-card, html body .quote, html body .band,
+html body .dvnm-qr-card, html body .dvnm-head-feature-card,
+html body .v56-process-grid article, html body .v58-service-gallery,
+html body .guide-card, html body .doc-card, html body .docs-card,
+html body .v59-bot-card, html body .install .panel,
+html body .section .split, html body .v64-identity-card {
+  border-radius: var(--v64-radius) !important;
+}
+html body .card, html body .product-card, html body .v56-process-grid article,
+html body .dvnm-qr-card, html body .dvnm-head-feature-card,
+html body .guide-card, html body .doc-card, html body .docs-card { overflow: hidden; }
+html body .btn, html body button.btn, html body .more { border-radius: 999px !important; }
+html body .section, html body .pagehero, html body .hero { scroll-margin-top: 90px; }
+
+/* Higher-contrast body copy; keep gradients and brand accents intact. */
+html[data-theme="dark"] body .section p,
+html[data-theme="dark"] body .pagehero p,
+html[data-theme="dark"] body .lead,
+html[data-theme="dark"] body .muted,
+html[data-theme="dark"] body .small-note,
+html[data-theme="dark"] body .v59-footer-brand > p,
+html[data-theme="dark"] body .v59-footer-contact a { color: #c4d4e1 !important; }
+html[data-theme="dark"] body .section h2,
+html[data-theme="dark"] body .section h3,
+html[data-theme="dark"] body .pagehero h1 { color: #f3f8fc !important; }
+html[data-theme="light"] body .section p,
+html[data-theme="light"] body .pagehero p,
+html[data-theme="light"] body .lead,
+html[data-theme="light"] body .muted { color: #40596b !important; }
+html[data-theme="light"] body .section h2,
+html[data-theme="light"] body .section h3,
+html[data-theme="light"] body .pagehero h1 { color: #102b3d !important; }
+html body a:focus-visible, html body button:focus-visible, html body input:focus-visible,
+html body select:focus-visible, html body textarea:focus-visible { outline: 3px solid #22cce0 !important; outline-offset: 3px !important; }
+
+/* Homepage: the copy has a defined column and DVNM Bot owns the right-hand field. */
+html body.home-page .hero,
+html body.v54-home .hero { display: block !important; min-height: min(91vh, 900px) !important; padding: clamp(42px, 6vh, 78px) 0 44px !important; }
+html body.v54-home .hero > .wrap,
+html body.home-page .hero > .wrap { display: block !important; width: min(calc(100% - 64px), 1500px) !important; max-width: 1500px !important; margin-inline: auto !important; }
+html body.v54-home .hero .hero-grid,
+html body.home-page .hero .hero-grid {
+  display: grid !important; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr) !important;
+  align-items: center !important; gap: clamp(24px, 3vw, 52px) !important; width: 100% !important;
+}
+html body.v54-home .hero .hero-grid > div:first-child,
+html body.home-page .hero .hero-grid > div:first-child { max-width: 660px !important; min-width: 0 !important; text-align: left !important; }
+html body.v54-home .hero h1,
+html body.home-page .hero h1 { max-width: 13ch !important; margin: 16px 0 22px !important; font-size: clamp(3.5rem, 5.5vw, 6.35rem) !important; line-height: .96 !important; letter-spacing: -.075em !important; }
+html body.v54-home .hero .lead,
+html body.home-page .hero .lead { max-width: 47ch !important; font-size: clamp(1rem, 1.18vw, 1.17rem) !important; line-height: 1.72 !important; }
+html body.v54-home .hero .cta,
+html body.home-page .hero .cta { justify-content: flex-start !important; }
+html body.v54-home .hero .small-note,
+html body.home-page .hero .small-note { text-align: left !important; }
+html body.v54-home .hero .art.v56-robot-stage,
+html body.home-page .hero .art.v56-robot-stage {
+  position: relative !important; display: block !important; width: 100% !important; max-width: none !important;
+  min-width: 0 !important; height: clamp(560px, 52vw, 790px) !important; min-height: 560px !important;
+  margin: 0 !important; overflow: visible !important; isolation: isolate !important;
+}
+html body.v54-home .hero .v55-robot-fullbody,
+html body.home-page .hero .v55-robot-fullbody {
+  position: absolute !important; left: 61% !important; bottom: 0 !important; height: 100% !important;
+  width: auto !important; max-height: 790px !important; max-width: 90% !important;
+  object-fit: contain !important; object-position: center bottom !important; transform: translateX(-50%) !important;
+  filter: drop-shadow(0 24px 42px rgba(0,195,229,.24)) !important; z-index: 4 !important;
+}
+html body.v54-home .hero .v56-portal,
+html body.home-page .hero .v56-portal { left: 61% !important; width: min(78%, 680px) !important; }
+html body.v54-home .hero .v56-portal-line,
+html body.home-page .hero .v56-portal-line { left: 61% !important; width: 86% !important; }
+html body.v54-home .hero .v56-stage-chip,
+html body.home-page .hero .v56-stage-chip { right: 2% !important; top: 7% !important; }
+html body.v54-home .hero .v56-stage-note,
+html body.home-page .hero .v56-stage-note { left: 43% !important; bottom: 2% !important; max-width: 290px !important; }
+html body.v54-home .hero .v62-hero-status.one,
+html body.home-page .hero .v62-hero-status.one { left: 4% !important; top: 20% !important; }
+html body.v54-home .hero .v62-hero-status.two,
+html body.home-page .hero .v62-hero-status.two { right: 0 !important; top: 42% !important; }
+html body.v54-home .hero .v62-hero-status.three,
+html body.home-page .hero .v62-hero-status.three { right: 3% !important; bottom: 15% !important; }
+html body.v54-home .hero .principles,
+html body.home-page .hero .principles { width: 100% !important; margin: 18px auto 0 !important; }
+
+/* Refined speaking mouth: V60 attaches this at the robot's measured face position. */
+.v60-robot-mouth { border-radius: 50% !important; transition: height .08s ease, opacity .08s ease !important; }
+.v60-robot-image-host.is-speaking .v60-robot-mouth { animation: v64-bot-mouth 155ms ease-in-out infinite alternate !important; }
+.v60-robot-image-host.is-speaking .v60-robot-chest { animation: v64-bot-chest 780ms ease-in-out infinite alternate !important; }
+@keyframes v64-bot-mouth { from { transform: translate(-50%,-50%) scaleY(.36); } to { transform: translate(-50%,-50%) scaleY(1.52); } }
+@keyframes v64-bot-chest { from { opacity: .42; scale: .84; } to { opacity: .96; scale: 1.2; } }
+
+/* QR: keep the download action clear and the card fully rounded. */
+html body .dvnm-qr-grid { align-items: center !important; gap: clamp(28px, 5vw, 72px) !important; }
+html body .dvnm-qr-copy .cta { display: flex !important; flex-wrap: wrap !important; gap: 12px !important; }
+html body .dvnm-qr-card { width: min(100%, 420px) !important; padding: 24px !important; border: 1px solid rgba(95,197,220,.25) !important; background: rgba(255,255,255,.98) !important; }
+html body .dvnm-qr-card img { display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 1 !important; border-radius: 18px !important; }
+
+/* Footer: clean corporate grid with icon-only Connect links. */
+html body .v59-footer { border-radius: 30px 30px 0 0 !important; }
+html body .v59-footer-shell { display: grid !important; grid-template-columns: minmax(230px,1.4fr) repeat(3,minmax(125px,.7fr)) minmax(130px,.65fr) !important; gap: clamp(18px, 2.5vw, 38px) !important; align-items: start !important; }
+.v64-footer-connect h2 { margin: 0 0 16px !important; color: inherit !important; font-size: .9rem !important; letter-spacing: .08em !important; text-transform: uppercase !important; }
+.v64-social-icons { display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 10px !important; }
+.v64-social-icons a { display: grid !important; place-items: center !important; width: 42px !important; height: 42px !important; border: 1px solid rgba(107,205,223,.30) !important; border-radius: 15px !important; color: #d8f6ff !important; background: rgba(255,255,255,.07) !important; transition: transform .2s ease, background .2s ease, border-color .2s ease !important; }
+.v64-social-icons a:hover { transform: translateY(-3px) !important; border-color: rgba(66,220,239,.8) !important; background: rgba(23,179,202,.16) !important; }
+.v64-social-icons svg { display: block !important; width: 22px !important; height: 22px !important; }
+html[data-theme="light"] .v64-social-icons a { color: #123348 !important; background: #f3f8fb !important; border-color: #cfdee7 !important; }
+.v59-footer-bottom { gap: 14px !important; flex-wrap: wrap !important; }
+
+/* About identity card. */
+.v64-identity-card { margin: 22px 0 28px !important; padding: clamp(22px,3vw,34px) !important; border: 1px solid rgba(32,195,214,.3) !important; background: linear-gradient(140deg,rgba(7,37,54,.98),rgba(11,77,93,.92)) !important; color: #f2fbff !important; }
+.v64-identity-card h2 { margin: 8px 0 10px !important; color: #fff !important; }
+.v64-identity-card p { margin: 0 !important; color: #d4eaf1 !important; }
+.v64-identity-card .eye { color: #6debf0 !important; }
+
+/* Independent demo environments: each is a complete, separate design language. */
+html body.demo-page { --demo-radius: 26px; --demo-card-radius: 24px; }
+html body.demo-page .head { position: sticky !important; top: 0 !important; z-index: 30000 !important; backdrop-filter: blur(16px) !important; }
+html body.demo-page .v64-demo-exit { display: inline-flex !important; align-items: center !important; justify-content: center !important; min-height: 40px !important; padding: 0 14px !important; border: 1px solid currentColor !important; border-radius: 999px !important; color: inherit !important; font-size: .78rem !important; font-weight: 850 !important; text-decoration: none !important; white-space: nowrap !important; }
+html body.demo-page .demo-hero { overflow: hidden !important; border-radius: 0 0 34px 34px !important; }
+html body.demo-page .demo-card, html body.demo-page .demo-panel, html body.demo-page .tech-product,
+html body.demo-page .community-event, html body.demo-page .demo-cart-summary,
+html body.demo-page .dvnm-demo-qr, html body.demo-page .v57-demo-photo { border-radius: var(--demo-card-radius) !important; }
+html body.demo-page .demo-section { padding-block: clamp(48px,6.2vw,88px) !important; }
+html body.demo-page .demo-section h2 { line-height: 1.08 !important; }
+html body.demo-page .demo-card p, html body.demo-page .demo-muted { line-height: 1.75 !important; }
+html body.demo-page .demo-hero-art, html body.demo-page .tech-orbit-card { border-radius: 30px !important; }
+
+/* DVNM Biz — ivory, deep navy and restrained brass. */
+html body.demo-biz { --demo-ink:#16263c; --demo-muted:#53657a; --demo-line:#d9e0e8; --demo-paper:#fff; --demo-accent:#a97b2d; --demo-glow:#f3ead8; background:#f4f6f8 !important; color:#16263c !important; }
+html body.demo-biz .demo-hero { color:#fff !important; background:radial-gradient(circle at 86% 20%,rgba(199,157,84,.30),transparent 30%),linear-gradient(132deg,#09182b,#1b3452 68%,#31475c) !important; }
+html body.demo-biz .demo-hero h1, html body.demo-biz .demo-hero h2 { color:#fff !important; }
+html body.demo-biz .demo-hero p { color:#dbe4ed !important; }
+html body.demo-biz .demo-eyebrow { color:#e8c27d !important; }
+html body.demo-biz .demo-section { background:#f4f6f8 !important; color:#16263c !important; }
+html body.demo-biz .demo-section.soft { background:#e9edf1 !important; }
+html body.demo-biz .demo-card { background:#fff !important; border:1px solid #d9e0e8 !important; box-shadow:0 15px 35px rgba(18,39,62,.07) !important; }
+html body.demo-biz .demo-card h3, html body.demo-biz .demo-section h2 { color:#16263c !important; }
+html body.demo-biz .demo-card p, html body.demo-biz .demo-muted { color:#53657a !important; }
+html body.demo-biz .demo-pill { color:#6d4b16 !important; background:#f3ead8 !important; }
+
+/* DVNM Market — warm product canvas, forest green and persimmon. */
+html body.demo-market { --demo-ink:#1c2b25; --demo-muted:#59685f; --demo-line:#d8e2d9; --demo-paper:#fffdf8; --demo-accent:#d65b32; --demo-glow:#e7f0e6; background:#f6f5ef !important; color:#1c2b25 !important; }
+html body.demo-market .demo-hero { color:#fff !important; background:radial-gradient(circle at 80% 24%,rgba(240,155,89,.28),transparent 30%),linear-gradient(135deg,#102e26,#205442 64%,#526f4b) !important; }
+html body.demo-market .demo-hero h1, html body.demo-market .demo-hero h2 { color:#fff !important; }
+html body.demo-market .demo-hero p { color:#e4eee6 !important; }
+html body.demo-market .demo-eyebrow { color:#ffd1aa !important; }
+html body.demo-market .demo-section { background:#f6f5ef !important; color:#1c2b25 !important; }
+html body.demo-market .demo-section.soft { background:#e9efe6 !important; }
+html body.demo-market .demo-card, html body.demo-market .demo-panel { background:#fffdf8 !important; border:1px solid #d8e2d9 !important; }
+html body.demo-market .demo-card h3, html body.demo-market .demo-section h2 { color:#1c2b25 !important; }
+html body.demo-market .demo-card p, html body.demo-market .demo-muted { color:#59685f !important; }
+html body.demo-market .demo-icon { color:#fff !important; background:#24634b !important; }
+html body.demo-market .demo-pill { color:#81331e !important; background:#ffe2d3 !important; }
+
+/* DVNM Creative — editorial charcoal, ink and electric coral. */
+html body.demo-creative { --demo-ink:#f7eef2; --demo-muted:#d0c0ca; --demo-line:rgba(255,255,255,.16); --demo-paper:#211b27; --demo-accent:#ff6c92; --demo-glow:#382638; background:#17141d !important; color:#f7eef2 !important; }
+html body.demo-creative .demo-hero { color:#fff !important; background:radial-gradient(circle at 79% 25%,rgba(255,99,151,.24),transparent 30%),linear-gradient(135deg,#17141d,#28202f 62%,#4b2539) !important; }
+html body.demo-creative .demo-hero h1, html body.demo-creative .demo-hero h2 { color:#fff !important; }
+html body.demo-creative .demo-hero p { color:#e0d2db !important; }
+html body.demo-creative .demo-eyebrow { color:#ff91b0 !important; }
+html body.demo-creative .demo-section { background:#17141d !important; color:#f7eef2 !important; }
+html body.demo-creative .demo-section.soft { background:#211b27 !important; }
+html body.demo-creative .demo-card, html body.demo-creative .demo-panel { background:#28212e !important; border:1px solid rgba(255,255,255,.15) !important; box-shadow:0 20px 50px rgba(0,0,0,.22) !important; }
+html body.demo-creative .demo-card h3, html body.demo-creative .demo-section h2 { color:#fff !important; }
+html body.demo-creative .demo-card p, html body.demo-creative .demo-muted { color:#d0c0ca !important; }
+html body.demo-creative .demo-icon { color:#fff !important; background:linear-gradient(135deg,#e85c89,#8c4fd5) !important; }
+html body.demo-creative .demo-pill { color:#ffd6e3 !important; background:#493043 !important; }
+
+/* DVNM Skills — bright learning environment, blue, mint and citrus. */
+html body.demo-skills { --demo-ink:#142b3d; --demo-muted:#516a78; --demo-line:#d4e3df; --demo-paper:#fff; --demo-accent:#087d75; --demo-glow:#e0f3e9; background:#f1f8f5 !important; color:#142b3d !important; }
+html body.demo-skills .demo-hero { color:#fff !important; background:radial-gradient(circle at 80% 20%,rgba(203,255,121,.22),transparent 30%),linear-gradient(135deg,#092f40,#096d72 65%,#4d9d7c) !important; }
+html body.demo-skills .demo-hero h1, html body.demo-skills .demo-hero h2 { color:#fff !important; }
+html body.demo-skills .demo-hero p { color:#e0f4f2 !important; }
+html body.demo-skills .demo-eyebrow { color:#d3ff91 !important; }
+html body.demo-skills .demo-section { background:#f1f8f5 !important; color:#142b3d !important; }
+html body.demo-skills .demo-section.soft { background:#e3f2eb !important; }
+html body.demo-skills .demo-card, html body.demo-skills .demo-panel { background:#fff !important; border:1px solid #d4e3df !important; box-shadow:0 14px 35px rgba(14,75,72,.07) !important; }
+html body.demo-skills .demo-card h3, html body.demo-skills .demo-section h2 { color:#142b3d !important; }
+html body.demo-skills .demo-card p, html body.demo-skills .demo-muted { color:#516a78 !important; }
+html body.demo-skills .demo-icon { color:#fff !important; background:#087d75 !important; }
+html body.demo-skills .demo-pill { color:#235b37 !important; background:#e1f4c9 !important; }
+
+/* DVNM Digital — premium midnight technology with cyan and ultraviolet. */
+html body.demo-digital { --demo-ink:#eaf7ff; --demo-muted:#b7d0e1; --demo-line:rgba(112,218,240,.19); --demo-paper:#0b1b2b; --demo-accent:#39d8ed; --demo-glow:#142f49; background:#06111d !important; color:#eaf7ff !important; }
+html body.demo-digital .demo-hero { color:#fff !important; background:radial-gradient(circle at 82% 22%,rgba(49,208,243,.22),transparent 30%),radial-gradient(circle at 18% 80%,rgba(123,86,255,.16),transparent 34%),linear-gradient(135deg,#050d18,#0b1e33 60%,#132d49) !important; }
+html body.demo-digital .demo-hero h1, html body.demo-digital .demo-hero h2 { color:#fff !important; }
+html body.demo-digital .demo-hero p { color:#c7dce9 !important; }
+html body.demo-digital .demo-eyebrow { color:#6feaff !important; }
+html body.demo-digital .demo-section { background:#06111d !important; color:#eaf7ff !important; }
+html body.demo-digital .demo-section.soft { background:#0b1b2b !important; }
+html body.demo-digital .demo-card, html body.demo-digital .demo-panel,
+html body.demo-digital .tech-product, html body.demo-digital .tech-contact {
+  background:linear-gradient(145deg,#10263a,#0c1b2d) !important; border:1px solid rgba(112,218,240,.20) !important; box-shadow:0 18px 45px rgba(0,0,0,.24) !important;
+}
+html body.demo-digital .demo-card h3, html body.demo-digital .demo-section h2,
+html body.demo-digital .tech-product h3, html body.demo-digital .tech-contact h2 { color:#f2fbff !important; }
+html body.demo-digital .demo-card p, html body.demo-digital .demo-muted,
+html body.demo-digital .tech-product p { color:#b7d0e1 !important; }
+html body.demo-digital .demo-icon { color:#001723 !important; background:linear-gradient(135deg,#7af3f0,#69b9ff) !important; }
+html body.demo-digital .demo-pill { color:#b7f8ff !important; background:#153b55 !important; }
+
+/* Header exit route and mobile layouts: navigation never depends on reaching the footer. */
+@media (min-width: 851px) {
+  html body.demo-page .head .links { gap: clamp(10px,1.5vw,22px) !important; }
+}
+@media (max-width: 1120px) {
+  html body.v54-home .hero .hero-grid, html body.home-page .hero .hero-grid { grid-template-columns: minmax(0,1fr) !important; gap: 12px !important; }
+  html body.v54-home .hero .hero-grid > div:first-child, html body.home-page .hero .hero-grid > div:first-child { margin-inline: auto !important; text-align: center !important; }
+  html body.v54-home .hero .eye, html body.home-page .hero .eye { margin-inline: auto !important; }
+  html body.v54-home .hero h1, html body.home-page .hero h1 { text-align: center !important; margin-inline: auto !important; font-size: clamp(3.15rem,7vw,5.25rem) !important; }
+  html body.v54-home .hero .lead, html body.home-page .hero .lead { margin-inline: auto !important; text-align: center !important; }
+  html body.v54-home .hero .cta, html body.home-page .hero .cta { justify-content: center !important; }
+  html body.v54-home .hero .small-note, html body.home-page .hero .small-note { text-align: center !important; }
+  html body.v54-home .hero .art.v56-robot-stage, html body.home-page .hero .art.v56-robot-stage { height: clamp(450px,66vw,650px) !important; min-height: 450px !important; max-width: 760px !important; margin-inline: auto !important; }
+  html body.v54-home .hero .v55-robot-fullbody, html body.home-page .hero .v55-robot-fullbody { left: 50% !important; height: 100% !important; max-height: 650px !important; }
+  html body.v54-home .hero .v56-portal, html body.home-page .hero .v56-portal,
+  html body.v54-home .hero .v56-portal-line, html body.home-page .hero .v56-portal-line { left: 50% !important; }
+  html body .v59-footer-shell { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media (max-width: 700px) {
+  html body.v54-home .hero > .wrap, html body.home-page .hero > .wrap { width: min(calc(100% - 34px), 620px) !important; }
+  html body.v54-home .hero, html body.home-page .hero { min-height: auto !important; padding: 34px 0 28px !important; }
+  html body.v54-home .hero h1, html body.home-page .hero h1 { font-size: clamp(2.7rem,11vw,4rem) !important; line-height: .98 !important; }
+  html body.v54-home .hero .art.v56-robot-stage, html body.home-page .hero .art.v56-robot-stage { height: clamp(350px,100vw,500px) !important; min-height: 350px !important; }
+  html body.v54-home .hero .v55-robot-fullbody, html body.home-page .hero .v55-robot-fullbody { height: 100% !important; max-height: 500px !important; max-width: 95% !important; }
+  html body.v54-home .hero .v56-stage-note, html body.home-page .hero .v56-stage-note { left: 50% !important; bottom: 1% !important; transform: translateX(-50%) !important; width: min(84%,300px) !important; }
+  html body .v59-footer-shell { grid-template-columns: minmax(0,1fr) !important; gap: 22px !important; }
+  html body .v64-footer-connect { grid-column: auto !important; }
+  html body.demo-page .v64-demo-exit { min-height: 36px !important; padding-inline: 10px !important; font-size: .7rem !important; }
+  html body.demo-page .head .actions { gap: 7px !important; }
+  html body.demo-page .demo-hero { border-radius: 0 0 24px 24px !important; }
+  html body.demo-page .demo-hero-grid { grid-template-columns: minmax(0,1fr) !important; }
+  html body.demo-page .demo-cards, html body.demo-page .tech-product-grid { grid-template-columns: minmax(0,1fr) !important; }
+  html body.demo-page .demo-section { padding-block: 44px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html body *, html body *::before, html body *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Desktop bot controls: keep the range track inside the card and prevent the
+   volume percentage from pushing the control beyond the card edge. */
+html body .v59-bot-card .v61-bot-audio {
+  display: grid !important;
+  grid-template-columns: 25px minmax(0,1fr) 38px !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+html body .v59-bot-card .v61-bot-audio input[type="range"] {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: 22px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+html body .v59-bot-card .v61-bot-audio output {
+  display: block !important;
+  min-width: 38px !important;
+  width: 38px !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+html body .v59-bot-card,
+html body .v59-bot-card * { box-sizing: border-box; }
+
+/* Preserve each demo's own design tokens over the older global theme layers. */
+html[data-theme] body.demo-page .demo-card,
+html[data-theme] body.demo-page .demo-panel,
+html[data-theme] body.demo-page .tech-product,
+html[data-theme] body.demo-page .community-event {
+  background: var(--demo-paper) !important;
+  border-color: var(--demo-line) !important;
+}
+html[data-theme] body.demo-page .demo-card h3,
+html[data-theme] body.demo-page .demo-section h2,
+html[data-theme] body.demo-page .demo-panel h3,
+html[data-theme] body.demo-page .tech-product h3 { color: var(--demo-ink) !important; }
+html[data-theme] body.demo-page .demo-card p,
+html[data-theme] body.demo-page .demo-panel p,
+html[data-theme] body.demo-page .demo-muted,
+html[data-theme] body.demo-page .demo-section > p { color: var(--demo-muted) !important; }
+html[data-theme] body.demo-page .demo-card,
+html[data-theme] body.demo-page .demo-panel,
+html[data-theme] body.demo-page .tech-product,
+html[data-theme] body.demo-page .community-event { border-radius: 24px !important; }
+
+/* Different motion signatures make the standalone demos feel authored, not cloned. */
+@keyframes v64-biz-drift { from { transform: translate3d(0,0,0) rotate(-.4deg); } to { transform: translate3d(0,-9px,0) rotate(.4deg); } }
+@keyframes v64-market-float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-8px) rotate(2deg); } }
+@keyframes v64-creative-glow { from { filter: saturate(.92) drop-shadow(0 12px 25px rgba(255,104,139,.09)); } to { filter: saturate(1.12) drop-shadow(0 22px 36px rgba(255,104,139,.24)); } }
+@keyframes v64-skills-rise { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes v64-digital-pulse { 0%,100% { box-shadow: 0 0 0 1px rgba(48,212,255,.12), 0 20px 55px rgba(10,83,145,.12); } 50% { box-shadow: 0 0 0 1px rgba(48,212,255,.35), 0 24px 70px rgba(10,83,145,.28); } }
+html body.demo-biz .demo-hero-art { animation: v64-biz-drift 9s ease-in-out infinite alternate; }
+html body.demo-market .demo-card .demo-icon,
+html body.demo-market .demo-hero-art .demo-icon { animation: v64-market-float 5.8s ease-in-out infinite; }
+html body.demo-creative .demo-hero-art { animation: v64-creative-glow 7s ease-in-out infinite alternate; }
+html body.demo-skills .demo-blob,
+html body.demo-skills .demo-hero-art .shape { animation: v64-skills-rise 6.2s ease-in-out infinite; }
+html body.demo-digital .tech-orbit-card { animation: v64-digital-pulse 5.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  html body.demo-biz .demo-hero-art,
+  html body.demo-market .demo-card .demo-icon,
+  html body.demo-market .demo-hero-art .demo-icon,
+  html body.demo-creative .demo-hero-art,
+  html body.demo-skills .demo-blob,
+  html body.demo-skills .demo-hero-art .shape,
+  html body.demo-digital .tech-orbit-card { animation: none !important; }
+}
+
+/* Consistent rounded treatment for the remaining repeated card surfaces. */
+html body article.card,
+html body .dvnm-demo-card,
+html body .dvnm-demo-preview,
+html body .v58-gallery-shot,
+html body .v58-service-gallery,
+html body .v57-demo-photo,
+html body .tech-contact,
+html body .contact-card,
+html body .contact-method,
+html body .faq-card,
+html body .faq details,
+html body details.demo-accordion,
+html body .dvnm-demo-qr-card,
+html body .v64-identity-card {
+  border-radius: 24px !important;
+}
+html body .dvnm-demo-preview,
+html body .v58-service-gallery,
+html body .v57-demo-photo,
+html body .dvnm-demo-qr-card { overflow: hidden !important; }
+
+/* Lip movement follows speech word-boundary events rather than flapping for the
+   entire sentence; the face stays still during pauses. */
+html body .v60-robot-image-host.is-speaking .v60-robot-mouth:not(.is-open) { animation: none !important; }
+html body .v60-robot-mouth.is-open { animation: v64-bot-mouth 165ms ease-in-out 1 alternate !important; }
+
+/* Theme the demo top bars as part of each independent experience. */
+html body.demo-biz .head { background: rgba(9,24,43,.96) !important; color: #f7f9fc !important; border-bottom: 1px solid rgba(213,177,112,.23) !important; }
+html body.demo-biz .head .links a { color: #e5edf5 !important; }
+html body.demo-biz .head .links a[aria-current="page"] { background: rgba(213,177,112,.16) !important; color: #fff !important; }
+html body.demo-market .head { background: rgba(250,249,242,.97) !important; color: #1c2b25 !important; border-bottom: 1px solid #d8e2d9 !important; }
+html body.demo-market .head .links a { color: #334b40 !important; }
+html body.demo-market .head .links a[aria-current="page"] { background: #e7f0e6 !important; color: #143d2d !important; }
+html body.demo-creative .head { background: rgba(23,20,29,.97) !important; color: #f7eef2 !important; border-bottom: 1px solid rgba(255,108,146,.25) !important; }
+html body.demo-creative .head .links a { color: #e0d2db !important; }
+html body.demo-creative .head .links a[aria-current="page"] { background: rgba(255,108,146,.15) !important; color: #fff !important; }
+html body.demo-skills .head { background: rgba(246,252,249,.97) !important; color: #142b3d !important; border-bottom: 1px solid #d4e3df !important; }
+html body.demo-skills .head .links a { color: #355365 !important; }
+html body.demo-skills .head .links a[aria-current="page"] { background: #e1f4ec !important; color: #0d4b55 !important; }
+html body.demo-digital .head { background: rgba(5,15,27,.97) !important; color: #eaf7ff !important; border-bottom: 1px solid rgba(112,218,240,.19) !important; }
+html body.demo-digital .head .links a { color: #c7dce9 !important; }
+html body.demo-digital .head .links a[aria-current="page"] { background: rgba(49,208,243,.14) !important; color: #fff !important; }
+html body.demo-market .head .v64-demo-exit,
+html body.demo-skills .head .v64-demo-exit { color: #173c31 !important; }
+html body.demo-biz .head .v64-demo-exit,
+html body.demo-creative .head .v64-demo-exit,
+html body.demo-digital .head .v64-demo-exit { color: #f4fbff !important; }
+html body.demo-skills .demo-hero-art { animation: v64-skills-rise 6.2s ease-in-out infinite alternate; }
+@media (max-width: 850px) {
+  html body.demo-biz .head .links { background: #0b1829 !important; border-color: rgba(213,177,112,.25) !important; }
+  html body.demo-market .head .links { background: #fbfaf3 !important; border-color: #d8e2d9 !important; }
+  html body.demo-creative .head .links { background: #211b27 !important; border-color: rgba(255,108,146,.25) !important; }
+  html body.demo-skills .head .links { background: #f6fcf9 !important; border-color: #d4e3df !important; }
+  html body.demo-digital .head .links { background: #081a2b !important; border-color: rgba(112,218,240,.2) !important; }
+}
+/* The demo identity is named in its own masthead, while the D mark remains the
+   parent-company signature and the exit action remains obvious. */
+html body.demo-biz .head .brand::after,
+html body.demo-market .head .brand::after,
+html body.demo-creative .head .brand::after,
+html body.demo-skills .head .brand::after,
+html body.demo-digital .head .brand::after {
+  display: inline-block !important;
+  margin-left: 9px !important;
+  font: 850 .78rem/1.1 Manrope, Inter, system-ui, sans-serif !important;
+  letter-spacing: .12em !important;
+  white-space: nowrap !important;
+}
+html body.demo-biz .head .brand::after { content: "DVNM BIZ"; color: #e8c27d !important; }
+html body.demo-market .head .brand::after { content: "DVNM MARKET"; color: #24634b !important; }
+html body.demo-creative .head .brand::after { content: "DVNM CREATIVE"; color: #ff91b0 !important; }
+html body.demo-skills .head .brand::after { content: "DVNM SKILLS"; color: #087d75 !important; }
+html body.demo-digital .head .brand::after { content: "DVNM DIGITAL"; color: #6feaff !important; }
+@media (max-width: 390px) {
+  html body.demo-page .head .brand::after { font-size: .64rem !important; letter-spacing: .07em !important; margin-left: 5px !important; }
+}

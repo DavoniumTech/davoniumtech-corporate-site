@@ -11,7 +11,3 @@ This repository root is the static website document root. It contains `index.htm
 ## Release notes
 
 V63 moves the approved full-body DVNM Bot into the right-hand desktop hero field, retains the centered responsive layout on smaller screens, makes mobile navigation solid and legible, makes the site footer opaque, and adds a five-image visual mosaic to the Demo Studio landing page. The existing V62 performance strategy and routes are retained.
-
-## V65 company and Demo Studio edition
-
-V65 adds the DAVONIUM name explanation, social and map links, the right-positioned standing Bot with speech-synchronised mouth pulses, a continuous starfield and distinct standalone product identities for the five core Demo Studio experiences. The original QR codes, print flyers, certificates, documentation and product content are preserved.

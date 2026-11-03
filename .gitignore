@@ -126,21 +126,3 @@ credentials.json
 *.key
 *.p12
 *.pfx
-# Local-only release helpers and archives
-PUBLISH-*.ps1
-PUBLISH-*-ONE-COMMAND.txt
-PUBLISH-ONE-COMMAND.txt
-DEPLOY-*.ps1
-DEPLOY-*.cmd
-PREVIEW-*.ps1
-preview-*-server.*
-*.zip
-*.sha256.txt
-.env
-.env.*
-credentials.json
-secrets.json
-*.pem
-*.key
-*.p12
-*.pfx
