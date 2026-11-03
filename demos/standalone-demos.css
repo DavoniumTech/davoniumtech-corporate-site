@@ -1,0 +1,219 @@
+
+/* V65 — isolated standalone demo systems. All rules are rooted in demo-page classes. */
+.demo-page {
+  --demo-ink:#172033; --demo-muted:#536176; --demo-line:#dce4ee;
+  --demo-paper:#fff; --demo-accent:#1467a8; --demo-glow:#eef6fb;
+  min-height:100vh; margin:0; background:var(--demo-bg,#fff)!important;
+  color:var(--demo-ink)!important; font-family:var(--demo-font,Inter,system-ui,sans-serif);
+}
+.demo-page *, .demo-page *::before, .demo-page *::after { box-sizing:border-box; }
+.demo-page .wrap { width:min(1160px,calc(100% - 40px)); margin-inline:auto; }
+.demo-page .dvnm-demo-header {
+  position:sticky; top:0; z-index:1000; width:100%;
+  color:var(--demo-ink); background:var(--demo-header-bg);
+  border-bottom:1px solid var(--demo-line); backdrop-filter:blur(18px);
+}
+.demo-page .dvnm-demo-header-inner {
+  width:min(1240px,calc(100% - 40px)); min-height:76px; margin:auto;
+  display:flex; align-items:center; gap:24px;
+}
+.demo-page .dvnm-demo-brand { display:flex; align-items:center; gap:11px; color:inherit; text-decoration:none; min-width:max-content; }
+.demo-page .dvnm-demo-brand img { width:38px;height:38px;object-fit:contain;border-radius:11px; }
+.demo-page .dvnm-demo-brand span { display:grid; gap:2px; }
+.demo-page .dvnm-demo-brand strong { font-size:1rem; letter-spacing:-.03em; }
+.demo-page .dvnm-demo-brand small { color:var(--demo-muted);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase; }
+.demo-page .dvnm-demo-nav { display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.3vw,30px);margin-left:auto; }
+.demo-page .dvnm-demo-nav a { color:var(--demo-muted);text-decoration:none;font-size:.82rem;font-weight:750; }
+.demo-page .dvnm-demo-nav a:hover,.demo-page .dvnm-demo-nav a:focus-visible { color:var(--demo-accent); }
+.demo-page .dvnm-demo-exit,.demo-page .dvnm-demo-footer-exit {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:42px;padding:0 16px;border:1px solid var(--demo-accent);
+  border-radius:999px;color:var(--demo-exit-ink,#fff)!important;background:var(--demo-accent);
+  text-decoration:none;font-size:.78rem;font-weight:850;white-space:nowrap;
+}
+.demo-page .dvnm-demo-menu-toggle { display:none; border:1px solid var(--demo-line);border-radius:12px;background:var(--demo-paper);color:var(--demo-ink);padding:9px 12px;font-size:1.1rem; }
+.demo-page .skip { position:absolute;left:12px;top:-60px;z-index:2000;padding:10px 14px;border-radius:12px;background:var(--demo-accent);color:#fff; }
+.demo-page .skip:focus { top:12px; }
+.demo-page .demo-hero { background:var(--demo-hero-bg)!important;color:var(--demo-ink)!important; }
+.demo-page .demo-hero h1,.demo-page .demo-section h2 { color:var(--demo-ink)!important; }
+.demo-page .demo-hero p,.demo-page .demo-muted,.demo-page .demo-card p,.demo-page .demo-panel p { color:var(--demo-muted)!important; }
+.demo-page .demo-section { background:var(--demo-section-bg)!important;color:var(--demo-ink)!important; }
+.demo-page .demo-section.soft { background:var(--demo-soft-bg)!important; }
+.demo-page .demo-card,.demo-page .demo-panel,.demo-page .tech-product,.demo-page .community-event {
+  color:var(--demo-ink)!important;background:var(--demo-card-bg)!important;
+  border:1px solid var(--demo-line)!important;border-radius:24px!important;
+  box-shadow:var(--demo-card-shadow,0 14px 38px rgba(18,34,55,.07))!important;
+}
+.demo-page .demo-hero-art { background:var(--demo-art-bg)!important;border:1px solid var(--demo-line)!important;border-radius:30px!important; }
+.demo-page .demo-eyebrow,.demo-page .demo-pill,.demo-page .demo-icon { color:var(--demo-accent)!important; }
+.demo-page .demo-pill,.demo-page .demo-icon { background:var(--demo-glow)!important; }
+.demo-page .btn,.demo-page button.btn { border-radius:999px!important; }
+.demo-page input,.demo-page select,.demo-page textarea { color:var(--demo-ink)!important;background:var(--demo-paper)!important;border:1px solid var(--demo-line)!important;border-radius:14px!important; }
+.demo-page a:focus-visible,.demo-page button:focus-visible,.demo-page input:focus-visible,.demo-page select:focus-visible,.demo-page textarea:focus-visible { outline:3px solid var(--demo-accent)!important;outline-offset:3px!important; }
+.demo-page .dvnm-demo-footer { margin-top:40px;padding:38px 0;background:var(--demo-footer-bg);color:var(--demo-footer-ink); }
+.demo-page .dvnm-demo-footer-inner { width:min(1160px,calc(100% - 40px));margin:auto;display:grid;grid-template-columns:1fr auto;gap:14px 28px;align-items:center; }
+.demo-page .dvnm-demo-footer-brand { color:inherit;text-decoration:none;font-size:1.1rem;font-weight:900; }
+.demo-page .dvnm-demo-footer-brand span { display:block;margin-top:5px;font-size:.72rem;font-weight:600;opacity:.72; }
+.demo-page .dvnm-demo-footer p { grid-column:1;max-width:70ch;margin:0;color:inherit;opacity:.78;font-size:.8rem;line-height:1.65; }
+.demo-page .dvnm-demo-footer-exit { grid-column:2;grid-row:1/3; }
+.demo-page [hidden] { display:none!important; }
+.demo-page .demo-section,.demo-page .demo-card,.demo-page .demo-panel { scroll-margin-top:100px; }
+.demo-page .demo-hero .demo-gradient-type { color:var(--demo-accent)!important;background:none!important;-webkit-text-fill-color:currentColor; }
+.demo-page .demo-cart-summary { border-radius:22px!important;background:var(--demo-card-bg)!important;color:var(--demo-ink)!important;border-color:var(--demo-line)!important; }
+.demo-page .demo-action-message { color:var(--demo-accent)!important; }
+.demo-page .demo-disclaimer { border-radius:18px!important;color:var(--demo-muted)!important;background:var(--demo-soft-bg)!important;border-color:var(--demo-line)!important; }
+.demo-page .tech-orbit-card { border-radius:30px!important; }
+
+/* 01 — DVNM Biz: pure-white business presentation. */
+:root[data-theme] .demo-page.demo-biz {
+  --demo-bg:#fff;--demo-header-bg:rgba(255,255,255,.94);--demo-paper:#fff;--demo-card-bg:#fff;
+  --demo-ink:#17212b;--demo-muted:#526171;--demo-line:#e4e9ee;--demo-accent:#1769aa;
+  --demo-glow:#edf6fc;--demo-hero-bg:linear-gradient(135deg,#fff 0%,#fff 70%,#f5faff 100%);
+  --demo-section-bg:#fff;--demo-soft-bg:#f7fafc;--demo-art-bg:#f0f7fc;--demo-footer-bg:#111c2a;--demo-footer-ink:#fff;
+  --demo-card-shadow:0 14px 40px rgba(21,49,73,.06);
+}
+.demo-page.demo-biz .demo-hero,.demo-page.demo-biz .demo-section,.demo-page.demo-biz .demo-section.soft { background-color:#fff!important; }
+.demo-page.demo-biz .demo-hero-art { background:#f4f9fc!important; }
+
+/* 02 — DVNM Market: warm ivory and burnt orange commerce. */
+:root[data-theme] .demo-page.demo-market {
+  --demo-bg:#fff8ef;--demo-header-bg:rgba(255,249,241,.96);--demo-paper:#fffdf9;--demo-card-bg:#fffdf9;
+  --demo-ink:#332319;--demo-muted:#705d4f;--demo-line:#ead9c8;--demo-accent:#c65b24;
+  --demo-glow:#ffead9;--demo-hero-bg:linear-gradient(135deg,#fff4e6,#fffaf4 65%,#f9e3ce);
+  --demo-section-bg:#fffaf4;--demo-soft-bg:#f7e9db;--demo-art-bg:#f5e2d1;--demo-footer-bg:#2c2019;--demo-footer-ink:#fff8ef;
+  --demo-card-shadow:0 15px 35px rgba(104,57,24,.08);
+}
+
+/* 03 — DVNM Creative: dark editorial studio with violet highlights. */
+:root[data-theme] .demo-page.demo-creative {
+  --demo-bg:#111014;--demo-header-bg:rgba(18,16,21,.96);--demo-paper:#1c1921;--demo-card-bg:#1c1921;
+  --demo-ink:#f8f5fb;--demo-muted:#c3bacb;--demo-line:#39313f;--demo-accent:#b18aff;
+  --demo-glow:#302440;--demo-hero-bg:radial-gradient(circle at 82% 18%,rgba(156,105,255,.19),transparent 34%),linear-gradient(145deg,#111014,#201827);
+  --demo-section-bg:#141217;--demo-soft-bg:#211a29;--demo-art-bg:#241b2d;--demo-footer-bg:#09080b;--demo-footer-ink:#f8f5fb;
+  --demo-exit-ink:#171020;--demo-card-shadow:0 18px 50px rgba(0,0,0,.24);
+}
+.demo-page.demo-creative .demo-hero h1,.demo-page.demo-creative .demo-section h2 { color:#fbf8ff!important; }
+.demo-page.demo-creative .demo-card p,.demo-page.demo-creative .demo-muted { color:#c9c0d2!important; }
+
+/* 04 — DVNM Skills: forest green and mint learning environment. */
+:root[data-theme] .demo-page.demo-skills {
+  --demo-bg:#f2f8f1;--demo-header-bg:rgba(247,252,245,.96);--demo-paper:#fff;--demo-card-bg:#fff;
+  --demo-ink:#17372b;--demo-muted:#526d60;--demo-line:#d5e5d9;--demo-accent:#18734c;
+  --demo-glow:#dff2e5;--demo-hero-bg:linear-gradient(135deg,#f4fbf4,#e6f5eb 65%,#f7fbf4);
+  --demo-section-bg:#f7fbf6;--demo-soft-bg:#e8f4e9;--demo-art-bg:#e3f2e6;--demo-footer-bg:#123c2b;--demo-footer-ink:#f5fff7;
+  --demo-card-shadow:0 14px 36px rgba(24,80,53,.08);
+}
+
+/* 05 — DVNM Digital: indigo and electric-blue technology platform. */
+:root[data-theme] .demo-page.demo-digital {
+  --demo-bg:#0b1024;--demo-header-bg:rgba(12,17,39,.96);--demo-paper:#171e3c;--demo-card-bg:#171e3c;
+  --demo-ink:#f3f5ff;--demo-muted:#c0c9e6;--demo-line:#303b68;--demo-accent:#66aaff;
+  --demo-glow:#202d55;--demo-hero-bg:radial-gradient(circle at 84% 20%,rgba(67,114,255,.24),transparent 32%),linear-gradient(145deg,#0c1230,#17183d 58%,#102d4a);
+  --demo-section-bg:#10172f;--demo-soft-bg:#171e3c;--demo-art-bg:#151d3b;--demo-footer-bg:#070b19;--demo-footer-ink:#f3f5ff;
+  --demo-exit-ink:#08152c;--demo-card-shadow:0 18px 48px rgba(0,0,0,.23);
+}
+.demo-page.demo-digital .demo-hero h1,.demo-page.demo-digital .demo-section h2 { color:#f3f5ff!important; }
+.demo-page.demo-digital .demo-card p,.demo-page.demo-digital .demo-muted { color:#c0c9e6!important; }
+.demo-page.demo-digital .demo-hero-art { background:linear-gradient(145deg,#17234b,#10172f)!important; }
+
+@media (max-width:900px) {
+  .demo-page .dvnm-demo-header-inner { min-height:68px;gap:12px; }
+  .demo-page .dvnm-demo-menu-toggle { display:inline-flex;align-items:center;justify-content:center;margin-left:auto;cursor:pointer; }
+  .demo-page .dvnm-demo-nav { display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;margin:0;padding:16px 22px 20px;background:var(--demo-header-bg);border-bottom:1px solid var(--demo-line);box-shadow:0 18px 30px rgba(0,0,0,.12);flex-direction:column;align-items:stretch;gap:0; }
+  .demo-page .dvnm-demo-nav.is-open { display:flex; }
+  .demo-page .dvnm-demo-nav a { padding:12px 4px;border-bottom:1px solid var(--demo-line); }
+  .demo-page .dvnm-demo-exit { min-height:39px;padding:0 12px;font-size:.72rem; }
+}
+@media (max-width:600px) {
+  .demo-page .wrap,.demo-page .dvnm-demo-footer-inner { width:calc(100% - 32px); }
+  .demo-page .dvnm-demo-header-inner { width:calc(100% - 28px); }
+  .demo-page .dvnm-demo-brand small { display:none; }
+  .demo-page .dvnm-demo-exit { padding:0 10px;font-size:.68rem; }
+  .demo-page .demo-hero { padding-top:44px!important;padding-bottom:48px!important; }
+  .demo-page .demo-section { padding-block:42px!important; }
+  .demo-page .demo-hero h1 { font-size:clamp(2.35rem,11vw,4rem)!important; }
+  .demo-page .demo-cards { grid-template-columns:1fr!important; }
+  .demo-page .dvnm-demo-footer-inner { grid-template-columns:1fr; }
+  .demo-page .dvnm-demo-footer-exit { grid-column:1;grid-row:auto;justify-self:start; }
+  .demo-page .dvnm-demo-footer p { grid-column:1; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .demo-page *, .demo-page *::before, .demo-page *::after { scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; }
+}
+
+.demo-page .dvnm-skills-quiz { max-width:720px; }
+.demo-page .dvnm-quiz-option { display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:13px 15px;border:1px solid var(--demo-line);border-radius:15px;background:var(--demo-paper);color:var(--demo-ink);cursor:pointer; }
+.demo-page .dvnm-quiz-option input { margin-top:4px;accent-color:var(--demo-accent); }
+
+.demo-page .dvnm-cart-items { display:grid;gap:8px;margin-top:12px; }
+.demo-page .dvnm-cart-line { display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 14px;border:1px solid var(--demo-line);border-radius:14px;background:var(--demo-paper);color:var(--demo-ink);font-size:.85rem; }
+.demo-page .dvnm-cart-remove { border:0;border-radius:999px;padding:7px 11px;background:var(--demo-glow);color:var(--demo-accent);font:inherit;font-size:.75rem;font-weight:800;cursor:pointer; }
+
+.demo-page .dvnm-shop-controls { display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin:24px 0; }
+.demo-page .dvnm-shop-controls label { display:grid;gap:7px;color:var(--demo-muted);font-size:.78rem;font-weight:800; }
+.demo-page .dvnm-shop-controls input,.demo-page .dvnm-shop-controls select { width:100%;min-height:44px;padding:10px 12px;font:inherit; }
+@media(max-width:650px){.demo-page .dvnm-shop-controls{grid-template-columns:1fr;}}
+
+/* Explicit theme-token application outranks the legacy theme variants in demos.css. */
+:root[data-theme] .demo-page .demo-hero { background:var(--demo-hero-bg)!important;color:var(--demo-ink)!important; }
+:root[data-theme] .demo-page .demo-section { background:var(--demo-section-bg)!important;color:var(--demo-ink)!important; }
+:root[data-theme] .demo-page .demo-section.soft { background:var(--demo-soft-bg)!important; }
+:root[data-theme] .demo-page .demo-card,
+:root[data-theme] .demo-page .demo-panel,
+:root[data-theme] .demo-page .tech-product,
+:root[data-theme] .demo-page .community-event { background:var(--demo-card-bg)!important;color:var(--demo-ink)!important;border-color:var(--demo-line)!important; }
+:root[data-theme] .demo-page .demo-hero h1,
+:root[data-theme] .demo-page .demo-section h2 { color:var(--demo-ink)!important; }
+:root[data-theme] .demo-page .demo-hero p,
+:root[data-theme] .demo-page .demo-muted,
+:root[data-theme] .demo-page .demo-card p,
+:root[data-theme] .demo-page .demo-panel p { color:var(--demo-muted)!important; }
+
+/* Distinct composition cues: the demos are separate concepts, not one template recoloured. */
+/* Biz uses a restrained editorial two-column business layout. */
+.demo-page.demo-biz .demo-hero-grid { grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:clamp(34px,6vw,82px); }
+.demo-page.demo-biz .demo-hero h1,.demo-page.demo-biz .demo-section h2 { font-family:Georgia,"Times New Roman",serif;letter-spacing:-.045em; }
+.demo-page.demo-biz .demo-card { border-radius:18px!important;box-shadow:0 9px 26px rgba(21,49,73,.045)!important; }
+.demo-page.demo-biz .demo-card:hover { transform:translateY(-3px); }
+
+/* Market uses a warm editorial storefront and product-first grid. */
+.demo-page.demo-market .demo-hero-grid { grid-template-columns:minmax(0,.95fr) minmax(320px,1.05fr); }
+.demo-page.demo-market .demo-hero h1,.demo-page.demo-market .demo-section h2 { font-family:Georgia,"Times New Roman",serif;letter-spacing:-.05em; }
+.demo-page.demo-market #products .demo-card { border-radius:26px!important;overflow:hidden; }
+.demo-page.demo-market #products .demo-icon { width:100%;height:118px;border-radius:18px;background:linear-gradient(135deg,#f7dfc9,#fff2e5)!important;font-size:2rem; }
+.demo-page.demo-market .demo-cart-summary { border-width:2px!important; }
+
+/* Creative is an editorial portfolio: oversized type and asymmetric project tiles. */
+.demo-page.demo-creative .demo-hero-grid { grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr);align-items:end; }
+.demo-page.demo-creative .demo-hero h1 { max-width:10ch;font-size:clamp(3.6rem,8vw,7.4rem)!important;line-height:.91!important; }
+.demo-page.demo-creative #selected-work .demo-cards { grid-template-columns:repeat(12,minmax(0,1fr)); }
+.demo-page.demo-creative #selected-work .demo-card:nth-child(1) { grid-column:span 7;min-height:250px; }
+.demo-page.demo-creative #selected-work .demo-card:nth-child(2) { grid-column:span 5;min-height:250px; }
+.demo-page.demo-creative #selected-work .demo-card:nth-child(3) { grid-column:span 12;min-height:180px; }
+.demo-page.demo-creative .demo-card { border-radius:8px!important;box-shadow:none!important; }
+.demo-page.demo-creative .demo-eyebrow { letter-spacing:.2em; }
+
+/* Skills uses a calm learning dashboard with clear progress-oriented panels. */
+.demo-page.demo-skills .demo-hero-grid { grid-template-columns:minmax(0,1fr) minmax(280px,.85fr); }
+.demo-page.demo-skills .demo-section h2 { max-width:18ch; }
+.demo-page.demo-skills .demo-card { border-radius:18px!important;border-left:4px solid var(--demo-accent)!important; }
+.demo-page.demo-skills .demo-icon { border-radius:50%;width:42px;height:42px; }
+.demo-page.demo-skills .demo-accordion { border-bottom:1px solid var(--demo-line); }
+.demo-page.demo-skills .demo-accordion summary { padding:19px 18px;border-radius:14px;background:var(--demo-card-bg);margin:8px 0; }
+
+/* Digital uses a dark product-platform composition with crisp technical panels. */
+.demo-page.demo-digital .demo-hero-grid { grid-template-columns:minmax(0,1fr) minmax(320px,1fr); }
+.demo-page.demo-digital .demo-hero h1 { max-width:11ch;font-size:clamp(3.2rem,7vw,6.5rem)!important; }
+.demo-page.demo-digital .tech-product { border-radius:26px!important;background:linear-gradient(145deg,#192348,#121a36)!important; }
+.demo-page.demo-digital .tech-orbit-card { border:1px solid rgba(110,160,255,.34)!important;box-shadow:0 24px 70px rgba(0,0,0,.32)!important; }
+
+@media(max-width:850px) {
+  .demo-page.demo-creative .demo-hero-grid,.demo-page.demo-digital .demo-hero-grid,
+  .demo-page.demo-market .demo-hero-grid,.demo-page.demo-biz .demo-hero-grid,
+  .demo-page.demo-skills .demo-hero-grid { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+  .demo-page.demo-creative #selected-work .demo-cards { grid-template-columns:1fr; }
+  .demo-page.demo-creative #selected-work .demo-card:nth-child(n) { grid-column:1;min-height:0; }
+  .demo-page.demo-creative .demo-hero h1 { font-size:clamp(3rem,14vw,5rem)!important; }
+}

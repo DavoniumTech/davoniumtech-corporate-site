@@ -13,17 +13,65 @@
     event.preventDefault(); const note = $('[data-demo-message]', form) || $('[data-demo-message]');
     if (note) note.textContent = 'Prototype preview only — this sample form does not send or store information. Contact Davonium to build a real form.';
   }));
-  // Demo shop cart keeps quantities in memory only; there is no checkout or payment connection.
-  let cartCount = 0, cartTotal = 0;
+  // Demo shop bag is local-only; each line can be removed and totals stay in USD.
+  let cartItems = [];
+  const money = value => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+  const renderCart = () => {
+    const count = $('#demo-cart-count'), total = $('#demo-cart-total');
+    const message = $('#demo-cart-message'), list = $('#demo-cart-items');
+    if (count) count.textContent = String(cartItems.length);
+    if (total) total.textContent = money(cartItems.reduce((sum, item) => sum + item.price, 0));
+    if (list) {
+      list.replaceChildren();
+      cartItems.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'dvnm-cart-line';
+        const name = document.createElement('span');
+        name.textContent = `${item.name} · ${money(item.price)}`;
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.className = 'dvnm-cart-remove';
+        remove.textContent = 'Remove'; remove.setAttribute('aria-label', `Remove ${item.name}`);
+        remove.addEventListener('click', () => { cartItems.splice(index, 1); renderCart(); });
+        row.append(name, remove); list.append(row);
+      });
+    }
+    if (message) message.textContent = cartItems.length
+      ? 'Your temporary demo bag is updated. No order or payment is created.'
+      : 'Your demo bag is empty. Add an item to try the interaction.';
+  };
   $$('[data-add-demo]').forEach(button => button.addEventListener('click', () => {
-    cartCount += 1; cartTotal += Number(button.dataset.price || 0);
-    const count = $('#demo-cart-count'), total = $('#demo-cart-total'), message = $('#demo-cart-message');
-    if (count) count.textContent = String(cartCount);
-    if (total) total.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(cartTotal);
-    if (message) message.textContent = `${button.dataset.product || 'Sample item'} added to this temporary demo bag.`;
+    cartItems.push({ name: button.dataset.product || 'Sample item', price: Number(button.dataset.price || 0) });
+    renderCart();
   }));
+  const clearCart = $('#demo-cart-clear');
+  if (clearCart) clearCart.addEventListener('click', () => { cartItems = []; renderCart(); });
 
-  $$('[data-community-rsvp]').forEach(button => button.addEventListener('click', () => {
+
+  // DVNM Market catalogue search, category filtering and price sorting.
+  const shopList = $('#shop-products');
+  const shopSearch = $('#shop-search');
+  const shopCategory = $('#shop-category');
+  const shopSort = $('#shop-sort');
+  const applyShopControls = () => {
+    if (!shopList) return;
+    const query = (shopSearch?.value || '').trim().toLowerCase();
+    const category = shopCategory?.value || 'all';
+    const cards = $$('[data-shop-product]', shopList);
+    cards.forEach(card => {
+      const matchesText = !query || card.textContent.toLowerCase().includes(query);
+      const matchesCategory = category === 'all' || card.dataset.productCategory === category;
+      card.hidden = !(matchesText && matchesCategory);
+    });
+    const sorted = [...cards].sort((a,b) => {
+      const pa = Number(a.dataset.price || 0), pb = Number(b.dataset.price || 0);
+      return shopSort?.value === 'low' ? pa-pb : shopSort?.value === 'high' ? pb-pa : 0;
+    });
+    sorted.forEach(card => shopList.append(card));
+  };
+  [shopSearch, shopCategory, shopSort].forEach(control => control?.addEventListener('input', applyShopControls));
+  [shopCategory, shopSort].forEach(control => control?.addEventListener('change', applyShopControls));
+
+    $$('[data-community-rsvp]').forEach(button => button.addEventListener('click', () => {
     const message = $('#community-rsvp-message');
     if (message) message.textContent = `Demo RSVP selected for “${button.dataset.communityRsvp}”. No registration was sent or stored. Contact Davonium to plan a real event sign-up flow.`;
   }));
@@ -158,4 +206,53 @@
     observer.observe(document.documentElement, { childList: true, subtree: true });
   }
   window.addEventListener('resize', function () { scan(document); }, { passive: true });
+})();
+
+
+/* V65 — standalone demo navigation. */
+(() => {
+  'use strict';
+  document.querySelectorAll('.dvnm-demo-header').forEach(header => {
+    const toggle = header.querySelector('.dvnm-demo-menu-toggle');
+    const nav = header.querySelector('.dvnm-demo-nav');
+    if (!toggle || !nav) return;
+    const close = () => {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open demo navigation');
+      toggle.textContent = '☰';
+    };
+    toggle.addEventListener('click', () => {
+      const open = !nav.classList.contains('is-open');
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close demo navigation' : 'Open demo navigation');
+      toggle.textContent = open ? '×' : '☰';
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+    document.addEventListener('click', event => {
+      if (!header.contains(event.target)) close();
+    });
+  });
+})();
+
+
+/* DVNM Skills sample quiz — local feedback only, no learner data is stored. */
+(() => {
+  'use strict';
+  const form = document.querySelector('#dvnm-skills-quiz');
+  const feedback = document.querySelector('#skills-quiz-feedback');
+  if (!form || !feedback) return;
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const selected = form.querySelector('input[name="skills-answer"]:checked');
+    if (!selected) {
+      feedback.textContent = 'Choose an answer before checking.';
+      return;
+    }
+    feedback.textContent = selected.value === 'b'
+      ? 'Correct. Clear headings help visitors understand what each section is about.'
+      : 'Not quite. A useful heading clearly describes the section’s purpose. Try again.';
+  });
 })();

@@ -1,5 +1,5 @@
-/* Davonium Technologies PWA service worker - V64 executive refinement. */
-const CACHE_NAME = 'davonium-site-v64-executive-20261103';
+/* Davonium Technologies PWA service worker - V65 standalone demo and CSP refinement. */
+const CACHE_NAME = 'davonium-site-v65-standalone-20261103';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -12,8 +12,11 @@ const CORE = [
   routeUrl("assets/css/davonium-v63-studio-finish.css?v=63"),
   routeUrl("assets/css/davonium-v64-executive.css?v=64"),
   routeUrl("assets/images/davonium-website-qr.png"),
-  routeUrl("assets/js/site.js?v=60"),
+  routeUrl("assets/js/site.js?v=65"),
   routeUrl("assets/js/davonium-v62-experience.js?v=62"),
+  routeUrl("assets/js/theme-init.js?v=65"),
+  routeUrl("demos/demos.js?v=65"),
+  routeUrl("demos/standalone-demos.css?v=65"),
   routeUrl("assets/images/davonium-d-icon.webp"),
   routeUrl("assets/images/dvnm-bot-cutout.webp")
 ];
