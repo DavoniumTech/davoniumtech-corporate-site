@@ -17,3 +17,8 @@ This repository root is the static website document root. It contains the corpor
 V66 is a performance and technical SEO foundation pass. It preserves the approved dark navy / blue / cyan corporate identity and existing navigation, product information, demo experiences, and PWA behaviour. The local CSS and deferred JavaScript stacks are bundled in their original cascade/execution order, the three Google Fonts stylesheet requests are consolidated, and large editorial photos are optimized as WebP. The PWA cache name is rotated so the updated bundles can be cached cleanly.
 
 See `DAVONIUM-V66-PERFORMANCE-SEO-RELEASE-NOTES.md` for the detailed changes, measurements, verification notes, and post-deployment checklist.
+
+
+## V67 commercial launch foundation
+
+See `DAVONIUM-V67-RELEASE-NOTES.md` for the pricing page, guided project builder, five sample workspace previews, lightweight starfield and deployment limitations.

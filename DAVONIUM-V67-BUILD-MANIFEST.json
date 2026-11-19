@@ -1,0 +1,56 @@
+{
+  "company": "Davonium Technologies",
+  "release": "V67 Commercial Launch Foundation",
+  "build_date": "2026-11-19",
+  "source_archive": "davoniumtech-corporate-site-main (9).zip",
+  "source_snapshot": "V66",
+  "production_deployed": false,
+  "git_pushed": false,
+  "html_pages": 82,
+  "source_file_comparison": {
+    "original_files": 268,
+    "current_files": 307,
+    "added_files": 39,
+    "modified_files": 79,
+    "missing_original_files": 0
+  },
+  "new_routes": [
+    "pricing.html",
+    "project-builder.html",
+    "workspaces/index.html",
+    "workspaces/biz.html",
+    "workspaces/market.html",
+    "workspaces/creative.html",
+    "workspaces/skills.html",
+    "workspaces/digital.html",
+    "demos/preview.html"
+  ],
+  "workspace_mode": "front-end demonstration with session-only sample data",
+  "pricing_publication_status": "approval-pending",
+  "pricing_amounts": {
+    "NGN": null,
+    "USD": null
+  },
+  "sitemap_urls": 75,
+  "static_local_reference_errors": 0,
+  "service_worker_cache": "davonium-site-v67-commercial-20261119",
+  "qa_report": "DAVONIUM-V67-QA-REPORT.md",
+  "release_notes": "DAVONIUM-V67-RELEASE-NOTES.md",
+  "responsive_demo_preview": {
+    "route": "demos/preview.html",
+    "embedded_demo_routes": [
+      "demos/business.html",
+      "demos/shop.html",
+      "demos/portfolio.html",
+      "demos/learning.html",
+      "demos/technology.html"
+    ],
+    "viewport_modes": [
+      "desktop",
+      "tablet",
+      "mobile"
+    ],
+    "frame_policy": "same-origin only for the five embedded sample-demo pages; site-wide frame blocking remains elsewhere",
+    "cloudflare_header_exceptions": "scoped per demo HTML document; global policy remains DENY / frame-ancestors none for other routes"
+  }
+}

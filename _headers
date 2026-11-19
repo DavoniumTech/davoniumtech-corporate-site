@@ -6,6 +6,39 @@
   Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000
 
+# The responsive Demo Preview embeds only these five public sample websites.
+# Keep the site-wide anti-framing policy everywhere else; allow same-origin framing
+# for the five demo documents only, so the preview can resize their real viewports.
+/demos/business.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+
+/demos/shop.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+
+/demos/portfolio.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+
+/demos/learning.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+
+/demos/technology.html
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+
 # HTML/extensionless routes revalidate; the more specific static-asset rules below assign longer caching.
 /*
   Cache-Control: no-cache, must-revalidate

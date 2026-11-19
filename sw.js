@@ -1,17 +1,41 @@
-/* Davonium Technologies PWA service worker - V66 performance bundles. */
-const CACHE_NAME = 'davonium-site-v66-performance-20261106';
+/* Davonium Technologies PWA service worker - V67 commercial launch bundles. */
+const CACHE_NAME = 'davonium-site-v67-commercial-20261119';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline.html"),
   routeUrl("manifest.webmanifest"),
-  routeUrl("assets/css/davonium-v66-styles-d993234fdbf0.css"),
+  routeUrl("assets/css/davonium-v67-styles-fde066d7fe3f.css"),
   routeUrl("assets/images/davonium-website-qr.png"),
-  routeUrl("assets/js/davonium-v66-runtime-26ca0c9d045b.js"),
+  routeUrl("assets/js/davonium-v67-runtime-f79db1cde3bd.js"),
   routeUrl("demos/"),
-  routeUrl("assets/css/davonium-v66-styles-7955e4a79e4b.css"),
-  routeUrl("assets/js/davonium-v66-runtime-97810e7a0c9b.js"),
+  routeUrl("demos/preview.html"),
+  routeUrl("assets/css/dvnm-v67-demo-preview.css"),
+  routeUrl("assets/js/davonium-v67-demo-preview.js"),
+  routeUrl("pricing.html"),
+  routeUrl("pricing"),
+  routeUrl("project-builder.html"),
+  routeUrl("project-builder"),
+  routeUrl("workspaces/"),
+  routeUrl("workspaces/biz"),
+  routeUrl("workspaces/market"),
+  routeUrl("workspaces/creative"),
+  routeUrl("workspaces/skills"),
+  routeUrl("workspaces/digital"),
+  routeUrl("assets/css/dvnm-v67-commercial.css"),
+  routeUrl("assets/css/dvnm-v67-workspaces.css"),
+  routeUrl("assets/js/davonium-v67-page-shell.js"),
+  routeUrl("assets/js/davonium-v67-pricing.js"),
+  routeUrl("assets/data/dvnm-v67-pricing.js"),
+  routeUrl("assets/js/davonium-v67-project-builder.js"),
+  routeUrl("assets/js/davonium-v67-contact-prefill.js"),
+  routeUrl("assets/js/davonium-v67-workspace-config.js"),
+  routeUrl("assets/js/davonium-v67-workspaces.js"),
+  routeUrl("assets/data/dvnm-v67-workspaces.json"),
+  routeUrl("assets/css/davonium-v67-styles-89e38d5b0f42.css"),
+  routeUrl("assets/css/davonium-v67-styles-a9a7bbacab17.css"),
+  routeUrl("assets/js/davonium-v67-runtime-1cc05e0e92ea.js"),
   routeUrl("assets/images/davonium-d-icon.webp"),
   routeUrl("assets/images/dvnm-bot-cutout.webp")
 ];
