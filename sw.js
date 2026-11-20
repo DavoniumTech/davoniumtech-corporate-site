@@ -1,10 +1,17 @@
 /* Davonium Technologies PWA service worker - V67 commercial launch bundles. */
-const CACHE_NAME = 'davonium-site-v67-commercial-20261119';
+const CACHE_NAME = 'davonium-site-v68-multicolor-20261120';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline.html"),
+  routeUrl("assets/css/davonium-v68-multicolor.css"),
+  routeUrl("assets/css/davonium-v68-demo-identities.css"),
+  routeUrl("assets/css/davonium-v68-workspaces.css"),
+  routeUrl("assets/js/davonium-v68-demo-interactions.js"),
+  routeUrl("assets/js/davonium-v68-workspaces.js"),
+  routeUrl("demos/marketing.html"),
+  routeUrl("demos/community.html"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/css/davonium-v67-styles-fde066d7fe3f.css"),
   routeUrl("assets/images/davonium-website-qr.png"),
@@ -13,6 +20,7 @@ const CORE = [
   routeUrl("demos/preview.html"),
   routeUrl("assets/css/dvnm-v67-demo-preview.css"),
   routeUrl("assets/js/davonium-v67-demo-preview.js"),
+  routeUrl("assets/js/davonium-v68-demo-preview.js"),
   routeUrl("pricing.html"),
   routeUrl("pricing"),
   routeUrl("project-builder.html"),

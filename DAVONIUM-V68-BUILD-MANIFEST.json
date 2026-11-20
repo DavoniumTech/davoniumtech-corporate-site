@@ -1,0 +1,44 @@
+{
+  "company": "Davonium Technologies",
+  "release": "V68",
+  "release_name": "Multicolour UI Transformation",
+  "base_branch": "main",
+  "base_commit": "b19ef4f2153654f35c4e0c4e79c8da09a5196d50",
+  "development_branch": "v68-multicolor-ui",
+  "scope": "front-end-first; no backend integration",
+  "html_pages": 82,
+  "demos": [
+    "business",
+    "shop",
+    "portfolio",
+    "learning",
+    "technology",
+    "marketing",
+    "community",
+    "certificate"
+  ],
+  "workspace_previews": ["biz", "market", "creative", "skills", "digital"],
+  "new_assets": [
+    "assets/css/davonium-v68-multicolor.css",
+    "assets/css/davonium-v68-demo-identities.css",
+    "assets/css/davonium-v68-workspaces.css",
+    "assets/js/davonium-v68-workspaces.js",
+    "assets/js/davonium-v68-demo-preview.js",
+    "assets/js/davonium-v68-demo-interactions.js"
+  ],
+  "new_standalone_demo_pages": ["demos/marketing.html", "demos/community.html"],
+  "qa": {
+    "v68_style_scope_coverage": "82/82",
+    "missing_local_html_references": 0,
+    "css_parse_errors": 0,
+    "sitemap_urls": 77,
+    "local_http_smoke_routes": 28,
+    "browser_visual_qa": "blocked by local Chromium policy",
+    "live_pagespeed": "not measured"
+  },
+  "publishing": {
+    "branch_only": true,
+    "main_modified": false,
+    "cloudflare_deployed": false
+  }
+}

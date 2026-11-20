@@ -1,6 +1,6 @@
 # Davonium Technologies — V66 Performance & SEO Foundation
 
-This repository root is the static website document root. It contains the corporate website, company and product pages, documentation, five independent Demo Studio experiences, images and icons, PWA files, Cloudflare Pages configuration, redirects, and security headers.
+This repository root is the static website document root. It contains the corporate website, company and product pages, documentation, eight independent Demo Studio experiences and five owner-workspace previews, images and icons, PWA files, Cloudflare Pages configuration, redirects, and security headers.
 
 ## Deployment
 
@@ -22,3 +22,8 @@ See `DAVONIUM-V66-PERFORMANCE-SEO-RELEASE-NOTES.md` for the detailed changes, me
 ## V67 commercial launch foundation
 
 See `DAVONIUM-V67-RELEASE-NOTES.md` for the pricing page, guided project builder, five sample workspace previews, lightweight starfield and deployment limitations.
+
+
+## V68 — Multicolour UI Transformation
+
+V68 adds a lightweight multicolour design layer across the existing 82-page site, eight standalone Demo Studio experiences, a redesigned eight-route responsive preview and five upgraded sample-only owner workspaces. See `DAVONIUM-V68-UI-AUDIT.md`, `DAVONIUM-V68-RELEASE-NOTES.md` and `DAVONIUM-V68-QA-REPORT.md` for the implementation scope and validation limits. V68 remains front-end only; it does not add a production CMS or backend services.

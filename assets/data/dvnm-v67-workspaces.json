@@ -4,7 +4,7 @@
     "tagline": "Business website management preview",
     "demo": "../demos/business",
     "demoName": "DVNM Biz",
-    "accent": "#4aa7dc",
+    "accent": "#6843c3",
     "summary": "Manage the content and enquiries behind a business website.",
     "stats": [
       [
@@ -70,7 +70,7 @@
     "tagline": "Online store administration preview",
     "demo": "../demos/shop",
     "demoName": "DVNM Market",
-    "accent": "#9a77ed",
+    "accent": "#126f45",
     "summary": "Explore the sample tools used to organise products, orders and a digital storefront.",
     "stats": [
       [
@@ -137,7 +137,7 @@
     "tagline": "Portfolio and studio content preview",
     "demo": "../demos/portfolio",
     "demoName": "DVNM Creative",
-    "accent": "#d77ca5",
+    "accent": "#693bb6",
     "summary": "Organise portfolio projects, visual galleries and the stories behind creative work.",
     "stats": [
       [
@@ -200,7 +200,7 @@
     "tagline": "Learning platform administration preview",
     "demo": "../demos/learning",
     "demoName": "DVNM Skills",
-    "accent": "#34b99e",
+    "accent": "#2459b5",
     "summary": "Preview how course content, learner groups and educational updates could be organised.",
     "stats": [
       [
@@ -267,7 +267,7 @@
     "tagline": "Technology company content preview",
     "demo": "../demos/technology",
     "demoName": "DVNM Digital",
-    "accent": "#56a9e2",
+    "accent": "#087383",
     "summary": "Coordinate a technology company’s pages, products, team information and documentation.",
     "stats": [
       [
