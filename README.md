@@ -1,4 +1,4 @@
-# Davonium Technologies — V66 Performance & SEO Foundation
+# Davonium Technologies — V68 Premium Multicolour UI Review Candidate
 
 This repository root is the static website document root. It contains the corporate website, company and product pages, documentation, eight independent Demo Studio experiences and five owner-workspace previews, images and icons, PWA files, Cloudflare Pages configuration, redirects, and security headers.
 
@@ -24,6 +24,10 @@ See `DAVONIUM-V66-PERFORMANCE-SEO-RELEASE-NOTES.md` for the detailed changes, me
 See `DAVONIUM-V67-RELEASE-NOTES.md` for the pricing page, guided project builder, five sample workspace previews, lightweight starfield and deployment limitations.
 
 
-## V68 — Multicolour UI Transformation
+## V68 — Premium multicolour experience (review candidate)
 
-V68 adds a lightweight multicolour design layer across the existing 82-page site, eight standalone Demo Studio experiences, a redesigned eight-route responsive preview and five upgraded sample-only owner workspaces. See `DAVONIUM-V68-UI-AUDIT.md`, `DAVONIUM-V68-RELEASE-NOTES.md` and `DAVONIUM-V68-QA-REPORT.md` for the implementation scope and validation limits. V68 remains front-end only; it does not add a production CMS or backend services.
+The current V68 review candidate builds on the owner-supplied archive, whose reconstructed Git tree was verified against the existing V68 `main` commit `c2312478f1b155dc6184c4c3b63412b22841a846`. It introduces a new corporate homepage composition, a shared visual system, eight independently art-directed demo routes, five product-specific sample workspaces, and an accessible Demo Studio filter. It remains front-end only. The source archive already contained earlier V68 styling and demo files; see `DAVONIUM-V68-UI-AUDIT.md` for the source-provenance note and the actual changes in this revision.
+
+This candidate has passed the static source checks and local HTTP route checks listed in `DAVONIUM-V68-QA-REPORT.md`. Browser-based visual, manual interaction, real-device and live PageSpeed checks remain release gates. **This package has not been published to GitHub or deployed to Cloudflare.** Do not deploy it until the owner reviews the package and explicitly approves publication.
+
+See `DAVONIUM-V68-RELEASE-NOTES.md`, `DAVONIUM-V68-IMPLEMENTATION-PLAN.md` and `DAVONIUM-V68-DEPLOYMENT-GUIDE.md` for scope and next checks.

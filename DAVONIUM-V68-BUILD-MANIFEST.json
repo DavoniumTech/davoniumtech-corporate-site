@@ -1,12 +1,22 @@
 {
   "company": "Davonium Technologies",
   "release": "V68",
-  "release_name": "Multicolour UI Transformation",
-  "base_branch": "main",
-  "base_commit": "b19ef4f2153654f35c4e0c4e79c8da09a5196d50",
-  "development_branch": "v68-multicolor-ui",
+  "release_name": "Premium Multicolour UI Transformation",
+  "artifact_status": "pre-release review candidate; additional redesign not pushed",
+  "source_archive": "davoniumtech-corporate-site-main (11).zip",
+  "source_provenance": {
+    "github_repository": "DavoniumTech/davoniumtech-corporate-site",
+    "verified_base_commit": "c2312478f1b155dc6184c4c3b63412b22841a846",
+    "verified_base_tree": "b788015d11394e4e27c96059c82f4aaaa21b9b69",
+    "base_parent_commit": "b19ef4f2153654f35c4e0c4e79c8da09a5196d50",
+    "main_and_v68_branch_same_commit": true,
+    "open_pull_requests_at_review": 0,
+    "method": "Reconstructed Git tree from the uploaded ZIP; exact tree hash match"
+  },
   "scope": "front-end-first; no backend integration",
   "html_pages": 82,
+  "css_files": 52,
+  "javascript_files": 52,
   "demos": [
     "business",
     "shop",
@@ -17,28 +27,54 @@
     "community",
     "certificate"
   ],
-  "workspace_previews": ["biz", "market", "creative", "skills", "digital"],
-  "new_assets": [
-    "assets/css/davonium-v68-multicolor.css",
-    "assets/css/davonium-v68-demo-identities.css",
-    "assets/css/davonium-v68-workspaces.css",
-    "assets/js/davonium-v68-workspaces.js",
-    "assets/js/davonium-v68-demo-preview.js",
-    "assets/js/davonium-v68-demo-interactions.js"
+  "workspace_previews": [
+    "biz",
+    "market",
+    "creative",
+    "skills",
+    "digital"
   ],
-  "new_standalone_demo_pages": ["demos/marketing.html", "demos/community.html"],
+  "modified_files_vs_supplied_archive": 88,
+  "added_files_vs_supplied_archive": 9,
+  "deleted_files_vs_supplied_archive": 0,
+  "new_application_assets": [
+    "assets/css/davonium-v68-premium-system.css",
+    "assets/css/davonium-v68-home.css",
+    "assets/css/davonium-v68-demo-experiences.css",
+    "assets/css/davonium-v68-workspaces-premium.css",
+    "assets/js/davonium-v68-workspaces-premium.js",
+    "assets/js/davonium-v68-demo-studio.js"
+  ],
+  "new_review_documents": [
+    "DAVONIUM-V68-DEPLOYMENT-GUIDE.md",
+    "DAVONIUM-V68-IMPLEMENTATION-PLAN.md",
+    "DAVONIUM-V68-HTTP-SMOKE-TEST.md"
+  ],
   "qa": {
-    "v68_style_scope_coverage": "82/82",
-    "missing_local_html_references": 0,
+    "missing_local_references": 0,
+    "missing_anchors": 0,
+    "duplicate_html_ids": 0,
+    "script_tag_balance_issues": 0,
+    "invalid_closing_meta_tags": 0,
     "css_parse_errors": 0,
-    "sitemap_urls": 77,
-    "local_http_smoke_routes": 28,
-    "browser_visual_qa": "blocked by local Chromium policy",
-    "live_pagespeed": "not measured"
+    "javascript_syntax_errors": 0,
+    "json_errors": 0,
+    "xml_errors": 0,
+    "sitemap_unique_urls": 77,
+    "local_http_smoke_routes_ok": 35,
+    "local_http_smoke_routes_total": 35,
+    "new_asset_raw_bytes": 110347,
+    "new_asset_gzip_bytes_level_9": 26309,
+    "browser_visual_qa": "not completed; headless Chromium did not finish within available execution window",
+    "live_pagespeed": "not measured",
+    "real_device_cwv": "not measured",
+    "manual_interaction_qa": "not completed"
   },
   "publishing": {
-    "branch_only": true,
-    "main_modified": false,
-    "cloudflare_deployed": false
-  }
+    "candidate_changes_pushed": false,
+    "pull_request_created": false,
+    "cloudflare_deployed": false,
+    "explicit_owner_approval_required": true
+  },
+  "service_worker_cache_namespace": "davonium-site-v68-premium-20261120-r3"
 }

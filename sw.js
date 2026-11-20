@@ -1,17 +1,29 @@
-/* Davonium Technologies PWA service worker - V67 commercial launch bundles. */
-const CACHE_NAME = 'davonium-site-v68-multicolor-20261120';
+/* Davonium Technologies PWA service worker - V68 premium visual transformation. */
+const CACHE_NAME = 'davonium-site-v68-premium-20261120-r3';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
   routeUrl(""),
   routeUrl("offline.html"),
   routeUrl("assets/css/davonium-v68-multicolor.css"),
+  routeUrl("assets/css/davonium-v68-premium-system.css"),
+  routeUrl("assets/css/davonium-v68-home.css"),
+  routeUrl("assets/css/davonium-v68-demo-experiences.css"),
+  routeUrl("assets/css/davonium-v68-workspaces-premium.css"),
   routeUrl("assets/css/davonium-v68-demo-identities.css"),
   routeUrl("assets/css/davonium-v68-workspaces.css"),
   routeUrl("assets/js/davonium-v68-demo-interactions.js"),
+  routeUrl("assets/js/davonium-v68-demo-studio.js"),
+  routeUrl("assets/js/davonium-v68-workspaces-premium.js"),
   routeUrl("assets/js/davonium-v68-workspaces.js"),
+  routeUrl("demos/business.html"),
+  routeUrl("demos/shop.html"),
+  routeUrl("demos/portfolio.html"),
+  routeUrl("demos/learning.html"),
+  routeUrl("demos/technology.html"),
   routeUrl("demos/marketing.html"),
   routeUrl("demos/community.html"),
+  routeUrl("demos/certificate.html"),
   routeUrl("manifest.webmanifest"),
   routeUrl("assets/css/davonium-v67-styles-fde066d7fe3f.css"),
   routeUrl("assets/images/davonium-website-qr.png"),
