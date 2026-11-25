@@ -23,3 +23,6 @@
     try { localStorage.setItem('davonium-theme-choice', next); } catch (_) {}
   });
 })();
+
+
+/* V69: site-wide consent loader and PWA registration */(function(){function inject(path,id){if(document.querySelector('[data-v69-loader="'+id+'"]'))return;var s=document.createElement("script");s.src=location.origin+path;s.async=true;s.dataset.v69Loader=id;document.head.appendChild(s);}function start(){inject("/assets/js/davonium-v69-cookie-consent.js","consent");if("serviceWorker"in navigator&&!location.pathname.startsWith("/admin"))navigator.serviceWorker.register("/sw.js",{scope:"/"}).catch(function(e){console.warn("PWA worker registration failed",e);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();})();
