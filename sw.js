@@ -57,7 +57,7 @@ const CORE = [
   routeUrl("assets/css/davonium-v67-styles-a9a7bbacab17.css"),
   routeUrl("assets/js/davonium-v67-runtime-1cc05e0e92ea.js"),
   routeUrl("assets/images/davonium-d-icon.webp"),
-  routeUrl("assets/images/dvnm-bot-cutout.webp")
+  routeUrl("assets/images/dvnm-bot-cutout.webp"),
   routeUrl("business-launch-kit.html"),
   routeUrl("business-launch-kit"),
   routeUrl("assets/css/davonium-v69-business-launch-kit.css"),
