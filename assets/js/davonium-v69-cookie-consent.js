@@ -1,27 +1,22 @@
+/* Davonium V69 privacy preference controls — no tracking scripts are loaded by this release. */
 (function(){
-  "use strict";
-  const KEY="davonium.cookiePreferences.v1";
-  const defaults={essential:true,analytics:false,marketing:false,updatedAt:null};
-  const read=()=>{try{const v=JSON.parse(localStorage.getItem(KEY)||"null");return v&&typeof v==="object"?{...defaults,...v,essential:true}:null}catch{return null}};
-  const save=p=>{const v={...defaults,...p,essential:true,updatedAt:new Date().toISOString()};try{localStorage.setItem(KEY,JSON.stringify(v))}catch{};return v};
-  const current=read();
-  window.DavoniumConsent={get:()=>read(),save,open:()=>openDialog(),reset:()=>{localStorage.removeItem(KEY);openDialog()}};
-  const css=`
-  .dv-consent{position:fixed;z-index:999999;left:18px;right:18px;bottom:18px;max-width:680px;margin:auto;padding:20px;background:var(--dv-consent-bg,#101b2c);color:var(--dv-consent-fg,#eef4ff);border:1px solid rgba(255,255,255,.16);border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.35);font:inherit}
-  .dv-consent h2{font-size:1.1rem;margin:0 0 8px}.dv-consent p{margin:0 0 12px;font-size:.92rem;line-height:1.55;color:inherit}
-  .dv-consent a{color:#9ed1ff}.dv-consent-actions{display:flex;gap:8px;flex-wrap:wrap}.dv-consent button{border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer;background:transparent;color:inherit}.dv-consent button.primary{background:#8bc5ff;color:#081626;border-color:transparent}.dv-consent button.secondary{background:rgba(255,255,255,.08)}.dv-consent button:focus-visible{outline:3px solid #9ed1ff;outline-offset:2px}
-  .dv-consent-settings{margin-top:14px;border-top:1px solid rgba(255,255,255,.15);padding-top:12px}.dv-consent-settings label{display:flex;justify-content:space-between;align-items:center;padding:8px 0;gap:12px}.dv-consent-settings input{width:20px;height:20px;accent-color:#8bc5ff}
-  @media(max-width:520px){.dv-consent{left:10px;right:10px;bottom:10px;padding:16px}.dv-consent-actions button{flex:1}}
-  `;
-  const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-  function openDialog(){
-    if(document.getElementById("dv-consent"))return;
-    const panel=document.createElement("section");panel.id="dv-consent";panel.className="dv-consent";panel.setAttribute("role","dialog");panel.setAttribute("aria-modal","true");panel.setAttribute("aria-labelledby","dv-consent-title");
-    panel.innerHTML='<h2 id="dv-consent-title">Your privacy choices</h2><p>We use essential browser storage for preferences and the website app experience. Optional analytics or marketing storage remains off unless you choose it. <a href="'+(location.pathname.includes("/legal/")?"cookies":"legal/cookies")+'">Learn about cookies &amp; storage</a>.</p><div class="dv-consent-actions"><button class="primary" data-action="accept">Accept optional</button><button class="secondary" data-action="reject">Reject optional</button><button class="secondary" data-action="customize">Customize</button></div><div class="dv-consent-settings" hidden><label>Essential storage <span>Always on</span></label><label>Analytics storage <input type="checkbox" id="dv-analytics"></label><label>Marketing storage <input type="checkbox" id="dv-marketing"></label><div class="dv-consent-actions"><button class="primary" data-action="save">Save choices</button></div></div>';
-    panel.addEventListener("click",e=>{const btn=e.target.closest("button");if(!btn)return;const a=btn.dataset.action;if(a==="accept"){save({analytics:false,marketing:false});panel.remove()}if(a==="reject"){save({analytics:false,marketing:false});panel.remove()}if(a==="customize"){const s=panel.querySelector(".dv-consent-settings");s.hidden=false;panel.querySelector("#dv-analytics").checked=read()?.analytics===true;panel.querySelector("#dv-marketing").checked=read()?.marketing===true;btn.disabled=true;}if(a==="save"){save({analytics:panel.querySelector("#dv-analytics").checked,marketing:panel.querySelector("#dv-marketing").checked});panel.remove()}});
-    document.body.appendChild(panel);panel.querySelector("button").focus();
-  }
-  if(!current){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",openDialog,{once:true});else openDialog();}
-  // Expose a consistent preferences entry point to existing page footers without altering their layouts.
-  document.addEventListener("DOMContentLoaded",()=>{const a=document.createElement("button");a.type="button";a.textContent="Cookie preferences";a.style.cssText="position:fixed;z-index:999998;left:10px;bottom:10px;font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid rgba(128,128,128,.45);background:rgba(16,27,44,.8);color:white;opacity:.7";a.addEventListener("click",openDialog);document.body.appendChild(a)});
+ "use strict";
+ const key="davonium.cookiePreferences.v1";
+ const defaultState={essential:true,analytics:false,marketing:false,updatedAt:null};
+ function read(){try{const v=JSON.parse(localStorage.getItem(key)||"null");return v&&typeof v==="object"?Object.assign({},defaultState,v,{essential:true}):null;}catch(_){return null;}}
+ function save(p){const v=Object.assign({},defaultState,p,{essential:true,updatedAt:new Date().toISOString()});try{localStorage.setItem(key,JSON.stringify(v));}catch(_){};return v;}
+ window.DavoniumConsent={get:read,save,open:openPanel,reset:function(){try{localStorage.removeItem(key);}catch(_){}openPanel();}};
+ const style=document.createElement("style");style.textContent=".dv-consent-panel{position:fixed;z-index:999990;left:12px;right:12px;bottom:14px;max-width:720px;margin:auto;background:#101b2c;color:#f4f7ff;border:1px solid #33445c;border-radius:18px;padding:18px;box-shadow:0 16px 50px #0006;font:inherit}.dv-consent-panel h2{font-size:1.12rem;margin:0 0 8px}.dv-consent-panel p{font-size:.92rem;line-height:1.5;margin:0 0 12px}.dv-consent-panel a{color:#a9d7ff}.dv-consent-panel button{font:inherit;font-weight:650;border:1px solid #536780;border-radius:10px;padding:10px 14px;cursor:pointer;color:inherit;background:#243247}.dv-consent-panel button:focus-visible{outline:3px solid #b6dcff;outline-offset:3px}.dv-consent-panel .primary{background:#a9d7ff;color:#091827;border-color:transparent}.dv-consent-actions{display:flex;gap:8px;flex-wrap:wrap}.dv-consent-actions button{flex:1}.dv-consent-settings{border-top:1px solid #39485d;margin-top:12px;padding-top:8px}.dv-consent-settings label{display:flex;justify-content:space-between;gap:10px;padding:8px 0;align-items:center}.dv-consent-settings input{width:20px;height:20px}@media(max-width:520px){.dv-consent-panel{padding:14px;bottom:8px}}";
+ document.head.appendChild(style);
+ function openPanel(){
+  if(document.getElementById("dv-consent-panel"))return;
+  const p=document.createElement("section");p.id="dv-consent-panel";p.className="dv-consent-panel";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-labelledby","dv-consent-heading");
+  const policy=location.pathname.includes("/legal/")?"cookies":"legal/cookies";
+  p.innerHTML='<h2 id="dv-consent-heading">Cookie &amp; storage choices</h2><p>Essential storage keeps your preferences and app features working. Optional analytics and marketing storage are off by default. This site currently loads no analytics or marketing trackers. <a href="'+policy+'">Read our cookie notice</a>.</p><div class="dv-consent-actions"><button class="primary" data-act="essential">Continue with essential only</button><button data-act="reject">Reject optional</button><button data-act="customize">Customize</button></div><div class="dv-consent-settings" hidden><label>Essential storage <span>Always active</span></label><label>Analytics (currently not installed) <input type="checkbox" id="dv-consent-analytics"></label><label>Marketing (currently not installed) <input type="checkbox" id="dv-consent-marketing"></label><div class="dv-consent-actions"><button class="primary" data-act="save">Save choices</button></div></div>';
+  p.addEventListener("click",function(e){const b=e.target.closest("button");if(!b)return;const act=b.dataset.act;if(act==="essential"||act==="reject"){save({analytics:false,marketing:false});p.remove();}if(act==="customize"){p.querySelector(".dv-consent-settings").hidden=false;p.querySelector("#dv-consent-analytics").checked=!!read()?.analytics;p.querySelector("#dv-consent-marketing").checked=!!read()?.marketing;b.disabled=true;}if(act==="save"){save({analytics:p.querySelector("#dv-consent-analytics").checked,marketing:p.querySelector("#dv-consent-marketing").checked});p.remove();}});
+  p.addEventListener("keydown",function(e){if(e.key==="Escape")p.remove();});
+  document.body.appendChild(p);p.querySelector("button").focus();
+ }
+ if(!read()){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",openPanel,{once:true});else openPanel();}
+ document.addEventListener("DOMContentLoaded",function(){const btn=document.createElement("button");btn.type="button";btn.textContent="Cookie preferences";btn.setAttribute("aria-label","Open cookie and storage preferences");btn.style.cssText="position:fixed;z-index:999989;left:10px;bottom:10px;font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid #7890a4;background:#152338;color:white;opacity:.72";btn.addEventListener("click",openPanel);document.body.appendChild(btn);});
 })();
