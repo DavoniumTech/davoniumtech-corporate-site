@@ -1,6 +1,6 @@
 /* Davonium V69 privacy preference controls — no tracking scripts are loaded by this release. */
 (function(){
- "use strict";
+ "use strict";if(window.DavoniumConsent)return;
  const key="davonium.cookiePreferences.v1";
  const defaultState={essential:true,analytics:false,marketing:false,updatedAt:null};
  function read(){try{const v=JSON.parse(localStorage.getItem(key)||"null");return v&&typeof v==="object"?Object.assign({},defaultState,v,{essential:true}):null;}catch(_){return null;}}
