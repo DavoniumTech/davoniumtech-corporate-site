@@ -1,16 +1,23 @@
-# Davonium Technologies — Website Backend & Privacy
+# Davonium V69 backend setup and admin access
 
-This backend stores contact enquiries submitted through the website. The website requests consent to its privacy notice before sending a message. Essential local storage is used to remember the visitor's cookie choice. Analytics and marketing options are currently off and no tracking scripts are enabled.
+## Enquiry endpoint
+Website forms call the Supabase Edge Function `submit-enquiry`. It is intentionally public (`verify_jwt=false`) and performs origin checks, method/body limits, field validation, required privacy consent, a honeypot and hashed-IP rate limiting. It stores lead, activity and notification rows using the server-side service-role client; it does not return lead data.
 
-## Enquiries
-Public requests are accepted only through the submit-enquiry Edge Function. Server-side validation, a honeypot, bounded fields, IP-derived rate limits and origin checks are used. Email notification is optional and only works after the owner configures a verified provider and sender secrets. The function never returns stored lead data.
+## Admin dashboard
+Visit `/admin/`. Sign-in uses Supabase Auth and then verifies active membership in `public.admin_users`. Browser code uses only the publishable key; database RLS policies restrict access.
 
-## Admin
-No admin user has been created yet. Owner must create the first account through Supabase Auth and then insert that user's UUID into public.admin_users with role owner. Do not open admin membership to the public.
+### Create the owner account (required before dashboard tests)
+1. Supabase Authentication → Users → create a verified owner account with a strong password. Enable MFA where available.
+2. Copy the UUID.
+3. SQL Editor, replace the UUID and run:
+```sql
+insert into public.admin_users(user_id,role,is_active)
+values ('YOUR-AUTH-USER-UUID','owner',true);
+```
+4. Sign in at `/admin/`. Only active membership is authorised.
+5. Never expose service-role keys in frontend code or GitHub.
 
-## Required secrets for optional email
-Set in Supabase Edge Functions secrets (never commit them):
-- RESEND_API_KEY
-- OWNER_NOTIFICATION_EMAIL
-- RESEND_FROM_EMAIL (verified sender/domain)
-Optional RATE_LIMIT_HASH_SALT is a random secret to strengthen IP hashing.
+## Optional owner email
+No sender is configured. To enable email, add secrets in Supabase Edge Function secrets only: `RESEND_API_KEY`, `OWNER_NOTIFICATION_EMAIL`, `RESEND_FROM_EMAIL`, optionally `RATE_LIMIT_HASH_SALT`.
+## Current scope
+Admin supports leads, status, follow-up notes, notifications and a basic project list. Customer conversion and milestone editing are not implemented yet. Legal notices remain drafts for legal/provider review.
