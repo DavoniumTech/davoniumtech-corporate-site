@@ -58,6 +58,14 @@ const CORE = [
   routeUrl("assets/js/davonium-v67-runtime-1cc05e0e92ea.js"),
   routeUrl("assets/images/davonium-d-icon.webp"),
   routeUrl("assets/images/dvnm-bot-cutout.webp")
+  routeUrl("business-launch-kit.html"),
+  routeUrl("business-launch-kit"),
+  routeUrl("assets/css/davonium-v69-business-launch-kit.css"),
+  routeUrl("assets/js/davonium-v69-backend-config.js"),
+  routeUrl("assets/js/davonium-v69-enquiry-client.js"),
+  routeUrl("assets/js/davonium-v69-cookie-consent.js"),
+  routeUrl("assets/js/davonium-v69-contact-form.js"),
+  routeUrl("assets/js/davonium-v69-project-builder-submit.js"),
 ];
 const homePath = BASE_URL.pathname;
 const explicitIndexPath = new URL('index.html', BASE_URL).pathname;
