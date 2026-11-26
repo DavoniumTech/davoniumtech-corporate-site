@@ -31,3 +31,10 @@ The current V68 review candidate builds on the owner-supplied archive, whose rec
 This candidate has passed the static source checks and local HTTP route checks listed in `DAVONIUM-V68-QA-REPORT.md`. Browser-based visual, manual interaction, real-device and live PageSpeed checks remain release gates. **This package has not been published to GitHub or deployed to Cloudflare.** Do not deploy it until the owner reviews the package and explicitly approves publication.
 
 See `DAVONIUM-V68-RELEASE-NOTES.md`, `DAVONIUM-V68-IMPLEMENTATION-PLAN.md` and `DAVONIUM-V68-DEPLOYMENT-GUIDE.md` for scope and next checks.
+
+ 
+## V70 — Corporate homepage redesign
+
+V70 establishes a new owner-directed homepage art direction based on the supplied Davonium campaign reference: deep navy, silver ribbon movement, restrained cyan highlights, a prominent DVNM Bot presentation, a mobile website preview and a direct Business Launch Kit pathway. The existing corporate routes, Demo Studio destinations, QR asset, product status content, service content, DVNM Bot interaction, PWA and backend integrations are preserved. The redesign is scoped to the public homepage; it does not claim that the admin authentication issue has been resolved. The service-worker cache namespace is rotated to make the new homepage stylesheet available after deployment.
+
+Release validation: source-level checks and GitHub main-branch verification are recorded in the V70 delivery summary. Live Cloudflare deployment and manual browser/device visual QA must still be confirmed after Pages publishes the updated main branch.
