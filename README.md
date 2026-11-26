@@ -1,45 +1,71 @@
-# Davonium Technologies — V68 Premium Multicolour UI Review Candidate
+# Davonium Technologies — Corporate Website (V70)
 
-This repository root is the static website document root. It contains the corporate website, company and product pages, documentation, eight independent Demo Studio experiences and five owner-workspace previews, images and icons, PWA files, Cloudflare Pages configuration, redirects, and security headers.
+The repository root is the static website document root for the Davonium Technologies public corporate website.
 
-## Deployment
+## Production
 
-- Production domain: `https://www.davoniumtech.com/`
-- GitHub production branch: `main`
-- Cloudflare Pages project root: `/`
-- Build command: none (static HTML/CSS/JavaScript site)
-- Keep the previous production commit or ZIP as a rollback point before deploying a new release.
-- Test the deployed preview before promoting changes to `main`.
-- Do not put access tokens, private keys, passwords, or `.env` files in the public repository.
+- Website: https://www.davoniumtech.com/
+- Production branch: `main`
+- Hosting: Cloudflare Pages
+- Root directory: `/`
+- Build command: none (static HTML, CSS and JavaScript)
+- The connected Pages project should publish commits from `main`.
 
-## V66 release
+## V70 site-wide design direction
 
-V66 is a performance and technical SEO foundation pass. It preserves the approved dark navy / blue / cyan corporate identity and existing navigation, product information, demo experiences, and PWA behaviour. The local CSS and deferred JavaScript stacks are bundled in their original cascade/execution order, the three Google Fonts stylesheet requests are consolidated, and large editorial photos are optimized as WebP. The PWA cache name is rotated so the updated bundles can be cached cleanly.
+V70 carries the owner-approved visual direction across the corporate website: deep navy, silver-toned motion and surfaces, white typography, restrained cyan highlights, clear calls to action, and a calmer information hierarchy. The homepage has a dedicated new hero composition with DVNM Bot, an illustrative mobile site preview and a Business Launch Kit pathway. The shared V70 design rules also apply to the existing About, Services, Products, Pricing, Work, Business Launch Kit, Contact, Support, Project Builder, Install, Demo Studio, workspace, documentation and legal page families through the shared corporate stylesheet.
 
-See `DAVONIUM-V66-PERFORMANCE-SEO-RELEASE-NOTES.md` for the detailed changes, measurements, verification notes, and post-deployment checklist.
+The redesign is progressive: it preserves existing page content, page routes, enquiry form behaviour, PWA features, DVNM Bot controls, QR assets, and the independent identities of the eight demo experiences. It does not replace functioning features with static mockups.
 
+## Company structure and product boundaries
 
-## V67 commercial launch foundation
+Davonium Technologies operates two distinct divisions:
 
-See `DAVONIUM-V67-RELEASE-NOTES.md` for the pricing page, guided project builder, five sample workspace previews, lightweight starfield and deployment limitations.
+1. **Digital Solutions** — client services including websites, web applications, mobile apps, custom software, business systems, automation, digital presence and delivery support.
+2. **Commercial Software Products** — Davonium-owned software products with their own product goals, roadmaps and customer environments.
 
+Product boundaries shown in public company content:
 
-## V68 — Premium multicolour experience (review candidate)
+- Ready2Go Learning — learning and exam-preparation product in development.
+- Marvel Chat — communication product with an initial build and active development.
+- DVNM TradeFlow — separate wholesale and distribution software initiative in development, with its own product architecture, database, deployments and customer environment.
+- Davonium Nexus — Davonium's private internal operating system and command centre. It is not presented as a customer-facing SaaS product and is separate from TradeFlow.
 
-The current V68 review candidate builds on the owner-supplied archive, whose reconstructed Git tree was verified against the existing V68 `main` commit `c2312478f1b155dc6184c4c3b63412b22841a846`. It introduces a new corporate homepage composition, a shared visual system, eight independently art-directed demo routes, five product-specific sample workspaces, and an accessible Demo Studio filter. It remains front-end only. The source archive already contained earlier V68 styling and demo files; see `DAVONIUM-V68-UI-AUDIT.md` for the source-provenance note and the actual changes in this revision.
+Product availability and feature status must remain truthful. Do not publish release dates, customer outcomes, testimonials, performance figures or pricing that have not been approved and verified.
 
-This candidate has passed the static source checks and local HTTP route checks listed in `DAVONIUM-V68-QA-REPORT.md`. Browser-based visual, manual interaction, real-device and live PageSpeed checks remain release gates. **This package has not been published to GitHub or deployed to Cloudflare.** Do not deploy it until the owner reviews the package and explicitly approves publication.
+## Public site map
 
-See `DAVONIUM-V68-RELEASE-NOTES.md`, `DAVONIUM-V68-IMPLEMENTATION-PLAN.md` and `DAVONIUM-V68-DEPLOYMENT-GUIDE.md` for scope and next checks.
+- Corporate: Home, About, Services, Products, Pricing, Work, Contact, Support, Install.
+- Business Launch Kit: industry-tailored online presence and launch materials.
+- Guided Project Builder: structured enquiry brief and contact handoff.
+- Demo Studio: eight independent demonstration experiences — business, commerce, creative, learning, technology, marketing, community and showcase.
+- Workspaces: five illustrative product-specific workspace previews.
+- Documentation and legal pages: product guides, engineering guides, privacy, cookies and terms.
 
- 
-## V70 — Corporate homepage redesign
+Demo and workspace sample data must continue to be labelled as illustrative/local-only where applicable. It must not be represented as customer records or live production business operations.
 
-V70 establishes a new owner-directed homepage art direction based on the supplied Davonium campaign reference: deep navy, silver ribbon movement, restrained cyan highlights, a prominent DVNM Bot presentation, a mobile website preview and a direct Business Launch Kit pathway. The existing corporate routes, Demo Studio destinations, QR asset, product status content, service content, DVNM Bot interaction, PWA and backend integrations are preserved. The redesign is scoped to the public homepage; it does not claim that the admin authentication issue has been resolved. The service-worker cache namespace is rotated to make the new homepage stylesheet available after deployment.
+## Backend and form boundaries
 
-Release validation: source-level checks and GitHub main-branch verification are recorded in the V70 delivery summary. Live Cloudflare deployment and manual browser/device visual QA must still be confirmed after Pages publishes the updated main branch.
+The contact form and guided project enquiry use the configured Supabase project and the `submit-enquiry` Edge Function for enquiry persistence. The browser configuration uses a publishable key only. Never place service-role keys, Supabase secret keys, database passwords, mail-provider secrets or other credentials in public repository files.
 
+The private Admin Lead Desk is a separate authenticated area. This V70 public-site visual release does not claim to resolve or validate the outstanding browser sign-in issue. Do not weaken row-level security or expose private lead data to make a visual change.
 
-## V70 — full corporate site system and business structure
+## Pricing and Business Launch Kit
 
-The V70 shared design-system pass extends the new navy, silver, cyan Davonium identity across the corporate page family and existing linked pages (demos, workspaces, documentation and legal content) through the shared V68 design-system stylesheet. It establishes a common page-hero, navigation, card, form, CTA and footer treatment while retaining each route's content and interactive behaviour. The About page now explains the two company divisions: Digital Solutions (client services) and Commercial Software Products (Davonium-owned software). The Products and Work pages distinguish DVNM TradeFlow as a separate commercial wholesale/distribution software initiative from Davonium Nexus, which remains an internal company operating system. No fabricated customer outcomes or unapproved prices have been introduced. The Supabase enquiry backend is preserved; no credentials or database policies were modified in this visual/content pass.
+Public package prices remain unapproved and are intentionally shown as quote-led until Davonium approves the figures and scope. Keep inclusions, exclusions, revisions, hosting/domain costs and ongoing service boundaries clear.
+
+## PWA and site quality
+
+Preserve the web manifest, service worker, offline page, installation route, QR artwork, route redirects, security headers, theme control and accessible mobile navigation. Rotate the cache namespace when shared assets change so visitors can receive the latest stylesheet and scripts.
+
+## Deployment and release verification
+
+A GitHub commit on `main` is the source update; it does not, by itself, prove Cloudflare Pages has deployed the commit. After a release:
+
+1. Confirm the Cloudflare Pages deployment corresponds to the latest `main` commit.
+2. Open the homepage and every principal corporate route on desktop and mobile.
+3. Test menu navigation, CTA destinations, the Business Launch Kit, project builder, contact submission, support links and product status links.
+4. Check all eight demo destinations, workspace previews, documentation, legal routes and 404/offline behaviour.
+5. Test the PWA install prompt and service-worker cache update.
+6. Confirm forms persist enquiries and never expose private records.
+7. Record any browser/device failures rather than claiming untested functionality as production-ready.

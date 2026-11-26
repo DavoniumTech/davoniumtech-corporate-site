@@ -1,44 +1,54 @@
-# Davonium Technologies — V70 Corporate Homepage Redesign
+# Davonium Technologies — V70 Full Corporate Website Transformation
 
-**Target branch:** main  
-**Design reference:** Owner-supplied Davonium Technologies campaign image  
-**Scope:** Public homepage visual redesign and PWA stylesheet cache update
+**Production branch:** `main`  
+**Production source:** `DavoniumTech/davoniumtech-corporate-site`  
+**Visual reference:** Owner-supplied Davonium Technologies campaign artwork  
+**Scope:** Full public corporate website design-system alignment and brand/content corrections.
 
-## Visual direction
+## Delivered in V70
 
-- Deep navy hero background with restrained circuit-grid texture.
-- Bright cyan emphasis, clear large-format typography and simple calls to action.
-- Silver ribbon paths to create movement without adding heavy 3D or framework dependencies.
-- Existing DVNM Bot cutout as the main brand character.
-- CSS-built mobile website preview and the existing real Davonium website QR asset.
-- Dedicated Business Launch Kit call-to-action linking to the existing service page.
+### Visual system
+- Reworked the homepage hero around the approved navy, silver and cyan art direction.
+- Introduced a consistent corporate site shell across the existing core page family.
+- Unified page hero treatments, typography hierarchy, navigation, buttons, section surfaces, cards, forms and footer styling.
+- Added responsive handling for phone, tablet and desktop layouts, plus reduced-motion handling.
+- Applied the shared design system to page families that already load the common corporate stylesheet, including demos, workspaces, documentation and legal routes.
 
-## Preserved
+### Public corporate pages
+- Home: new hero scene, DVNM Bot, mobile website preview, QR visual and Business Launch Kit CTA.
+- About: explicit Digital Solutions and Commercial Software Products divisions.
+- Services: client-service positioning and the corrected eight-demo reference.
+- Products: Ready2Go Learning, Marvel Chat and DVNM TradeFlow, with honest development labels.
+- Work: honest development portfolio; no invented clients or results.
+- Pricing: quote-led package scope retained; unapproved price figures are not published.
+- Business Launch Kit: connected to the shared visual shell and main navigation.
+- Contact and Project Builder: existing enquiry fields and backend integration preserved.
+- Support and Install: brought into the same corporate visual system.
 
-- Existing navigation routes and public pages.
-- Demo Studio and all eight demo destinations.
-- Products and their current truthful development-status descriptions.
-- Business Launch Kit content and project-builder path.
-- Existing service descriptions and image gallery.
-- Website QR asset, DVNM Bot audio controls, PWA manifest, and other site features.
-- Existing Supabase enquiry integration and database configuration; this release does not change credentials or database policies.
-- Existing admin code remains untouched by this homepage visual release.
+### Product architecture and content integrity
+- DVNM TradeFlow is presented as a separate Davonium-owned wholesale/distribution software initiative.
+- Davonium Nexus is clearly labelled as an internal company operating system/command centre, not a public customer SaaS.
+- Ready2Go Learning and Marvel Chat retain their existing development-status disclosures.
+- The website does not claim unverified customers, case-study outcomes, ratings, or performance figures.
 
-## Files changed
+### Preserved
+- Existing routes and page content.
+- Eight independent Demo Studio experiences.
+- Five workspace previews and their sample-data boundaries.
+- Documentation and legal content.
+- Supabase enquiry submission integration.
+- DVNM Bot artwork and interaction controls.
+- QR artwork, manifest, service worker, offline route and install flow.
 
-- index.html — updated release metadata, SEO title/description, homepage hero composition, and stylesheet link.
-- assets/css/davonium-v70-home.css — responsive homepage art direction.
-- sw.js — V70 cache namespace and homepage stylesheet precache.
-- README.md — release overview.
+## Files and implementation notes
 
-## Validation
+- `index.html`: homepage hero and product-family copy.
+- `assets/css/davonium-v70-home.css`: homepage-specific art direction.
+- `assets/css/davonium-v68-premium-system.css`: shared V70 site-wide design system appended for existing page families.
+- `sw.js`: V70 cache namespace and homepage stylesheet precache.
+- Corporate content pages: About, Services, Products, Work, Pricing, Business Launch Kit, Contact, Support, Project Builder and Install.
+- Main navigation: Business Launch Kit link added to the corporate and main entry-page navigation.
 
-- Verify all hero asset paths exist in the repository.
-- Verify the homepage stylesheet is linked after previous homepage styles.
-- Verify sw.js includes the new stylesheet and uses a new cache namespace.
-- Verify the homepage's original Demo Studio and section IDs remain present.
-- Verify the release is pushed directly to main.
+## Verification boundary
 
-## Deployment gate
-
-GitHub main is the production source for the connected static Cloudflare Pages site. GitHub source verification does not itself prove Cloudflare deployment or real-device rendering. After the Pages deployment completes, check the live homepage on desktop and mobile, test navigation/menu, Business Launch Kit links, Demo Studio cards, DVNM Bot controls and PWA install/offline behaviour.
+GitHub main-branch source was checked for the V70 stylesheet, required home assets, preserved homepage sections, page-family navigation additions and company product-boundary copy. This is source verification, not a visual browser test. Cloudflare deployment identity, real-device rendering, the working contact form, enquiry persistence and the separate admin login still require live checks before being declared passed.
