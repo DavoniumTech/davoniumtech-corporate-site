@@ -162,3 +162,38 @@ body.dv70-home{background:#f7f9fc;color:#102236}
 @media(prefers-reduced-motion:reduce){
  .dv70-home .dv70-hero *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+/* Honour the existing site theme toggle while keeping the hero art direction constant. */
+:root[data-theme="dark"] body.dv70-home{background:#0c1725;color:#e8f2f8}
+:root[data-theme="dark"] .dv70-home #demo-studio,
+:root[data-theme="dark"] .dv70-home #website-qr,
+:root[data-theme="dark"] .dv70-home #dvnm-bot,
+:root[data-theme="dark"] .dv70-home #products,
+:root[data-theme="dark"] .dv70-home #services-preview{background:#0e1b2a;color:#e8f2f8}
+:root[data-theme="dark"] .dv70-home .section-head h2,
+:root[data-theme="dark"] .dv70-home #website-qr h2,
+:root[data-theme="dark"] .dv70-home #dvnm-bot h2{color:#edf7fc}
+:root[data-theme="dark"] .dv70-home .section-head p,
+:root[data-theme="dark"] .dv70-home #website-qr p,
+:root[data-theme="dark"] .dv70-home #dvnm-bot p{color:#a8bac8}
+:root[data-theme="dark"] .dv70-home #demo-studio .dvnm-demo-card,
+:root[data-theme="dark"] .dv70-home #services-preview .card,
+:root[data-theme="dark"] .dv70-home #products .product-card{background:#142438;border-color:#2b4053}
+:root[data-theme="dark"] .dv70-home #demo-studio .dvnm-demo-copy h3,
+:root[data-theme="dark"] .dv70-home #services-preview .card h3,
+:root[data-theme="dark"] .dv70-home #products .product-card h3{color:#edf7fc}
+:root[data-theme="dark"] .dv70-home #demo-studio .dvnm-demo-copy p,
+:root[data-theme="dark"] .dv70-home #services-preview .card p,
+:root[data-theme="dark"] .dv70-home #products .product-card p{color:#a8bac8}
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit{background:linear-gradient(135deg,#13263a,#0d1b2c);border-color:#2a455a;color:#e9f2f8}
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit h2,
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit-card h3{color:#eff8fc}
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit-intro,
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit-card ul,
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit-note{color:#a8bac8}
+:root[data-theme="dark"] .dv70-home #business-launch-kit .v69-kit-card{background:#172d42;border-color:#304c61}
+:root[data-theme="dark"] .dv70-home .quote{background:#142438;border-color:#2b4053}
+:root[data-theme="dark"] .dv70-home .quote blockquote{color:#edf7fc}
+:root[data-theme="dark"] .dv70-home .band{background:#142438;border-color:#2b4053}
+:root[data-theme="dark"] .dv70-home .band h2{color:#edf7fc}
+:root[data-theme="dark"] .dv70-home .band p{color:#a8bac8}
