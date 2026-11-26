@@ -3,7 +3,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), display-capture=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000
 
 # The responsive Demo Preview embeds only the eight public sample websites.
@@ -13,49 +13,49 @@
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/shop.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/portfolio.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/learning.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/technology.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/marketing.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/community.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 /demos/certificate.html
   ! X-Frame-Options
   X-Frame-Options: SAMEORIGIN
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co; font-src 'self' data: https://fonts.gstatic.com; form-action 'self' mailto:; frame-ancestors 'self'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; upgrade-insecure-requests
 
 # HTML/extensionless routes revalidate; the more specific static-asset rules below assign longer caching.
 /*
