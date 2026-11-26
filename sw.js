@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker - V68 premium visual transformation. */
-const CACHE_NAME = 'davonium-site-v69-platform-20261126-r1';
+const CACHE_NAME = 'davonium-site-v69-platform-20261126-r2';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -134,7 +134,9 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || !url.pathname.startsWith(BASE_URL.pathname)) return;
-  if (/^\/admin(?:\/|$)|\/auth(?:\/|$)/i.test(url.pathname)) return; // never cache private pages
+  if (/^\/admin(?:\/|$)|\/auth(?:\/|$)/i.test(url.pathname)) return; // never cache private pages or admin routes
+  // Admin login/client/config assets must always be fetched fresh to prevent stale auth scripts.
+  if (/davonium-v69-admin(?:-backend-config)?\.js$/.test(url.pathname)) { event.respondWith(fetch(request, { cache: 'no-store' })); return; }
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
