@@ -121,7 +121,7 @@ Deno.serve(async (req: Request) => {
           from: fromEmail,
           to: [ownerEmail],
           subject: "New Davonium website enquiry",
-          text: "Name: " + name + "\\nEmail: " + email + "\\nService: " + service + "\\n\\n" + message,
+          text: "Name: " + name + "\nEmail: " + email + "\nService: " + service + "\n\n" + message,
         }),
       });
       emailNotificationAccepted = emailResponse.ok;
