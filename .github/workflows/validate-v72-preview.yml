@@ -1,0 +1,143 @@
+name: Validate V72 redesign preview
+
+on:
+  push:
+    branches:
+      - redesign/conversion-first-20261128
+
+permissions:
+  contents: read
+
+jobs:
+  static-preview-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out redesign branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check V72 JavaScript syntax
+        run: |
+          node --check assets/js/davonium-v72-theme-init.js
+          node --check assets/js/davonium-v72-home.js
+      - name: Validate V72 homepage, links and assets
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import re
+
+          root = Path(".")
+          page = root / "index.html"
+          html = page.read_text(encoding="utf-8")
+
+          class Audit(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = []
+                  self.h1 = 0
+                  self.buttons_without_name = []
+                  self.resources = []
+                  self.links = []
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if "id" in a:
+                      self.ids.append(a["id"])
+                  if tag == "h1":
+                      self.h1 += 1
+                  if tag == "button":
+                      if not a.get("aria-label") and not a.get("title"):
+                          self.buttons_without_name.append(a.get("id", "(no id)"))
+                  for key in ("src", "href"):
+                      value = a.get(key, "")
+                      if value:
+                          if key == "src":
+                              self.resources.append(value)
+                          elif tag == "a":
+                              self.links.append(value)
+
+          audit = Audit()
+          audit.feed(html)
+          if audit.h1 != 1:
+              raise SystemExit(f"Homepage needs exactly one H1; found {audit.h1}.")
+          duplicates = sorted({x for x in audit.ids if audit.ids.count(x) > 1})
+          if duplicates:
+              raise SystemExit("Duplicate IDs: " + ", ".join(duplicates))
+          if audit.buttons_without_name:
+              raise SystemExit("Buttons without accessible names: " + ", ".join(audit.buttons_without_name))
+
+          for value in audit.resources:
+              u = urlparse(value)
+              if u.scheme or u.netloc or value.startswith("data:"):
+                  continue
+              target = root / value.lstrip("/")
+              if not target.is_file():
+                  raise SystemExit("Missing local asset: " + value)
+
+          missing_routes = []
+          for value in audit.links:
+              u = urlparse(value)
+              if u.scheme or u.netloc or value.startswith(("mailto:", "tel:", "javascript:", "#")):
+                  continue
+              path = u.path
+              if not path or path == "/":
+                  target = root / "index.html"
+              else:
+                  target = root / path.lstrip("/")
+                  if path.endswith("/"):
+                      target = target / "index.html"
+                  elif not target.suffix:
+                      target = target.with_suffix(".html")
+                  if not target.exists() and not path.endswith("/"):
+                      candidate = root / path.lstrip("/") / "index.html"
+                      if candidate.exists():
+                          target = candidate
+              if not target.exists():
+                  missing_routes.append(value)
+          if missing_routes:
+              raise SystemExit("Unresolved local routes: " + ", ".join(sorted(set(missing_routes))))
+
+          required = [
+              "assets/css/davonium-v72-home.css",
+              "assets/js/davonium-v72-theme-init.js",
+              "assets/js/davonium-v72-home.js",
+              "assets/images/dvnm-bot-cutout.webp",
+              "assets/images/davonium-website-qr.png",
+              "demos/index.html", "workspaces/index.html",
+              "services.html", "products.html", "pricing.html",
+              "about.html", "work.html", "contact.html", "project-builder.html",
+          ]
+          missing = [p for p in required if not (root / p).is_file()]
+          if missing:
+              raise SystemExit("Missing release files: " + ", ".join(missing))
+
+          for route in ["business", "shop", "portfolio", "learning", "technology", "marketing", "community", "certificate"]:
+              if not (root / "demos" / (route + ".html")).is_file():
+                  raise SystemExit("Missing independent demo: " + route)
+          for route in ["biz", "market", "creative", "skills", "digital"]:
+              if not (root / "workspaces" / (route + ".html")).is_file():
+                  raise SystemExit("Missing Forge workspace: " + route)
+
+          if "davonium-v67-styles" in html or "davonium-v70-home.css" in html or "davonium-v67-runtime" in html:
+              raise SystemExit("V72 homepage still loads legacy homepage CSS/runtime bundles.")
+          if "https://www.davoniumtech.com/" not in html:
+              raise SystemExit("Canonical homepage URL missing.")
+          if not re.search(r'<meta name="davonium-release" content="V72-preview">', html):
+              raise SystemExit("V72 preview release marker missing.")
+
+          print("V72 preview validation passed: scripts, unique IDs, one H1, accessible buttons, local resources, internal routes, eight demos and five workspaces.")
+          PY
+      - name: Check V72 stylesheet structure
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          css = Path("assets/css/davonium-v72-home.css").read_text(encoding="utf-8")
+          if css.count("{") != css.count("}"):
+              raise SystemExit("V72 stylesheet has unbalanced braces.")
+          if "@media(prefers-reduced-motion:reduce)" not in css and "@media (prefers-reduced-motion:reduce)" not in css:
+              raise SystemExit("Reduced-motion support is missing.")
+          print("V72 stylesheet structure check passed.")
+          PY
