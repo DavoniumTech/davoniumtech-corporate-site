@@ -1,5 +1,5 @@
-/* Davonium Technologies PWA service worker - V68 premium visual transformation. */
-const CACHE_NAME = 'davonium-site-v70-home-20261126-r1';
+/* Davonium Technologies PWA service worker - V71 full-site cache refresh. */
+const CACHE_NAME = 'davonium-site-v71-full-site-20261127-r1';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -62,6 +62,7 @@ const CORE = [
   routeUrl("business-launch-kit"),
   routeUrl("assets/css/davonium-v69-business-launch-kit.css"),
   routeUrl("assets/css/davonium-v70-home.css"),
+  routeUrl("assets/css/davonium-v71-site.css"),
   routeUrl("assets/js/davonium-v69-backend-config.js"),
   routeUrl("assets/js/davonium-v69-enquiry-client.js"),
   routeUrl("assets/js/davonium-v69-cookie-consent.js"),
