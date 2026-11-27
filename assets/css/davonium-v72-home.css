@@ -175,8 +175,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
  .v72-nav{gap:10px}.v72-links{gap:1px}.v72-links a{padding-inline:8px;font-size:.76rem}
  .v72-actions>.v72-header-cta{display:none}
  .v72-menu{display:inline-grid}
- .v72-links{position:absolute;top:calc(100% + 8px);left:0;right:0;display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:12px;border:1px solid var(--v72-line);border-radius:18px;background:var(--v72-panel-solid);box-shadow:var(--v72-shadow)}
- .v72-links.open{display:grid}
+ .v72-links{position:absolute;top:calc(100% + 8px);left:0;right:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:12px;border:1px solid var(--v72-line);border-radius:18px;background:var(--v72-panel-solid);box-shadow:var(--v72-shadow)}
+ html.v72-js .v72-links{display:none}
+ html.v72-js .v72-links.open{display:grid}
  .v72-links a{min-height:44px;padding:10px 12px;font-size:.86rem}
  .v72-hero-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.9fr)}
  .v72-hero-stage{min-height:500px}.v72-bot-image{height:520px}
