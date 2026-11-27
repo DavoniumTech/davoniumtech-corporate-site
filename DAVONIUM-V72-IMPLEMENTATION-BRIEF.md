@@ -258,13 +258,44 @@ Keep five DVNM Forge workspaces: Biz, Market, Creative, Skills and Digital. Thei
 - [ ] PageSpeed/Core Web Vitals measured; no unverified performance claims.
 - [ ] Private admin authentication and RLS tested separately.
 
-## 15. External access required to finish full verification
+## 15. Access, backend and deployment verification
 
-The GitHub connection can read and write to the corporate repository; the V71 backup and redesign branches have been created. No production files have been changed yet.
-
-The current conversation does not have a connected Supabase project tool or Cloudflare account tool. A Supabase connection is needed to inspect the actual production schema, rate-limit RPC, deployed Edge Function, secrets presence (without exposing them), RLS and live lead persistence. A Cloudflare connection or owner-side dashboard check is needed to verify Pages deployment and create/inspect previews.
+The GitHub connection can read and write to the corporate repository; the V71 backup and redesign branches exist. The Supabase connection is now active and the website's configured project has been inspected.
 
 The two shared ChatGPT conversation URLs supplied for the earlier website plan could not be retrieved as readable transcripts in this session. Their exact approved decisions must be incorporated before treating the design brief as a complete transcription of that plan. The AI discussion link is intentionally out of scope for this phase.
+
+Cloudflare account/deployment access is still not connected. The production Pages deployment and preview URL must be verified separately.
+
+### Supabase audit — 28 November 2026
+
+The website's public browser configuration points to project ref `jaswikaaecfgqrxooubv`, whose current Supabase project name is **`davonium-corporate-staging`**, region `eu-west-1`, database PostgreSQL 17.12, status `ACTIVE_HEALTHY`. The deployed website therefore sends public enquiries to a project explicitly named staging. Before announcing the site or changing any credentials, confirm that this is intentionally the live lead destination. Do not silently replace it; switching projects requires a production data, backup, Auth, function, redirect and DNS/configuration plan.
+
+Verified backend facts:
+- The deployed `submit-enquiry` Edge Function is ACTIVE, version 1, with `verify_jwt=false`. The deployed source retrieved from Supabase matches the repository's `supabase/functions/submit-enquiry/index.ts`.
+- This function is intentionally public because a visitor does not need an account to enquire. Its handler still enforces allowed browser origins, POST-only behaviour, a 16 KB request size limit, required fields, privacy consent, a honeypot and a database-backed IP-hash rate limiter. The limiter permits up to five requests per 15-minute window and removes old records after 30 days. Origin checks/CORS are not authentication because non-browser clients can forge an Origin header; server-side validation and rate limiting remain essential.
+- Public tables `admin_users`, `leads`, `lead_activities`, `customers`, `projects`, `project_milestones`, and `notifications` all have RLS enabled. The policies inspected use `auth.uid()` and an active `admin_users` membership, with role-specific access for leads, activity, customers and project operations. No anonymous SELECT grant was found for these tables.
+- Supabase Auth contains one user with a confirmed email, a recorded sign-in, no active ban, and one active `owner` membership in `admin_users`. This verifies the membership record exists, but it does not replace a fresh browser login test.
+- The current database reports zero rows in `leads`, `lead_activities`, and `notifications`. The available recent Edge log window showed no invocation of `submit-enquiry`. Consequently, a live end-to-end public form submission has **not** been verified.
+- The private `enquiry_rate_limits` table has RLS disabled, and Supabase's security advisor labels this critical. Additional privilege checks show `anon` and `authenticated` lack USAGE on schema `private` and have no direct table privileges; `service_role` has the required table privileges. The `consume_enquiry_rate_limit(text)` function is SECURITY INVOKER, has an empty search path, and execute privilege is restricted to `service_role`. This materially reduces direct API exposure compared with the advisor's generic warning, but RLS remains recommended defense-in-depth. **Do not auto-apply** the advisor's SQL. Supabase explicitly warns that enabling RLS without a deliberate policy can block access; review the service-role execution model and then decide whether to apply `ALTER TABLE private.enquiry_rate_limits ENABLE ROW LEVEL SECURITY;`.
+- The security advisor also reports **Leaked Password Protection Disabled**. Enable Supabase Auth's compromised-password protection after reviewing the Auth settings and the impact on future sign-ups/password changes.
+- The performance advisor lists 12 unused indexes. This is a newly created staging project with very little traffic; do not drop indexes based on this early observation.
+- Two migrations are recorded in Supabase (`20261125231258` / `20261126120000_launch_platform_foundation`, and `20261125233416` / `20261126124500_role_scoped_access_and_security`), but the Git repository currently contains no SQL migration files. Export/version the database schema and RLS definitions into the source repository before ongoing production maintenance.
+
+### Edge Function behaviour that needs correction
+
+The current handler checks the primary `leads` insert, but does not check the returned errors from the `lead_activities` and `notifications` inserts. It returns a successful enquiry response even if either side-effect insert fails. The Resend notification is optional; the code also does not inspect the HTTP response's `ok` status. The next implementation should make the lead record the durable source of truth, check/log every side effect, and provide a dependable owner notification/retry path. Prefer a transaction-backed database operation for related records if they must always be created together. Do not tell a visitor an email was sent unless the provider confirms it.
+
+The function's use of `SUPABASE_SERVICE_ROLE_KEY` is server-side only in the deployed Edge Function source; no service-role key is present in the public browser configuration. The connector did not expose Edge Function secrets for inspection, so the presence/configuration of optional Resend secrets has not been verified.
+
+### Required live verification
+
+1. Submit one clearly labelled test enquiry from the actual custom domain, after confirming this staging project's intended role.
+2. Confirm exactly one lead row is created; confirm matching activity and notification rows.
+3. Confirm the owner receives the agreed notification; verify Resend delivery only if the email secrets are configured.
+4. Confirm the admin lead desk can sign in in a fresh desktop and Android browser, verify the active owner membership, read the lead, and update its status.
+5. Confirm anonymous API requests cannot read or modify lead records.
+6. Remove any test lead/activity/notification through the authorised admin workflow after the test, or clearly retain it as a labelled QA record.
+7. Confirm rate limiting and CORS behaviour without relying on forged-origin checks as the only anti-abuse control.
 
 ## 16. Next implementation order
 
