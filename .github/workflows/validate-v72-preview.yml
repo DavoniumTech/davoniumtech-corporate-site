@@ -22,6 +22,9 @@ jobs:
         run: |
           node --check assets/js/davonium-v72-theme-init.js
           node --check assets/js/davonium-v72-home.js
+          node --check assets/js/davonium-v69-enquiry-client.js
+          node --check assets/js/davonium-v69-contact-form.js
+          node --check assets/js/davonium-v69-project-builder-submit.js
       - name: Validate V72 homepage, links and assets
         run: |
           python3 - <<'PY'
@@ -123,6 +126,24 @@ jobs:
 
           if "davonium-v67-styles" in html or "davonium-v70-home.css" in html or "davonium-v67-runtime" in html:
               raise SystemExit("V72 homepage still loads legacy homepage CSS/runtime bundles.")
+          enquiry_client = (root / "assets/js/davonium-v69-enquiry-client.js").read_text(encoding="utf-8")
+          contact_client = (root / "assets/js/davonium-v69-contact-form.js").read_text(encoding="utf-8")
+          builder_client = (root / "assets/js/davonium-v69-project-builder-submit.js").read_text(encoding="utf-8")
+          if "DavoniumConsent" in enquiry_client:
+              raise SystemExit("Cookie preference must not block an enquiry when no optional trackers are installed.")
+          if "payload.privacy_consent" not in enquiry_client:
+              raise SystemExit("Required privacy notice consent validation is missing.")
+          for name, source in [("contact", contact_client), ("project builder", builder_client)]:
+              if all(key not in source for key in ["utm_source", "utm_medium", "utm_campaign"]):
+                  raise SystemExit(f"{name} form must pass campaign attribution fields.")
+
+          service_worker = (root / "sw.js").read_text(encoding="utf-8")
+          if "davonium-site-v72-content-20261128-preview" not in service_worker:
+              raise SystemExit("V72 service-worker cache version is missing.")
+          for asset in ["davonium-v72-home.css", "davonium-v72-theme-init.js", "davonium-v72-home.js"]:
+              if asset not in service_worker:
+                  raise SystemExit("V72 asset missing from service-worker precache: " + asset)
+
           if "https://www.davoniumtech.com/" not in html:
               raise SystemExit("Canonical homepage URL missing.")
           if not re.search(r'<meta name="davonium-release" content="V72-preview">', html):
