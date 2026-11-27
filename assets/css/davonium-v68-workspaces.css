@@ -111,3 +111,22 @@ body[data-workspace-page]{--wk-foreground-accent:var(--wk-accent)}
 #main.workspace-page .workspace-index-card h2{color:var(--index-accent,#7652de)}
 :root[data-theme="dark"] #main.workspace-page .workspace-index-card h2,:root[data-theme="dark"] #main.workspace-page .workspace-index-card a{color:color-mix(in srgb,var(--index-accent,#7652de) 52%,white)}
 #main.workspace-page .workspace-index-card a{color:var(--index-accent,#7652de);font-weight:850}
+
+/* DVNM Forge V71 — local workspace builder controls */
+.wk-forge-toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 15px;padding:10px 12px;border:1px solid var(--wk-line);border-radius:14px;background:var(--surface-solid)}
+.wk-forge-brand{margin-right:auto;color:var(--wk-accent);font-size:.68rem;font-weight:950;letter-spacing:.16em}
+.wk-forge-toolbar button{min-height:34px;padding:7px 10px;font-size:.68rem}
+.wk-forge-toolbar button:disabled{opacity:.4;cursor:not-allowed}
+.wk-save-state{color:var(--muted);font-size:.68rem;font-weight:750}
+.wk-media-panel{margin-top:16px}
+.wk-media-upload{display:inline-flex;position:relative;overflow:hidden;align-items:center;justify-content:center;cursor:pointer;margin:6px 0 14px}
+.wk-media-upload input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.wk-media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.wk-media-item{min-width:0;overflow:hidden;border:1px solid var(--wk-line);border-radius:12px;background:var(--surface-solid)}
+.wk-media-item img{display:block;width:100%;height:115px;object-fit:cover;background:var(--wk-accent-soft)}
+.wk-media-item>div{display:grid;gap:3px;padding:9px 10px;min-width:0}
+.wk-media-item strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.73rem}
+.wk-media-item small{color:var(--muted);font-size:.65rem}
+.wk-media-item button{margin:0 8px 8px}
+.wk-app-footer{flex-wrap:wrap}
+@media(max-width:700px){.wk-forge-toolbar{align-items:stretch}.wk-forge-brand{width:100%;margin-bottom:4px}.wk-forge-toolbar button{flex:1 1 calc(33.33% - 7px)}.wk-save-state{width:100%;text-align:right}}

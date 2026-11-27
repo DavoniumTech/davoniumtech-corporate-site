@@ -43,6 +43,204 @@
     if (el) el.textContent = message;
   }
   function safeItems(name) { return (state[name] || []).slice(); }
+
+  // DVNM Forge V71: browser-local persistence, undo/redo, import/export and media library.
+  var storageKey = 'dvnm-forge-v1:' + key;
+  var undoStack = [];
+  var redoStack = [];
+  var mediaItems = [];
+  var mediaUrls = Object.create(null);
+  var mediaDbPromise = null;
+  var persistenceAvailable = true;
+
+  function cloneModules(value) { return JSON.parse(JSON.stringify(value || {})); }
+  function validModules(value) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+    return Object.keys(value).every(function (name) {
+      return Array.isArray(value[name]) && value[name].every(function (item) { return typeof item === 'string'; });
+    });
+  }
+  function loadSavedModules() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (saved && saved.version === 1 && validModules(saved.modules)) state = cloneModules(saved.modules);
+    } catch (_) { persistenceAvailable = false; }
+  }
+  function persistModules() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({version:1,workspace:key,updatedAt:new Date().toISOString(),modules:state}));
+      toast = 'Saved on this device.';
+      return true;
+    } catch (_) {
+      persistenceAvailable = false;
+      toast = 'Could not save. This browser may be low on storage space.';
+      return false;
+    }
+  }
+  function rememberChange() {
+    undoStack.push(cloneModules(state));
+    if (undoStack.length > 40) undoStack.shift();
+    redoStack = [];
+  }
+  function undoChange() {
+    if (!undoStack.length) { setToast('There are no more changes to undo.'); return; }
+    redoStack.push(cloneModules(state));
+    state = undoStack.pop();
+    persistModules();
+    toast = 'Change undone. Saved on this device.';
+    renderView();
+  }
+  function redoChange() {
+    if (!redoStack.length) { setToast('There are no changes to redo.'); return; }
+    undoStack.push(cloneModules(state));
+    state = redoStack.pop();
+    persistModules();
+    toast = 'Change restored. Saved on this device.';
+    renderView();
+  }
+  function openMediaDb() {
+    if (!('indexedDB' in window)) return Promise.reject(new Error('IndexedDB is not available in this browser.'));
+    if (mediaDbPromise) return mediaDbPromise;
+    mediaDbPromise = new Promise(function (resolve, reject) {
+      var request = indexedDB.open('davonium-dvnm-forge-media', 1);
+      request.onupgradeneeded = function () {
+        var db = request.result;
+        if (!db.objectStoreNames.contains('media')) db.createObjectStore('media', {keyPath:'id'});
+      };
+      request.onsuccess = function () { resolve(request.result); };
+      request.onerror = function () { reject(request.error || new Error('Could not open local media storage.')); };
+    });
+    return mediaDbPromise;
+  }
+  function loadMediaItems() {
+    return openMediaDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var request = db.transaction('media','readonly').objectStore('media').getAll();
+        request.onsuccess = function () {
+          mediaItems = (request.result || []).filter(function (item) { return item.workspace === key; });
+          resolve(mediaItems);
+        };
+        request.onerror = function () { reject(request.error || new Error('Could not read saved media.')); };
+      });
+    });
+  }
+  function storeMediaItem(record) {
+    return openMediaDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction('media','readwrite');
+        tx.objectStore('media').put(record);
+        tx.oncomplete = function () { resolve(record); };
+        tx.onerror = function () { reject(tx.error || new Error('Could not save media.')); };
+      });
+    });
+  }
+  function deleteMediaItem(id) {
+    return openMediaDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction('media','readwrite');
+        tx.objectStore('media').delete(id);
+        tx.oncomplete = function () { resolve(); };
+        tx.onerror = function () { reject(tx.error || new Error('Could not remove media.')); };
+      });
+    });
+  }
+  function mediaUrl(item) {
+    if (!mediaUrls[item.id]) mediaUrls[item.id] = URL.createObjectURL(item.blob);
+    return mediaUrls[item.id];
+  }
+  function safeFilename(name) {
+    return String(name || 'file').replace(/[^a-z0-9._-]+/gi,'-').replace(/^-+|-+$/g,'').slice(0,100) || 'file';
+  }
+  function downloadBlob(filename, blob) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+  }
+  function exportWorkspaceJson() {
+    var payload = {format:'dvnm-forge-workspace',schemaVersion:1,workspace:key,workspaceName:config.name,exportedAt:new Date().toISOString(),modules:state,media:mediaItems.map(function (m) { return {id:m.id,name:m.name,type:m.type,size:m.size,createdAt:m.createdAt}; })};
+    downloadBlob('dvnm-forge-' + key + '-workspace.json', new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));
+    setToast('Workspace JSON exported.');
+  }
+  function zipCrc32(bytes) {
+    var crc = -1;
+    for (var i=0;i<bytes.length;i++) {
+      crc ^= bytes[i];
+      for (var j=0;j<8;j++) crc = (crc >>> 1) ^ (-(crc & 1) & 0xedb88320);
+    }
+    return (crc ^ -1) >>> 0;
+  }
+  function zipBytes(files) {
+    var encoder = new TextEncoder(), local = [], central = [], offset = 0, centralSize = 0;
+    function u16(n) { return new Uint8Array([n & 255,(n >>> 8) & 255]); }
+    function u32(n) { return new Uint8Array([n & 255,(n >>> 8) & 255,(n >>> 16) & 255,(n >>> 24) & 255]); }
+    function join(parts) { return new Blob(parts).arrayBuffer().then(function (ab) { return new Uint8Array(ab); }); }
+    var chain = Promise.resolve();
+    files.forEach(function (file) {
+      chain = chain.then(function () {
+        var name = encoder.encode(file.name), dataPromise = file.data instanceof Uint8Array ? Promise.resolve(file.data) : file.data instanceof Blob ? file.data.arrayBuffer().then(function (ab) { return new Uint8Array(ab); }) : Promise.resolve(encoder.encode(String(file.data)));
+        return dataPromise.then(function (data) {
+          var crc = zipCrc32(data);
+          var header = join([u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0x21),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),name]);
+          return header.then(function (localHeader) {
+            local.push(localHeader,data);
+            var entry = join([u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0x21),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name]);
+            return entry.then(function (centralHeader) { central.push(centralHeader); centralSize += centralHeader.length; offset += localHeader.length + data.length; });
+          });
+        });
+      });
+    });
+    return chain.then(function () {
+      var end = join([u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(centralSize),u32(offset),u16(0)]);
+      return end.then(function (endHeader) { return new Blob(local.concat(central,[endHeader]),{type:'application/zip'}); });
+    });
+  }
+  function exportWorkspaceZip() {
+    var payload = {format:'dvnm-forge-workspace',schemaVersion:1,workspace:key,workspaceName:config.name,exportedAt:new Date().toISOString(),modules:state};
+    var files = [{name:'workspace.json',data:JSON.stringify(payload,null,2)},{name:'README.txt',data:'DVNM Forge local workspace export\nWorkspace: '+config.name+'\nBuilt with DVNM Forge by Davonium Technologies.\nAll records are local sample content unless replaced by the workspace owner.\n'}];
+    mediaItems.forEach(function (item) { files.push({name:'media/'+safeFilename(item.name),data:item.blob}); });
+    zipBytes(files).then(function (blob) {
+      downloadBlob('dvnm-forge-' + key + '-workspace.zip',blob);
+      setToast('Workspace ZIP exported with ' + mediaItems.length + ' media file(s).');
+    }).catch(function () { setToast('The ZIP export could not be created in this browser.'); });
+  }
+  function importWorkspaceJson(file) {
+    if (!file) return;
+    file.text().then(function (textValue) {
+      var payload = JSON.parse(textValue);
+      if (!payload || payload.format !== 'dvnm-forge-workspace' || payload.schemaVersion !== 1 || payload.workspace !== key || !validModules(payload.modules)) throw new Error('This file is not a valid export for this workspace.');
+      rememberChange();
+      state = cloneModules(payload.modules);
+      persistModules();
+      active = 'Overview'; query = ''; sortAsc = false;
+      toast = 'Workspace imported and saved on this device.';
+      renderShell();
+    }).catch(function (error) { setToast(error.message || 'Could not import this JSON file.'); });
+  }
+  function uploadMediaFiles(fileList) {
+    var files = Array.prototype.slice.call(fileList || []);
+    files = files.filter(function (file) {
+      return /^image\\/(png|jpeg|webp|gif|svg\\+xml)$/.test(file.type) && file.size <= 10 * 1024 * 1024;
+    });
+    if (!files.length) { setToast('Choose PNG, JPEG, WebP, GIF or SVG images up to 10 MB each.'); return; }
+    Promise.all(files.map(function (file) {
+      var id = key + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8);
+      return storeMediaItem({id:id,workspace:key,name:safeFilename(file.name),type:file.type,size:file.size,createdAt:new Date().toISOString(),blob:file});
+    })).then(function (saved) {
+      mediaItems = mediaItems.concat(saved);
+      renderView(); setToast(saved.length + ' media file(s) saved in this browser.');
+    }).catch(function (error) { setToast(error.message || 'Media upload failed.'); });
+  }
+  function renderMediaPanel() {
+    var cards = mediaItems.map(function (item) {
+      return '<article class="wk-media-item"><img src="' + esc(mediaUrl(item)) + '" alt="' + esc(item.name) + '"><div><strong>' + esc(item.name) + '</strong><small>' + Math.max(1,Math.round(item.size/1024)) + ' KB</small></div><button type="button" class="wk-secondary-button" data-action="remove-media" data-media-id="' + esc(item.id) + '">Remove</button></article>';
+    }).join('');
+    return '<section class="wk-panel wk-media-panel"><div class="wk-panel-head"><div><h2>Media library</h2><p>Upload images for this local workspace. Files stay in this browser and are included in ZIP exports.</p></div><span class="wk-sample-tag">' + mediaItems.length + ' files</span></div><label class="wk-primary-button wk-media-upload">＋ Upload images<input type="file" data-forge-media multiple accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"></label>' + (cards ? '<div class="wk-media-grid">' + cards + '</div>' : '<p class="wk-empty">No uploaded images yet. Add a few files to build this workspace media library.</p>') + '</section>';
+  }
+  function mediaPanelToolbar() {
+    return '<nav class="wk-forge-toolbar" aria-label="DVNM Forge tools"><span class="wk-forge-brand">DVNM FORGE</span><button type="button" class="wk-secondary-button" data-action="undo" ' + (!undoStack.length?'disabled':'') + '>↶ Undo</button><button type="button" class="wk-secondary-button" data-action="redo" ' + (!redoStack.length?'disabled':'') + '>↷ Redo</button><button type="button" class="wk-secondary-button" data-action="export-json">Export JSON</button><button type="button" class="wk-secondary-button" data-action="export-zip">Export ZIP</button><button type="button" class="wk-secondary-button" data-action="import-json">Import JSON</button><input type="file" data-forge-import accept="application/json,.json" hidden><span class="wk-save-state">' + (persistenceAvailable?'Autosave on':'Local storage unavailable') + '</span></nav>';
+  }
   function moduleNav() {
     return '<button type="button" data-module="Overview" ' + (active === 'Overview' ? 'aria-current="page"' : '') + '><span class="wk-nav-icon" aria-hidden="true">⌂</span><span class="wk-nav-name">Overview</span></button>' +
       modules().map(function (name, i) {
@@ -115,7 +313,7 @@
     var heading = key === 'biz' ? 'Your website, clearly organised.' : key === 'market' ? 'Your store, in view.' : key === 'creative' ? 'A studio space for work in progress.' : key === 'skills' ? 'Learning progress, made visible.' : 'Products and releases, in context.';
     var note = key === 'biz' ? 'Review pages, services and incoming enquiries in one place.' : key === 'market' ? 'Explore the sample catalogue, orders and store operations.' : key === 'creative' ? 'Organise projects, reviews and the stories behind the work.' : key === 'skills' ? 'Follow programmes, lessons and learner support activities.' : 'Keep product information, release notes and documentation organised.';
     var inner = key === 'biz' ? overviewBiz() : key === 'market' ? overviewMarket() : key === 'creative' ? overviewCreative() : key === 'skills' ? overviewSkills() : overviewDigital();
-    return '<div class="wk-page-heading"><div><span class="wk-eyebrow">Workspace overview · Sample data</span><h1>' + esc(heading) + '</h1><p>' + esc(note) + '</p></div><button class="wk-primary-button" type="button" data-action="create">＋ Add sample record</button></div>' + metrics() + inner + '<p class="wk-toast" role="status" data-wk-toast>' + esc(toast) + '</p>';
+    return '<div class="wk-page-heading"><div><span class="wk-eyebrow">DVNM Forge · Local workspace</span><h1>' + esc(heading) + '</h1><p>' + esc(note) + '</p></div><button class="wk-primary-button" type="button" data-action="create">＋ Add sample record</button></div>' + metrics() + inner + renderMediaPanel() + '<p class="wk-toast" role="status" data-wk-toast>' + esc(toast) + '</p>';
   }
   function renderModule() {
     var items = safeItems(active);
@@ -125,7 +323,7 @@
       var originalIndex = state[active].indexOf(item);
       return '<form class="wk-record-form" data-edit-form data-index="' + originalIndex + '"><span class="wk-record-index">' + String(originalIndex+1).padStart(2,'0') + '</span><input name="value" aria-label="Edit sample record ' + (originalIndex+1) + '" value="' + esc(item) + '" maxlength="90" required><button class="wk-secondary-button" type="submit">Save</button><button class="wk-secondary-button" data-action="remove" data-index="' + originalIndex + '" type="button">Remove</button></form>';
     }).join('');
-    return '<div class="wk-page-heading"><div><span class="wk-eyebrow">' + esc(config.demoName) + ' / Content manager</span><h1>' + esc(active) + '</h1><p>Manage illustrative sample entries. Changes stay in this browser page and are not sent to a server.</p></div><span class="wk-sample-tag">' + (state[active] || []).length + ' sample records</span></div>' +
+    return '<div class="wk-page-heading"><div><span class="wk-eyebrow">' + esc(config.demoName) + ' / Content manager</span><h1>' + esc(active) + '</h1><p>Manage local workspace content. Changes autosave in this browser and are not sent to a server.</p></div><span class="wk-sample-tag">' + (state[active] || []).length + ' sample records</span></div>' +
       '<section class="wk-panel"><div class="wk-panel-head"><div><h2>' + esc(active) + ' records</h2><p>Rename, add or remove sample entries to explore this module.</p></div><div><button class="wk-secondary-button" type="button" data-action="sort">' + (sortAsc ? 'Default order' : 'Sort A–Z') + '</button></div></div>' +
       (items.length ? '<div class="wk-record-list">' + rows + '</div>' : '<div class="wk-empty">' + (query ? 'No records match your search.' : 'There are no sample records in this module yet. Add one below to try the interaction.') + '</div>') +
       '<form class="wk-add-form" data-add-form><input name="value" maxlength="90" placeholder="Add a sample ' + esc(active.toLowerCase()) + ' record" aria-label="New sample record" required><button class="wk-primary-button" type="submit">＋ Add record</button></form>' +
@@ -152,10 +350,12 @@
     mount.style.setProperty('--wk-accent-2', palette[1]);
     mount.style.setProperty('--wk-accent-soft', palette[2]);
     mount.innerHTML = '<div class="wk-premium-shell wk-app' + (collapsed ? ' is-collapsed' : '') + '">' +
-      '<aside class="wk-sidebar"><a class="wk-product-brand" href="' + esc(demoHref) + '"><span class="wk-product-mark">' + esc(config.mark || 'D') + '</span><span><strong>' + esc(config.demoName) + '</strong><small>Workspace preview</small></span></a>' +
-      '<p class="wk-sidebar-label">Workspace</p><nav class="wk-sidebar-nav" aria-label="Workspace navigation">' + moduleNav() + '</nav><div class="wk-sidebar-spacer"></div><div class="wk-sidebar-note"><strong>Sample environment</strong><p>Records are local examples. No live customer or business data is connected.</p></div><div class="wk-sidebar-foot"><span class="wk-sidebar-avatar">D</span><span>Davonium Technologies · Demo</span></div></aside>' +
-      '<div class="wk-main"><header class="wk-topbar"><div class="wk-crumb"><span>Workspace</span><b>/</b><strong>' + esc(config.demoName) + '</strong><b>/</b><span data-wk-crumb>' + esc(active) + '</span></div><div class="wk-top-actions"><label class="wk-search-wrap"><span class="sr-only">Search current sample module</span><input class="wk-search" type="search" placeholder="Search records…" aria-label="Search records" value="' + esc(query) + '"></label><button class="wk-icon-button" type="button" data-action="notifications" aria-label="Show sample notifications">♧</button><button class="wk-icon-button" type="button" data-action="collapse" aria-pressed="' + collapsed + '" aria-label="Collapse workspace sidebar">☷</button><a class="wk-top-link" href="' + esc(demoHref) + '">Public demo ↗</a></div></header><div class="wk-content"><div data-wk-view aria-live="polite"></div><div class="wk-app-footer"><span>DVNM · Local interactive preview · Sample data only</span><a href="../contact?topic=workspace">Plan a workspace like this ↗</a></div></div></div></div>';
+      '<aside class="wk-sidebar"><a class="wk-product-brand" href="' + esc(demoHref) + '"><span class="wk-product-mark">' + esc(config.mark || 'D') + '</span><span><strong>' + esc(config.demoName) + '</strong><small>DVNM Forge workspace</small></span></a>' +
+      '<p class="wk-sidebar-label">Workspace</p><nav class="wk-sidebar-nav" aria-label="Workspace navigation">' + moduleNav() + '</nav><div class="wk-sidebar-spacer"></div><div class="wk-sidebar-note"><strong>Sample environment</strong><p>Local workspace data is saved on this device only. No account, cloud sync or backend is connected.</p></div><div class="wk-sidebar-foot"><span class="wk-sidebar-avatar">D</span><span>Davonium Technologies · Demo</span></div></aside>' +
+      '<div class="wk-main"><header class="wk-topbar"><div class="wk-crumb"><span>Workspace</span><b>/</b><strong>' + esc(config.demoName) + '</strong><b>/</b><span data-wk-crumb>' + esc(active) + '</span></div><div class="wk-top-actions"><label class="wk-search-wrap"><span class="sr-only">Search current sample module</span><input class="wk-search" type="search" placeholder="Search records…" aria-label="Search records" value="' + esc(query) + '"></label><button class="wk-icon-button" type="button" data-action="notifications" aria-label="Show sample notifications">♧</button><button class="wk-icon-button" type="button" data-action="collapse" aria-pressed="' + collapsed + '" aria-label="Collapse workspace sidebar">☷</button><a class="wk-top-link" href="' + esc(demoHref) + '">Public demo ↗</a></div></header><div class="wk-content"><div data-wk-view aria-live="polite"></div><div class="wk-app-footer"><span>Built with DVNM Forge by Davonium Technologies · Local data only</span><a href="../contact?topic=workspace">Explore DVNM Forge capabilities ↗</a></div></div></div></div>';
     renderView();
+    var toolbar = mount.querySelector('.wk-main');
+    if (toolbar) toolbar.insertAdjacentHTML('afterbegin',mediaPanelToolbar());
   }
 
   mount.addEventListener('click', function (event) {
@@ -167,13 +367,26 @@
       renderView(); return;
     }
     var action = button.getAttribute('data-action');
+    if (action === 'undo') { undoChange(); return; }
+    if (action === 'redo') { redoChange(); return; }
+    if (action === 'export-json') { exportWorkspaceJson(); return; }
+    if (action === 'export-zip') { exportWorkspaceZip(); return; }
+    if (action === 'import-json') { var importPicker = mount.querySelector('[data-forge-import]'); if (importPicker) importPicker.click(); return; }
+    if (action === 'remove-media') {
+      var mediaId = button.getAttribute('data-media-id');
+      deleteMediaItem(mediaId).then(function () {
+        if (mediaUrls[mediaId]) { URL.revokeObjectURL(mediaUrls[mediaId]); delete mediaUrls[mediaId]; }
+        mediaItems = mediaItems.filter(function (item) { return item.id !== mediaId; }); renderView(); setToast('Media removed from this device.');
+      }).catch(function () { setToast('Could not remove this media file.'); });
+      return;
+    }
     if (action === 'remove') {
       var index = Number(button.getAttribute('data-index'));
       if (Number.isInteger(index) && state[active] && index >= 0 && index < state[active].length) {
-        state[active].splice(index,1); toast = 'Sample record removed.'; renderView();
+        rememberChange(); state[active].splice(index,1); persistModules(); toast = 'Sample record removed and saved.'; renderView();
       }
     } else if (action === 'reset') {
-      state = JSON.parse(JSON.stringify(original));active = 'Overview';query = '';sortAsc = false;
+      rememberChange(); state = cloneModules(original); persistModules(); active = 'Overview';query = '';sortAsc = false;
       activity.unshift(['↺','Sample content restored to its starting state','Just now']);toast = 'All sample data has been reset.';renderShell();
     } else if (action === 'create') {
       active = firstModule();query = '';toast = 'Add a sample record below. It will remain local to this preview.';renderView();
@@ -197,12 +410,18 @@
     if (form.matches('[data-edit-form]')) {
       event.preventDefault();var index = Number(form.getAttribute('data-index'));var value = form.elements.value.value.trim();
       if (value && Number.isInteger(index) && state[active] && index >= 0 && index < state[active].length) {
-        state[active][index] = value;activity.unshift(['✎',active + ' sample record updated','Just now']);toast = 'Sample record updated.';renderView();
+        rememberChange(); state[active][index] = value;persistModules();activity.unshift(['✎',active + ' sample record updated','Just now']);toast = 'Sample record updated and saved.';renderView();
       }
     } else if (form.matches('[data-add-form]')) {
       event.preventDefault();var added = form.elements.value.value.trim();
-      if (added && state[active]) { state[active].push(added);activity.unshift(['＋','Sample record added to ' + active,'Just now']);toast = 'Sample record added.';renderView(); }
+      if (added && state[active]) { rememberChange(); state[active].push(added);persistModules();activity.unshift(['＋','Sample record added to ' + active,'Just now']);toast = 'Sample record added and saved.';renderView(); }
     }
   });
-  renderShell();
+  loadSavedModules();
+  loadMediaItems().catch(function () { toast = 'Media storage is unavailable; content autosave still works.'; }).then(function () { renderShell(); });
+  mount.addEventListener('change', function (event) {
+    if (event.target.matches('[data-forge-media]')) { uploadMediaFiles(event.target.files); event.target.value = ''; }
+    if (event.target.matches('[data-forge-import]')) { importWorkspaceJson(event.target.files && event.target.files[0]); event.target.value = ''; }
+  });
+  window.addEventListener('beforeunload', persistModules);
 }());
