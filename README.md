@@ -74,3 +74,11 @@ A GitHub commit on `main` is the source update; it does not, by itself, prove Cl
 ## V71 — DVNM Forge local workspace builder
 
 The five DVNM workspaces (Biz, Market, Creative, Skills and Digital) now support local browser autosave, create/read/update/delete for sample records, undo/redo, JSON import/export, IndexedDB-backed image media, and ZIP export including workspace JSON and uploaded media. This remains a frontend-only local workspace preview: no account, Supabase/Firebase backend, cloud sync, production customer records, real payments or live business operations are connected. The workspace owner must export JSON/ZIP before clearing browser data or changing devices. The interface includes the attribution “Built with DVNM Forge by Davonium Technologies.”
+
+
+## V71 — Knowledge Centre and Insights
+
+- `knowledge-centre.html` publishes 220 plain-language terms in ten searchable topic areas, with static HTML definitions for discoverability.
+- `insights.html` publishes six original practical articles about online presence, Business Launch Kits, QR destinations, project scoping, demo/production boundaries and first software releases. Social share links are provided for supported share destinations.
+- These are static editorial resources maintained in GitHub. They are not a user-generated CMS or a claim of customer case studies.
+- The V71 content cache refresh pre-caches both new pages and the Knowledge Centre search script.

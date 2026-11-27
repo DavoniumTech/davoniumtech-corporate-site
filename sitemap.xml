@@ -76,4 +76,6 @@
   <url><loc>https://www.davoniumtech.com/demos/preview</loc></url>
   <url><loc>https://www.davoniumtech.com/demos/marketing</loc><lastmod>2026-11-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.davoniumtech.com/demos/community</loc><lastmod>2026-11-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.davoniumtech.com/knowledge-centre</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.davoniumtech.com/insights</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

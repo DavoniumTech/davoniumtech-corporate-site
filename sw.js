@@ -1,5 +1,5 @@
 /* Davonium Technologies PWA service worker - V71 full-site cache refresh. */
-const CACHE_NAME = 'davonium-site-v71-full-site-20261127-r1';
+const CACHE_NAME = 'davonium-site-v71-content-20261127-r2';
 const BASE_URL = new URL('./', self.registration.scope);
 const routeUrl = (path) => new URL(path.replace(/^\/+/, ''), BASE_URL).href;
 const CORE = [
@@ -68,6 +68,9 @@ const CORE = [
   routeUrl("assets/js/davonium-v69-cookie-consent.js"),
   routeUrl("assets/js/davonium-v69-contact-form.js"),
   routeUrl("assets/js/davonium-v69-project-builder-submit.js"),
+  routeUrl("knowledge-centre.html"),
+  routeUrl("insights.html"),
+  routeUrl("assets/js/davonium-v71-knowledge-centre.js"),
 ];
 const homePath = BASE_URL.pathname;
 const explicitIndexPath = new URL('index.html', BASE_URL).pathname;

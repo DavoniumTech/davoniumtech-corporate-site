@@ -61,3 +61,10 @@ We keep public product status and guide links aligned. Search submission and cra
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
 
 DVNM Bot motion, voice and accessibility: https://www.davoniumtech.com/docs/guides/dvnm-bot-motion-voice-accessibility
+
+
+## Knowledge Centre
+The Knowledge Centre contains 220 static, searchable definitions across ten topic areas.
+
+## Insights
+The Insights section contains six original practical articles. Articles are editorial guidance, not customer case studies or outcome claims.

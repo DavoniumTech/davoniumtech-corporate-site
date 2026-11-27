@@ -29,3 +29,7 @@ We publish public guides about our products, accessibility, installation, offlin
 - Website Demo Studio guide: https://www.davoniumtech.com/docs/guides/website-demo-studio
 
 DVNM Bot motion, voice and accessibility: https://www.davoniumtech.com/docs/guides/dvnm-bot-motion-voice-accessibility
+
+- [Knowledge Centre](https://www.davoniumtech.com/knowledge-centre): 220 searchable terms across web, software, security, commerce, SEO and AI.
+
+- [Insights](https://www.davoniumtech.com/insights): practical articles about business visibility, QR codes, project planning and software delivery.
