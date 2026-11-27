@@ -221,7 +221,7 @@
   function uploadMediaFiles(fileList) {
     var files = Array.prototype.slice.call(fileList || []);
     files = files.filter(function (file) {
-      return /^image\\/(png|jpeg|webp|gif|svg\\+xml)$/.test(file.type) && file.size <= 10 * 1024 * 1024;
+      return ['image/png','image/jpeg','image/webp','image/gif','image/svg+xml'].indexOf(file.type) !== -1 && file.size <= 10 * 1024 * 1024;
     });
     if (!files.length) { setToast('Choose PNG, JPEG, WebP, GIF or SVG images up to 10 MB each.'); return; }
     Promise.all(files.map(function (file) {
