@@ -24,6 +24,7 @@ jobs:
         run: |
           node --check assets/js/davonium-v68-workspaces-premium.js
           node --check sw.js
+          node --check assets/js/davonium-v71-knowledge-centre.js
 
       - name: Check release assets and route families
         run: |
@@ -72,7 +73,7 @@ jobs:
           sw = (root / "sw.js").read_text(encoding="utf-8")
           if "davonium-v71-site.css" not in css:
               raise SystemExit("V71 shared CSS import is missing")
-          if "davonium-v71-site.css" not in sw or "davonium-site-v71-full-site-20261127-r1" not in sw:
+          if "davonium-v71-site.css" not in sw or "davonium-site-v71-content-20261127-r2" not in sw:
               raise SystemExit("V71 service-worker cache refresh is missing")
 
           print("Static checks passed: core pages, eight demos, five Forge workspaces, CSS delivery and Forge feature markers.")
