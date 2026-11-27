@@ -144,6 +144,12 @@ jobs:
               if asset not in service_worker:
                   raise SystemExit("V72 asset missing from service-worker precache: " + asset)
 
+          sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+          if "https://www.davoniumtech.com/business-launch-kit" not in sitemap:
+              raise SystemExit("Business Launch Kit is missing from the sitemap.")
+          if "<loc>https://www.davoniumtech.com/</loc><lastmod>2026-11-28</lastmod>" not in sitemap:
+              raise SystemExit("V72 homepage sitemap lastmod is not current.")
+
           if "https://www.davoniumtech.com/" not in html:
               raise SystemExit("Canonical homepage URL missing.")
           if not re.search(r'<meta name="davonium-release" content="V72-preview">', html):
