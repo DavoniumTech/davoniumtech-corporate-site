@@ -297,16 +297,35 @@ The function's use of `SUPABASE_SERVICE_ROLE_KEY` is server-side only in the dep
 6. Remove any test lead/activity/notification through the authorised admin workflow after the test, or clearly retain it as a labelled QA record.
 7. Confirm rate limiting and CORS behaviour without relying on forged-origin checks as the only anti-abuse control.
 
-## 16. Next implementation order
+## 16. V72 implementation progress — 28 November 2026
 
-1. Import the owner-approved decisions from the two earlier website planning chats.
-2. Lock homepage copy, navigation and commercial offers.
-3. Build the shared corporate design system and conversion-first homepage.
-4. Align Services, Pricing, Work, Products and Contact pages with the new journey.
-5. Remove enquiry friction and add attribution while retaining server-side validation.
-6. Review navigation, resource placement, product/demo boundaries and responsive layouts.
-7. Update metadata, sitemap, cache strategy and accessible states.
-8. Run source validation, browser QA and real form/admin tests.
-9. Review the preview with the owner, then merge/publish only after acceptance.
+The first conversion-first homepage draft has now been committed to `redesign/conversion-first-20261128`. It is not deployed to production.
 
-**Release rule:** a redesigned source branch is not the same thing as a published, tested website. Announce the new corporate site only after the candidate has passed the checks above.
+Implemented on the branch:
+- Replaced the crowded homepage with a focused corporate route: proposition, three service pillars, Business Launch Kit, three clearly labelled in-house demonstrations, product statuses, delivery process, project CTA and a compact QR download.
+- Moved the full eight-experience catalogue back to the Demo Studio route, preserving each independent demo page. The five Forge workspace routes remain untouched.
+- Brought the approved full-body DVNM Bot image into the hero. Spoken introduction remains user-triggered; a small volume slider is provided. The visual indicator changes only while browser speech is actually running.
+- Added a dedicated V72 stylesheet and small theme/navigation/speech script. The homepage no longer loads the old 744 KB raw V67 shared stylesheet, the old V68/V70 homepage visual layers, or the 66 KB V67 runtime bundle. Existing inner pages continue to use their current styles until their migration pass.
+- Kept a dark navy/cyan identity and optional light theme, with responsive layouts and reduced-motion support.
+- Updated the service-worker cache version and pre-cache list for the V72 homepage assets.
+- Removed the cookie-preference requirement from the shared enquiry client while retaining mandatory privacy-notice consent. The site currently states that optional analytics and marketing trackers are not installed, so saving a cookie preference must not block a customer enquiry.
+- Added UTM source, medium and campaign values to the contact and Project Builder payloads, using fields already present in the `leads` table.
+- Improved the source Edge Function's secondary activity, in-app notification and Resend response checks so failed side effects are logged and their status is returned. This function change is **source only and has not been deployed** to Supabase.
+
+Automated preview validation was added as `.github/workflows/validate-v72-preview.yml`. The latest run for branch commit `899ae170c7fd5e2fbb2eef4bf0b60bd51908cda0` completed successfully. It checks JavaScript syntax for the new home scripts and enquiry clients, unique IDs, one H1, button labels, local resources and routes, eight demos, five workspaces, the V72 service-worker assets and reduced-motion CSS.
+
+**Not yet verified:** visual rendering in a real browser, mobile screenshots, Core Web Vitals, contact form submission, Project Builder persistence, Resend delivery, fresh admin login, the admin lead workflow, or a Cloudflare preview deployment. Static checks do not prove those behaviours.
+
+## 17. Remaining implementation and release order
+
+1. Import the owner-approved decisions from the first two earlier planning chats; their shared transcripts were not readable in this session.
+2. Confirm whether `davonium-corporate-staging` is intentionally the live public lead destination before any backend deployment or production configuration change.
+3. Complete visual/browser QA of the V72 homepage on Android and desktop, including dark/light themes, keyboard navigation and speech controls.
+4. Align Services, Pricing, Work, Products, About, Contact, Project Builder and Business Launch Kit to the new corporate system while keeping Demo Studio experiences independent.
+5. Test one real, labelled enquiry from the public domain; verify lead, activity, notification, owner delivery and admin access.
+6. Decide and document the private rate-limit table RLS defense-in-depth change; enable leaked-password protection; confirm Resend configuration and retry handling.
+7. Export database schema and RLS policies into version-controlled SQL migrations.
+8. Verify sitemap, canonical URLs, routes, caching, metadata, accessibility and Core Web Vitals.
+9. Obtain the owner’s review of a Cloudflare preview; merge/deploy only after acceptance.
+
+**Release rule:** a redesigned source branch is not the same thing as a published, tested website. Announce the new corporate site only after the candidate has passed the live checks above.
