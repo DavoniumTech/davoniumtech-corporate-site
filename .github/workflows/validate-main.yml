@@ -76,5 +76,43 @@ jobs:
           if "davonium-v71-site.css" not in sw or "davonium-site-v71-content-20261127-r2" not in sw:
               raise SystemExit("V71 service-worker cache refresh is missing")
 
-          print("Static checks passed: core pages, eight demos, five Forge workspaces, CSS delivery and Forge feature markers.")
+          # Confirm new editorial pages are substantial and included in search discovery.
+          knowledge = (root / "knowledge-centre.html").read_text(encoding="utf-8")
+          insights = (root / "insights.html").read_text(encoding="utf-8")
+          sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+          if knowledge.count("<dt>") != 220:
+              raise SystemExit("Knowledge Centre must contain exactly 220 static glossary terms.")
+          if insights.count('class="section insight-article"') != 6:
+              raise SystemExit("Insights page must contain the six initial editorial articles.")
+          for url in ["https://www.davoniumtech.com/knowledge-centre", "https://www.davoniumtech.com/insights"]:
+              if url not in sitemap:
+                  raise SystemExit("New public route is missing from sitemap: " + url)
+
+          # Ensure resource links are reachable from all page families that use shared navigation.
+          check_pages = [
+              "index.html", "about.html", "services.html", "products.html", "pricing.html",
+              "work.html", "business-launch-kit.html", "contact.html", "support.html",
+              "project-builder.html", "install.html", "docs/index.html", "demos/index.html",
+              "workspaces/index.html", "legal/privacy.html", "legal/cookies.html", "legal/terms.html",
+          ]
+          check_pages += [str(p) for p in (root / "docs/guides").glob("*.html")]
+          check_pages += [str(p) for p in (root / "demos").glob("*.html") if p.name != "preview.html"]
+          check_pages += [str(p) for p in (root / "workspaces").glob("*.html") if p.name != "index.html"]
+          missing_navigation = []
+          for name in check_pages:
+              page = (root / name).read_text(encoding="utf-8")
+              if 'id="primary-nav"' in page or 'class="dvnm-demo-nav"' in page or 'class="v68-demo-nav"' in page:
+                  if 'href="/insights"' not in page or 'href="/knowledge-centre"' not in page:
+                      missing_navigation.append(name)
+          if missing_navigation:
+              raise SystemExit("Resource navigation missing from: " + ", ".join(missing_navigation))
+
+          # Check the exact backend origin is permitted by all site CSP policies.
+          headers = (root / "_headers").read_text(encoding="utf-8")
+          policies = [line for line in headers.splitlines() if "Content-Security-Policy:" in line]
+          supabase_policies = [line for line in policies if "connect-src 'self' https://jaswikaaecfgqrxooubv.supabase.co;" in line]
+          if len(policies) != 9 or len(supabase_policies) != 9:
+              raise SystemExit("Supabase CSP allowance must be present in all nine policy entries.")
+
+          print("Static checks passed: core routes, eight demos, five Forge workspaces, 220 glossary terms, six Insights articles, resource navigation, CSP and V71 asset caching.")
           PY

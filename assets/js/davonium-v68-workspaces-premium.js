@@ -1,5 +1,6 @@
-/* Davonium Technologies V68 — distinct, local-only workspace experiences.
-   No backend, account, payments, or persistence. All sample changes live in memory. */
+/* Davonium Technologies DVNM Forge V71 — five distinct, local-first workspaces.
+   Browser localStorage saves workspace records; IndexedDB stores uploaded media.
+   No backend, cloud account, payments or production customer data are connected. */
 (function () {
   'use strict';
   var mount = document.getElementById('workspace-app');
