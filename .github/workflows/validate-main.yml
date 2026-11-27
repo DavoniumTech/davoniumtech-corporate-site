@@ -1,0 +1,79 @@
+name: Validate Davonium static website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check changed JavaScript syntax
+        run: |
+          node --check assets/js/davonium-v68-workspaces-premium.js
+          node --check sw.js
+
+      - name: Check release assets and route families
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path(".")
+          required = [
+              "index.html",
+              "about.html",
+              "services.html",
+              "products.html",
+              "pricing.html",
+              "work.html",
+              "business-launch-kit.html",
+              "contact.html",
+              "support.html",
+              "project-builder.html",
+              "install.html",
+              "assets/css/davonium-v71-site.css",
+              "assets/js/davonium-v68-workspaces-premium.js",
+              "sw.js",
+              "knowledge-centre.html",
+              "insights.html",
+          ]
+          missing = [item for item in required if not (root / item).is_file()]
+          if missing:
+              raise SystemExit("Missing required release files: " + ", ".join(missing))
+
+          demos = ["business", "shop", "portfolio", "learning", "technology", "marketing", "community", "certificate"]
+          workspaces = ["biz", "market", "creative", "skills", "digital"]
+          for item in demos:
+              if not (root / "demos" / (item + ".html")).is_file():
+                  raise SystemExit("Missing demo route: " + item)
+          for item in workspaces:
+              if not (root / "workspaces" / (item + ".html")).is_file():
+                  raise SystemExit("Missing Forge workspace route: " + item)
+
+          forge = (root / "assets/js/davonium-v68-workspaces-premium.js").read_text(encoding="utf-8")
+          for marker in ["localStorage.setItem(storageKey", "indexedDB.open", "function undoChange", "function redoChange", "function exportWorkspaceJson", "function importWorkspaceJson", "function zipBytes", "Built with DVNM Forge by Davonium Technologies"]:
+              if marker not in forge:
+                  raise SystemExit("DVNM Forge implementation marker missing: " + marker)
+
+          css = (root / "assets/css/davonium-v68-premium-system.css").read_text(encoding="utf-8")
+          sw = (root / "sw.js").read_text(encoding="utf-8")
+          if "davonium-v71-site.css" not in css:
+              raise SystemExit("V71 shared CSS import is missing")
+          if "davonium-v71-site.css" not in sw or "davonium-site-v71-full-site-20261127-r1" not in sw:
+              raise SystemExit("V71 service-worker cache refresh is missing")
+
+          print("Static checks passed: core pages, eight demos, five Forge workspaces, CSS delivery and Forge feature markers.")
+          PY
