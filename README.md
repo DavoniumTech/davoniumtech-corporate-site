@@ -1,84 +1,121 @@
-# Davonium Technologies — Corporate Website (V70)
+# Davonium Technologies — Corporate Website (V71)
 
-The repository root is the static website document root for the Davonium Technologies public corporate website.
+## Production source
 
-## Production
+- Public domain: https://www.davoniumtech.com/
+- GitHub repository: https://github.com/DavoniumTech/davoniumtech-corporate-site
+- Production branch: main
+- Hosting target: Cloudflare Pages
+- Document root: /
+- Build command: none; static HTML, CSS and JavaScript.
+- Last source release: V71, 27 November 2026.
 
-- Website: https://www.davoniumtech.com/
-- Production branch: `main`
-- Hosting: Cloudflare Pages
-- Root directory: `/`
-- Build command: none (static HTML, CSS and JavaScript)
-- The connected Pages project should publish commits from `main`.
+A successful GitHub push updates the website source. It does not by itself prove Cloudflare Pages has deployed the commit or that the public domain is serving the new files. Verify the deployed commit in Cloudflare Pages and then perform real-browser/device checks before announcing a release.
 
-## V70 site-wide design direction
-
-V70 carries the owner-approved visual direction across the corporate website: deep navy, silver-toned motion and surfaces, white typography, restrained cyan highlights, clear calls to action, and a calmer information hierarchy. The homepage has a dedicated new hero composition with DVNM Bot, an illustrative mobile site preview and a Business Launch Kit pathway. The shared V70 design rules also apply to the existing About, Services, Products, Pricing, Work, Business Launch Kit, Contact, Support, Project Builder, Install, Demo Studio, workspace, documentation and legal page families through the shared corporate stylesheet.
-
-The redesign is progressive: it preserves existing page content, page routes, enquiry form behaviour, PWA features, DVNM Bot controls, QR assets, and the independent identities of the eight demo experiences. It does not replace functioning features with static mockups.
-
-## Company structure and product boundaries
+## Company structure
 
 Davonium Technologies operates two distinct divisions:
 
-1. **Digital Solutions** — client services including websites, web applications, mobile apps, custom software, business systems, automation, digital presence and delivery support.
-2. **Commercial Software Products** — Davonium-owned software products with their own product goals, roadmaps and customer environments.
+1. Digital Solutions — client services including corporate websites, landing pages, web applications, mobile apps, custom software, business systems, workflow automation, digital presence and delivery support.
+2. Commercial Software Products — software products owned and developed by Davonium Technologies, with their own roadmaps and customer environments.
 
-Product boundaries shown in public company content:
+### Product boundaries
 
-- Ready2Go Learning — learning and exam-preparation product in development.
-- Marvel Chat — communication product with an initial build and active development.
-- DVNM TradeFlow — separate wholesale and distribution software initiative in development, with its own product architecture, database, deployments and customer environment.
-- Davonium Nexus — Davonium's private internal operating system and command centre. It is not presented as a customer-facing SaaS product and is separate from TradeFlow.
+- Ready2Go Learning: a learning and exam-preparation product in development.
+- Marvel Chat: a communication product with an initial build and active development.
+- DVNM TradeFlow: a separate wholesale and distribution software initiative, with its own product architecture, database, deployments and customer environment.
+- Davonium Nexus: Davonium's private internal operating system and company command centre. It is not a public customer-facing SaaS and is separate from TradeFlow.
 
-Product availability and feature status must remain truthful. Do not publish release dates, customer outcomes, testimonials, performance figures or pricing that have not been approved and verified.
+Keep status labels honest. Do not publish unapproved prices, release dates, customer results, testimonials, performance claims or features that have not been tested.
 
-## Public site map
+## V71 implementation
 
-- Corporate: Home, About, Services, Products, Pricing, Work, Contact, Support, Install.
-- Business Launch Kit: industry-tailored online presence and launch materials.
-- Guided Project Builder: structured enquiry brief and contact handoff.
-- Demo Studio: eight independent demonstration experiences — business, commerce, creative, learning, technology, marketing, community and showcase.
-- Workspaces: five illustrative product-specific workspace previews.
+### Corporate site and visual system
+
+- A homepage art direction based on the owner-supplied navy, silver and cyan campaign reference.
+- A shared site design layer for the principal corporate pages, Demo Studio, workspaces, documentation and legal page families.
+- Responsive page headers, typography, cards, buttons, forms, content sections and footers.
+- A versioned shared stylesheet: assets/css/davonium-v71-site.css.
+- The homepage also retains its own V70 composition stylesheet: assets/css/davonium-v70-home.css.
+
+Existing content, routes and unique demo identities have been retained rather than replaced by blank templates.
+
+### Public page families
+
+- Corporate: Home, About, Services, Products, Pricing, Work, Contact, Support and Install.
+- Business Launch Kit: an industry-tailored online-presence and launch-material service.
+- Guided Project Builder: a structured project brief and enquiry handoff.
+- Demo Studio: eight independent experiences — Biz, Market, Creative, Skills, Digital, Growth, Connect and Showcase.
+- DVNM Forge: five local workspace builders — Biz, Market, Creative, Skills and Digital.
+- Knowledge Centre: 220 static, searchable definitions across ten topic groups.
+- Insights: six original practical articles covering digital presence, Business Launch Kit scope, QR codes, website planning, demo-versus-production boundaries and product-release planning.
 - Documentation and legal pages: product guides, engineering guides, privacy, cookies and terms.
 
-Demo and workspace sample data must continue to be labelled as illustrative/local-only where applicable. It must not be represented as customer records or live production business operations.
+### DVNM Forge local workspace behaviour
 
-## Backend and form boundaries
+The five workspaces share a browser-local engine supporting:
 
-The contact form and guided project enquiry use the configured Supabase project and the `submit-enquiry` Edge Function for enquiry persistence. The browser configuration uses a publishable key only. Never place service-role keys, Supabase secret keys, database passwords, mail-provider secrets or other credentials in public repository files.
+- Create, read, update and delete of workspace records.
+- Local autosave in localStorage.
+- Undo and redo history.
+- Image uploads stored in browser IndexedDB, with a local media library.
+- JSON import and export.
+- ZIP export containing workspace JSON, a README and uploaded media.
+- Attribution: Built with DVNM Forge by Davonium Technologies.
 
-The private Admin Lead Desk is a separate authenticated area. This V70 public-site visual release does not claim to resolve or validate the outstanding browser sign-in issue. Do not weaken row-level security or expose private lead data to make a visual change.
+Data boundary: these are local-first workspace builders. They do not connect to Supabase, Firebase, a cloud account, live customer records, live payments or production business systems. Workspace data is stored in the current browser/device. Export the JSON or ZIP before clearing browser data or changing devices. Do not put real customer or confidential data into these sample workspaces.
 
-## Pricing and Business Launch Kit
+### PWA and asset delivery
 
-Public package prices remain unapproved and are intentionally shown as quote-led until Davonium approves the figures and scope. Keep inclusions, exclusions, revisions, hosting/domain costs and ongoing service boundaries clear.
+The web manifest, service worker, offline page, installation route, QR artwork and selected precached pages remain part of the site.
 
-## PWA and site quality
+Current service-worker cache namespace:
+davonium-site-v71-content-20261127-r2
 
-Preserve the web manifest, service worker, offline page, installation route, QR artwork, route redirects, security headers, theme control and accessible mobile navigation. Rotate the cache namespace when shared assets change so visitors can receive the latest stylesheet and scripts.
+The shared stylesheet and new Knowledge Centre/Insights pages are included in the service-worker precache list. The cache namespace is rotated when release assets change to reduce stale-PWA behaviour.
 
-## Deployment and release verification
+### Enquiries, Supabase and private administration
 
-A GitHub commit on `main` is the source update; it does not, by itself, prove Cloudflare Pages has deployed the commit. After a release:
+The public enquiry browser configuration uses a Supabase publishable key. The _headers Content Security Policy allows the exact project origin:
+https://jaswikaaecfgqrxooubv.supabase.co
 
-1. Confirm the Cloudflare Pages deployment corresponds to the latest `main` commit.
-2. Open the homepage and every principal corporate route on desktop and mobile.
-3. Test menu navigation, CTA destinations, the Business Launch Kit, project builder, contact submission, support links and product status links.
-4. Check all eight demo destinations, workspace previews, documentation, legal routes and 404/offline behaviour.
-5. Test the PWA install prompt and service-worker cache update.
-6. Confirm forms persist enquiries and never expose private records.
-7. Record any browser/device failures rather than claiming untested functionality as production-ready.
+Never place a Supabase service-role key, secret key, database password, mail-provider secret or other privileged credential in public assets.
 
+The contact and Project Builder clients call the submit-enquiry Edge Function. Their successful live submission and persistence still require browser-level end-to-end verification. The private Admin Lead Desk is a separate authenticated application; its previous browser “Failed to fetch” sign-in issue has not been declared resolved or production-tested by this V71 visual/content release. Do not weaken RLS or expose private lead data.
 
-## V71 — DVNM Forge local workspace builder
+## Source validation
 
-The five DVNM workspaces (Biz, Market, Creative, Skills and Digital) now support local browser autosave, create/read/update/delete for sample records, undo/redo, JSON import/export, IndexedDB-backed image media, and ZIP export including workspace JSON and uploaded media. This remains a frontend-only local workspace preview: no account, Supabase/Firebase backend, cloud sync, production customer records, real payments or live business operations are connected. The workspace owner must export JSON/ZIP before clearing browser data or changing devices. The interface includes the attribution “Built with DVNM Forge by Davonium Technologies.”
+A GitHub Actions workflow, .github/workflows/validate-main.yml, runs on pushes to main. It checks:
 
+- JavaScript syntax for the Forge engine, Knowledge Centre search and service worker.
+- Required corporate routes, eight demo routes and five workspace routes.
+- Presence of Forge autosave, IndexedDB media, undo/redo, JSON import/export, ZIP export and attribution markers.
+- Presence of the versioned V71 CSS and service-worker cache key.
+- 220 glossary terms and six Insights articles.
+- Knowledge Centre and Insights sitemap entries.
+- Resource navigation across principal pages, documentation guides, demos and workspaces.
+- All nine CSP policy entries for the exact Supabase project origin.
 
-## V71 — Knowledge Centre and Insights
+The last confirmed successful run at the time of this README revision should be checked from the latest Actions tab. The workflow is re-run after every main-branch push; do not assume a new commit has already passed.
 
-- `knowledge-centre.html` publishes 220 plain-language terms in ten searchable topic areas, with static HTML definitions for discoverability.
-- `insights.html` publishes six original practical articles about online presence, Business Launch Kits, QR destinations, project scoping, demo/production boundaries and first software releases. Social share links are provided for supported share destinations.
-- These are static editorial resources maintained in GitHub. They are not a user-generated CMS or a claim of customer case studies.
-- The V71 content cache refresh pre-caches both new pages and the Knowledge Centre search script.
+## Release checks still required
+
+The following are not proven by source inspection or GitHub Actions alone:
+
+1. Confirm Cloudflare Pages deployed the latest main commit and the custom domain is serving it.
+2. Open the homepage and every principal corporate route on an actual phone and desktop.
+3. Check navigation, menu behaviour, text wrapping, images, forms, buttons, footer and social-share previews.
+4. Test all eight demos and all five Forge workspaces in a browser.
+5. Test Forge persistence after reload, media upload, undo/redo, JSON import/export and unzip the generated ZIP to verify its contents.
+6. Submit a real low-risk enquiry and confirm it is saved in Supabase and appears only in authorised views.
+7. Test private Admin authentication separately; verify invitation, redirect, sign-in and lead permissions without exposing private data.
+8. Check PWA install, update and offline behaviour on a real device.
+9. Review live performance, accessibility and Core Web Vitals before claiming performance targets.
+
+## Social sharing and advertising
+
+The site exposes social links and share actions, page titles, canonical URLs, Open Graph/Twitter metadata and a sitemap. This does not set up Meta Business Manager, advertising accounts, campaigns, billing, audience targeting or ad spend. Review actual Facebook/Instagram link previews after Cloudflare deploys the current commit; do not advertise routes that have not been confirmed live.
+
+## Operating rule
+
+Keep production source on main as requested. Record direct commits, run validation, verify the hosting deployment, and test the real public pages. Never describe a source-only update as a completed live deployment.
