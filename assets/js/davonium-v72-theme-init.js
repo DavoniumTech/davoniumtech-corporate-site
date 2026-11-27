@@ -1,0 +1,1 @@
+(function(){try{var t=localStorage.getItem("davonium.v72.theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.dataset.theme=t;}catch(_){document.documentElement.dataset.theme="dark";}})();
