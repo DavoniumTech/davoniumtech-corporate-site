@@ -342,6 +342,10 @@
     if (!view) return;
     view.innerHTML = active === 'Overview' ? overview() : renderModule();
     updateNavigation();
+    var undoButton = mount.querySelector('[data-action="undo"]');
+    var redoButton = mount.querySelector('[data-action="redo"]');
+    if (undoButton) undoButton.disabled = !undoStack.length;
+    if (redoButton) redoButton.disabled = !redoStack.length;
   }
   function renderShell() {
     mount.className = 'wk-premium-root wk-' + key;
