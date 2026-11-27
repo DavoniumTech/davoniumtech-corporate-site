@@ -4,8 +4,6 @@
  const cfg=window.DAVONIUM_BACKEND;
  if(!cfg)return;
  function submitEnquiry(payload,status,button){
-  const consent=window.DavoniumConsent?.get();
-  if(!consent){status.textContent="Please set your cookie/storage preference before submitting.";return Promise.resolve(false);}
   if(!payload.privacy_consent){status.textContent="Please accept the privacy notice to send this enquiry.";return Promise.resolve(false);}
   button.disabled=true;const old=button.textContent;button.textContent="Sending securely…";
   return fetch(cfg.url+"/functions/v1/"+cfg.enquiryFunction,{method:"POST",headers:{"Content-Type":"application/json","apikey":cfg.publishableKey},body:JSON.stringify(payload)})
