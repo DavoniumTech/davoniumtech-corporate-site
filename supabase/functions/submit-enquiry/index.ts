@@ -86,23 +86,58 @@ Deno.serve(async (req: Request) => {
     console.error("Lead insert failed:", error.message);
     return json(origin, 500, { error: "We could not save your enquiry. Please try WhatsApp or email." });
   }
-  await admin.from("lead_activities").insert({ lead_id: data.id, event_type: "created", note: "Website enquiry received", metadata: { source: "website" } });
-  await admin.from("notifications").insert({ kind: "new_lead", title: "New website enquiry", body: name + " — " + service, lead_id: data.id });
-  // Email notification is intentionally optional until a verified sender is configured.
+  const activity = await admin.from("lead_activities").insert({
+    lead_id: data.id,
+    event_type: "created",
+    note: "Website enquiry received",
+    metadata: { source: "website" },
+  });
+  if (activity.error) {
+    console.error("Lead activity insert failed:", activity.error.message);
+  }
+
+  const notification = await admin.from("notifications").insert({
+    kind: "new_lead",
+    title: "New website enquiry",
+    body: name + " — " + service,
+    lead_id: data.id,
+  });
+  if (notification.error) {
+    console.error("In-app notification insert failed:", notification.error.message);
+  }
+
+  // Email notification is optional until a verified sender is configured.
+  // A lead remains saved even if this secondary delivery step fails.
   const resendKey = Deno.env.get("RESEND_API_KEY");
   const ownerEmail = Deno.env.get("OWNER_NOTIFICATION_EMAIL");
   const fromEmail = Deno.env.get("RESEND_FROM_EMAIL");
+  let emailNotificationAccepted = false;
   if (resendKey && ownerEmail && fromEmail) {
     try {
-      await fetch("https://api.resend.com/emails", {
+      const emailResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Authorization": "Bearer " + resendKey, "Content-Type": "application/json" },
         body: JSON.stringify({
-          from: fromEmail, to: [ownerEmail], subject: "New Davonium website enquiry",
-          text: "Name: " + name + "\nEmail: " + email + "\nService: " + service + "\n\n" + message,
+          from: fromEmail,
+          to: [ownerEmail],
+          subject: "New Davonium website enquiry",
+          text: "Name: " + name + "\\nEmail: " + email + "\\nService: " + service + "\\n\\n" + message,
         }),
       });
-    } catch (e) { console.error("Owner email notification failed:", e); }
+      emailNotificationAccepted = emailResponse.ok;
+      if (!emailResponse.ok) {
+        console.error("Owner email provider rejected notification:", emailResponse.status);
+      }
+    } catch (e) {
+      console.error("Owner email notification failed:", e instanceof Error ? e.message : String(e));
+    }
   }
-  return json(origin, 201, { ok: true, reference: data.id });
+
+  return json(origin, 201, {
+    ok: true,
+    reference: data.id,
+    activityRecorded: !activity.error,
+    inAppNotificationCreated: !notification.error,
+    emailNotificationAccepted,
+  });
 });
