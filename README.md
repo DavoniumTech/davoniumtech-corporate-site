@@ -69,3 +69,8 @@ A GitHub commit on `main` is the source update; it does not, by itself, prove Cl
 5. Test the PWA install prompt and service-worker cache update.
 6. Confirm forms persist enquiries and never expose private records.
 7. Record any browser/device failures rather than claiming untested functionality as production-ready.
+
+
+## V71 — DVNM Forge local workspace builder
+
+The five DVNM workspaces (Biz, Market, Creative, Skills and Digital) now support local browser autosave, create/read/update/delete for sample records, undo/redo, JSON import/export, IndexedDB-backed image media, and ZIP export including workspace JSON and uploaded media. This remains a frontend-only local workspace preview: no account, Supabase/Firebase backend, cloud sync, production customer records, real payments or live business operations are connected. The workspace owner must export JSON/ZIP before clearing browser data or changing devices. The interface includes the attribution “Built with DVNM Forge by Davonium Technologies.”
